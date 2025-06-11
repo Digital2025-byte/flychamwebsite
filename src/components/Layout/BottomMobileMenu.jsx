@@ -31,13 +31,17 @@ const BottomMobileMenu = ({ navItems }) => {
                     </button>
 
                     {/* Center Logo */}
-                    <div className="relative w-20 h-6">
+                    <div
+                    onClick={()=>{
+                        router.push(`/`);
+                    }}
+                    className="relative w-20 h-6 cursor-pointer">
                         <Image src={logo} alt="Logo" className="object-contain" fill />
                     </div>
 
                     {/* Globe Icon */}
-                    <button className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
-                        <FaGlobe className="text-[#075377] text-sm" />
+                    <button className="w-8 h-8  rounded-full flex items-center justify-center">
+                        {/* <FaGlobe className="text-[#075377] text-sm" /> */}
                     </button>
                 </div>}
 
@@ -70,7 +74,7 @@ const BottomMobileMenu = ({ navItems }) => {
                     <nav className="flex flex-col px-6 py-4 space-y-3 text-white text-sm font-medium">
                         {navItems?.map((item, idx) => {
                             return (
-                                <MenuItem router={router} key={idx} link={item.link} icon={item.icon} label={item.label} index={item.label} false />
+                                <MenuItem setIsOpen={setIsOpen} router={router} key={idx} link={item.link} icon={item.icon} label={item.label} index={item.label} false />
                             )
                         })}
 
@@ -81,11 +85,12 @@ const BottomMobileMenu = ({ navItems }) => {
     );
 };
 
-const MenuItem = ({ router, link, icon, label, active = false }) => (
+const MenuItem = ({ router, link, icon, label, active = false,setIsOpen }) => (
     <div
         onClick={() => {
             if (link) {
                 router.push(`${link}`);
+                setIsOpen(false)
             }
         }}
         className={`cursor-pointer flex items-center gap-2 px-4 py-2 rounded-md ${active ? 'bg-secondary text-[#075377]' : 'hover:bg-secondary'}`}
