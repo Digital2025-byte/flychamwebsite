@@ -1,0 +1,113 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+
+  --color-main: #054E72;
+  --color-main-light: #4C86A3;
+
+  --color-secondary: #D0C29C;
+  --color-secondary-light: #E8E0C4;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-main: var(--color-main);
+  --color-secondary: var(--color-secondary);
+  --color-main-light: var(--color-main-light);
+
+  --color-secondary-light: var(--color-secondary-light);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+
+body,
+h1,
+p {
+  font-family: 'Montserrat', Helvetica, Arial, sans-serif;
+}
+
+.bg-main {
+  background-color: var(--color-main);
+}
+.bg-main-light {
+  background-color: var(--color-main-light);
+}
+
+.bg-secondary-light {
+  background-color: var(--color-secondary-light);
+}
+
+.text-main {
+  color: var(--color-main);
+}
+
+.text-secondary {
+  color: var(--color-secondary);
+}
+
+.bg-secondary {
+  background-color: var(--color-secondary);
+}
+
+.border-main {
+  border-color: var(--color-main);
+}
+
+.border-secondary-light {
+  border-color: var(--color-secondary-light);
+}
+
+.rdp-root {
+  --rdp-accent-color: var(--color-main) !important;
+  --rdp-selected-border: 8px 0px 0px 8px !important;
+  --rdp-day_button-border-radius: 8px 0px 0px 8px !important;
+  --rdp-day_button-border: 1px !important;
+
+
+}
+
+.rdp-month_caption {
+  justify-content: center !important;
+}
+
+.rdp-nav {
+  display: none !important;
+}
+
+@keyframes pathPulse {
+  0% {
+    stroke-width: 4px;
+    opacity: 0.9;
+  }
+
+  100% {
+    stroke-width: 6px;
+    opacity: 1;
+  }
+}
+.custom-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+.custom-scroll::-webkit-scrollbar-thumb {
+  background: #d0c29c;
+  border-radius: 9999px;
+}
+.custom-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.mask-video {
+  -webkit-mask-image: url('/videos/mask.webp');
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: cover;
+  -webkit-mask-position: center;
+
+  mask-image: url('/videos/mask.webp');
+  mask-repeat: no-repeat;
+  mask-size: cover;
+  mask-position: center;
+}

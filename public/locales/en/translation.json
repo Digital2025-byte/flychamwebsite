@@ -1,0 +1,38 @@
+{
+  "sliderTitle": "Discover A World Of Enchanting Destinations",
+  "sliderDesc": "And Unforgettable Experiences",
+  "flightSearch": {
+    "from": "From",
+    "to": "To",
+    "oneway": "Oneway",
+    "roundTrip": "Round Trip",
+    "search": "Search",
+    "airports": {
+      "damascus": {
+        "code": "DAM, Syria",
+        "name": "Damascus International Airport"
+      },
+      "kuwait": {
+        "code": "KWI, Kuwait",
+        "name": "Kuwait International Airport"
+      }
+    }
+  },
+  "home": {
+    "destination": {
+      "head": "Choose Your Destination and Plan Your Next Trip with Us",
+      "desc": "Going somewhere to celebrate this season? Whether you’re going home or somewhere to roam, we’ve got the travel tools to get you to your destination.",
+      "button": "See All"
+    },
+    "destinations": {
+      "slider": {
+        "muscat": "Flights to Muscat",
+        "kuwait": "Flights to Kuwait",
+        "sharjah": "Flights to Sharjah",
+        "abudhabi": "Flights to Abu Dhabi",
+        "erbil": "Flights to Erbil",
+        "damascus": "Flights to Damascus"
+      }
+    }
+  }
+}

@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://flycham.com
+
+# Sitemaps
+Sitemap: https://flycham.com/sitemap.xml
