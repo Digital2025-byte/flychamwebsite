@@ -48,7 +48,7 @@ const flight = () => {
         </div>
         <div className="mt-20 mb-20 w-[85%] justify-self-center">
           <SectionTexts
-            head='About Fly Cham'
+            head={t("About title")}
             desc='Learn more about our company and services'
             btn=''
           />
