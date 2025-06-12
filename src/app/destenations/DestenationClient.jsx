@@ -63,6 +63,10 @@ const DestenationClient = () => {
                     name: t('destinations.uae.abudhabi.name'),
                     description: t('destinations.uae.abudhabi.description'),
                 },
+                {
+                    name: t('destinations.uae.sharjah.name'),
+                    description: t('destinations.uae.sharjah.description'),
+                },
             ],
         },
         {
@@ -122,7 +126,7 @@ const DestenationClient = () => {
         speed: 500,
         slidesToShow: 1,
         slidesToScroll: 1,
-        // autoplay: true,
+        autoplay: true,
         arrows: false, // Disable default arrows
 
     };

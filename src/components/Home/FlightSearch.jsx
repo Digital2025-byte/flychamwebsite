@@ -6,12 +6,14 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import searchPattern from '@/assets/images/searchPattern.webp';
 import { useTranslation } from 'react-i18next';
+import useIsArabic from '@/hooks/useIsArabic';
 
 const FlightSearch = ({ isHome }) => {
     const [isSwitched, setIsSwitched] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [activeTap, setActiveTap] = useState(0);
     const { t } = useTranslation()
+    const isArabic = useIsArabic()
     const cardVariants = {
         initial: { opacity: 0, y: 20 },
         animate: { opacity: 1, y: 0 },
@@ -33,7 +35,11 @@ const FlightSearch = ({ isHome }) => {
         <motion.div
             layout
             className="cursor-pointer bg-main text-white rounded-2xl p-4 flex-1 w-full"
-            onClick={() => setIsModalOpen(true)}
+            onClick={() => {
+                if (!isArabic) {
+                    setIsModalOpen(true)
+                }
+            }}
         >
             <div className="flex items-center gap-2 mb-1 ">
                 <FaLocationArrow className="text-sm" />
@@ -52,8 +58,11 @@ const FlightSearch = ({ isHome }) => {
         <motion.div
             layout
             className=" cursor-pointer bg-secondary text-white rounded-2xl p-4 flex-1  w-full"
-            onClick={() => setIsModalOpen(true)}
-        >
+            onClick={() => {
+                if (!isArabic) {
+                    setIsModalOpen(true)
+                }
+            }}        >
             <div className="flex items-center gap-2 mb-1">
                 <FaLocationArrow className="text-sm" />
                 <span className="text-xs uppercase tracking-wider text-white">{t('flightSearch.to')}</span>
@@ -115,14 +124,14 @@ const FlightSearch = ({ isHome }) => {
                             </motion.div>
                             {toCard}
                         </motion.div>
-<button
-  className="w-full md:w-auto flex items-center justify-center gap-2 px-6 py-3 mt-4 md:mt-0 rounded-xl font-semibold text-sm md:text-base tracking-wide whitespace-nowrap
+                        <button
+                            className="w-full md:w-auto flex items-center justify-center gap-2 px-6 py-3 mt-4 md:mt-0 rounded-xl font-semibold text-sm md:text-base tracking-wide whitespace-nowrap
              text-main bg-secondary hover:bg-secondary-light active:scale-[0.98] transition-all duration-300 ease-in-out
              shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-secondary-light"
->
-  <FaSearch className="text-sm md:text-base" />
-  {t('flightSearch.search')}
-</button>
+                        >
+                            <FaSearch className="text-sm md:text-base" />
+                            {t('flightSearch.search')}
+                        </button>
 
 
 

@@ -178,6 +178,10 @@
     "abudhabi": {
       "name": "Abu Dhabi",
       "description": "Travel with Fly Cham to Abu Dhabi, the second largest city in the United Arab Emirates..."
+    },
+    "sharjah": {
+      "name": "Sharjah",
+      "description": "Travel with Fly Cham to Sharjah, a cultural gem of the UAE known for its museums, art, and heritage—perfect for those seeking authentic Arabian experiences..."
     }
   },
   "syria": {
@@ -283,5 +287,50 @@
   "loyaltyProgram": "Loyalty Program",
   "aboutUs": "About Us",
   "support": "Support"
-}
+},
+  "flyingStart": {
+    "travelFrom": "Where are you Traveling From?",
+    "placeholder": "Enter airport or city",
+    "matchingAirports": "Matching Airports",
+    "noResults": "No matching results found.",
+    "placeHolder":"Enter airport or city"
+  },
+  "cities": {
+    "dubai": {
+      "name": "Dubai",
+      "label": "Dubai International Airport"
+    },
+    "kuwait": {
+      "name": "Kuwait",
+      "label": "Kuwait International Airport"
+    },
+    "damascus": {
+      "name": "Damascus",
+      "label": "Damascus International Airport"
+    },
+    "aleppo": {
+      "name": "Aleppo",
+      "label": "Aleppo International Airport"
+    },
+    "muscat": {
+      "name": "Muscat",
+      "label": "Muscat International Airport"
+    },
+    "abudhabi": {
+      "name": "Abu Dhabi",
+      "label": "Abu Dhabi International Airport"
+    },
+    "sharjah": {
+      "name": "Sharjah",
+      "label": "Sharjah International Airport"
+    },
+    "erbil": {
+      "name": "Erbil",
+      "label": "Erbil International Airport"
+    },
+    "baghdad": {
+      "name": "Baghdad",
+      "label": "Baghdad International Airport"
+    }
+  }
 }

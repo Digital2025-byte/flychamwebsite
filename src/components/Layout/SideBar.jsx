@@ -78,7 +78,7 @@ const SideBar = ({ navItems }) => {
                     />
                 </div>
 
-                {/* <div className="absolute bottom-0 left-0 w-full overflow-hidden rounded-br-[16px]">
+                <div className="absolute bottom-0 left-0 w-full overflow-hidden rounded-br-[16px]">
                     <Image
                         src={pattern}
                         alt="Fly Cham pattern"
@@ -86,7 +86,7 @@ const SideBar = ({ navItems }) => {
                         height={250}
                         className=" w-full h-full"
                     />
-                </div> */}
+                </div>
 
                 <div className="space-y-6"
 

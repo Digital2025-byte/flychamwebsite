@@ -8,7 +8,7 @@ import AboutFlyChamSection from '@/components/Home/OurCompanyCard'
 import SideBar from '@/components/Layout/SideBar'
 import useIsMobile from '@/hooks/useIsMobile'
 import React from 'react'
-import { useRouter } from 'next/navigation';
+// import { useRouter } from 'next/navigation';
 
 import DestinationCarousel from '@/components/Home/DestinationCarousel'
 import Topic from '@/components/About/Topic'
@@ -16,10 +16,15 @@ import Panner from '@/components/Home/Panner'
 import Help from '@/components/Home/Help'
 import SectionTexts from '@/components/Ui/SectionTexts'
 import { useTranslation } from 'react-i18next'
+import { useRouter } from 'next/navigation';
+
 const HomeClient = () => {
   const isMobile = useIsMobile(1024);
   const router = useRouter()
   const { t } = useTranslation()
+  const handleNavigate = () => {
+    router.push('/destenations')
+  }
   return (
     <div className="transition-all duration-700">
 
@@ -42,13 +47,13 @@ const HomeClient = () => {
             {isMobile &&
               <>
                 <DestinationCarousel />
-                <button className="w-full xl:w-auto mt-4 xl:mt-0 cursor-pointer border border-sky-900 text-sky-900 text-sm px-4 py-2 rounded hover:bg-sky-900 hover:text-white transition" onClick={() => router.push(`/destenations`)}>
+                <button onClick={handleNavigate} className="w-full xl:w-auto mt-4 xl:mt-0 cursor-pointer border border-sky-900 text-sky-900 text-sm px-4 py-2 rounded hover:bg-sky-900 hover:text-white transition" onClick={() => router.push(`/destenations`)}>
                   See All
                 </button>
               </>
             }
             {!isMobile &&
-              <DestinationCards />
+              <DestinationCards handleNavigate={handleNavigate} />
             }
 
           </div>

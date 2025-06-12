@@ -1,6 +1,4 @@
-// components/layout/ClientLayoutWrapper.tsx
 'use client';
-
 import Script from "next/script";
 import SideBar from "@/components/Layout/SideBar";
 import BottomMobileMenu from "@/components/Layout/BottomMobileMenu";
@@ -22,28 +20,29 @@ import { useEffect } from "react";
 import Footer from "@/components/Layout/Footer";
 import { useParams, usePathname } from "next/navigation";
 import useIsMobile from "@/hooks/useIsMobile";
+import useIsArabic from "@/hooks/useIsArabic";
 
 
 export default function ClientLayoutWrapper({ children }) {
     const pathname = usePathname()
     const isMobile = useIsMobile()
-const { t } = useTranslation();
-
-const navItems = [
-  { label: t('nav.bookFlight'), icon: <IoMdHome />, link: '/' },
-  { label: t('nav.travelExperience'), icon: <FaSuitcaseRolling />, link: '/destenations' },
-  { label: t('nav.travelAgent'), icon: <BsFillSuitcaseLgFill />, link: '/travel-agent' },
-  { label: t('nav.holiday'), icon: <MdBeachAccess /> },
-  { label: t('nav.loyaltyProgram'), icon: <FaGift /> },
-  { label: t('nav.aboutUs'), icon: <MdInfoOutline />, link: '/about' },
-  { label: t('nav.support'), icon: <BiSupport />, link: '/contact' },
-];
+    const { t } = useTranslation();
+    const isAr = useIsArabic()
+    const navItems = [
+        { label: t('nav.bookFlight'), icon: <IoMdHome />, link: '/' },
+        { label: t('nav.travelExperience'), icon: <FaSuitcaseRolling />, link: '/destenations' },
+        { label: t('nav.travelAgent'), icon: <BsFillSuitcaseLgFill />, link: '/travel-agent' },
+        { label: t('nav.holiday'), icon: <MdBeachAccess /> },
+        { label: t('nav.loyaltyProgram'), icon: <FaGift /> },
+        { label: t('nav.aboutUs'), icon: <MdInfoOutline />, link: '/about' },
+        { label: t('nav.support'), icon: <BiSupport />, link: '/contact' },
+    ];
 
     return (
 
         <>
 
-            <ZohoSalesIQ />
+                <ZohoSalesIQ />
             {/* ✅ GTM Script */}
             <GTMScript />
 

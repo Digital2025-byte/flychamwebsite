@@ -1,3 +1,4 @@
+
 import { Geist, Geist_Mono } from 'next/font/google';
 
 import 'slick-carousel/slick/slick.css';
@@ -26,7 +27,7 @@ export const metadata = {
 
 // const SUPPORTED_LOCALES = ['en', 'ar'];
 
-export default async function RootLayout({ children }) {
+export default function RootLayout({ children }) {
   return (
     <html dir="ltr">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>

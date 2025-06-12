@@ -5,10 +5,12 @@ import Image from "next/image";
 import CustomCalendar from "../Ui/CustomCalendar";
 import tabImage from '@/assets/images/tabImage.webp'; // Adjust path if needed
 import { useState } from "react";
-import cities from "@/util/cities";
 import useIsMobile from "@/hooks/useIsMobile";
+import useCities from "@/hooks/useCities";
 
 const Destinations = ({ formik, setActiveTab }) => {
+    const cities = useCities();
+
   const [search, setSearch] = useState('');
   const isMobile = useIsMobile()
 
