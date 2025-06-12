@@ -20,18 +20,13 @@ export const metadata = {
   title: 'Fly Cham',
   description: 'fly cham Choose Excellence',
   icons: {
-    icon: '/tabicon.png',
+    icon: '/tabicon.svg',
   },
 };
 
-const SUPPORTED_LOCALES = ['en', 'ar'];
+// const SUPPORTED_LOCALES = ['en', 'ar'];
 
 export default async function RootLayout({ children }) {
-
-
-
-
-
   return (
     <html dir="ltr">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
@@ -42,6 +37,6 @@ export default async function RootLayout({ children }) {
   )
 }
 
-export function generateStaticParams() {
-  return SUPPORTED_LOCALES.map((locale) => ({ locale }));
-}
+// export function generateStaticParams() {
+//   return SUPPORTED_LOCALES.map((locale) => ({ locale }));
+// }

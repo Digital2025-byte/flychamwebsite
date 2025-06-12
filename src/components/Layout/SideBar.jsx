@@ -16,12 +16,14 @@ import {
 import arrow from "@/assets/arrow.svg"
 import { useRouter } from "next/navigation";
 import useIsArabic from '@/hooks/useIsArabic';
+import { useTranslation } from 'react-i18next';
 
 const SideBar = ({ navItems }) => {
     const [isOpen, setIsOpen] = useState(true)
     const [isManuallyControlled, setIsManuallyControlled] = useState(false) // Track if user manually closed it
     const router = useRouter()
     const isArabic = useIsArabic();
+    const { i18n } = useTranslation()
 
     const handleMouseEnter = () => {
         // Only respond to hover if sidebar was manually closed
@@ -51,18 +53,21 @@ const SideBar = ({ navItems }) => {
 
     return (
         <div
-            className={`fixed  ${isArabic ? 'right-0' : 'left-0'} h-screen bg-main text-white flex flex-col justify-between transition-all duration-600 shadow-xl ${isArabic ? 'rounded-l-2xl' : 'rounded-r-2xl'} z-50 xl:pt-8`}
+            className={`relative  ${isArabic ? 'right-0' : 'left-0'} h-screen bg-main text-white flex flex-col justify-between transition-all duration-700 shadow-xl
+                z-50 xl:pt-8`}
             style={{
                 width: isOpen ? '220px' : '80px',
             }}
 
         >
+            {/* ${isArabic ? 'rounded-bl-2xl' : 'rounded-br-2xl'} */}
+
             {/* Top section */}
             <div className=" h-120 py-6 px-4">
 
                 <div
                     onClick={handleArrowClick}
-                    className={`absolute top-[30px] ${isArabic ? 'left-[-10px]' : 'right-[-10px]'}  cursor-pointer transition-transform duration-300`}
+                    className={`absolute top-[30px] ${isArabic ? 'left-[-10px]' : 'right-[-10px]'}  cursor-pointer transition-transform duration-700`}
                 >
                     <Image
                         src={arrow}
@@ -73,7 +78,7 @@ const SideBar = ({ navItems }) => {
                     />
                 </div>
 
-                <div className="absolute bottom-0 left-0 w-full overflow-hidden rounded-br-[16px]">
+                {/* <div className="absolute bottom-0 left-0 w-full overflow-hidden rounded-br-[16px]">
                     <Image
                         src={pattern}
                         alt="Fly Cham pattern"
@@ -81,7 +86,7 @@ const SideBar = ({ navItems }) => {
                         height={250}
                         className=" w-full h-full"
                     />
-                </div>
+                </div> */}
 
                 <div className="space-y-6"
 
@@ -119,7 +124,7 @@ const SideBar = ({ navItems }) => {
                                         }
                                     }}
                                 >
-                                    <div className="flex items-center relative">
+                                    <div className="flex gap-2 items-center relative">
                                         {/* Icon */}
                                         <span className="text-lg relative">
                                             {item.icon}
@@ -132,15 +137,46 @@ const SideBar = ({ navItems }) => {
 
                                         {/* Label */}
                                         <span
-                                            className={`mx-2 cursor-pointer transition-opacity duration-300 whitespace-nowrap ml-3 ${isOpen ? 'opacity-100 delay-100' : 'opacity-0'
+                                            className={`ml-3 whitespace-nowrap transition-all duration-300 ${isOpen ? 'opacity-100' : 'opacity-0 w-0 overflow-hidden'
                                                 }`}
                                         >
                                             {item.label}
                                         </span>
+
                                     </div>
                                 </button>
                             ))}
+
                         </nav>
+                        {/* Language Switch Button */}
+                        <button
+                            className="w-full  flex items-center gap-3 py-2 px-3 rounded-md text-white hover:bg-secondary transition font-semibold"
+                            style={{
+                                fontFamily: 'Montserrat, sans-serif',
+                                fontSize: '15px',
+                                fontStyle: 'normal',
+                                lineHeight: '15.791px',
+                            }}
+                            onClick={() => {
+                                const langCode = isArabic ? 'en' : 'ar';
+                                i18n.changeLanguage(langCode);
+                                const dir = langCode === 'ar' ? 'rtl' : 'ltr';
+                                document.documentElement.setAttribute('dir', dir);
+                                document.documentElement.setAttribute('lang', langCode);
+                            }}
+                        >
+                            <div className="flex gap-2 items-center relative">
+                                <span className="text-lg relative">
+                                    <FaGlobe />
+                                </span>
+                                <span
+                                    className={`ml-3 whitespace-nowrap transition-all duration-300 ${isOpen ? 'opacity-100' : 'opacity-0 w-0 overflow-hidden'
+                                        }`}
+                                >
+                                    {isArabic ? 'English' : 'العربية'}
+                                </span>
+                            </div>
+                        </button>
                     </div>
                 </div>
             </div>

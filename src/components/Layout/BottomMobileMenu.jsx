@@ -1,104 +1,118 @@
 'use client';
 
-import { useState } from 'react';
-import { FaBars, FaGlobe, FaTimes, FaHome, FaPlane, FaUmbrellaBeach, FaGift, FaInfoCircle, FaBlog, FaHeadphones } from 'react-icons/fa';
+import { useEffect, useRef, useState } from 'react';
+import { FaBars, FaGlobe, FaTimes } from 'react-icons/fa';
 import Image from 'next/image';
-import logo from '@/assets/images/logo.webp'; // Update to your actual logo path
-import { IoMdHome } from "react-icons/io";
-import { MdBeachAccess } from "react-icons/md";
-import { MdInfoOutline } from "react-icons/md";
-import { BiSupport } from "react-icons/bi";
-import { HiOutlineDocumentText } from "react-icons/hi2";
-import {
-    FaSuitcaseRolling,
-} from 'react-icons/fa';
+import logo from '@/assets/images/logo.webp';
 import { useRouter } from 'next/navigation';
+import useIsArabic from '@/hooks/useIsArabic';
+import { useTranslation } from 'react-i18next';
+
 const BottomMobileMenu = ({ navItems }) => {
-    const [isOpen, setIsOpen] = useState(false);
-    const router = useRouter()
+  const [isOpen, setIsOpen] = useState(false);
+  const menuRef = useRef(null);
+  const router = useRouter();
+  const isArabic = useIsArabic();
+  const { i18n } = useTranslation();
 
-    return (
-        <>
-            {/* Fixed Bottom Menu Bar */}
-            {!isOpen &&
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (isOpen && menuRef.current && !menuRef.current.contains(e.target)) {
+        setIsOpen(false);
+      }
+    };
+    document[isOpen ? 'addEventListener' : 'removeEventListener']('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [isOpen]);
 
+  useEffect(() => {
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
+  }, [isOpen]);
 
-                <div className="fixed bottom-0 left-0 right-0 z-50 bg-[#075377] h-16 rounded-t-2xl flex items-center justify-between px-6 shadow-lg ">
-                    {/* Open Menu Icon */}
+  const handleLanguageToggle = () => {
+    const lang = isArabic ? 'en' : 'ar';
+    i18n.changeLanguage(lang);
+    if (typeof document !== 'undefined') {
+      document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+      document.documentElement.setAttribute('lang', lang);
+    }
+    setIsOpen(false);
+  };
 
-                    <button onClick={() => setIsOpen(true)} className="text-white text-xl cursor-pointer">
-                        <FaBars />
-                    </button>
+  return (
+    <>
+      {!isOpen && (
+        <div dir="ltr" className="fixed bottom-0 left-0 right-0 z-50 bg-[#075377] h-16 rounded-t-2xl flex items-center justify-between px-6 shadow-xl backdrop-blur-md">
+          <button
+            onClick={() => setIsOpen(true)}
+            className="text-white text-2xl p-2 rounded-full hover:bg-white/10 active:scale-95 transition"
+          >
+            <FaBars />
+          </button>
+          <div onClick={() => router.push(`/`)} className="relative w-20 h-6 cursor-pointer">
+            <Image src={logo} alt="Logo" fill className="object-contain" />
+          </div>
+          <div className="w-8 h-8" />
+        </div>
+      )}
 
-                    {/* Center Logo */}
-                    <div className="relative w-20 h-6">
-                        <Image src={logo} alt="Logo" className="object-contain" fill />
-                    </div>
+      <div
+        ref={menuRef}
+        className={`fixed bottom-0 left-0 right-0 z-[60] bg-main transition-transform duration-300 ${
+          isOpen ? 'translate-y-0' : 'translate-y-full'
+        } rounded-t-3xl shadow-xl pt-4 pb-8 px-6 backdrop-blur-md`}
+      >
+        <div className="flex items-center justify-between mb-6">
+          <button
+            onClick={() => setIsOpen(false)}
+            className="text-white text-2xl p-2 rounded-full hover:bg-white/10 active:scale-95 transition"
+          >
+            <FaTimes />
+          </button>
+          <div onClick={() => router.push(`/`)} className="w-32 h-auto cursor-pointer">
+            <Image src={logo} alt="Logo" className="w-full h-auto object-contain" />
+          </div>
+          <div className="w-8 h-8" />
+        </div>
 
-                    {/* Globe Icon */}
-                    <button className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
-                        <FaGlobe className="text-[#075377] text-sm" />
-                    </button>
-                </div>}
-
-            {/* Slide-In Menu Panel */}
-            <div
-                className={`w-full fixed bottom-0 left-0 right-0 bg-main z-50 transition-transform duration-300 ${isOpen ? 'translate-y-0' : 'translate-y-full'
-                    } rounded-t-2xl`}
-
-            >
-                {/* Header */}
-                <div className="flex items-center justify-between px-4 pt-4">
-                    {!isOpen ?
-
-                        <button onClick={() => setIsOpen(true)} className="text-white text-xl cursor-pointer">
-                            <FaBars />
-                        </button>
-                        :
-                        <button onClick={() => setIsOpen(false)} className="text-white text-xl cursor-pointer">
-                            <FaTimes />
-                        </button>
-                    }
-                    <Image src={logo} alt="Logo" className="w-20 h-auto" />
-                    <button className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
-                        <FaGlobe className="text-[#075377] text-sm" />
-                    </button>
-                </div>
-
-                {/* Navigation Menu */}
-                <div className="mt-4">
-                    <nav className="flex flex-col px-6 py-4 space-y-3 text-white text-sm font-medium">
-                        {navItems?.map((item, idx) => {
-                            return (
-                                <MenuItem router={router} key={idx} link={item.link} icon={item.icon} label={item.label} index={item.label} false />
-                            )
-                        })}
-
-                    </nav>
-                </div>
-            </div>
-        </>
-    );
+        <nav className="flex flex-col space-y-4 text-white font-medium text-sm">
+          {navItems?.map((item, idx) => (
+            <MenuItem key={idx} {...item} router={router} setIsOpen={setIsOpen} />
+          ))}
+          <div
+            onClick={handleLanguageToggle}
+            className="cursor-pointer flex items-center gap-3 px-4 py-3 rounded-xl bg-white/10 hover:bg-white/20 transition"
+          >
+            <span className="text-xl"><FaGlobe /></span>
+            <span className="text-sm sm:text-base md:text-lg">{isArabic ? 'English' : 'العربية'}</span>
+          </div>
+        </nav>
+      </div>
+    </>
+  );
 };
 
-const MenuItem = ({ router, link, icon, label, active = false }) => (
-    <div
-        onClick={() => {
-            if (link) {
-                router.push(`${link}`);
-            }
-        }}
-        className={`cursor-pointer flex items-center gap-2 px-4 py-2 rounded-md ${active ? 'bg-secondary text-[#075377]' : 'hover:bg-secondary'}`}
-    >
-        <span className="text-lg relative">
-            {icon}
-            {label === 'Travel Agent' && (
-                <span className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full border border-white shadow-lg"></span>
-            )}
-        </span>
-        <span className="text-base">{label}</span>
-    </div>
+const MenuItem = ({ setIsOpen, router, link, icon, label, active = false }) => (
+  <div
+    onClick={() => {
+      if (link) {
+        router.push(link);
+        setIsOpen(false);
+      }
+    }}
+    className={`cursor-pointer flex items-center gap-3 px-4 py-3 rounded-xl transition ${
+      active ? 'bg-white text-[#075377]' : 'bg-white/10 hover:bg-white/20 text-white'
+    }`}
+  >
+    <span className="text-xl relative">
+      {icon}
+      {label === 'Travel Agent' && (
+        <span className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full border border-white shadow" />
+      )}
+    </span>
+    <span className="text-sm sm:text-base md:text-lg">{label}</span>
+  </div>
 );
-
 
 export default BottomMobileMenu;

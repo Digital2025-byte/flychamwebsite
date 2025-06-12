@@ -34,6 +34,254 @@
         "damascus": "Flights to Damascus"
       }
     },
-    "About title":"About Fly Cham"
+    "AboutTitle": "About Fly Cham Airlines",
+    "AboutDesc": "Learn more about our company and services"
+  },
+  "aboutFlyCham.cards": {
+    "company.title": "OUR COMPANY",
+    "company.description": "Discover more",
+    "mission.title": "OUR MISSION",
+    "mission.description": "Discover more",
+    "responsibility.title": "OUR RESPONSIBILITY",
+    "responsibility.description": "Discover more"
+  },
+  "footer": {
+    "aboutFlyCham": {
+      "title": "About Fly Cham",
+      "links": {
+        "ourStory": "Our Story",
+        "ourMission": "Our Mission",
+        "ourVision": "Our Vision",
+        "ourValues": "Our Values",
+        "ourResponsibility": "Our Responsibility",
+        "ourFleet": "Our Fleet",
+        "mediaCenter": "Media Center",
+        "chairmanMessage": "Chairman’s Message"
+      }
+    },
+    "bookFlights": {
+      "title": "Book Flights",
+      "links": {
+        "searchFlight": "Search A Flight",
+        "flightSchedules": "Flight Schedules",
+        "hotelBooking": "Hotel Booking",
+        "carRental": "Car Rental",
+        "visaInfo": "Visa Information",
+        "groupTravel": "Group Travel",
+        "privateFlights": "Request Private Flights"
+      }
+    },
+    "destinations": {
+      "title": "Our Destinations Network",
+      "links": {
+        "domestic": "Domestic Destinations",
+        "international": "International Destinations",
+        "indirect": "Indirect Destinations",
+        "holidays": "Holidays",
+        "discoverSyria": "Discover Syria",
+        "tourismPrograms": "Tourism Programs",
+        "familyPackages": "Family Holidays Packages",
+        "honeymoonPackages": "Honeymoon Packages"
+      }
+    },
+    "loyaltyProgram": {
+      "title": "About Loyalty Program",
+      "links": {
+        "about": "About The Program",
+        "join": "Join The Program",
+        "terms": "Terms And Conditions"
+      }
+    },
+    "travelExperience": {
+      "title": "Travel Experience",
+      "links": {
+        "beforeTravel": "Before Travel",
+        "atAirport": "At The Airport",
+        "onBoard": "On Board",
+        "additionalServices": "Additional Services"
+      }
+    },
+    "help": {
+      "title": "Help",
+      "links": {
+        "contact": "Contact Us",
+        "inquiries": "Inquiries & Complaints",
+        "salesOffices": "Our Sales Offices",
+        "agentsWorldwide": "Our Agents Worldwide",
+        "joinPartner": "Join As a Partner",
+        "faq": "FAQs"
+      }
+    }
+  },
+    "intro": {
+    "title": "About Fly Cham",
+    "paragraph1": "With our launch, our goal has been to achieve excellence in every flight, ensuring comfort and safety, and connecting travelers to their favorite destinations in a distinctive way.",
+    "paragraph2": "We are proud of our services and our team that always strives to meet passengers' satisfaction.",
+    "button": "Discover More"
+  },
+    "mission": {
+    "heading": "Our Mission, Vision, and Value",
+    "sideText": "Unique experience that reflects our values of comfort and quality toward a future full of excellence.",
+    "paragraph": "Our commitment goes beyond the sky, as we seek to build sustainable and strong ties with our travelers and provide innovative services."
+  },
+    "topic": {
+    "title": "Who We Are",
+    "description": "Shaping the future of air travel with a bold vision and a shared commitment. Fly Cham connects people, cultures, and opportunities across the region with reliability and forward-thinking service",
+    "button": "Discover more",
+    "card1": {
+      "title": "Our Responsibility",
+      "text": "Our journey doesn’t end in the sky. We believe in supporting communities, creating opportunities for youth, and embracing sustainability in everything we do."
+    },
+    "card2": {
+      "title": "Our Fleet",
+      "text": "Modern, efficient, and built for comfort — our fleet is designed to meet the needs of today’s travelers."
+    }
+  },
+    "best": {
+    "heading1": "Fly Cham",
+    "heading2": "is Your Best Choice",
+    "comfort": "More Comfort",
+    "businessClass": "With Business Class",
+    "bookNow": "Book Now",
+    "loyalty": {
+      "title": "Exclusive Benefits with The Loyalty Program",
+      "coming": "Coming Soon"
+    },
+    "trip": {
+      "title": "Plan Your Next Trip to Syria",
+      "coming": "Coming Soon"
+    }
+  },
+    "contact": {
+    "title": "Contact Us",
+    "subtitle": "Our team is ready to assist you every step of the way. Whether you're traveling with us, a business partner, or a member of the Cham Miles loyalty program, take advantage of the range of services available and don't hesitate to contact us for any assistance.",
+    "phone": {
+      "number": "+963 4000",
+      "label": "Call us for immediate Help"
+    },
+    "email": {
+      "address": "cs@flycham.com",
+      "label": "Email us for Queries"
+    },
+    "hours": {
+      "range": "Saturday to Thursday, 9:00 AM - Mid Night",
+      "label": "Our Active Hours"
+    }
+  },
+  "destinations": {
+  "uae": {
+    "country": "UAE",
+    "dubai": {
+      "name": "Dubai",
+      "description": "Travel to Dubai with Fly Cham and discover a city unlike any other destination in the world..."
+    },
+    "abudhabi": {
+      "name": "Abu Dhabi",
+      "description": "Travel with Fly Cham to Abu Dhabi, the second largest city in the United Arab Emirates..."
+    }
+  },
+  "syria": {
+    "country": "Syria",
+    "damascus": {
+      "name": "Damascus",
+      "description": "Travel to the Syrian capital, Damascus, where you'll find a unique blend of culture and history..."
+    },
+    "aleppo": {
+      "name": "Aleppo",
+      "description": "Travel to Aleppo, the oldest continuously inhabited city in the world..."
+    }
+  },
+  "kuwait": {
+    "country": "Kuwait",
+    "kuwait": {
+      "name": "Kuwait",
+      "description": "Travel to Kuwait, one of the most popular tourist destinations in the heart of the Arabian Gulf..."
+    }
+  },
+  "oman": {
+    "country": "Oman",
+    "muscat": {
+      "name": "Muscat",
+      "description": "Travel to Muscat, the enchanting jewel of Oman, offering the perfect blend of traditional charm..."
+    }
+  },
+  "iraq": {
+    "country": "Iraq",
+    "baghdad": {
+      "name": "Baghdad",
+      "description": "Travel to the heart of Arab civilization in Baghdad, Iraq..."
+    },
+    "erbil": {
+      "name": "Erbil",
+      "description": "Travel to Erbil, the enchanting jewel of Kurdistan and the oldest continuously inhabited city..."
+    }
   }
+},
+  "hero.title": "Never Stop Exploring The World.",
+  "hero.description": "Discover Fly Cham destinations, including domestic, international, and indirect destinations, offering you comprehensive and comfortable travel services. Browse our flight schedule and book your next journey with us.",
+  "hero.button": "Book Now",
+    "travelAgent": {
+    "join": {
+      "title": "Join Us",
+      "text": "Fill up the form and join us as travel agent."
+    },
+    "login": {
+      "title": "Log in",
+      "text": "Already have an account? log in here"
+    },
+    "button": "Click here"
+    
+  },
+   "whoweare": {
+    "hero": {
+      "title": "Who We Are",
+      "subtitle": "Fly Cham is a Syrian-Emirati joint private commercial airline, officially launched in May 2025, with a bold vision to elevate the aviation sector across Syria and the region. Built on two core pillars, passenger air travel and air cargo transportation, Fly Cham operates an expanding network of domestic and international flight routes, tailored to meet the growing demands of the Syrian market and customers' expectations."
+    },
+    "middle": {
+      "highlight": "Get ready to discover new cities in your own style",
+      "description": "Learn about our modern fleet equipped with the latest technologies to provide a safe and comfortable travel experience"
+    },
+    "button": {
+      "discover": "Discover More"
+    },
+    "responsibility": {
+      "title": "Our Responsibility",
+      "description": "We believe our role extends far beyond air travel. As we are committed to our responsibility toward society, empowering youth and all communities in Syria, and fostering a spirit of innovation among young people. We will be an active partner in building a brighter future and achieving a positive and sustainable impact."
+    },
+    "bottom": {
+      "statementTitle": "Comfort, care, and excellence in every detail",
+      "statementDescription": "Learn about our modern fleet equipped with the latest technologies to provide a safe and comfortable travel experience"
+    },
+    "cards": {
+    "community": {
+      "title": "Our Commitment to Community",
+      "desc": "We believe our role extends far beyond air travel. As we are committed to our responsibility toward society, empowering youth and all communities in Syria, and fostering a spirit of innovation among young people. We will be an active partner in building a brighter future and achieving a positive and sustainable impact."
+    },
+    "passengers": {
+      "title": "Towards Our Passengers",
+      "desc": "We believe our role extends far beyond air travel. As we are committed to our responsibility toward society, empowering youth and all communities in Syria, and fostering a spirit of innovation among young people. We will be an active partner in building a brighter future and achieving a positive and sustainable impact."
+    },
+    "syrianCommunity": {
+      "title": "Towards the Syrian Community",
+      "desc": "We believe in supporting the Syrian community through various community initiatives, and sponsoring and support cultural events and local associations, as well as entrepreneurship, youth, and women's empowerment programs."
+    },
+    "training": {
+      "title": "Training & Development",
+      "desc": "We believe in nurturing talent from within. Through specialized aviation training programs and skills development workshops, we aim to build a new generation of aviation professionals, equipping our team members with the tools to succeed locally and globally via establishing Fly Cham own Training Center."
+    },
+    "futureLeaders": {
+      "title": "Towards Future Leaders",
+      "desc": "Our vision includes creating meaningful opportunities for the youth. By fostering leadership, innovation, and entrepreneurship, to inspire the next wave of Syrian change-makers — in aviation and beyond."
+    }
+  }
+  },
+  "nav": {
+  "bookFlight": "Book Flight",
+  "travelExperience": "Travel Experience",
+  "travelAgent": "Travel Agent",
+  "holiday": "Holiday",
+  "loyaltyProgram": "Loyalty Program",
+  "aboutUs": "About Us",
+  "support": "Support"
+}
 }

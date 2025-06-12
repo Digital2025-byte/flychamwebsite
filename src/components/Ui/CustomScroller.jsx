@@ -9,6 +9,8 @@ const CustomScroller = ({
   handleTrackClick,
   handleThumbMouseDown,
 }) => {
+
+  
   return (
     <div className="absolute right-4 top-1/2 -translate-y-1/2 z-50">
       <div

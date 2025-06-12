@@ -17,23 +17,27 @@ import GA4Script from "@/components/Layout/GA4Script";
 import LanguageSwitcher from "@/components/Layout/LanguageSwitcher";
 import './globals.css';
 import i18n from '../../i18n'
-import { I18nextProvider } from "react-i18next";
+import { I18nextProvider, useTranslation } from "react-i18next";
 import { useEffect } from "react";
+import Footer from "@/components/Layout/Footer";
+import { useParams, usePathname } from "next/navigation";
+import useIsMobile from "@/hooks/useIsMobile";
 
 
 export default function ClientLayoutWrapper({ children }) {
-    const navItems = [
-        { label: 'Book Flight', icon: <IoMdHome />, link: '/' },
-        { label: 'Travel Experience', icon: <FaSuitcaseRolling />, link: '/destenations' },
-        {
-            label: 'Travel Agent', icon: <BsFillSuitcaseLgFill />
-            , link: '/travel-agent'
-        },
-        { label: 'Holiday', icon: <MdBeachAccess /> },
-        { label: 'Loyalty Program', icon: <FaGift /> },
-        { label: 'About Us', icon: <MdInfoOutline />, link: '/about' },
-        { label: 'Support', icon: <BiSupport />, link: '/contact' },
-    ];
+    const pathname = usePathname()
+    const isMobile = useIsMobile()
+const { t } = useTranslation();
+
+const navItems = [
+  { label: t('nav.bookFlight'), icon: <IoMdHome />, link: '/' },
+  { label: t('nav.travelExperience'), icon: <FaSuitcaseRolling />, link: '/destenations' },
+  { label: t('nav.travelAgent'), icon: <BsFillSuitcaseLgFill />, link: '/travel-agent' },
+  { label: t('nav.holiday'), icon: <MdBeachAccess /> },
+  { label: t('nav.loyaltyProgram'), icon: <FaGift /> },
+  { label: t('nav.aboutUs'), icon: <MdInfoOutline />, link: '/about' },
+  { label: t('nav.support'), icon: <BiSupport />, link: '/contact' },
+];
 
     return (
 
@@ -59,14 +63,34 @@ export default function ClientLayoutWrapper({ children }) {
             {/* ✅ Layout */}
             {/* <I18nextProvider i18n={i18n}> */}
             <div >
-                <div className="hidden xl:block">
-                    <SideBar navItems={navItems} />
+                <div className="flex h-screen overflow-hidden">
+                    {/* Sidebar */}
+                    <aside className="hidden xl:block   h-screen shadow-xl z-50">
+                        {/* {(pathname !== '/about' || pathname !== '/Mission') && */}
+                        <SideBar navItems={navItems} />
+                        {/* } */}
+                    </aside>
+
+                    {/* Main Content */}
+                    <main className="flex-1 w-[100%] h-screen overflow-y-auto bg-white  ">
+
+                        {children}
+                        {(pathname !== '/about' && pathname !== '/Mission') && <Footer />}
+
+                    </main>
                 </div>
-                {children}
-                <div className="block xl:hidden">
-                    <BottomMobileMenu navItems={navItems} />
-                </div>
-                <LanguageSwitcher />
+
+
+
+                {/* <div className="hidden xl:block">
+                    <LanguageSwitcher />
+                </div> */}
+
+
+
+            </div>
+            <div className="block xl:hidden">
+                <BottomMobileMenu navItems={navItems} />
             </div>
             {/* </I18nextProvider> */}
 

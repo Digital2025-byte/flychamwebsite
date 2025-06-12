@@ -25,7 +25,7 @@ const Hero = () => {
         autoplay: true,
         autoplaySpeed: 5000,
         arrows: false,
-        fade: !isArabic,
+        // fade: !isArabic,
         rtl: i18n.language === 'ar', // ✅ works now
         beforeChange: (_, next) => setCurrentSlide(next),
     };
