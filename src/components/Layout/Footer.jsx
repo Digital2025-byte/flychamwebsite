@@ -13,76 +13,76 @@ import { FaXTwitter } from "react-icons/fa6";
 import pattern from '@/assets/images/pattern.webp';
 import { useTranslation } from 'react-i18next';
 const Footer = () => {
- const { t } = useTranslation();
+    const { t } = useTranslation();
 
-const sections = [
-  {
-    title: t('footer.aboutFlyCham.title'),
-    links: [
-      t('footer.aboutFlyCham.links.ourStory'),
-      t('footer.aboutFlyCham.links.ourMission'),
-      t('footer.aboutFlyCham.links.ourVision'),
-      t('footer.aboutFlyCham.links.ourValues'),
-      t('footer.aboutFlyCham.links.ourResponsibility'),
-      t('footer.aboutFlyCham.links.ourFleet'),
-      t('footer.aboutFlyCham.links.mediaCenter'),
-      t('footer.aboutFlyCham.links.chairmanMessage'),
-    ]
-  },
-  {
-    title: t('footer.bookFlights.title'),
-    links: [
-      t('footer.bookFlights.links.searchFlight'),
-      t('footer.bookFlights.links.flightSchedules'),
-      t('footer.bookFlights.links.hotelBooking'),
-      t('footer.bookFlights.links.carRental'),
-      t('footer.bookFlights.links.visaInfo'),
-      t('footer.bookFlights.links.groupTravel'),
-      t('footer.bookFlights.links.privateFlights'),
-    ]
-  },
-  {
-    title: t('footer.destinations.title'),
-    links: [
-      t('footer.destinations.links.domestic'),
-      t('footer.destinations.links.international'),
-      t('footer.destinations.links.indirect'),
-      t('footer.destinations.links.holidays'),
-      t('footer.destinations.links.discoverSyria'),
-      t('footer.destinations.links.tourismPrograms'),
-      t('footer.destinations.links.familyPackages'),
-      t('footer.destinations.links.honeymoonPackages'),
-    ]
-  },
-  {
-    title: t('footer.loyaltyProgram.title'),
-    links: [
-      t('footer.loyaltyProgram.links.about'),
-      t('footer.loyaltyProgram.links.join'),
-      t('footer.loyaltyProgram.links.terms'),
-    ]
-  },
-  {
-    title: t('footer.travelExperience.title'),
-    links: [
-      t('footer.travelExperience.links.beforeTravel'),
-      t('footer.travelExperience.links.atAirport'),
-      t('footer.travelExperience.links.onBoard'),
-      t('footer.travelExperience.links.additionalServices'),
-    ]
-  },
-  {
-    title: t('footer.help.title'),
-    links: [
-      t('footer.help.links.contact'),
-      t('footer.help.links.inquiries'),
-      t('footer.help.links.salesOffices'),
-      t('footer.help.links.agentsWorldwide'),
-      t('footer.help.links.joinPartner'),
-      t('footer.help.links.faq'),
-    ]
-  }
-];
+    const sections = [
+        {
+            title: t('footer.aboutFlyCham.title'),
+            links: [
+                t('footer.aboutFlyCham.links.ourStory'),
+                t('footer.aboutFlyCham.links.ourMission'),
+                t('footer.aboutFlyCham.links.ourVision'),
+                t('footer.aboutFlyCham.links.ourValues'),
+                t('footer.aboutFlyCham.links.ourResponsibility'),
+                t('footer.aboutFlyCham.links.ourFleet'),
+                t('footer.aboutFlyCham.links.mediaCenter'),
+                t('footer.aboutFlyCham.links.chairmanMessage'),
+            ]
+        },
+        {
+            title: t('footer.bookFlights.title'),
+            links: [
+                t('footer.bookFlights.links.searchFlight'),
+                t('footer.bookFlights.links.flightSchedules'),
+                t('footer.bookFlights.links.hotelBooking'),
+                t('footer.bookFlights.links.carRental'),
+                t('footer.bookFlights.links.visaInfo'),
+                t('footer.bookFlights.links.groupTravel'),
+                t('footer.bookFlights.links.privateFlights'),
+            ]
+        },
+        {
+            title: t('footer.destinations.title'),
+            links: [
+                t('footer.destinations.links.domestic'),
+                t('footer.destinations.links.international'),
+                t('footer.destinations.links.indirect'),
+                t('footer.destinations.links.holidays'),
+                t('footer.destinations.links.discoverSyria'),
+                t('footer.destinations.links.tourismPrograms'),
+                t('footer.destinations.links.familyPackages'),
+                t('footer.destinations.links.honeymoonPackages'),
+            ]
+        },
+        {
+            title: t('footer.loyaltyProgram.title'),
+            links: [
+                t('footer.loyaltyProgram.links.about'),
+                t('footer.loyaltyProgram.links.join'),
+                t('footer.loyaltyProgram.links.terms'),
+            ]
+        },
+        {
+            title: t('footer.travelExperience.title'),
+            links: [
+                t('footer.travelExperience.links.beforeTravel'),
+                t('footer.travelExperience.links.atAirport'),
+                t('footer.travelExperience.links.onBoard'),
+                t('footer.travelExperience.links.additionalServices'),
+            ]
+        },
+        {
+            title: t('footer.help.title'),
+            links: [
+                t('footer.help.links.contact'),
+                t('footer.help.links.inquiries'),
+                t('footer.help.links.salesOffices'),
+                t('footer.help.links.agentsWorldwide'),
+                t('footer.help.links.joinPartner'),
+                t('footer.help.links.faq'),
+            ]
+        }
+    ];
 
 
     return (
@@ -193,11 +193,11 @@ const sections = [
 
                 {/* Footer Bottom */}
                 <div className="text-center md:text-start mt-10 border-t border-white/20 pt-4 flex flex-col md:flex-row justify-between text-xs text-white/70">
-                    <p>© All Rights Reserved. Fly Cham 2025</p>
+                    <p>© {t('appfooter.rights')} Fly Cham 2025</p>
                     <div className="flex gap-4 mt-2 md:mt-0 justify-center">
-                        <span>Site Map</span>
-                        <span>Privacy Policy</span>
-                        <span>Terms and Conditions</span>
+                        <span>{t('appfooter.siteMap')}</span>
+                        <span>{t('appfooter.privacy')}</span>
+                        <span>{t('appfooter.terms')}</span>
                     </div>
                 </div>
                 <Image

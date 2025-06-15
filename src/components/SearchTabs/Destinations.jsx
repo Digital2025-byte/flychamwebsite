@@ -7,9 +7,11 @@ import tabImage from '@/assets/images/tabImage.webp'; // Adjust path if needed
 import { useState } from "react";
 import useIsMobile from "@/hooks/useIsMobile";
 import useCities from "@/hooks/useCities";
+import { useTranslation } from "react-i18next";
 
 const Destinations = ({ formik, setActiveTab }) => {
     const cities = useCities();
+  const { t } = useTranslation();
 
   const [search, setSearch] = useState('');
   const isMobile = useIsMobile()
@@ -18,30 +20,16 @@ const Destinations = ({ formik, setActiveTab }) => {
     `${city.name} ${city.label}`.toLowerCase().includes(search.toLowerCase())
   );
 
-  const suggestions = [
-    {
-      city: 'Syria, Damascus',
-      airport: 'Damascus International airport',
-    },
-    {
-      city: 'Syria, Damascus',
-      airport: 'Damascus International airport',
-    },
-    {
-      city: 'Syria, Damascus',
-      airport: 'Damascus International airport',
-    },
-  ];
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
       {/* Left Side */}
       <div className="space-y-4">
-        <label htmlFor="origin" className="block text-xl font-semibold">
-          Where are you Traveling To ?
+        <label htmlFor="origin" className="block text-xl font-semibold text-start">
+          {t('flyingStart.travelFrom')}
         </label>
         <input
           type="text"
-          placeholder="Enter airport or city"
+          placeholder={t('flyingStart.placeHolder')}
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           className="w-full border-2 rounded-md px-4 py-2 transition focus:outline-none"
@@ -56,7 +44,7 @@ const Destinations = ({ formik, setActiveTab }) => {
         {/* Suggestions */}
         {/* {search && ( */}
           <div className="space-y-3 max-h-60 overflow-y-auto pr-1 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none']">
-            <h2 className="text-lg font-medium">Matching Airports</h2>
+            <h2 className="text-lg font-medium text-start">{t('flyingStart.matchingAirports')}</h2>
             {filteredCities.length > 0 ? (
               filteredCities.filter((c)=>c.value !==formik.values.source).map((item, index) => (
                 <div
@@ -76,10 +64,10 @@ const Destinations = ({ formik, setActiveTab }) => {
                   rounded-md px-4 py-2 cursor-pointer hover:bg-secondary-light hover:border-secondary-light`}               >
                   <div className="flex items-center justify-between">
                     <div>
-                      <div className="font-semibold">{item.name}</div>
+                      <div className="font-semibold text-start">{item.name}</div>
                       <div className={`
                                            ${formik.values.destination === item.value ? 'text-black' : 'text-gray-700'}
-                        text-sm 
+                        text-sm text-start
                         `}>{item.label}</div>
                     </div>
                     <div
@@ -92,7 +80,7 @@ const Destinations = ({ formik, setActiveTab }) => {
 
               ))
             ) : (
-              <div className="text-gray-500 italic">No matching results found.</div>
+              <div className="text-gray-500 italic text-start"> {t('flyingStart.noResults')}</div>
             )}
           </div>
         {/* )} */}

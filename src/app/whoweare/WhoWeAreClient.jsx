@@ -18,35 +18,35 @@ import { useTranslation } from 'react-i18next';
 const WhoWeAreClient = () => {
     const { t } = useTranslation();
 
-const cardData = [
-    {
-        img: cardimg1.src,
-        title: t('whoweare.cards.community.title'),
-        desc: t('whoweare.cards.community.desc'),
-    },
-    {
-        img: cardimg2.src,
-        title: t('whoweare.cards.passengers.title'),
-        desc: t('whoweare.cards.passengers.desc'),
-        isReversed: true,
-    },
-    {
-        img: cardimg3.src,
-        title: t('whoweare.cards.syrianCommunity.title'),
-        desc: t('whoweare.cards.syrianCommunity.desc'),
-    },
-    {
-        img: cardimg4.src,
-        title: t('whoweare.cards.training.title'),
-        desc: t('whoweare.cards.training.desc'),
-        isReversed: true,
-    },
-    {
-        img: cardimg5.src,
-        title: t('whoweare.cards.futureLeaders.title'),
-        desc: t('whoweare.cards.futureLeaders.desc'),
-    },
-];
+    const cardData = [
+        {
+            img: cardimg1.src,
+            title: t('whoweare.cards.community.title'),
+            desc: t('whoweare.cards.community.desc'),
+        },
+        {
+            img: cardimg2.src,
+            title: t('whoweare.cards.passengers.title'),
+            desc: t('whoweare.cards.passengers.desc'),
+            isReversed: true,
+        },
+        {
+            img: cardimg3.src,
+            title: t('whoweare.cards.syrianCommunity.title'),
+            desc: t('whoweare.cards.syrianCommunity.desc'),
+        },
+        {
+            img: cardimg4.src,
+            title: t('whoweare.cards.training.title'),
+            desc: t('whoweare.cards.training.desc'),
+            isReversed: true,
+        },
+        {
+            img: cardimg5.src,
+            title: t('whoweare.cards.futureLeaders.title'),
+            desc: t('whoweare.cards.futureLeaders.desc'),
+        },
+    ];
     const FullScreenCard = ({ img, title, desc, isReversed, index }) => {
         return (
             <div className={`w-full h-screen flex flex-col ${isReversed ? `md:flex-row-reverse` : `md:flex-row`}`}>
@@ -202,7 +202,7 @@ const cardData = [
                                     boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
                                 }}
                             >
-{t('whoweare.button.discover')}                                <span className="text-lg"><CiDesktopMouse1 /></span>
+                                {t('whoweare.button.discover')}                                <span className="text-lg"><CiDesktopMouse1 /></span>
                             </button>
                         </div>
                     </Reveal>
@@ -220,12 +220,12 @@ const cardData = [
                     <div className="pt-12 px-6 space-y-6 text-white">
                         <Reveal delay={0.1}>
                             <h1 className="text-[42px] font-semibold leading-tight break-words">
-{t('whoweare.hero.title')}                            </h1>
+                                {t('whoweare.hero.title')}                            </h1>
                         </Reveal>
 
                         <Reveal delay={0.2}>
                             <p className="text-[16px] font-medium leading-relaxed">
-{t('whoweare.hero.subtitle')}
+                                {t('whoweare.hero.subtitle')}
                             </p>
                         </Reveal>
                     </div>
@@ -233,13 +233,13 @@ const cardData = [
                     <div className="py-12 px-6 space-y-6">
                         <Reveal delay={0.3}>
                             <h2 className="text-[22px] font-bold text-white">
-{t('whoweare.middle.highlight')}                            </h2>
+                                {t('whoweare.middle.highlight')}                            </h2>
                         </Reveal>
 
                         <Reveal delay={0.4}>
                             <div className="text-white text-[15px] font-medium space-y-4">
                                 <p>
-{t('whoweare.middle.description')}                                </p>
+                                    {t('whoweare.middle.description')}                                </p>
                                 <button
                                     className="mx-auto flex items-center justify-center gap-2 text-white text-sm font-semibold px-5 py-2 rounded-md"
                                     style={{
@@ -247,7 +247,7 @@ const cardData = [
                                         boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
                                     }}
                                 >
-                                  {t('whoweare.button.discover')} <CiDesktopMouse1 className="text-lg" />
+                                    {t('whoweare.button.discover')} <CiDesktopMouse1 className="text-lg" />
                                 </button>
                             </div>
                         </Reveal>
@@ -260,11 +260,11 @@ const cardData = [
                 <div className="bg-white px-6 py-12 space-y-6">
                     <Reveal delay={0.1}>
                         <h1 className="text-[42px] text-[#2A2A2A] font-semibold leading-tight">
-{t('whoweare.responsibility.title')}                        </h1>
+                            {t('whoweare.responsibility.title')}                        </h1>
                     </Reveal>
                     <Reveal delay={0.2}>
                         <p className="text-[16px] text-[#2A2A2A] font-medium leading-relaxed">
-{t('whoweare.responsibility.description')}                        </p>
+                            {t('whoweare.responsibility.description')}                        </p>
                     </Reveal>
                 </div>
 
@@ -272,12 +272,12 @@ const cardData = [
                 <div className="bg-white px-6 pb-20 space-y-6">
                     <Reveal delay={0.2}>
                         <h2 className="text-[22px] font-bold text-[#2A2A2A]">
-{t('whoweare.bottom.statementTitle')}                        </h2>
+                            {t('whoweare.bottom.statementTitle')}                        </h2>
                     </Reveal>
                     <Reveal delay={0.3}>
                         <div className="text-[#2A2A2A] text-[15px] font-medium space-y-4">
                             <p>
-{t('whoweare.bottom.statementDescription')}                            </p>
+                                {t('whoweare.bottom.statementDescription')}                            </p>
                             <button
                                 className="mx-auto flex items-center justify-center gap-2 text-white text-sm font-semibold px-5 py-2 rounded-md"
                                 style={{
@@ -285,7 +285,7 @@ const cardData = [
                                     boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
                                 }}
                             >
-                               {t('whoweare.button.discover')} <CiDesktopMouse1 className="text-lg" />
+                                {t('whoweare.button.discover')} <CiDesktopMouse1 className="text-lg" />
                             </button>
                         </div>
                     </Reveal>

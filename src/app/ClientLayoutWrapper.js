@@ -34,7 +34,7 @@ export default function ClientLayoutWrapper({ children }) {
         { label: t('nav.travelAgent'), icon: <BsFillSuitcaseLgFill />, link: '/travel-agent' },
         { label: t('nav.holiday'), icon: <MdBeachAccess /> },
         { label: t('nav.loyaltyProgram'), icon: <FaGift /> },
-        { label: t('nav.aboutUs'), icon: <MdInfoOutline />, link: '/about' },
+        { label: t('nav.aboutUs'), icon: <MdInfoOutline /> },
         { label: t('nav.support'), icon: <BiSupport />, link: '/contact' },
     ];
 

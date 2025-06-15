@@ -41,8 +41,8 @@ export default function SearchTabs({ onClose, activeTab, setActiveTab, tabs, for
                                 <div
                                     className={` flex flex-col justify-center px-4 py-4 w-2/3 transition-colors duration-500 ${isSelected ? 'bg-secondary' : 'bg-gray-600'}`}
                                 >
-                                    <span className="text-white text-sm font-semibold">{tab.title}</span>
-                                    <span className="text-white/70 text-xs">{tab.subtitle}</span>
+                                    <span className="text-white text-sm font-semibold text-start">{tab.title}</span>
+                                    <span className="text-white/70 text-xs text-start">{tab.subtitle}</span>
                                 </div>
                             </div>
 

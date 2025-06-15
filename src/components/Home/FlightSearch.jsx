@@ -13,33 +13,16 @@ const FlightSearch = ({ isHome }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [activeTap, setActiveTap] = useState(0);
     const { t } = useTranslation()
-    const isArabic = useIsArabic()
-    const cardVariants = {
-        initial: { opacity: 0, y: 20 },
-        animate: { opacity: 1, y: 0 },
-        exit: { opacity: 0, y: -20 },
-    };
 
-    // Airport data
-    const damascusAirport = {
-        code: "DAM, Syria",
-        name: "Damascus International Airport"
-    };
-
-    const kuwaitAirport = {
-        code: "KWI, Kuwait",
-        name: "Kuwait International Airport"
-    };
+    const handleModalOpen = () => {
+        setIsModalOpen(true)
+    }
 
     const fromCard = (
         <motion.div
             layout
             className="cursor-pointer bg-main text-white rounded-2xl p-4 flex-1 w-full"
-            onClick={() => {
-                if (!isArabic) {
-                    setIsModalOpen(true)
-                }
-            }}
+            onClick={handleModalOpen}
         >
             <div className="flex items-center gap-2 mb-1 ">
                 <FaLocationArrow className="text-sm" />
@@ -58,11 +41,7 @@ const FlightSearch = ({ isHome }) => {
         <motion.div
             layout
             className=" cursor-pointer bg-secondary text-white rounded-2xl p-4 flex-1  w-full"
-            onClick={() => {
-                if (!isArabic) {
-                    setIsModalOpen(true)
-                }
-            }}        >
+            onClick={handleModalOpen}        >
             <div className="flex items-center gap-2 mb-1">
                 <FaLocationArrow className="text-sm" />
                 <span className="text-xs uppercase tracking-wider text-white">{t('flightSearch.to')}</span>
