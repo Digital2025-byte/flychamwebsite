@@ -42,7 +42,7 @@ export default function ClientLayoutWrapper({ children }) {
 
         <>
 
-                <ZohoSalesIQ />
+            <ZohoSalesIQ />
             {/* ✅ GTM Script */}
             <GTMScript />
 

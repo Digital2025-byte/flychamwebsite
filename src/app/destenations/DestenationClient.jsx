@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Slider from 'react-slick';
 import { FaMapMarkerAlt } from 'react-icons/fa';
@@ -19,20 +19,25 @@ import turkey from '@/assets/images/Destenations/turkey.webp';
 import kuwait from '@/assets/images/Destenations/kuwait.webp';
 import { useTranslation } from 'react-i18next';
 import useIsArabic from '@/hooks/useIsArabic';
+
+
 const DestinationCard = ({ name, description, isArabic }) => (
-  <div
-    className={`group bg-white rounded-xl p-5 shadow-lg w-full max-w-xs text-black transition hover:shadow-2xl hover:-translate-y-1 ${
-      isArabic ? 'text-right' : 'text-left'
-    }`}
-    dir={isArabic ? 'rtl' : 'ltr'}
-  >
-    <div className={`flex items-center gap-2 mb-2 flex-row`}>
-      <FaMapMarkerAlt className="text-black" />
-      <h3 className="text-[28px] font-semibold">{name}</h3>
+    <div
+        className={`group bg-white rounded-xl p-5 shadow-lg w-full max-w-xs text-black transition hover:shadow-2xl hover:-translate-y-1 flex flex-col justify-between h-auto ${isArabic ? 'text-right' : 'text-left'}`}
+        dir={isArabic ? 'rtl' : 'ltr'}
+    >
+        <div>
+            <div className="flex items-center gap-2 mb-2">
+                <FaMapMarkerAlt className="text-black" />
+                <h3 className="text-[28px] font-semibold whitespace-nowrap">{name}</h3>
+            </div>
+            <p className="text-[12.6px] font-normal">{description}</p>
+        </div>
     </div>
-    <p className="text-[12.6px] font-normal">{description}</p>
-  </div>
 );
+
+
+
 
 
 // Arrows
@@ -56,6 +61,10 @@ const DestenationClient = () => {
             background: uaeImage,
             cities: [
                 {
+                    name: t('destinations.uae.sharjah.name'),
+                    description: t('destinations.uae.sharjah.description'),
+                },
+                {
                     name: t('destinations.uae.dubai.name'),
                     description: t('destinations.uae.dubai.description'),
                 },
@@ -63,10 +72,7 @@ const DestenationClient = () => {
                     name: t('destinations.uae.abudhabi.name'),
                     description: t('destinations.uae.abudhabi.description'),
                 },
-                {
-                    name: t('destinations.uae.sharjah.name'),
-                    description: t('destinations.uae.sharjah.description'),
-                },
+
             ],
         },
         {
@@ -121,15 +127,18 @@ const DestenationClient = () => {
 
     const sliderRef = useRef();
 
-    const settings = {
-        infinite: true,
-        speed: 500,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        autoplay: true,
-        arrows: false, // Disable default arrows
+const settings = {
+    infinite: true,
+    speed: 2000, // 1 second transition
+    cssEase: 'ease-in-out',
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 3000, // wait 3s before next slide
+    pauseOnHover: false,
+    arrows: false,
+};
 
-    };
     const handleClickBookNow = () => {
         const widget = document.getElementById("search-widget");
         if (widget) {
@@ -139,7 +148,7 @@ const DestenationClient = () => {
 
     return (
         <>
-            <div className=" relative w-full min-h-screen ">
+            <div className=" relative  min-h-screen ">
                 <Slider {...settings} ref={sliderRef}>
                     {destinations.map((destination, index) => (
                         <div key={index}>
@@ -207,13 +216,13 @@ const DestenationClient = () => {
                                             </button>
                                         </div>
 
-                                        <div className="flex flex-col md:flex-row gap-6 w-full justify-center items-center lg:items-stretch">
+                                        <div className={`flex flex-col md:flex-row ${isArabic ? 'md:flex-row-reverse' : ''} gap-6 w-full justify-center items-center md:items-stretch`}>
                                             {destination.cities.map((city) => (
                                                 <DestinationCard
                                                     key={city.name}
                                                     name={city.name}
                                                     description={city.description}
-                                                    isArabic={ isArabic}
+                                                    isArabic={isArabic}
                                                 />
                                             ))}
                                         </div>

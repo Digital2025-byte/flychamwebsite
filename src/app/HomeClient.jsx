@@ -25,6 +25,7 @@ const HomeClient = () => {
   const handleNavigate = () => {
     router.push('/destenations')
   }
+
   return (
     <div className="transition-all duration-700">
 

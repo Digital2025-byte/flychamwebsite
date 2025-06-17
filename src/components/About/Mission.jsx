@@ -17,10 +17,10 @@ const Mission = () => {
         {/* Heading + Side Text */}
         <div className="flex flex-col lg:flex-row justify-between mb-6 w-full relative lg:absolute top-0 lg:top-[50px] z-10">
           <h2 className="text-[32px] sm:text-[40px] lg:text-[50px] leading-[1.2] font-semibold text-center lg:text-left">
-{t("mission.heading")}
+            {t("mission.heading")}
           </h2>
           <p className="text-[#133343] text-[14px] font-semibold tracking-[0.98px] font-montserrat text-center lg:text-right mt-4 lg:mt-0">
-   {t("mission.sideText")}
+            {t("mission.sideText")}
           </p>
         </div>
 
@@ -64,7 +64,7 @@ const Mission = () => {
 
         {/* Paragraph */}
         <p className="mt-6 w-full lg:max-w-2xl text-[#133343] text-[16px] md:text-[18px] lg:text-[20px] font-[600] tracking-[0.98px] font-montserrat leading-relaxed">
-   {t("mission.paragraph")}
+          {t("mission.paragraph")}
         </p>
       </div>
     </div>

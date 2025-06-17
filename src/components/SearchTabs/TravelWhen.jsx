@@ -63,18 +63,19 @@ const TravelWhen = ({ formik, activeTap }) => {
           pagedNavigation
           // showOutsideDays
           locale={isArabic ? arSA : enUS}
+  disabled={{ before: new Date() }} // ✅ Disable past days
 
           mode={activeTap === 0 ? 'single' : 'range'}
           selected={selected}
           onSelect={setSelected}
           className="flex justify-center"
-classNames={{
-  today: 'border-main',
-  selected: `bg-main border-main text-white ${!activeTap && 'rounded'}`,
-  range_middle: 'bg-main-light text-black',
-  range_start: isArabic ? 'rounded-r-xl' : 'rounded-l-xl',
-  range_end: isArabic ? 'rounded-l-xl' : 'rounded-r-xl',
-}}
+          classNames={{
+            today: 'border-main',
+            selected: `bg-main border-main text-white ${!activeTap && 'rounded'}`,
+            range_middle: 'bg-main-light text-black',
+            range_start: isArabic ? 'rounded-r-xl' : 'rounded-l-xl',
+            range_end: isArabic ? 'rounded-l-xl' : 'rounded-r-xl',
+          }}
 
         />
       </div>

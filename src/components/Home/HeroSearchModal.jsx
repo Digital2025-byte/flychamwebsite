@@ -90,9 +90,10 @@ export default function HeroSearchModal({ isOpen, onClose, activeTap }) {
             // https://reservations.chamwings.com/service-app/ibe/reservation.html#/fare/en/USD/SY/DAM/KWI/11-06-2025/12-06-2025/1/0/0/Y///
             // Build URL
             const searchUrl = `https://reservations.flycham.com/service-app/ibe/reservation.html#/fare/en/USD/SY/${source}/${destination}/${formattedDeparture}/${formattedReturn}/${adults}/${children}/${infants}/Y///`;
+            console.log('searchUrl', searchUrl);
 
             // Open in new tab
-            window.open(searchUrl, '_blank');
+            // window.open(searchUrl, '_blank');
         }
 
 
@@ -132,25 +133,25 @@ export default function HeroSearchModal({ isOpen, onClose, activeTap }) {
 
 
 
-function validateTabFields(activeTab, values, t) {
-  if (activeTab === 0 && !values.source) {
-    toast.error(t('validation.sourceTitle'), {
-      description: t('validation.sourceDescription'),
-      duration: 3000,
-    });
-    return false;
-  }
+    function validateTabFields(activeTab, values, t) {
+        if (activeTab === 0 && !values.source) {
+            toast.error(t('validation.sourceTitle'), {
+                description: t('validation.sourceDescription'),
+                duration: 3000,
+            });
+            return false;
+        }
 
-  if (activeTab === 1 && !values.destination) {
-    toast.error(t('validation.destinationTitle'), {
-      description: t('validation.destinationDescription'),
-      duration: 3000,
-    });
-    return false;
-  }
+        if (activeTab === 1 && !values.destination) {
+            toast.error(t('validation.destinationTitle'), {
+                description: t('validation.destinationDescription'),
+                duration: 3000,
+            });
+            return false;
+        }
 
-  return true;
-}
+        return true;
+    }
 
     if (!hasMounted) return null;
 
@@ -216,7 +217,7 @@ function validateTabFields(activeTab, values, t) {
                                         variant="contained"
                                         text={activeTab === tabs.length - 1 ? t('Finish') : t('Next')}
                                         onClick={() => {
-                                            if (!validateTabFields(activeTab, formik.values,t)) return;
+                                            if (!validateTabFields(activeTab, formik.values, t)) return;
 
                                             activeTab === tabs.length - 1
                                                 ? formik.handleSubmit()

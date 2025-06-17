@@ -4,11 +4,11 @@ export const metadata = {
   title: 'Our Mission – Fly Cham',
   description: 'Learn about Fly Cham’s mission, vision, and core values that guide our journey in aviation.',
   icons: {
-    icon: '/tabicon.svg', 
+    icon: '/tabicon.svg',
   },
-      openGraph: {
-  title: 'Our Mission – Fly Cham',
-  description: 'Learn about Fly Cham’s mission, vision, and core values that guide our journey in aviation.',
+  openGraph: {
+    title: 'Our Mission – Fly Cham',
+    description: 'Learn about Fly Cham’s mission, vision, and core values that guide our journey in aviation.',
     images: [
       {
         url: 'https://flycham.com/logo.jpg',

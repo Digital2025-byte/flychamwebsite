@@ -41,15 +41,15 @@ const SideBar = ({ navItems }) => {
 
     const handleArrowClick = () => {
         if (isOpen) {
-            // Closing via arrow - enable hover behavior
-            setIsOpen(false)
-            setIsManuallyControlled(true)
+            setIsOpen(false);
+            setIsManuallyControlled(true);
         } else {
-            // Opening via arrow - disable hover behavior (return to default)
-            setIsOpen(true)
-            setIsManuallyControlled(false)
+            setIsOpen(true);
+            setIsManuallyControlled(false);
         }
-    }
+
+
+    };
 
     return (
         <div
@@ -67,16 +67,20 @@ const SideBar = ({ navItems }) => {
 
                 <div
                     onClick={handleArrowClick}
-                    className={`absolute top-[30px] ${isArabic ? 'left-[-10px]' : 'right-[-10px]'}  cursor-pointer transition-transform duration-700`}
+                    className={`absolute top-[30px] ${isArabic ? 'left-[-10px]' : 'right-[-10px]'} cursor-pointer transition-transform duration-700`}
                 >
                     <Image
                         src={arrow}
                         alt="Fly Cham arrow"
                         width={20}
                         height={20}
-                        className={`${!isOpen ? 'rotate-180' : ''} transition-transform duration-300`}
+                        className={`transition-transform duration-300 ${!isArabic
+                            ? isOpen ? '' : 'rotate-180' // Rotate when closed (Arabic)
+                            : isOpen ? 'rotate-180' : '' // Rotate when closed (English)
+                            }`}
                     />
                 </div>
+
 
                 <div className="absolute bottom-0 left-0 w-full overflow-hidden rounded-br-[16px]">
                     <Image
