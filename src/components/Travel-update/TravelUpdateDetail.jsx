@@ -34,6 +34,24 @@ export const TravelUpdateDetail = () => {
                 </div>
               </div>
             </li>
+            <li className="flex items-start gap-3">
+              <AirplaneTilt size={20} color="#054E72" className="mt-1" />
+              <div>
+                <div>{t('travelUpdate.suspendedRoute3')}</div>
+                <div className="text-[#5F5F5C] text-[15px] mt-1 ml-5">
+                  {t('travelUpdate.suspendedRoute3Date')}
+                </div>
+              </div>
+            </li>
+            <li className="flex items-start gap-3">
+              <AirplaneTilt size={20} color="#054E72" className="mt-1" />
+              <div>
+                <div>{t('travelUpdate.suspendedRoute4')}</div>
+                <div className="text-[#5F5F5C] text-[15px] mt-1 ml-5">
+                  {t('travelUpdate.suspendedRoute4Date')}
+                </div>
+              </div>
+            </li>
           </ul>
         </div>
 
@@ -50,6 +68,10 @@ export const TravelUpdateDetail = () => {
       </div>
     );
   };
+
+
+
+
 
   const FlexibleOptionsNotice = () => {
     const options = t('travelUpdate.flexibleOptions', { returnObjects: true });

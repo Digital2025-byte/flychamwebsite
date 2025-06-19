@@ -429,7 +429,7 @@
 
   "alert": {
     "important": "Important:",
-    "message": "Flight suspensions-Jordan, Iran canceled until 20 June",
+    "message": "Flights to/from UAE, Kuwait, Oman, Baghdad, and Erbil are temporarily suspended.",
     "learn_more": "learn more"
   },
 "travelUpdate": {
@@ -447,7 +447,7 @@
 
   "decisionNotice": "This decision has been made due to ongoing operational constraints and regional considerations. We apologize for any inconvenience this may cause and are committed to supporting all affected passengers.",
 
-  "supportNotice": "For assistance with your existing reservations, please visit Manage Your Booking or contact our support team.",
+  "supportNotice": "For assistance with your existing reservations, please visit the Manage Your Booking section or contact our support team.",
 
   "overviewTitle": "Suspended Routes Overview",
   "suspendedRoutesTitle": "Fly Cham Routes",
@@ -465,7 +465,7 @@
   "suspendedRoute4Date": "Until and including Sunday 30 June 2025",
 
   "importantNoticeTitle": "Important Notice",
-  "importantNoticeText": "Customers connecting through suspended cities (UAE, Kuwait, Oman, Iraq) or holding final destinations in these countries will not be accepted for travel from any origin point until further notice.",
+  "importantNoticeText": "Customers connecting through suspended cities (UAE, Kuwait, Oman, Iraq), or holding final destinations in these countries, will not be accepted for travel from any origin point until further notice.",
 
   "whatYouNeedToKnow": "Passenger Support",
 
@@ -482,11 +482,12 @@
   "rebookingProcessText": "We are working closely with all concerned teams to provide the best possible assistance and will share updates as soon as they become available.",
 
   "flightStatusUpdatesTitle": "Flight Status Updates",
-  "flightStatusUpdatesText": "For assistance with your existing reservations, please visit Manage Your Booking or contact our support team.",
+  "flightStatusUpdatesText": "For assistance with your existing reservations, please visit the Manage Your Booking section or contact our support team.",
 
   "buttonCheckStatus": "Check Flight Status",
   "buttonManageBooking": "Manage Your Booking",
   "buttonContactUs": "Contact Us"
 }
+
 
 }
