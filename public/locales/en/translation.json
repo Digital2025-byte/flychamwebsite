@@ -115,9 +115,8 @@
   },
   "intro": {
     "title": "About Fly Cham",
-    "paragraph1": "With our launch, our goal has been to achieve excellence in every flight, ensuring comfort and safety, and connecting travelers to their favorite destinations in a distinctive way.",
-    "paragraph2": "We are proud of our services and our team that always strives to meet passengers' satisfaction.",
-    "button": "Discover More"
+    "followUs": "Follow us on social media",
+    "orContactUs": "or contact us via call center"
   },
   "mission": {
     "heading": "Our Mission, Vision, and Value",
@@ -418,18 +417,76 @@
   "linkText": "Manage Your Booking",
   "moreText": "Morbi convallis convallis diam sit amet lacinia.",
   "buttonText": "Find more",
-  "travelCard": {
-    "updateLabel": "Update",
-    "lastUpdated": "Last updated: 15 June 2025, 06:38 Dubai (GMT+4)",
-    "title": "Flight suspensions - Iraq, Jordan, Lebanon, and Iran",
-    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus, ut interdum tellus elit sed risus. Maecenas eget condimentum velit, sit amet feugiat lectus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Praesent auctor purus luctus enim egestas, ac scelerisque ante pulvinar. Donec ut rhoncus ex. Suspendisse ac rhoncus nisl, eu tempor urna.",
-    "linkText": "Manage Your Booking",
-    "moreText": "Morbi convallis convallis diam sit amet lacinia.",
-    "buttonText": "Find more"
-  },
+"travelCard": {
+  "updateLabel": "Update",
+  "lastUpdated": "Last updated: 19 June 2025, 13:00 Dubai (GMT+4)",
+  "title": "Flight Suspensions – UAE, Kuwait, Muscat, and Iraq",
+  "description": "We regret to inform our passengers that all Fly Cham flights to and from the following destinations are currently suspended until further notice: United Arab Emirates: Sharjah, Dubai, Abu Dhabi — Kuwait — Oman: Muscat — Iraq: Baghdad, Erbil. This decision has been made due to ongoing operational constraints and regional considerations. We apologize for any inconvenience this may cause and are committed to supporting all affected passengers.",
+  "linkText": "Manage Your Booking",
+  "moreText": "For assistance with your existing reservations, please visit Manage Your Booking or contact our support team.",
+  "buttonText": "Learn more"
+},
+
   "alert": {
     "important": "Important:",
     "message": "Flight suspensions-Jordan, Iran canceled until 20 June",
     "learn_more": "learn more"
-  }
+  },
+"travelUpdate": {
+  "pageTitle": "Flight Suspensions – UAE, Kuwait, Muscat, and Iraq",
+  "lastUpdated": "Last updated: 19 June 2025, 13:00 Dubai (GMT+4)",
+
+  "introText": "We regret to inform our passengers that all Fly Cham flights to and from the following destinations are currently suspended until further notice:",
+
+  "suspendedDestinations": [
+    "United Arab Emirates: Sharjah, Dubai, Abu Dhabi",
+    "Kuwait",
+    "Oman: Muscat",
+    "Iraq: Baghdad, Erbil"
+  ],
+
+  "decisionNotice": "This decision has been made due to ongoing operational constraints and regional considerations. We apologize for any inconvenience this may cause and are committed to supporting all affected passengers.",
+
+  "supportNotice": "For assistance with your existing reservations, please visit Manage Your Booking or contact our support team.",
+
+  "overviewTitle": "Suspended Routes Overview",
+  "suspendedRoutesTitle": "Fly Cham Routes",
+
+  "suspendedRoute1": "United Arab Emirates (Sharjah, Dubai, Abu Dhabi)",
+  "suspendedRoute1Date": "Until and including Sunday 30 June 2025",
+
+  "suspendedRoute2": "Kuwait",
+  "suspendedRoute2Date": "Until and including Sunday 30 June 2025",
+
+  "suspendedRoute3": "Oman (Muscat)",
+  "suspendedRoute3Date": "Until and including Sunday 30 June 2025",
+
+  "suspendedRoute4": "Iraq (Baghdad and Erbil)",
+  "suspendedRoute4Date": "Until and including Sunday 30 June 2025",
+
+  "importantNoticeTitle": "Important Notice",
+  "importantNoticeText": "Customers connecting through suspended cities (UAE, Kuwait, Oman, Iraq) or holding final destinations in these countries will not be accepted for travel from any origin point until further notice.",
+
+  "whatYouNeedToKnow": "Passenger Support",
+
+  "flexibleOptionsIntro": "We understand that these suspensions may affect your travel plans. Passengers holding bookings to the mentioned destinations are kindly advised to review available options by contacting our support team or visiting the Manage Your Booking section.",
+
+  "flexibleOptions": [
+    "Possible changes to travel dates",
+    "Potential rerouting options within the same region",
+    "Guidance on refunds or credit usage where applicable",
+    "Support for connecting itineraries impacted by these changes"
+  ],
+
+  "rebookingProcessTitle": "Rebooking Process",
+  "rebookingProcessText": "We are working closely with all concerned teams to provide the best possible assistance and will share updates as soon as they become available.",
+
+  "flightStatusUpdatesTitle": "Flight Status Updates",
+  "flightStatusUpdatesText": "For assistance with your existing reservations, please visit Manage Your Booking or contact our support team.",
+
+  "buttonCheckStatus": "Check Flight Status",
+  "buttonManageBooking": "Manage Your Booking",
+  "buttonContactUs": "Contact Us"
+}
+
 }

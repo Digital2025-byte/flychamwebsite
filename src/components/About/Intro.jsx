@@ -4,6 +4,8 @@ import Image from 'next/image';
 import bg from '@/assets/images/about/bg.webp';
 import { CiDesktopMouse1 } from 'react-icons/ci';
 import { useTranslation } from 'react-i18next';
+import { FaFacebookF, FaInstagram, FaLinkedinIn, FaTwitter, FaWhatsapp, FaXTwitter, FaYoutube } from 'react-icons/fa6';
+import { PiThreadsLogo } from 'react-icons/pi';
 
 const Intro = ({ scrollToNext }) => {
   const { t } = useTranslation()
@@ -44,19 +46,60 @@ const Intro = ({ scrollToNext }) => {
           <div className="w-24 sm:w-32 h-0.5 bg-gradient-to-r from-transparent via-white/60 to-transparent mx-auto"></div>
 
           {/* Subtitle/Description - Better hierarchy */}
-          <div className="space-y-4 sm:space-y-6">
-            <p className="max-w-3xl mx-auto text-white/90 text-base sm:text-lg md:text-xl lg:text-xl leading-relaxed sm:leading-relaxed md:leading-relaxed font-light backdrop-blur-sm bg-black/10 rounded-2xl p-4 sm:p-6 lg:p-8 border border-white/10">
-              {t("intro.paragraph1")
-              }
-            </p>
+{/* Contact / Social Links */}
+<div className="flex flex-col items-center justify-center space-y-3 sm:space-y-4 text-center">
+  <p className="text-white/80 text-base sm:text-lg font-light">
+    {t("intro.followUs")} {/* Example: "Follow us on social media" */}
+  </p>
+<div className="flex justify-center flex-wrap gap-3 sm:gap-5 pt-2">
+  {[
+    {
+      icon: <PiThreadsLogo size={20} />,
+      url: 'https://www.threads.com/@fly.cham',
+    },
+    {
+      icon: <FaInstagram size={20} />,
+      url: 'https://www.instagram.com/fly.cham/',
+    },
+    {
+      icon: <FaFacebookF size={20} />,
+      url: 'https://www.facebook.com/people/%D9%81%D9%84%D8%A7%D9%8A-%D8%B4%D8%A7%D9%85-Fly-Cham/61575817032233/',
+    },
+    {
+      icon: <FaLinkedinIn size={20} />,
+      url: 'https://www.linkedin.com/company/fly-cham/',
+    },
+    {
+      icon: <FaXTwitter size={20} />,
+      url: 'https://x.com/fly_cham',
+    },
+    {
+      icon: <FaWhatsapp size={20} />,
+      url: 'https://wa.me/97141234567',
+    },
+  ].map((item, index) => (
+    <div
+      key={index}
+      onClick={() => window.open(item.url, '_blank')}
+      className="cursor-pointer w-10 h-10 flex items-center justify-center rounded-full border border-[#D6B680] text-[#D6B680] hover:opacity-80 transition"
+    >
+      {item.icon}
+    </div>
+  ))}
+</div>
+  <p className="text-white/80 text-base sm:text-lg font-light">
+    {t("intro.orContactUs")} {/* Example: "or contact us via call center" */}
+  </p>
 
-            <p className="max-w-2xl mx-auto text-white/70 text-sm sm:text-base md:text-m font-light">
-              {t("intro.paragraph2")
-              }            </p>
-          </div>
+  <p dir='ltr' className="text-white text-lg sm:text-xl font-semibold">
+    +971 4 123 4567
+  </p>
+
+
+</div>
 
           {/* Modern CTA Button */}
-          <div className="pt-4 sm:pt-6 lg:pt-8">
+          {/* <div className="pt-4 sm:pt-6 lg:pt-8">
             <button
               onClick={scrollToNext}
               className="group relative inline-flex items-center justify-center gap-3 text-white text-sm sm:text-base font-medium px-8 sm:px-10 py-3 sm:py-4 rounded-full transition-all duration-500 hover:scale-105 transform hover:-translate-y-1 backdrop-blur-md border border-white/20 hover:border-white/40 shadow-2xl hover:shadow-blue-500/25"
@@ -68,10 +111,9 @@ const Intro = ({ scrollToNext }) => {
               }</span>
               <CiDesktopMouse1 className="text-lg sm:text-xl transition-transform duration-300 group-hover:translate-y-1" />
 
-              {/* Button glow effect */}
               <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-600/20 to-blue-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"></div>
             </button>
-          </div>
+          </div> */}
         </div>
 
         {/* Scroll Indicator */}

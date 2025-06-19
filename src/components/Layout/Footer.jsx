@@ -12,8 +12,10 @@ import {
 import { FaXTwitter } from "react-icons/fa6";
 import pattern from '@/assets/images/pattern.webp';
 import { useTranslation } from 'react-i18next';
+import useIsArabic from '@/hooks/useIsArabic';
 const Footer = () => {
     const { t } = useTranslation();
+    const isArabic = useIsArabic()
 
     const sections = [
         {
@@ -203,7 +205,10 @@ const Footer = () => {
                 <Image
                     src={pattern}
                     alt="Background Pattern"
-                    className="absolute opacity-30 bottom-0 right-0 w-[280px] md:w-[400px] pointer-events-none select-none z-0"
+                    className={
+                        ` ${isArabic ? '' : 'rotate-270'}
+ absolute opacity-30 bottom-0 ${isArabic ? 'left-5' : 'right-5'} w-[280px] md:w-[400px] pointer-events-none select-none z-0`
+                    }
                     aria-hidden="true"
                 />
             </footer>

@@ -1,5 +1,5 @@
 import React from 'react';
-import bg1 from '@/assets/images/travel-update/bg1.png';
+import bg1 from '@/assets/images/travel-update/bg1.webp';
 import Hero from '@/components/Travel-update/Hero';
 import TravelCard from '@/components/Travel-update/TravelCard';
 import { TravelUpdateDetail } from '@/components/Travel-update/TravelUpdateDetail';
@@ -57,7 +57,7 @@ const Page = ({ params }) => {
       />
 
       <div className="w-[90%] md:w-[80%] mx-auto px-2 py-4">
-    <TravelUpdateDetail />
+        <TravelUpdateDetail />
       </div>
     </>
   );

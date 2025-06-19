@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import bg1 from '@/assets/images/travel-update/bg1.png';
+import bg1 from '@/assets/images/travel-update/bg1.webp';
 import { useTranslation } from 'react-i18next';
 import TravelCard from '@/components/Travel-update/TravelCard';
 import Hero from '@/components/Travel-update/Hero';

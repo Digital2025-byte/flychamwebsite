@@ -64,7 +64,7 @@ const Hero = ({ slides, isNavigationBtns, title, subTitle, objectFit = 'cover', 
 
       {/* Center Text */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-center z-10 max-w-[90vw] px-4">
-        <h2 className="text-[clamp(1.5rem,5vw,3rem)] font-bold mb-4 leading-tight">{title}</h2>
+        <h2 className="text-[clamp(1.5rem,5vw,3rem)] font-bold mb-4 leading-tight">{t("travelUpdate.pageTitle")}</h2>
         <h1 className="text-[clamp(1.2rem,4vw,2rem)] font-black leading-snug">{subTitle}</h1>
       </div>
 
