@@ -67,7 +67,7 @@ const SideBar = ({ navItems }) => {
 
                 <div
                     onClick={handleArrowClick}
-                    className={`absolute top-[30px] ${isArabic ? 'left-[-10px]' : 'right-[-10px]'} cursor-pointer transition-transform duration-700`}
+                    className={`absolute top-[45px] ${isArabic ? 'left-[-10px]' : 'right-[-10px]'} cursor-pointer transition-transform duration-700`}
                 >
                     <Image
                         src={arrow}

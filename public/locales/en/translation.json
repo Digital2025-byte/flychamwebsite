@@ -426,5 +426,10 @@
     "linkText": "Manage Your Booking",
     "moreText": "Morbi convallis convallis diam sit amet lacinia.",
     "buttonText": "Find more"
+  },
+  "alert": {
+    "important": "Important:",
+    "message": "Flight suspensions-Jordan, Iran canceled until 20 June",
+    "learn_more": "learn more"
   }
 }

@@ -21,6 +21,7 @@ import Footer from "@/components/Layout/Footer";
 import { useParams, usePathname } from "next/navigation";
 import useIsMobile from "@/hooks/useIsMobile";
 import useIsArabic from "@/hooks/useIsArabic";
+import ImportantAlert from "@/components/Ui/Alert";
 
 
 export default function ClientLayoutWrapper({ children }) {
@@ -72,7 +73,7 @@ export default function ClientLayoutWrapper({ children }) {
 
                     {/* Main Content */}
                     <main className="flex-1 w-[100%] h-screen overflow-y-auto bg-white  ">
-
+                
                         {children}
                         {(pathname !== '/about' && pathname !== '/Mission') && <Footer />}
 
