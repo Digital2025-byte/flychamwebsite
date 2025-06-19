@@ -38,8 +38,8 @@ export default function AboutFlyChamSection() {
         {cards.map((card, index) => (
           <div
             key={index}
-            onClick={() => router.push(`/${card.link}`)}
-            className="relative cursor-pointer overflow-hidden rounded-2xl shadow-md transition duration-300 hover:shadow-xl hover:-translate-y-1 h-[300px] flex flex-col justify-end"
+            // onClick={() => router.push(`/${card.link}`)}
+            className="relative overflow-hidden rounded-2xl shadow-md transition duration-300 hover:shadow-xl hover:-translate-y-1 h-[300px] flex flex-col justify-end"
           >
             <div className="relative w-full h-full">
               <Image

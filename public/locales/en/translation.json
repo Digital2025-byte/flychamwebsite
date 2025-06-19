@@ -123,7 +123,7 @@
     "heading": "Our Mission, Vision, and Value",
     "sideText": "Unique experience that reflects our values of comfort and quality toward a future full of excellence.",
     "paragraph": "Our commitment goes beyond the sky, as we seek to build sustainable and strong ties with our travelers and provide innovative services.",
-     "sections": {
+    "sections": {
       "mission": {
         "title": "Our Mission",
         "description": "Our mission is to deliver a trusted, seamless, and memorable flight experience for every passenger while providing efficient and reliable airline services across our expanding network of domestic and regional flight destinations. We are committed to raising the bar for the region's aviation sector by ensuring operational safety and security on every flight."
@@ -380,7 +380,7 @@
       "subtitle": "Check Date"
     }
   },
-   "guestsTitle": "Guest's",
+  "guestsTitle": "Guest's",
   "labels": {
     "adults": "Adults",
     "children": "Children",
@@ -398,19 +398,33 @@
   },
   "promoTitle": "Promo coupon",
   "promoPlaceholder": "Enter Coupon Here",
-    "validation": {
+  "validation": {
     "sourceTitle": "Please select a departure city.",
     "sourceDescription": "You must choose a source before continuing.",
     "destinationTitle": "Missing destination",
     "destinationDescription": "Please select your arrival city before continuing."
   },
-    "appfooter": {
+  "appfooter": {
     "rights": "All Rights Reserved.",
     "siteMap": "Site Map",
     "privacy": "Privacy Policy",
     "terms": "Terms and Conditions"
+  },
+  "travelsliderTitle": "Travel Updates",
+  "updateLabel": "Update",
+  "lastUpdated": "Last updated: 15 June 2025, 06:38 Dubai (GMT+4)",
+  "title": "Flight suspensions - Iraq, Jordan, Lebanon, and Iran",
+  "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus, ut interdum tellus elit sed risus. Maecenas eget condimentum velit, sit amet feugiat lectus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Praesent auctor purus luctus enim egestas, ac scelerisque ante pulvinar. Donec ut rhoncus ex. Suspendisse ac rhoncus nisl, eu tempor urna.",
+  "linkText": "Manage Your Booking",
+  "moreText": "Morbi convallis convallis diam sit amet lacinia.",
+  "buttonText": "Find more",
+  "travelCard": {
+    "updateLabel": "Update",
+    "lastUpdated": "Last updated: 15 June 2025, 06:38 Dubai (GMT+4)",
+    "title": "Flight suspensions - Iraq, Jordan, Lebanon, and Iran",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus, ut interdum tellus elit sed risus. Maecenas eget condimentum velit, sit amet feugiat lectus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Praesent auctor purus luctus enim egestas, ac scelerisque ante pulvinar. Donec ut rhoncus ex. Suspendisse ac rhoncus nisl, eu tempor urna.",
+    "linkText": "Manage Your Booking",
+    "moreText": "Morbi convallis convallis diam sit amet lacinia.",
+    "buttonText": "Find more"
   }
-  
-
-  
 }

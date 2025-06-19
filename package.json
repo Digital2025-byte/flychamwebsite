@@ -19,6 +19,7 @@
     "keen-slider": "^6.8.6",
     "locomotive-scroll": "^4.1.4",
     "next": "^15.3.3",
+    "phosphor-react": "^1.4.1",
     "react": "^19.1.0",
     "react-date-range": "^2.0.1",
     "react-datepicker": "^8.4.0",

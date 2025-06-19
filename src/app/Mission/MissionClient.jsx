@@ -51,6 +51,23 @@ const MissionClient = () => {
                 </div>
             ),
         },
+         {
+            id: "vision",
+            content: (
+                <div className=" z-10 h-auto md:h-full flex flex-col md:flex-row-reverse  items-center justify-center gap-1 md:gap-8">
+                    <img src={pattern2.src || pattern2} alt="pattern" className="absolute top-0 left-0  max-w-3xl lg:max-w-4xl z-0 opacity-70" />
+                    <div className="flex-1 z-10 py-6 md:py-10 px-6 md:px-12 lg:px-20 text-center">
+                        <h2 className="text-[#2A2A2A] text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-4 md:mb-6 leading-tight">{t('mission.sections.vision.title')}</h2>
+                        <p className="text-[#2A2A2A] text-sm sm:text-base md:text-lg lg:text-xl font-semibold leading-relaxed max-w-3xl mx-auto">
+                            {t('mission.sections.vision.description')}                    </p>
+                    </div>
+                    <div className=" flex-1  relative  flex items-center justify-center z-10">
+                        {/* <div className="absolute right-0 top-0 lg:top-[20%] w-[80%] h-[70%] bg-[#EFE9E1] rounded-tl-[40px] z-0"></div> */}
+                        <img src={hostess2.src || hostess2} alt="hostess" className="relative z-10 w-full max-w-xs md:max-w-xl lg:max-w-md xl:max-w-lg h-auto" />
+                    </div>
+                </div>
+            ),
+        },
         {
             id: "mission",
             content: (
@@ -68,23 +85,7 @@ const MissionClient = () => {
                 </div>
             ),
         },
-        {
-            id: "vision",
-            content: (
-                <div className=" z-10 h-auto md:h-full flex flex-col md:flex-row-reverse  items-center justify-center gap-1 md:gap-8">
-                    <img src={pattern2.src || pattern2} alt="pattern" className="absolute top-0 left-0  max-w-3xl lg:max-w-4xl z-0 opacity-70" />
-                    <div className="flex-1 z-10 py-6 md:py-10 px-6 md:px-12 lg:px-20 text-center">
-                        <h2 className="text-[#2A2A2A] text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-4 md:mb-6 leading-tight">{t('mission.sections.vision.title')}</h2>
-                        <p className="text-[#2A2A2A] text-sm sm:text-base md:text-lg lg:text-xl font-semibold leading-relaxed max-w-3xl mx-auto">
-                            {t('mission.sections.vision.description')}                    </p>
-                    </div>
-                    <div className=" flex-1  relative  flex items-center justify-center z-10">
-                        {/* <div className="absolute right-0 top-0 lg:top-[20%] w-[80%] h-[70%] bg-[#EFE9E1] rounded-tl-[40px] z-0"></div> */}
-                        <img src={hostess2.src || hostess2} alt="hostess" className="relative z-10 w-full max-w-xs md:max-w-xl lg:max-w-md xl:max-w-lg h-auto" />
-                    </div>
-                </div>
-            ),
-        },
+       
         {
             id: "values",
             content: (

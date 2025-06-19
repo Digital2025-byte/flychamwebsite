@@ -17,7 +17,9 @@ import Help from '@/components/Home/Help'
 import SectionTexts from '@/components/Ui/SectionTexts'
 import { useTranslation } from 'react-i18next'
 import { useRouter } from 'next/navigation';
-
+import bg1 from '../assets/images/main-slider/bg1.webp';
+import bg2 from '../assets/images/main-slider/bg2.webp';
+import bg3 from '../assets/images/main-slider/bg3.webp';
 const HomeClient = () => {
   const isMobile = useIsMobile(1024);
   const router = useRouter()
@@ -25,11 +27,12 @@ const HomeClient = () => {
   const handleNavigate = () => {
     router.push('/destenations')
   }
+  const slides = [bg1, bg2, bg3];
 
   return (
     <div className="transition-all duration-700">
 
-      <Hero />
+      <Hero slides={slides} title={t('sliderTitle')} subTitle={t('sliderDesc')} isNavigationBtns />
       <div className="">
         <div className="w-[90%] md:w-[70%] mx-auto">
 
@@ -48,7 +51,9 @@ const HomeClient = () => {
             {isMobile &&
               <>
                 <DestinationCarousel />
-                <button onClick={handleNavigate} className="w-full xl:w-auto mt-4 xl:mt-0 cursor-pointer border border-sky-900 text-sky-900 text-sm px-4 py-2 rounded hover:bg-sky-900 hover:text-white transition" onClick={() => router.push(`/destenations`)}>
+                <button onClick={handleNavigate}
+                  className="w-full xl:w-auto mt-4 xl:mt-0 cursor-pointer border border-sky-900 text-sky-900 text-sm px-4 py-2 rounded hover:bg-sky-900 hover:text-white transition"
+                >
                   See All
                 </button>
               </>

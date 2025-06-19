@@ -13,7 +13,7 @@ const CustomScroller = ({
   const isArabic = useIsArabic()
 
   return (
-    <div className={`absolute ${isArabic ? 'right-4' : `left-4`} top-1/2 -translate-y-1/2 z-50`}>
+    <div className={`absolute ${!isArabic ? 'right-4' : `left-4`} top-1/2 -translate-y-1/2 z-50`}>
       <div
         ref={trackRef}
         onClick={handleTrackClick}

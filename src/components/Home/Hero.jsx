@@ -2,15 +2,12 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
-import bg1 from '../../assets/images/main-slider/bg1.webp';
-import bg2 from '../../assets/images/main-slider/bg2.webp';
-import bg3 from '../../assets/images/main-slider/bg3.webp';
+
 import { useTranslation } from 'react-i18next';
 import useIsArabic from '@/hooks/useIsArabic';
 
-const Hero = () => {
+const Hero = ({ slides, isNavigationBtns ,title,subTitle}) => {
     const { t, i18n } = useTranslation();
-    const slides = [bg1, bg2, bg3];
     const [currentSlide, setCurrentSlide] = useState(0);
     const isArabic = useIsArabic();
     const intervalRef = useRef(null);
@@ -90,7 +87,7 @@ const Hero = () => {
                         lineHeight: '1.1',
                     }}
                 >
-                    {t('sliderTitle')}
+                    {title}
                 </h2>
                 <h1
                     style={{
@@ -99,37 +96,40 @@ const Hero = () => {
                         lineHeight: '1.2',
                     }}
                 >
-                    {t('sliderDesc')}
+                    {subTitle}
                 </h1>
             </div>
 
             {/* Navigation Dots */}
-            <div
-                style={{
-                    position: 'absolute',
-                    bottom: '100px',
-                    left: '50%',
-                    transform: 'translateX(-50%)',
-                    display: 'flex',
-                    gap: '10px',
-                    zIndex: 20,
-                }}
-            >
-                {slides.map((_, index) => (
-                    <div
-                        key={index}
-                        onClick={() => goToSlide(index)}
-                        style={{
-                            width: index === currentSlide ? '40px' : '14px',
-                            height: '14px',
-                            borderRadius: '50px',
-                            backgroundColor: index === currentSlide ? '#d2c5a3' : '#fff',
-                            cursor: 'pointer',
-                            transition: 'all 0.3s ease',
-                        }}
-                    />
-                ))}
-            </div>
+            {isNavigationBtns &&
+
+                <div
+                    style={{
+                        position: 'absolute',
+                        bottom: '100px',
+                        left: '50%',
+                        transform: 'translateX(-50%)',
+                        display: 'flex',
+                        gap: '10px',
+                        zIndex: 20,
+                    }}
+                >
+                    {slides.map((_, index) => (
+                        <div
+                            key={index}
+                            onClick={() => goToSlide(index)}
+                            style={{
+                                width: index === currentSlide ? '40px' : '14px',
+                                height: '14px',
+                                borderRadius: '50px',
+                                backgroundColor: index === currentSlide ? '#d2c5a3' : '#fff',
+                                cursor: 'pointer',
+                                transition: 'all 0.3s ease',
+                            }}
+                        />
+                    ))}
+                </div>
+            }
         </div>
     );
 };
