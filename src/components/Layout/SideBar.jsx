@@ -4,26 +4,19 @@ import Image from 'next/image';
 import logo from '@/assets/images/logo.webp';
 import tabicon from '@/assets/images/tabicon.png';
 import pattern from '@/assets/images/pattern.webp';
-import {
-    FaPlane,
-    FaSuitcaseRolling,
-    FaUser,
-    FaGift,
-    FaGlobe,
-    FaQuestionCircle,
-    FaHome,
-} from 'react-icons/fa';
 import arrow from "@/assets/arrow.svg"
 import { useRouter } from "next/navigation";
 import useIsArabic from '@/hooks/useIsArabic';
 import { useTranslation } from 'react-i18next';
+import { GlobeHemisphereWestIcon } from '@phosphor-icons/react';
+import SubMenu from './SubMenu';
 
-const SideBar = ({ navItems }) => {
-    const [isOpen, setIsOpen] = useState(true)
+const SideBar = ({ navItems, isOpen, setIsOpen }) => {
     const [isManuallyControlled, setIsManuallyControlled] = useState(false) // Track if user manually closed it
     const router = useRouter()
     const isArabic = useIsArabic();
     const { i18n } = useTranslation()
+    const [hoveredItem, setHoveredItem] = useState(null);
 
     const handleMouseEnter = () => {
         // Only respond to hover if sidebar was manually closed
@@ -112,44 +105,59 @@ const SideBar = ({ navItems }) => {
                         <nav
 
                             className="flex flex-col gap-2 mt-9">
-                            {navItems.map((item, index) => (
-                                <button
-                                    key={item.label}
-                                    className={`w-full flex  items-center gap-3 py-2 px-3 rounded-md text-white hover:bg-secondary hover:text-white transition font-semibold`}
-                                    style={{
-                                        fontFamily: 'Montserrat, sans-serif',
-                                        fontSize: '15px',
-                                        fontStyle: 'normal',
-                                        lineHeight: '15.791px',
-                                    }}
-                                    onClick={() => {
-                                        if (item.link) {
-                                            router.push(`${item.link}`)
-                                        }
-                                    }}
-                                >
-                                    <div className="flex gap-2 items-center relative">
-                                        {/* Icon */}
-                                        <span className="text-lg relative">
-                                            {item.icon}
-
-                                            {/* Enhanced red circle for Travel Agent */}
-                                            {item.label === 'Travel Agent' && (
-                                                <span className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full border border-white shadow-lg"></span>
-                                            )}
-                                        </span>
-
-                                        {/* Label */}
-                                        <span
-                                            className={`ml-3 whitespace-nowrap transition-all duration-300 ${isOpen ? 'opacity-100' : 'opacity-0 w-0 overflow-hidden'
-                                                }`}
+                            <nav className="flex flex-col gap-2 mt-9">
+                                {navItems.map((item, index) => (
+                                    <div
+                                        key={item.label}
+                                        className="relative group"
+                                        onMouseEnter={() => setHoveredItem(index)}
+                                    >
+                                        <button
+                                            className={`w-full flex items-center gap-3 py-2 px-3 rounded-md text-white hover:bg-secondary hover:text-white transition font-semibold`}
+                                            style={{
+                                                fontFamily: 'Montserrat, sans-serif',
+                                                fontSize: '15px',
+                                                fontStyle: 'normal',
+                                                lineHeight: '15.791px',
+                                            }}
+                                            onClick={() => {
+                                                if (item.link) {
+                                                    router.push(`${item.link}`);
+                                                }
+                                            }}
                                         >
-                                            {item.label}
-                                        </span>
+                                            <div className="flex gap-2 items-center relative">
+                                                <span className="text-lg relative">
+                                                    <item.icon
+                                                        size={24}
+                                                        weight={hoveredItem === index ? 'fill' : 'bold'}
+                                                        color="white"
+                                                    />
+                                                </span>
 
+
+                                                <span
+                                                    className={`ml-3 whitespace-nowrap transition-all duration-300 ${isOpen
+                                                        ? 'opacity-100'
+                                                        : 'opacity-0 w-0 overflow-hidden'
+                                                        }`}
+                                                >
+                                                    {item.label}
+                                                </span>
+                                            </div>
+                                        </button>
+
+                                        {/* Submenu */}
+                                        <SubMenu
+                                            subLinks={item.subLinks}
+                                            isOpen={hoveredItem === index}
+                                            setHoveredItem={setHoveredItem}
+                                        />
                                     </div>
-                                </button>
-                            ))}
+                                ))}
+                            </nav>
+
+
 
                         </nav>
                         {/* Language Switch Button */}
@@ -171,7 +179,8 @@ const SideBar = ({ navItems }) => {
                         >
                             <div className="flex gap-2 items-center relative">
                                 <span className="text-lg relative">
-                                    <FaGlobe />
+                                    <GlobeHemisphereWestIcon
+                                        color="white" size={24} />
                                 </span>
                                 <span
                                     className={`ml-3 whitespace-nowrap transition-all duration-300 ${isOpen ? 'opacity-100' : 'opacity-0 w-0 overflow-hidden'

@@ -16,28 +16,95 @@ import LanguageSwitcher from "@/components/Layout/LanguageSwitcher";
 import './globals.css';
 import i18n from '../../i18n'
 import { I18nextProvider, useTranslation } from "react-i18next";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Footer from "@/components/Layout/Footer";
 import { useParams, usePathname } from "next/navigation";
 import useIsMobile from "@/hooks/useIsMobile";
 import useIsArabic from "@/hooks/useIsArabic";
 import ImportantAlert from "@/components/Ui/Alert";
+import { Airplane, TrolleySuitcase, Island, Clock, Handshake, Medal, Question, User, TrolleySuitcaseIcon, HandshakeIcon, QuestionIcon, ClockIcon, MedalIcon, UserIcon, AirplaneTiltIcon, TreePalmIcon } from '@phosphor-icons/react';
+import { IslandIcon } from "@phosphor-icons/react/dist/ssr";
 
 
 export default function ClientLayoutWrapper({ children }) {
+    const [isOpen, setIsOpen] = useState(true)
+
     const pathname = usePathname()
     const isMobile = useIsMobile()
     const { t } = useTranslation();
     const isAr = useIsArabic()
     const navItems = [
-        { label: t('nav.bookFlight'), icon: <IoMdHome />, link: '/' },
-        { label: t('nav.travelExperience'), icon: <FaSuitcaseRolling />, link: '/destenations' },
-        { label: t('nav.travelAgent'), icon: <BsFillSuitcaseLgFill />, link: '/travel-agent' },
-        { label: t('nav.holiday'), icon: <MdBeachAccess /> },
-        { label: t('nav.loyaltyProgram'), icon: <FaGift /> },
-        { label: t('nav.aboutUs'), icon: <MdInfoOutline /> },
-        { label: t('nav.support'), icon: <BiSupport />, link: '/contact' },
+        {
+            label: t('nav.bookFlight'),
+            icon: AirplaneTiltIcon,
+            link: '/',
+            subLinks: [
+
+            ],
+        },
+        {
+            label: t('nav.travelExperience'),
+            icon: TrolleySuitcaseIcon,
+            link: '/destenations',
+            subLinks: [
+
+            ],
+        },
+        {
+            label: t('nav.holiday'),
+            icon: IslandIcon,
+            link: '/holiday',
+            subLinks: [
+
+            ],
+        },
+        {
+            label: t('nav.flightStatus'),
+            icon: ClockIcon,
+            link: '/flight-status',
+            subLinks: [
+
+            ],
+        },
+        {
+            label: t('nav.travelAgent'),
+            icon: HandshakeIcon,
+            link: '/travel-agent',
+            subLinks: [
+                { label: 'Sing up', link: '/' },
+                { label: 'Login', link: '/' },
+            ],
+        },
+        {
+            label: t('nav.loyaltyProgram'),
+            icon: MedalIcon,
+            link: '/loyalty',
+            subLinks: [
+
+            ],
+        },
+        {
+            label: t('nav.help'),
+            icon: QuestionIcon,
+            link: '/',
+            subLinks: [
+                { label: 'Travel Updates', link: '/' },
+                { label: 'Share Feedback', link: '/' },
+                { label: 'FAQs', link: '/' },
+                { label: 'Contact Us', link: '/' },
+                { label: 'Travel Hub-B2B', link: '/' },
+            ],
+        },
+        {
+            label: t('nav.account'),
+            icon: UserIcon,
+            link: '/',
+            subLinks: [
+
+            ],
+        },
     ];
+
 
     return (
 
@@ -67,13 +134,13 @@ export default function ClientLayoutWrapper({ children }) {
                     {/* Sidebar */}
                     <aside className="hidden xl:block   h-screen shadow-xl z-50">
                         {/* {(pathname !== '/about' || pathname !== '/Mission') && */}
-                        <SideBar navItems={navItems} />
+                        <SideBar navItems={navItems} isOpen={isOpen} setIsOpen={setIsOpen} />
                         {/* } */}
                     </aside>
 
                     {/* Main Content */}
                     <main className="flex-1 w-[100%] h-screen overflow-y-auto bg-white  ">
-                
+
                         {children}
                         {(pathname !== '/about' && pathname !== '/Mission') && <Footer />}
 

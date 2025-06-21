@@ -11,38 +11,43 @@ const TravelUpdateClient = () => {
 
     const slides = [bg1];
 
-    const updates = [
-        {
-            label: t('travelCard.updateLabel'),
-            date: t('travelCard.lastUpdated'),
-            title: t('travelCard.title'),
-            description: t('travelCard.description'),
-            linkText: t('travelCard.linkText'),
-            moreText: t('travelCard.moreText'),
-            buttonText: t('travelCard.buttonText'), slug: "iraq-jordan-lebanon-iran"
-        }
-    ];
+const countryKeys = ['UAE', 'Kuwait', 'Iraq', 'Muscat'];
+
+const updates = countryKeys.map((key) => ({
+  label: t('travelCard.updateLabel'),
+  date: t('travelCard.lastUpdated'),
+  title: t(`travelCard.title${key}`),
+  description: t(`travelCard.description${key}`),
+  linkText: t('travelCard.linkText'),
+  moreText: t('travelCard.moreText'),
+  buttonText: t('travelCard.buttonText'),
+  contactText: t('travelCard.contactText'),
+  slug: `flight-suspension-${key.toLowerCase().replace(/\s+/g, '-')}`
+}));
 
 
-    return (
-        <>
-            <Hero
-                slides={slides}
-                title={t('travelsliderTitle')}
-                objectFit="cover"
-                parentHeight="responsive"
-                height="responsive"
-            />
 
-            <div className="w-[90%] md:w-[80%] mx-auto px-2 py-4">
-                {updates.map((update, index) => (
-                    <div key={index} className="mb-6">
-                        <TravelCard update={update} />
-                    </div>
-                ))}
-            </div>
-        </>
-    );
+
+return (
+  <>
+    <Hero
+      slides={slides}
+      title={t('travelsliderTitle')}
+      objectFit="cover"
+      parentHeight="responsive"
+      height="responsive"
+    />
+
+    <div className="w-[90%] md:w-[80%] mx-auto px-2 py-4">
+      {updates.map((update, index) => (
+        <div key={index} className="mb-6">
+          <TravelCard update={update} />
+        </div>
+      ))}
+    </div>
+  </>
+);
+
 };
 
 export default TravelUpdateClient;

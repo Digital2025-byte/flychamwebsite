@@ -24,67 +24,65 @@ const Hero = ({ slides, isNavigationBtns, title, subTitle, objectFit = 'cover', 
   };
 
   return (
-<div
-  className={`relative w-full overflow-hidden ${
-    parentHeight === 'responsive' ? 'h-[250px] md:h-[400px] lg:h-[500px]' : ''
-  }`}
-  style={{
-    height: parentHeight !== 'responsive' ? parentHeight : undefined,
-    backgroundColor: objectFit === 'contain' ? '#000' : 'transparent', // prevent white space
-  }}
->
+    <div
+      className={`relative w-full overflow-hidden ${parentHeight === 'responsive' ? 'h-[250px] md:h-[400px] lg:h-[500px]' : ''
+        }`}
+      style={{
+        height: parentHeight !== 'responsive' ? parentHeight : undefined,
+        backgroundColor: objectFit === 'contain' ? '#000' : 'transparent', // prevent white space
+      }}
+    >
 
       {/* Slides */}
-<div
-  className={`flex transition-transform duration-800 ease-in-out w-full`}
-  style={{
-    transform: isArabic
-      ? `translateX(${currentSlide * 100}%)`
-      : `translateX(-${currentSlide * 100}%)`,
-  }}
->
-  {slides.map((image, index) => (
-    <div
-      key={index}
-      className={`min-w-full flex-shrink-0 relative ${
-        height === 'responsive' ? 'h-[250px] md:h-[400px] lg:h-[500px]' : ''
-      }`}
-      style={height !== 'responsive' ? { height } : {}}
-    >
-      <Image
-        src={image}
-        alt={`Slide ${index + 1}`}
-        fill
-        className={`object-${objectFit}`}
-        priority={index === 0}
-      />
-      
-      {/* Black overlay (half opacity) */}
-      <div className="absolute inset-0 bg-[#e8e0c447]"></div>
-    </div>
-  ))}
-</div>
+      <div
+        className={`flex transition-transform duration-800 ease-in-out w-full`}
+        style={{
+          transform: isArabic
+            ? `translateX(${currentSlide * 100}%)`
+            : `translateX(-${currentSlide * 100}%)`,
+        }}
+      >
+        {slides.map((image, index) => (
+          <div
+            key={index}
+            className={`min-w-full flex-shrink-0 relative ${height === 'responsive' ? 'h-[250px] md:h-[400px] lg:h-[500px]' : ''
+              }`}
+            style={height !== 'responsive' ? { height } : {}}
+          >
+            <Image
+              src={image}
+              alt={`Slide ${index + 1}`}
+              fill
+              className={`object-${objectFit}`}
+              priority={index === 0}
+            />
+
+            {/* Black overlay (half opacity) */}
+            <div className="absolute inset-0 bg-[#e8e0c447]"></div>
+          </div>
+        ))}
+      </div>
 
 
       {/* Center Text */}
- <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-center z-10 max-w-[90vw] px-4">
-  <h2
-    className="text-[clamp(1.5rem,5vw,3rem)] font-bold mb-4 leading-tight"
-    style={{
-      textShadow: '2px 2px 4px rgba(0,0,0,0.8)',
-    }}
-  >
-    {title}
-  </h2>
-  <h1
-    className="text-[clamp(1.2rem,4vw,2rem)] font-black leading-snug"
-    style={{
-      textShadow: '2px 2px 4px rgba(0,0,0,0.8)',
-    }}
-  >
-    {subTitle}
-  </h1>
-</div>
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-center z-10 max-w-[90vw] px-4">
+        <h2
+          className="text-[clamp(1.5rem,5vw,3rem)] font-bold mb-4 leading-tight"
+          style={{
+            textShadow: '1px 1px 2px rgba(0,0,0,0.8)',
+          }}
+        >
+          {t(title)}
+        </h2>
+        {subTitle &&
+          <p
+            className="text-[#F5F5F4] font-medium text-[18px] font-[Montserrat] leading-normal"
+          >
+            {t(subTitle)}
+          </p>
+
+        }
+      </div>
 
       {/* Navigation Dots */}
       {isNavigationBtns && (
@@ -93,9 +91,8 @@ const Hero = ({ slides, isNavigationBtns, title, subTitle, objectFit = 'cover', 
             <div
               key={index}
               onClick={() => goToSlide(index)}
-              className={`cursor-pointer transition-all duration-300 ${
-                index === currentSlide ? 'w-10 bg-[#d2c5a3]' : 'w-4 bg-white'
-              } h-4 rounded-full`}
+              className={`cursor-pointer transition-all duration-300 ${index === currentSlide ? 'w-10 bg-[#d2c5a3]' : 'w-4 bg-white'
+                } h-4 rounded-full`}
             />
           ))}
         </div>

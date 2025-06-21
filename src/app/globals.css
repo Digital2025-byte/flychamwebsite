@@ -6,9 +6,9 @@
   --foreground: #171717;
 
   --color-main: #26485B;
-  --color-main-light: #4C86A3;
+  --color-main-light: #245673;
 
-  --color-secondary: #D0C29C;
+  --color-secondary: #BAA981;
   --color-secondary-light: #E8E0C4;
 }
 
@@ -34,6 +34,7 @@ p {
 .bg-main {
   background-color: var(--color-main);
 }
+
 .bg-main-light {
   background-color: var(--color-main-light);
 }
@@ -90,16 +91,20 @@ p {
     opacity: 1;
   }
 }
+
 .custom-scroll::-webkit-scrollbar {
   width: 8px;
 }
+
 .custom-scroll::-webkit-scrollbar-thumb {
   background: #d0c29c;
   border-radius: 9999px;
 }
+
 .custom-scroll::-webkit-scrollbar-track {
   background: transparent;
 }
+
 .mask-video {
   -webkit-mask-image: url('/videos/mask.webp');
   -webkit-mask-repeat: no-repeat;

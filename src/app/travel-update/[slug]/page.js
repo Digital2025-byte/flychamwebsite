@@ -5,33 +5,44 @@ import TravelCard from '@/components/Travel-update/TravelCard';
 import { TravelUpdateDetail } from '@/components/Travel-update/TravelUpdateDetail';
 
 export async function generateStaticParams() {
-  return [
-    { slug: 'iraq-jordan-lebanon-iran' },
-    { slug: 'kuwait-uae' }
-    // add more slugs here!
+  const slugs = [
+    'flight-suspension-uae',
+    'flight-suspension-kuwait',
+    'flight-suspension-iraq',
+    'flight-suspension-muscat'
   ];
+
+  return slugs.map(slug => ({ slug }));
 }
 
+
 const travelUpdates = {
-  'iraq-jordan-lebanon-iran': {
+  'flight-suspension-uae': {
     label: 'Update',
-    date: 'Last updated: 15 June 2025, 06:38 Dubai (GMT+4)',
-    title: 'Flight suspensions - Iraq, Jordan, Lebanon, and Iran',
-    description: 'Lorem ipsum dolor sit amet...',
-    linkText: 'Manage Your Booking',
-    moreText: 'Morbi convallis convallis diam sit amet lacinia.',
-    buttonText: 'Find more'
+    date: 'travelCard.lastUpdated',
+    title: 'travelCard.titleUAE',
+    subTitle: 'travelPage.subTitleUAE'
   },
-  'kuwait-uae': {
+  'flight-suspension-kuwait': {
     label: 'Update',
-    date: 'Last updated: 18 June 2025',
-    title: 'Flight suspensions - Kuwait & UAE',
-    description: 'Some flights may be delayed due to weather...',
-    linkText: 'Manage Your Booking',
-    moreText: 'Stay updated for more details.',
-    buttonText: 'Find more'
+    date: 'travelCard.lastUpdated',
+    title: 'travelCard.titleKuwait',
+    subTitle: 'travelPage.subTitleKuwait'
+  },
+  'flight-suspension-iraq': {
+    label: 'Update',
+    date: 'travelCard.lastUpdated',
+    title: 'travelCard.titleIraq',
+    subTitle: 'travelPage.subTitleIraq'
+  },
+  'flight-suspension-muscat': {
+    label: 'Update',
+    date: 'travelCard.lastUpdated',
+    title: 'travelCard.titleMuscat',
+    subTitle: 'travelPage.subTitleMuscat'
   }
 };
+
 
 const Page = ({ params }) => {
   const { slug } = params;
@@ -50,14 +61,15 @@ const Page = ({ params }) => {
     <>
       <Hero
         slides={slides}
-        title={updateData.title}
+        title={(updateData.title)}
+        subTitle={(updateData.subTitle)}
         objectFit="cover"
         parentHeight="responsive"
         height="responsive"
       />
 
       <div className="w-[90%] md:w-[80%] mx-auto px-2 py-4">
-        <TravelUpdateDetail />
+        <TravelUpdateDetail slug={slug}/>
       </div>
     </>
   );

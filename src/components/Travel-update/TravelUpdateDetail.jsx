@@ -1,11 +1,35 @@
 'use client';
+import { AirplaneTilt, Clock } from '@phosphor-icons/react';
 import { useTranslation } from 'react-i18next';
-import { AirplaneTilt, Clock } from 'phosphor-react';
 
-export const TravelUpdateDetail = () => {
+export const TravelUpdateDetail = ({ slug }) => {
   const { t } = useTranslation();
+  const titleMap = {
+    'flight-suspension-uae': t('travelCard.titleUAE'),
+    'flight-suspension-kuwait': t('travelCard.titleKuwait'),
+    'flight-suspension-iraq': t('travelCard.titleIraq'),
+    'flight-suspension-muscat': t('travelCard.titleMuscat')
+  };
+  const SuspendedRoutesCard = ({ slug }) => {
+    const { t } = useTranslation();
 
-  const SuspendedRoutesCard = () => {
+    const routeMap = {
+      'flight-suspension-uae': [
+        { route: t('travelUpdate.suspendedRoute1'), date: t('travelUpdate.suspendedRoute1Date') }
+      ],
+      'flight-suspension-kuwait': [
+        { route: t('travelUpdate.suspendedRoute2'), date: t('travelUpdate.suspendedRoute2Date') }
+      ],
+      'flight-suspension-iraq': [
+        { route: t('travelUpdate.suspendedRoute4'), date: t('travelUpdate.suspendedRoute4Date') }
+      ],
+      'flight-suspension-muscat': [
+        { route: t('travelUpdate.suspendedRoute3'), date: t('travelUpdate.suspendedRoute3Date') }
+      ]
+    };
+
+    const routes = routeMap[slug] || [];
+
     return (
       <div className="flex flex-col md:flex-row gap-4 mb-8">
         {/* Left Card */}
@@ -15,43 +39,17 @@ export const TravelUpdateDetail = () => {
           </h3>
 
           <ul className="space-y-4 text-[#1B1F23] text-[16px] leading-6">
-            <li className="flex items-start gap-3">
-              <AirplaneTilt size={20} color="#054E72" className="mt-1" />
-              <div>
-                <div>{t('travelUpdate.suspendedRoute1')}</div>
-                <div className="text-[#5F5F5C] text-[15px] mt-1 ml-5">
-                  {t('travelUpdate.suspendedRoute1Date')}
+            {routes.map((item, index) => (
+              <li key={index} className="flex items-start gap-3">
+                <AirplaneTilt size={20} color="#054E72" className="mt-1" />
+                <div>
+                  <div>{item.route}</div>
+                  <div className="text-[#5F5F5C] text-[15px] mt-1 ml-5">
+                    {item.date}
+                  </div>
                 </div>
-              </div>
-            </li>
-
-            <li className="flex items-start gap-3">
-              <AirplaneTilt size={20} color="#054E72" className="mt-1" />
-              <div>
-                <div>{t('travelUpdate.suspendedRoute2')}</div>
-                <div className="text-[#5F5F5C] text-[15px] mt-1 ml-5">
-                  {t('travelUpdate.suspendedRoute2Date')}
-                </div>
-              </div>
-            </li>
-            <li className="flex items-start gap-3">
-              <AirplaneTilt size={20} color="#054E72" className="mt-1" />
-              <div>
-                <div>{t('travelUpdate.suspendedRoute3')}</div>
-                <div className="text-[#5F5F5C] text-[15px] mt-1 ml-5">
-                  {t('travelUpdate.suspendedRoute3Date')}
-                </div>
-              </div>
-            </li>
-            <li className="flex items-start gap-3">
-              <AirplaneTilt size={20} color="#054E72" className="mt-1" />
-              <div>
-                <div>{t('travelUpdate.suspendedRoute4')}</div>
-                <div className="text-[#5F5F5C] text-[15px] mt-1 ml-5">
-                  {t('travelUpdate.suspendedRoute4Date')}
-                </div>
-              </div>
-            </li>
+              </li>
+            ))}
           </ul>
         </div>
 
@@ -96,20 +94,28 @@ export const TravelUpdateDetail = () => {
   };
 
   const ActionButtons = () => {
+    const { t } = useTranslation();
+
+    const buttons = [
+      t('travelUpdate.buttonCheckStatus'),
+      t('travelUpdate.buttonManageBooking'),
+      t('travelUpdate.buttonContactUs'),
+    ];
+
     return (
       <div className="flex flex-col md:flex-row gap-3">
-        <button className="flex-1 px-6 py-3 bg-[#054E72] text-white rounded-md font-bold text-[14px]">
-          {t('travelUpdate.buttonCheckStatus')}
-        </button>
-        <button className="flex-1 px-6 py-3 border border-[#054E72] text-[#054E72] rounded-md font-bold text-[14px]">
-          {t('travelUpdate.buttonManageBooking')}
-        </button>
-        <button className="flex-1 px-6 py-3 border border-[#054E72] text-[#054E72] rounded-md font-bold text-[14px]">
-          {t('travelUpdate.buttonContactUs')}
-        </button>
+        {buttons.map((label, index) => (
+          <button
+            key={index}
+            className="cursor-pointer flex-1 px-6 py-3 border border-[#054E72] text-[#054E72] hover:bg-[#054E72] hover:text-white rounded-md font-bold text-[14px] transition"
+          >
+            {label}
+          </button>
+        ))}
       </div>
     );
   };
+
 
   const WhatYouNeedToKnow = () => {
     return (
@@ -142,8 +148,8 @@ export const TravelUpdateDetail = () => {
   return (
     <div className="w-full mx-auto px-2 py-4">
       <div className="mb-6">
-        <h1 className="text-[32px] text-[#282826] font-bold mb-1">
-          {t('travelUpdate.pageTitle')}
+        <h1 className="text-[32px] text-main font-bold mb-1">
+          {titleMap[slug] || t('travelUpdate.pageTitle')}
         </h1>
 
         <div className="flex items-center text-[13.96px] text-[#5F5F5C] mb-6">
@@ -151,11 +157,11 @@ export const TravelUpdateDetail = () => {
           {t('travelUpdate.lastUpdated')}
         </div>
 
-        <h2 className="text-[24px] text-black font-semibold mb-4">
+        <h2 className="text-[24px] text-secondary font-semibold mb-4">
           {t('travelUpdate.overviewTitle')}
         </h2>
 
-        <SuspendedRoutesCard />
+        <SuspendedRoutesCard slug={slug} />
         <FlexibleOptionsNotice />
         <WhatYouNeedToKnow />
         <ActionButtons />

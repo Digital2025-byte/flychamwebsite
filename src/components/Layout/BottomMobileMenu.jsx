@@ -59,9 +59,8 @@ const BottomMobileMenu = ({ navItems }) => {
 
       <div
         ref={menuRef}
-        className={`fixed bottom-0 left-0 right-0 z-[60] bg-main transition-transform duration-300 ${
-          isOpen ? 'translate-y-0' : 'translate-y-full'
-        } rounded-t-3xl shadow-xl pt-4 pb-8 px-6 backdrop-blur-md`}
+        className={`fixed bottom-0 left-0 right-0 z-[60] bg-main transition-transform duration-300 ${isOpen ? 'translate-y-0' : 'translate-y-full'
+          } rounded-t-3xl shadow-xl pt-4 pb-8 px-6 backdrop-blur-md`}
       >
         <div className="flex items-center justify-between mb-6">
           <button
@@ -93,26 +92,58 @@ const BottomMobileMenu = ({ navItems }) => {
   );
 };
 
-const MenuItem = ({ setIsOpen, router, link, icon, label, active = false }) => (
-  <div
-    onClick={() => {
-      if (link) {
-        router.push(link);
-        setIsOpen(false);
-      }
-    }}
-    className={`cursor-pointer flex items-center gap-3 px-4 py-3 rounded-xl transition ${
-      active ? 'bg-white text-[#075377]' : 'bg-white/10 hover:bg-white/20 text-white'
-    }`}
-  >
-    <span className="text-xl relative">
-      {icon}
-      {label === 'Travel Agent' && (
-        <span className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full border border-white shadow" />
+const MenuItem = ({ setIsOpen, router, link, icon: Icon, label, active = false, subLinks = [] }) => {
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  const handleClick = () => {
+    if (subLinks.length > 0) {
+      setIsExpanded(!isExpanded);
+    } else if (link) {
+      router.push(link);
+      setIsOpen(false);
+    }
+  };
+
+  return (
+    <div>
+      <div
+        onClick={handleClick}
+        className={`cursor-pointer flex items-center justify-between px-4 py-3 rounded-xl transition ${
+          active ? 'bg-white text-[#075377]' : 'bg-white/10 hover:bg-white/20 text-white'
+        }`}
+      >
+        <div className="flex items-center gap-3">
+          <span className="text-xl relative">
+            <Icon size={24} weight={active ? 'fill' : 'bold'} />
+            {label === 'Travel Agent' && (
+              <span className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full border border-white shadow" />
+            )}
+          </span>
+          <span className="text-sm sm:text-base md:text-lg">{label}</span>
+        </div>
+        {subLinks.length > 0 && (
+          <span className="text-xl">{isExpanded ? '-' : '+'}</span>
+        )}
+      </div>
+
+      {isExpanded && subLinks.length > 0 && (
+        <div className="ml-8 mt-2 flex flex-col space-y-2">
+          {subLinks.map((sub, subIdx) => (
+            <div
+              key={subIdx}
+              onClick={() => {
+                router.push(sub.link);
+                setIsOpen(false);
+              }}
+              className="cursor-pointer px-3 py-2 rounded-md bg-white/5 hover:bg-white/10 text-sm text-white transition"
+            >
+              {sub.label}
+            </div>
+          ))}
+        </div>
       )}
-    </span>
-    <span className="text-sm sm:text-base md:text-lg">{label}</span>
-  </div>
-);
+    </div>
+  );
+};
 
 export default BottomMobileMenu;
