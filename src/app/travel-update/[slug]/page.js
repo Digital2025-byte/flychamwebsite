@@ -13,10 +13,10 @@ export async function generateStaticParams() {
 }
 
 const travelUpdates = {
-  'iraq-jordan-lebanon-iran': {
+  'iraq-jordan-lebanon': {
     label: 'Update',
     date: 'Last updated: 15 June 2025, 06:38 Dubai (GMT+4)',
-    title: 'Flight suspensions - Iraq, Jordan, Lebanon, and Iran',
+    title: 'Flight suspensions',
     description: 'Lorem ipsum dolor sit amet...',
     linkText: 'Manage Your Booking',
     moreText: 'Morbi convallis convallis diam sit amet lacinia.',
