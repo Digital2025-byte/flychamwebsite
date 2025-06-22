@@ -76,12 +76,16 @@ const Footer = () => {
         {
             title: t('footer.help.title'),
             links: [
-                t('footer.help.links.contact'),
-                t('footer.help.links.inquiries'),
-                t('footer.help.links.salesOffices'),
-                t('footer.help.links.agentsWorldwide'),
-                t('footer.help.links.joinPartner'),
+                t('footer.help.links.travelUpdates'),
+                t('footer.help.links.share'),
                 t('footer.help.links.faq'),
+                t('footer.help.links.contact'),
+                t('footer.help.links.ouroffice'),
+                t('footer.help.links.ourgsa'),
+                t('footer.help.links.travelhub'),
+                t('footer.help.links.apiintegration'),
+                t('footer.help.links.travelAgentGuide'),
+
             ]
         }
     ];
@@ -207,7 +211,7 @@ const Footer = () => {
                     alt="Background Pattern"
                     className={
                         ` ${isArabic ? '' : 'rotate-270'}
- absolute opacity-30 bottom-0 ${isArabic ? 'left-5' : 'right-5'} w-[280px] md:w-[400px] pointer-events-none select-none z-0`
+ absolute opacity-30 bottom-0 ${isArabic ? 'left-0' : 'right-0'} w-[280px] md:w-[400px] pointer-events-none select-none z-0`
                     }
                     aria-hidden="true"
                 />

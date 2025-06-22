@@ -109,7 +109,15 @@
         "salesOffices": "Our Sales Offices",
         "agentsWorldwide": "Our Agents Worldwide",
         "joinPartner": "Join As a Partner",
-        "faq": "FAQs"
+        "faq": "FAQs",
+        "travelAgentGuide":"Travel Agent Guide",
+        "apiintegration":"Api Intergration",
+        "travelhub":"Travel Hub - B2B",
+
+        "ourgsa":"Our GSA",
+        "ouroffice":"Our Offices",
+        "share":"Share Facebook & Review",
+        "travelUpdates":"Travel Updates"
       }
     }
   },
@@ -428,6 +436,7 @@
   "moreText": "Morbi convallis convallis diam sit amet lacinia.",
   "buttonText": "Find more",
   "travelCard": {
+    "pageTitle": "Flight Suspensions",
     "updateLabel": "Update",
     "lastUpdated": "Last updated: 19 June 2025, 13:00 Dubai (GMT+4)",
     "titleUAE": "Flight Suspensions – United Arab Emirates",
@@ -443,16 +452,19 @@
     "buttonText": "Find more",
     "contactText": "Contact us",
     "countryUAE": "United Arab Emirates",
-"countryKuwait": "Kuwait",
-"countryIraq": "Iraq",
-"countryMuscat": "Muscat"
-
+    "countryKuwait": "Kuwait",
+    "countryIraq": "Iraq",
+    "countryMuscat": "Muscat"
   },
   "travelPage": {
-    "subTitleUAE": "Latest travel update for UAE flights",
+    "subTitleUAE": "Latest travel update for United Arab Emirates flights",
     "subTitleKuwait": "Latest travel update for Kuwait flights",
     "subTitleIraq": "Latest travel update for Iraq flights",
-    "subTitleMuscat": "Latest travel update for Muscat flights"
+    "subTitleMuscat": "Latest travel update for Muscat flights",
+    "countryIraq":"Iraq",
+    "countryKuwait":"Kuwait",
+    "countryMuscat":"Muscat",
+    "countryUAE":"United Arab Emirates"
   },
   "alert": {
     "important": "Important:",

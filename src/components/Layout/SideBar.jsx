@@ -75,16 +75,18 @@ const SideBar = ({ navItems, isOpen, setIsOpen }) => {
                     />
                 </div>
 
-
-                <div className="absolute bottom-0 left-0 w-full overflow-hidden rounded-br-[16px]">
+                            {isOpen && 
+                            
+                <div className="absolute bottom-0 left-0 opacity-50 w-full overflow-hidden rounded-br-[16px]">
                     <Image
                         src={pattern}
                         alt="Fly Cham pattern"
                         width={250}
                         height={250}
                         className=" w-full h-full"
-                    />
+                        />
                 </div>
+                    }
 
                 <div className="space-y-6"
 

@@ -13,7 +13,7 @@ const BottomMobileMenu = ({ navItems }) => {
   const menuRef = useRef(null);
   const router = useRouter();
   const isArabic = useIsArabic();
-  const { i18n } = useTranslation();
+  const { t,i18n } = useTranslation();
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -43,7 +43,7 @@ const BottomMobileMenu = ({ navItems }) => {
   return (
     <>
       {!isOpen && (
-        <div dir="ltr" className="fixed bottom-0 left-0 right-0 z-50 bg-[#075377] h-16 rounded-t-2xl flex items-center justify-between px-6 shadow-xl backdrop-blur-md">
+        <div dir="ltr" className="fixed bottom-0 left-0 right-0 z-50 bg-main  h-16 rounded-t-2xl flex items-center justify-between px-6 shadow-xl backdrop-blur-md">
           <button
             onClick={() => setIsOpen(true)}
             className="text-white text-2xl p-2 rounded-full hover:bg-white/10 active:scale-95 transition"
@@ -82,7 +82,7 @@ const BottomMobileMenu = ({ navItems }) => {
         <div className="overflow-y-auto max-h-[calc(100vh-80px)] px-6 py-4">
           <nav className="flex flex-col space-y-4 text-white font-medium text-sm">
             {navItems?.map((item, idx) => (
-              <MenuItem key={idx} {...item} router={router} setIsOpen={setIsOpen} />
+              <MenuItem t={t}key={idx} {...item} router={router} setIsOpen={setIsOpen} />
             ))}
             <div
               onClick={handleLanguageToggle}
@@ -101,7 +101,7 @@ const BottomMobileMenu = ({ navItems }) => {
   );
 };
 
-const MenuItem = ({ setIsOpen, router, link, icon: Icon, label, active = false, subLinks = [] }) => {
+const MenuItem = ({ t,setIsOpen, router, link, icon: Icon, label, active = false, subLinks = [] }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   const handleClick = () => {
@@ -123,7 +123,7 @@ const MenuItem = ({ setIsOpen, router, link, icon: Icon, label, active = false, 
         <div className="flex items-center gap-3">
           <span className="text-xl relative">
             <Icon size={24} weight={active ? 'fill' : 'bold'} />
-            {label === 'Travel Agent' && (
+            {label === t('nav.travelAgent') && (
               <span className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full border border-white shadow" />
             )}
           </span>

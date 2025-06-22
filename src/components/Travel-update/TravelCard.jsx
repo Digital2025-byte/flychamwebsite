@@ -39,9 +39,9 @@ const TravelCard = ({ update }) => {
                                     {update.linkText}
                                 </span>{' '}
                                 {update.moreText}
-                                <a className="font-semibold italic underline text-main cursor-pointer">
+                                <Link href={`/contact`} className="font-semibold italic underline text-main cursor-pointer">
                                     {update.contactText}
-                                </a>{' '}
+                                </Link>{' '}
                             </p>
 
                             <Link href={`/travel-update/${update.slug}`}>

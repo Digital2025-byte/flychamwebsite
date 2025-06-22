@@ -104,12 +104,19 @@
     "help": {
       "title": "المساعدة",
       "links": {
-        "contact": "اتصل بنا",
-        "inquiries": "الاستفسارات والشكاوى",
-        "salesOffices": "مكاتبنا",
-        "agentsWorldwide": "وكلاؤنا حول العالم",
-        "joinPartner": "انضم كشريك",
-        "faq": "الأسئلة الشائعة"
+    "contact": "اتصل بنا",
+    "inquiries": "الاستفسارات والشكاوى",
+    "salesOffices": "مكاتبنا",
+    "agentsWorldwide": "وكلاؤنا حول العالم",
+    "joinPartner": "انضم كشريك",
+    "faq": "الأسئلة الشائعة",
+    "travelAgentGuide": "دليل وكلاء السفر",
+    "apiintegration": "تكامل API",
+    "travelhub": "بوابة السفر - B2B",
+    "ourgsa": "ممثلونا العامون للمبيعات",
+    "ouroffice": "مكاتبنا",
+    "share": "مشاركة على فيسبوك والتقييم",
+    "travelUpdates": "تحديثات السفر"
       }
     }
   },
@@ -331,7 +338,11 @@
     "subTitleUAE": "آخر تحديث لرحلات الإمارات العربية المتحدة",
     "subTitleKuwait": "آخر تحديث لرحلات الكويت",
     "subTitleIraq": "آخر تحديث لرحلات العراق",
-    "subTitleMuscat": "آخر تحديث لرحلات مسقط"
+    "subTitleMuscat": "آخر تحديث لرحلات مسقط",
+    "countryIraq": "العراق",
+    "countryKuwait": "الكويت",
+    "countryMuscat": "مسقط",
+    "countryUAE": "الإمارات العربية المتحدة"
   },
   "flyingStart": {
     "travelFrom": "من أين تسافر؟",
@@ -430,6 +441,7 @@
   "travelsliderTitle": "تحديثات السفر",
   "travelCard": {
     "updateLabel": "تحديث",
+    "pageTitle": "تعليق الرحلات الجوية ",
     "lastUpdated": "آخر تحديث: 19 يونيو 2025، 13:00 بتوقيت دبي (GMT+4)",
     "titleUAE": "تعليق الرحلات – الإمارات العربية المتحدة",
     "titleKuwait": "تعليق الرحلات – الكويت",

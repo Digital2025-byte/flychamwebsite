@@ -1,10 +1,12 @@
 'use client';
-import { AirplaneTilt, ArrowLeft, Clock } from '@phosphor-icons/react';
+import useIsArabic from '@/hooks/useIsArabic';
+import { AirplaneTilt, ArrowLeft, ArrowRightIcon, Clock } from '@phosphor-icons/react';
 import { useRouter } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 
 export const TravelUpdateDetail = ({ slug }) => {
   const { t } = useTranslation();
+  const isArabic = useIsArabic()
   const router = useRouter()
   const titleMap = {
     'flight-suspension-uae': t('travelCard.titleUAE'),
@@ -43,7 +45,8 @@ export const TravelUpdateDetail = ({ slug }) => {
           <ul className="space-y-4 text-[#1B1F23] text-[16px] leading-6">
             {routes.map((item, index) => (
               <li key={index} className="flex items-start gap-3">
-                <AirplaneTilt size={20} color="#054E72" className="mt-1" />
+                <AirplaneTilt size={20} color="#054E72" className={`mt-1 ${isArabic ? 'rotate-270' : ''}`}
+                />
                 <div>
                   <div>{item.route}</div>
                   <div className="text-[#5F5F5C] text-[15px] mt-1 ml-5">
@@ -72,51 +75,58 @@ export const TravelUpdateDetail = ({ slug }) => {
 
 
 
-const FlexibleOptionsNotice = () => {
-  const { t, i18n } = useTranslation();
-  const isArabic = i18n.language === 'ar';
+  const FlexibleOptionsNotice = () => {
+    const { t, i18n } = useTranslation();
+    const isArabic = useIsArabic();
 
-  const options = t('travelUpdate.flexibleOptions', { returnObjects: true });
+    const options = t('travelUpdate.flexibleOptions', { returnObjects: true });
 
-  return (
-    <div className="mb-8">
-      <p className="text-[#054E72] text-[18px] font-medium mb-4">
-        {t('travelUpdate.flexibleOptionsIntro')}
-      </p>
-      <ul className="pl-5 space-y-2 text-[#000] text-[16px] leading-[24px]">
-        {options.map((item, index) => (
-          <li
-            key={index}
-            className={`relative before:content-['-'] before:absolute ${
-              isArabic ? 'before:right-0 pr-4' : 'before:left-0 pl-4'
-            } before:text-[#000]`}
-          >
-            {item}
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-};
+    return (
+      <div className="mb-8">
+        <p className="text-[#054E72] text-[18px] font-medium mb-4">
+          {t('travelUpdate.flexibleOptionsIntro')}
+        </p>
+        <ul className="pl-5 space-y-2 text-[#000] text-[16px] leading-[24px]">
+          {options.map((item, index) => (
+            <li
+              key={index}
+              className={`relative before:content-['-'] before:absolute ${isArabic ? 'before:right-0 pr-4' : 'before:left-0 pl-4'
+                } before:text-[#000]`}
+            >
+              {item}
+            </li>
+          ))}
+        </ul>
+      </div>
+    );
+  };
 
   const ActionButtons = () => {
     const { t } = useTranslation();
-
     const buttons = [
       t('travelUpdate.buttonCheckStatus'),
       t('travelUpdate.buttonManageBooking'),
       t('travelUpdate.buttonContactUs'),
     ];
-
+    const handleClick = (label) => {
+      console.log('labl',label);
+      
+      if (label === t('travelUpdate.buttonContactUs')) {
+        router.push('/contact')
+      }
+    }
     return (
       <div className="flex flex-col md:flex-row gap-3">
         {buttons.map((label, index) => (
-          <button
-            key={index}
-            className="cursor-pointer flex-1 px-6 py-3 border border-[#054E72] text-[#054E72] hover:bg-[#054E72] hover:text-white rounded-md font-bold text-[14px] transition"
-          >
-            {label}
-          </button>
+<button
+  key={index}
+  onClick={() => handleClick(label)}
+  className="cursor-pointer flex-1 px-6 py-3 border border-main font-bold text-[14px] transition rounded-md
+    bg-transparent text-main hover:bg-main hover:!text-white"
+>
+  {label}
+</button>
+
         ))}
       </div>
     );
@@ -159,7 +169,13 @@ const FlexibleOptionsNotice = () => {
           onClick={() => router.back()}
           className="cursor-pointer flex items-center gap-1 text-main-light font-semibold text-[14px] hover:underline"
         >
-          <ArrowLeft size={15} weight="bold" />
+          {isArabic ?
+
+            <ArrowRightIcon size={15} weight="bold" />
+            :
+
+            <ArrowLeft size={15} weight="bold" />
+          }
           {t('Back')}
         </button>
 

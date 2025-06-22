@@ -19,33 +19,37 @@ export async function generateStaticParams() {
 const travelUpdates = {
   'flight-suspension-uae': {
     label: 'Update',
+    pageTitle: "travelCard.pageTitle",
     date: 'travelCard.lastUpdated',
     title: 'travelCard.titleUAE',
     subTitle: 'travelPage.subTitleUAE',
-    country: 'UAE'
+    country: 'travelPage.countryUAE'
   },
   'flight-suspension-kuwait': {
-    label: 'Update',
+    label: 'Update', pageTitle: "travelCard.pageTitle",
+
     date: 'travelCard.lastUpdated',
     title: 'travelCard.titleKuwait',
     subTitle: 'travelPage.subTitleKuwait',
-    country: 'Kuwait'
+    country: 'travelPage.countryKuwait'
 
   },
   'flight-suspension-iraq': {
-    label: 'Update',
+    label: 'Update', pageTitle: "travelCard.pageTitle",
+
     date: 'travelCard.lastUpdated',
     title: 'travelCard.titleIraq',
     subTitle: 'travelPage.subTitleIraq',
-    country: 'Iraq'
+    country: 'travelPage.countryIraq'
 
   },
   'flight-suspension-muscat': {
-    label: 'Update',
+    label: 'Update', pageTitle: "travelCard.pageTitle",
+
     date: 'travelCard.lastUpdated',
     title: 'travelCard.titleMuscat',
     subTitle: 'travelPage.subTitleMuscat',
-    country: 'Muscat'
+    country: 'travelPage.countryMuscat'
 
   }
 };
@@ -68,7 +72,7 @@ const Page = ({ params }) => {
     <>
       <Hero
         slides={slides}
-        title={(updateData.title)}
+        title={(updateData.pageTitle)}
         subTitle={(updateData.subTitle)}
         country={(updateData.country)}
         objectFit="cover"
