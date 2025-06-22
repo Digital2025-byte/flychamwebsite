@@ -13,6 +13,7 @@ export default function ImportantAlert() {
   const router = useRouter();
   const isArabic = useIsArabic()
   const alerts = [
+    t('travelCard.damAleppo'),
     t('travelCard.titleUAE'),
     t('travelCard.titleMuscat'),
     t('travelCard.titleIraq'),

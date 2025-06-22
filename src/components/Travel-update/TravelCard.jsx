@@ -4,7 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import { Info } from '@phosphor-icons/react';
 
-const TravelCard = ({ update }) => {
+const TravelCard = ({ update, isFindMore }) => {
     return (
         <div className="relative w-full rounded-lg border border-gray-200 shadow-md overflow-hidden">
             {/* Header */}
@@ -43,15 +43,16 @@ const TravelCard = ({ update }) => {
                                     {update.contactText}
                                 </Link>{' '}
                             </p>
-
-                            <Link href={`/travel-update/${update.slug}`}>
-                                <button
-                                    type="button"
-                                    className="inline-flex px-[23.94px] py-[8px] bg-main rounded-[5.98px] justify-center items-center gap-[9.97px] text-[#F5F5F4] text-[14px] font-bold cursor-pointer hover:bg-main transition-colors"
-                                >
-                                    {update.buttonText}
-                                </button>
-                            </Link>
+                            {isFindMore &&
+                                <Link href={`/travel-update/${update.slug}`}>
+                                    <button
+                                        type="button"
+                                        className="inline-flex px-[23.94px] py-[8px] bg-main rounded-[5.98px] justify-center items-center gap-[9.97px] text-[#F5F5F4] text-[14px] font-bold cursor-pointer hover:bg-main transition-colors"
+                                    >
+                                        {update.buttonText}
+                                    </button>
+                                </Link>
+                            }
                         </div>
                     </div>
                 </div>

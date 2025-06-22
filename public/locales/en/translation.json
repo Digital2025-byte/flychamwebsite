@@ -116,7 +116,7 @@
 
         "ourgsa":"Our GSA",
         "ouroffice":"Our Offices",
-        "share":"Share Facebook & Review",
+        "share":"Share Feedback & Review",
         "travelUpdates":"Travel Updates"
       }
     }
@@ -454,7 +454,11 @@
     "countryUAE": "United Arab Emirates",
     "countryKuwait": "Kuwait",
     "countryIraq": "Iraq",
-    "countryMuscat": "Muscat"
+    "countryMuscat": "Muscat",
+
+    "damAleppo":"Our flights on June 22 and 23 have been diverted to and from Aleppo International Airport instead of Damascus International Airport.",
+
+    "descriptionDamAleppo":"Dear passengers, our flights on June 22 and 23 have been diverted to and from Aleppo International Airport instead of Damascus International Airport due to the current circumstances. Please note that free transportation services are available from Damascus to Aleppo and vice versa for diverted flights from Damascus International Airport only.Please be at the bus departure area on Al-Adawi Highway 8.5 hours before the diverted flight's departure time.For more information and assistance, please contact customer service or the office that issued your tickets."
   },
   "travelPage": {
     "subTitleUAE": "Latest travel update for United Arab Emirates flights",
