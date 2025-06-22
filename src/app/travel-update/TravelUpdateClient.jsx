@@ -38,7 +38,7 @@ return (
       height="responsive"
     />
 
-    <div className="w-[90%] md:w-[80%] mx-auto px-2 py-4">
+    <div className="w-[90%] md:w-[80%] mx-auto my-4 px-2 py-4">
       {updates.map((update, index) => (
         <div key={index} className="mb-6">
           <TravelCard update={update} />

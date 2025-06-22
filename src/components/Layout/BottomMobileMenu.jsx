@@ -25,10 +25,10 @@ const BottomMobileMenu = ({ navItems }) => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [isOpen]);
 
-  useEffect(() => {
-    document.body.style.overflow = isOpen ? 'hidden' : '';
-    return () => { document.body.style.overflow = ''; };
-  }, [isOpen]);
+  // useEffect(() => {
+  //   document.body.style.overflow = isOpen ? 'hidden' : '';
+  //   return () => { document.body.style.overflow = ''; };
+  // }, [isOpen]);
 
   const handleLanguageToggle = () => {
     const lang = isArabic ? 'en' : 'ar';
@@ -60,34 +60,43 @@ const BottomMobileMenu = ({ navItems }) => {
       <div
         ref={menuRef}
         className={`fixed bottom-0 left-0 right-0 z-[60] bg-main transition-transform duration-300 ${isOpen ? 'translate-y-0' : 'translate-y-full'
-          } rounded-t-3xl shadow-xl pt-4 pb-8 px-6 backdrop-blur-md`}
+          } rounded-t-3xl shadow-xl backdrop-blur-md`}
       >
-        <div className="flex items-center justify-between mb-6">
-          <button
-            onClick={() => setIsOpen(false)}
-            className="text-white text-2xl p-2 rounded-full hover:bg-white/10 active:scale-95 transition"
-          >
-            <FaTimes />
-          </button>
-          <div onClick={() => router.push(`/`)} className="w-32 h-auto cursor-pointer">
-            <Image src={logo} alt="Logo" className="w-full h-auto object-contain" />
+        {/* Fixed header */}
+        <div className="sticky top-0 z-10 bg-main px-6 pt-4 pb-4 border-b border-white/10">
+          <div className="flex items-center justify-between">
+            <button
+              onClick={() => setIsOpen(false)}
+              className="text-white text-2xl p-2 rounded-full hover:bg-white/10 active:scale-95 transition"
+            >
+              <FaTimes />
+            </button>
+            <div onClick={() => router.push(`/`)} className="w-32 h-auto cursor-pointer">
+              <Image src={logo} alt="Logo" className="w-full h-auto object-contain" />
+            </div>
+            <div className="w-8 h-8" />
           </div>
-          <div className="w-8 h-8" />
         </div>
 
-        <nav className="flex flex-col space-y-4 text-white font-medium text-sm">
-          {navItems?.map((item, idx) => (
-            <MenuItem key={idx} {...item} router={router} setIsOpen={setIsOpen} />
-          ))}
-          <div
-            onClick={handleLanguageToggle}
-            className="cursor-pointer flex items-center gap-3 px-4 py-3 rounded-xl bg-white/10 hover:bg-white/20 transition"
-          >
-            <span className="text-xl"><FaGlobe /></span>
-            <span className="text-sm sm:text-base md:text-lg">{isArabic ? 'English' : 'العربية'}</span>
-          </div>
-        </nav>
+        {/* Scrollable links */}
+        <div className="overflow-y-auto max-h-[calc(100vh-80px)] px-6 py-4">
+          <nav className="flex flex-col space-y-4 text-white font-medium text-sm">
+            {navItems?.map((item, idx) => (
+              <MenuItem key={idx} {...item} router={router} setIsOpen={setIsOpen} />
+            ))}
+            <div
+              onClick={handleLanguageToggle}
+              className="cursor-pointer flex items-center gap-3 px-4 py-3 rounded-xl bg-white/10 hover:bg-white/20 transition"
+            >
+              <span className="text-xl"><FaGlobe /></span>
+              <span className="text-sm sm:text-base md:text-lg">
+                {isArabic ? 'English' : 'العربية'}
+              </span>
+            </div>
+          </nav>
+        </div>
       </div>
+
     </>
   );
 };
@@ -108,9 +117,8 @@ const MenuItem = ({ setIsOpen, router, link, icon: Icon, label, active = false, 
     <div>
       <div
         onClick={handleClick}
-        className={`cursor-pointer flex items-center justify-between px-4 py-3 rounded-xl transition ${
-          active ? 'bg-white text-[#075377]' : 'bg-white/10 hover:bg-white/20 text-white'
-        }`}
+        className={`cursor-pointer flex items-center justify-between px-4 py-3 rounded-xl transition ${active ? 'bg-white text-[#075377]' : 'bg-white/10 hover:bg-white/20 text-white'
+          }`}
       >
         <div className="flex items-center gap-3">
           <span className="text-xl relative">

@@ -37,73 +37,62 @@ export default function ClientLayoutWrapper({ children }) {
         {
             label: t('nav.bookFlight'),
             icon: AirplaneTiltIcon,
-            link: '/',
-            subLinks: [
-
-            ],
+            link: '',
+            subLinks: []
         },
         {
             label: t('nav.travelExperience'),
             icon: TrolleySuitcaseIcon,
             link: '/destenations',
-            subLinks: [
-
-            ],
+            subLinks: []
         },
         {
             label: t('nav.holiday'),
             icon: IslandIcon,
-            link: '/holiday',
-            subLinks: [
-
-            ],
+            link: '',
+            subLinks: []
         },
         {
             label: t('nav.flightStatus'),
             icon: ClockIcon,
-            link: '/flight-status',
-            subLinks: [
-
-            ],
+            link: '',
+            subLinks: []
         },
         {
             label: t('nav.travelAgent'),
             icon: HandshakeIcon,
             link: '/travel-agent',
             subLinks: [
-                { label: 'Sing up', link: '/' },
-                { label: 'Login', link: '/' },
-            ],
+                { label: t('nav.subSignUp'), link: '/' },
+                { label: t('nav.subLogin'), link: 'https://reservations.flycham.com/xbe/' }
+            ]
         },
         {
             label: t('nav.loyaltyProgram'),
             icon: MedalIcon,
-            link: '/loyalty',
-            subLinks: [
-
-            ],
+            link: '',
+            subLinks: []
         },
         {
             label: t('nav.help'),
             icon: QuestionIcon,
-            link: '/',
+            link: '',
             subLinks: [
-                { label: 'Travel Updates', link: '/' },
-                { label: 'Share Feedback', link: '/' },
-                { label: 'FAQs', link: '/' },
-                { label: 'Contact Us', link: '/' },
-                { label: 'Travel Hub-B2B', link: '/' },
-            ],
+                { label: t('nav.subTravelUpdates'), link: '/travel-update' },
+                { label: t('nav.subShareFeedback'), link: '/' },
+                { label: t('nav.subFAQs'), link: '/' },
+                { label: t('nav.subContactUs'), link: '/' },
+                { label: t('nav.subTravelHub'), link: '/' }
+            ]
         },
         {
             label: t('nav.account'),
             icon: UserIcon,
-            link: '/',
-            subLinks: [
-
-            ],
-        },
+            link: '',
+            subLinks: []
+        }
     ];
+
 
 
     return (

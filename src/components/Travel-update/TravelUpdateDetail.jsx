@@ -1,9 +1,11 @@
 'use client';
-import { AirplaneTilt, Clock } from '@phosphor-icons/react';
+import { AirplaneTilt, ArrowLeft, Clock } from '@phosphor-icons/react';
+import { useRouter } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 
 export const TravelUpdateDetail = ({ slug }) => {
   const { t } = useTranslation();
+  const router = useRouter()
   const titleMap = {
     'flight-suspension-uae': t('travelCard.titleUAE'),
     'flight-suspension-kuwait': t('travelCard.titleKuwait'),
@@ -70,28 +72,32 @@ export const TravelUpdateDetail = ({ slug }) => {
 
 
 
+const FlexibleOptionsNotice = () => {
+  const { t, i18n } = useTranslation();
+  const isArabic = i18n.language === 'ar';
 
-  const FlexibleOptionsNotice = () => {
-    const options = t('travelUpdate.flexibleOptions', { returnObjects: true });
+  const options = t('travelUpdate.flexibleOptions', { returnObjects: true });
 
-    return (
-      <div className="mb-8">
-        <p className="text-[#054E72] text-[18px] font-medium mb-4">
-          {t('travelUpdate.flexibleOptionsIntro')}
-        </p>
-        <ul className="pl-5 space-y-2 text-[#000] text-[16px] leading-[24px]">
-          {options.map((item, index) => (
-            <li
-              key={index}
-              className="relative before:content-['-'] before:absolute before:left-0 before:text-[#000] pl-4"
-            >
-              {item}
-            </li>
-          ))}
-        </ul>
-      </div>
-    );
-  };
+  return (
+    <div className="mb-8">
+      <p className="text-[#054E72] text-[18px] font-medium mb-4">
+        {t('travelUpdate.flexibleOptionsIntro')}
+      </p>
+      <ul className="pl-5 space-y-2 text-[#000] text-[16px] leading-[24px]">
+        {options.map((item, index) => (
+          <li
+            key={index}
+            className={`relative before:content-['-'] before:absolute ${
+              isArabic ? 'before:right-0 pr-4' : 'before:left-0 pl-4'
+            } before:text-[#000]`}
+          >
+            {item}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
 
   const ActionButtons = () => {
     const { t } = useTranslation();
@@ -148,6 +154,15 @@ export const TravelUpdateDetail = ({ slug }) => {
   return (
     <div className="w-full mx-auto px-2 py-4">
       <div className="mb-6">
+        {/* Back button */}
+        <button
+          onClick={() => router.back()}
+          className="cursor-pointer flex items-center gap-1 text-main-light font-semibold text-[14px] hover:underline"
+        >
+          <ArrowLeft size={15} weight="bold" />
+          {t('Back')}
+        </button>
+
         <h1 className="text-[32px] text-main font-bold mb-1">
           {titleMap[slug] || t('travelUpdate.pageTitle')}
         </h1>

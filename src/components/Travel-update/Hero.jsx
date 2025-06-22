@@ -5,7 +5,9 @@ import Image from 'next/image';
 import { useTranslation } from 'react-i18next';
 import useIsArabic from '@/hooks/useIsArabic';
 
-const Hero = ({ slides, isNavigationBtns, title, subTitle, objectFit = 'cover', height = 'responsive', parentHeight = 'responsive' }) => {
+const Hero = ({ slides, isNavigationBtns, title,country, subTitle, objectFit = 'cover', height = 'responsive', parentHeight = 'responsive' }) => {
+  console.log('country',country);
+  
   const { t, i18n } = useTranslation();
   const [currentSlide, setCurrentSlide] = useState(0);
   const isArabic = useIsArabic();
@@ -73,6 +75,14 @@ const Hero = ({ slides, isNavigationBtns, title, subTitle, objectFit = 'cover', 
           }}
         >
           {t(title)}
+        </h2>
+        <h2
+          className="text-[clamp(1.5rem,5vw,3rem)] font-bold mb-4 leading-tight"
+          style={{
+            textShadow: '1px 1px 2px rgba(0,0,0,0.8)',
+          }}
+        >
+          {(country)}
         </h2>
         {subTitle &&
           <p

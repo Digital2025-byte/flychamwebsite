@@ -319,7 +319,14 @@
     "support": "Support",
     "help": "Help",
     "account": "Account",
-    "flightStatus": " Flight Status"
+    "flightStatus": " Flight Status",
+    "subSignUp": "Sign up",
+    "subLogin": "Login",
+    "subTravelUpdates": "Travel Updates",
+    "subShareFeedback": "Share Feedback",
+    "subFAQs": "FAQs",
+    "subContactUs": "Contact Us",
+    "subTravelHub": "Travel Hub-B2B"
   },
   "flyingStart": {
     "travelFrom": "Where are you Traveling From?",
@@ -434,15 +441,19 @@
     "linkText": "Manage Your Booking",
     "moreText": "For assistance with your existing reservations, please visit Manage Your Booking or contact our support team.",
     "buttonText": "Find more",
-    "contactText": "Contact us"
-  },
-"travelPage": {
-  "subTitleUAE": "Latest travel update for UAE flights",
-  "subTitleKuwait": "Latest travel update for Kuwait flights",
-  "subTitleIraq": "Latest travel update for Iraq flights",
-  "subTitleMuscat": "Latest travel update for Muscat flights"
-},
+    "contactText": "Contact us",
+    "countryUAE": "United Arab Emirates",
+"countryKuwait": "Kuwait",
+"countryIraq": "Iraq",
+"countryMuscat": "Muscat"
 
+  },
+  "travelPage": {
+    "subTitleUAE": "Latest travel update for UAE flights",
+    "subTitleKuwait": "Latest travel update for Kuwait flights",
+    "subTitleIraq": "Latest travel update for Iraq flights",
+    "subTitleMuscat": "Latest travel update for Muscat flights"
+  },
   "alert": {
     "important": "Important:",
     "message": "Flights to/from UAE, Kuwait, Oman, Baghdad, and Erbil are temporarily suspended.",

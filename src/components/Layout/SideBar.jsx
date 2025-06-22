@@ -10,12 +10,13 @@ import useIsArabic from '@/hooks/useIsArabic';
 import { useTranslation } from 'react-i18next';
 import { GlobeHemisphereWestIcon } from '@phosphor-icons/react';
 import SubMenu from './SubMenu';
+import LanguageSwitchButton from './LanguageSwitchButton';
 
 const SideBar = ({ navItems, isOpen, setIsOpen }) => {
     const [isManuallyControlled, setIsManuallyControlled] = useState(false) // Track if user manually closed it
     const router = useRouter()
     const isArabic = useIsArabic();
-    const { i18n } = useTranslation()
+    const { i18n,t } = useTranslation()
     const [hoveredItem, setHoveredItem] = useState(null);
 
     const handleMouseEnter = () => {
@@ -60,7 +61,7 @@ const SideBar = ({ navItems, isOpen, setIsOpen }) => {
 
                 <div
                     onClick={handleArrowClick}
-                    className={`absolute top-[45px] ${isArabic ? 'left-[-10px]' : 'right-[-10px]'} cursor-pointer transition-transform duration-700`}
+                    className={`absolute top-[120px] ${isArabic ? 'left-[-10px]' : 'right-[-10px]'} cursor-pointer transition-transform duration-700`}
                 >
                     <Image
                         src={arrow}
@@ -113,7 +114,7 @@ const SideBar = ({ navItems, isOpen, setIsOpen }) => {
                                         onMouseEnter={() => setHoveredItem(index)}
                                     >
                                         <button
-                                            className={`w-full flex items-center gap-3 py-2 px-3 rounded-md text-white hover:bg-secondary hover:text-white transition font-semibold`}
+                                            className={`cursor-pointer w-full flex items-center gap-3 py-2 px-3 rounded-md text-white hover:bg-secondary hover:text-white transition font-semibold`}
                                             style={{
                                                 fontFamily: 'Montserrat, sans-serif',
                                                 fontSize: '15px',
@@ -134,7 +135,11 @@ const SideBar = ({ navItems, isOpen, setIsOpen }) => {
                                                         color="white"
                                                     />
                                                 </span>
-
+                                                {item.label === t('nav.travelAgent') && (
+                                   <span
+    className={`absolute -top-1 ${isArabic ? 'left-20' : 'right-25'} w-3 h-3 bg-red-500 rounded-full border border-white shadow`}
+  />
+                                                )}
 
                                                 <span
                                                     className={`ml-3 whitespace-nowrap transition-all duration-300 ${isOpen
@@ -161,35 +166,8 @@ const SideBar = ({ navItems, isOpen, setIsOpen }) => {
 
                         </nav>
                         {/* Language Switch Button */}
-                        <button
-                            className="w-full  flex items-center gap-3 py-2 px-3 rounded-md text-white hover:bg-secondary transition font-semibold"
-                            style={{
-                                fontFamily: 'Montserrat, sans-serif',
-                                fontSize: '15px',
-                                fontStyle: 'normal',
-                                lineHeight: '15.791px',
-                            }}
-                            onClick={() => {
-                                const langCode = isArabic ? 'en' : 'ar';
-                                i18n.changeLanguage(langCode);
-                                const dir = langCode === 'ar' ? 'rtl' : 'ltr';
-                                document.documentElement.setAttribute('dir', dir);
-                                document.documentElement.setAttribute('lang', langCode);
-                            }}
-                        >
-                            <div className="flex gap-2 items-center relative">
-                                <span className="text-lg relative">
-                                    <GlobeHemisphereWestIcon
-                                        color="white" size={24} />
-                                </span>
-                                <span
-                                    className={`ml-3 whitespace-nowrap transition-all duration-300 ${isOpen ? 'opacity-100' : 'opacity-0 w-0 overflow-hidden'
-                                        }`}
-                                >
-                                    {isArabic ? 'English' : 'العربية'}
-                                </span>
-                            </div>
-                        </button>
+                        <LanguageSwitchButton isOpen={isOpen} />
+
                     </div>
                 </div>
             </div>

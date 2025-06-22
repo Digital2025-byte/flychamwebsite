@@ -21,25 +21,32 @@ const travelUpdates = {
     label: 'Update',
     date: 'travelCard.lastUpdated',
     title: 'travelCard.titleUAE',
-    subTitle: 'travelPage.subTitleUAE'
+    subTitle: 'travelPage.subTitleUAE',
+    country: 'UAE'
   },
   'flight-suspension-kuwait': {
     label: 'Update',
     date: 'travelCard.lastUpdated',
     title: 'travelCard.titleKuwait',
-    subTitle: 'travelPage.subTitleKuwait'
+    subTitle: 'travelPage.subTitleKuwait',
+    country: 'Kuwait'
+
   },
   'flight-suspension-iraq': {
     label: 'Update',
     date: 'travelCard.lastUpdated',
     title: 'travelCard.titleIraq',
-    subTitle: 'travelPage.subTitleIraq'
+    subTitle: 'travelPage.subTitleIraq',
+    country: 'Iraq'
+
   },
   'flight-suspension-muscat': {
     label: 'Update',
     date: 'travelCard.lastUpdated',
     title: 'travelCard.titleMuscat',
-    subTitle: 'travelPage.subTitleMuscat'
+    subTitle: 'travelPage.subTitleMuscat',
+    country: 'Muscat'
+
   }
 };
 
@@ -63,13 +70,14 @@ const Page = ({ params }) => {
         slides={slides}
         title={(updateData.title)}
         subTitle={(updateData.subTitle)}
+        country={(updateData.country)}
         objectFit="cover"
         parentHeight="responsive"
         height="responsive"
       />
 
       <div className="w-[90%] md:w-[80%] mx-auto px-2 py-4">
-        <TravelUpdateDetail slug={slug}/>
+        <TravelUpdateDetail slug={slug} />
       </div>
     </>
   );
