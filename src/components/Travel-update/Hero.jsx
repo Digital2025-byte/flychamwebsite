@@ -5,9 +5,7 @@ import Image from 'next/image';
 import { useTranslation } from 'react-i18next';
 import useIsArabic from '@/hooks/useIsArabic';
 
-const Hero = ({ slides, isNavigationBtns, title,country, subTitle, objectFit = 'cover', height = 'responsive', parentHeight = 'responsive' }) => {
-  console.log('country',country);
-  
+const Hero = ({ slides, isNavigationBtns, title, country, subTitle, objectFit = 'cover', height = 'responsive', parentHeight = 'responsive' }) => {
   const { t, i18n } = useTranslation();
   const [currentSlide, setCurrentSlide] = useState(0);
   const isArabic = useIsArabic();
@@ -67,32 +65,32 @@ const Hero = ({ slides, isNavigationBtns, title,country, subTitle, objectFit = '
 
 
       {/* Center Text */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-center z-10 max-w-[90vw] px-4">
-        <h2
-          className="text-[clamp(1.5rem,5vw,3rem)] font-bold mb-4 leading-tight"
-          style={{
-            textShadow: '1px 1px 2px rgba(0,0,0,0.8)',
-          }}
-        >
-          {t(title)}
-        </h2>
-        <h2
-          className="text-[clamp(1.5rem,5vw,3rem)] font-bold mb-4 leading-tight"
-          style={{
-            textShadow: '1px 1px 2px rgba(0,0,0,0.8)',
-          }}
-        >
-          {t(country)}
-        </h2>
-        {subTitle &&
-          <p
-            className="text-[#F5F5F4] font-medium text-[18px] font-[Montserrat] leading-normal"
-          >
-            {t(subTitle)}
-          </p>
+<div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-center z-10 max-w-[90vw] px-4">
+  <h2
+    className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-medium mb-4 leading-tight"
+    style={{
+      textShadow: '1px 1px 2px rgba(0,0,0,0.8)',
+    }}
+  >
+    {t(title)}
+  </h2>
 
-        }
-      </div>
+  <h2
+    className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-4 leading-tight"
+    style={{
+      textShadow: '1px 1px 2px rgba(0,0,0,0.8)',
+    }}
+  >
+    {t(country)}
+  </h2>
+
+  {subTitle && (
+    <p className="text-[14px] sm:text-[16px] md:text-[18px] lg:text-[20px] text-[#F5F5F4] font-medium font-[Montserrat] leading-normal">
+      {t(subTitle)}
+    </p>
+  )}
+</div>
+
 
       {/* Navigation Dots */}
       {isNavigationBtns && (

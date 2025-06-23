@@ -26,7 +26,7 @@ export default function ImportantAlert() {
     speed: 500,
     slidesToShow: 1,
     vertical: true,
-    autoplay: true,
+    // autoplay: true,
     autoplaySpeed: 4000,
     arrows: false,
     pauseOnHover: true

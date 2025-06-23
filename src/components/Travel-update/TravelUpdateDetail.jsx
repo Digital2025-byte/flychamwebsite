@@ -38,7 +38,7 @@ export const TravelUpdateDetail = ({ slug }) => {
       <div className="flex flex-col md:flex-row gap-4 mb-8">
         {/* Left Card */}
         <div className="flex-1 bg-[#F5F5F5] p-6 rounded-xl">
-          <h3 className="text-[20px] text-[#1B1F23] font-semibold mb-4">
+          <h3 className="text-xl md:text-2xl text-[#1B1F23] font-semibold mb-4">
             {t('travelUpdate.suspendedRoutesTitle')}
           </h3>
 
@@ -116,13 +116,17 @@ export const TravelUpdateDetail = ({ slug }) => {
       }
     }
     return (
-      <div className="flex flex-col md:flex-row gap-3">
+      <div className="flex flex-col md:flex-row gap-6 md:gap-3">
         {buttons.map((label, index) => (
 <button
   key={index}
   onClick={() => handleClick(label)}
-  className="cursor-pointer flex-1 px-6 py-3 border border-main font-bold text-[14px] transition rounded-md
-    bg-transparent text-main hover:bg-main hover:!text-white"
+  className="
+    cursor-pointer flex-1 px-6 py-3 border border-main font-bold text-[14px] transition rounded-md
+    bg-transparent text-main
+    hover:bg-main hover:!text-white
+    active:!bg-main active:!text-white
+  "
 >
   {label}
 </button>
@@ -165,7 +169,7 @@ export const TravelUpdateDetail = ({ slug }) => {
     <div className="w-full mx-auto px-2 py-4">
       <div className="mb-6">
         {/* Back button */}
-        <button
+        {/* <button
           onClick={() => router.back()}
           className="cursor-pointer flex items-center gap-1 text-main-light font-semibold text-[14px] hover:underline"
         >
@@ -177,20 +181,21 @@ export const TravelUpdateDetail = ({ slug }) => {
             <ArrowLeft size={15} weight="bold" />
           }
           {t('Back')}
-        </button>
+        </button> */}
 
-        <h1 className="text-[32px] text-main font-bold mb-1">
-          {titleMap[slug] || t('travelUpdate.pageTitle')}
-        </h1>
+<h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl text-main font-bold mb-1">
+  {titleMap[slug] || t('travelUpdate.pageTitle')}
+</h1>
 
-        <div className="flex items-center text-[13.96px] text-[#5F5F5C] mb-6">
-          <Clock size={20} color="#5F5F5C" className="mr-2" />
-          {t('travelUpdate.lastUpdated')}
-        </div>
+<div className="flex items-center text-sm sm:text-base md:text-lg text-[#5F5F5C] mb-6">
+  <Clock size={20} color="#5F5F5C" className="mr-2" />
+  {t('travelUpdate.lastUpdated')}
+</div>
 
-        <h2 className="text-[24px] text-secondary font-semibold mb-4">
-          {t('travelUpdate.overviewTitle')}
-        </h2>
+<h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-secondary font-semibold mb-4">
+  {t('travelUpdate.overviewTitle')}
+</h2>
+
 
         <SuspendedRoutesCard slug={slug} />
         <FlexibleOptionsNotice />

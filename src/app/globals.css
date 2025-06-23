@@ -27,8 +27,8 @@
 
 body,
 h1,
-p {
-  font-family: 'Montserrat', Helvetica, Arial, sans-serif;
+p,h2,h3,h4,h5,h6,div,span {
+  font-family: 'Montserrat', Helvetica, Arial, sans-serif !important;
 }
 
 .bg-main {

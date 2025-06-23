@@ -38,10 +38,11 @@ const TravelUpdateClient = () => {
         objectFit="cover"
         parentHeight="responsive"
         height="responsive"
+        subTitle={t("travelsliderSubTitle")}
       />
 
       <div className="w-[90%] md:w-[80%] mx-auto my-6 px-2 py-4">
-        <div className='mb-6'>
+        <div className='mb-10'>
 
           <TravelCard update={{
             label: t('travelCard.updateLabel'),
@@ -53,7 +54,7 @@ const TravelUpdateClient = () => {
 
         </div>
         {updates.map((update, index) => (
-          <div key={index} className="mb-6">
+          <div key={index} className="mb-10">
             <TravelCard update={update} isFindMore />
           </div>
         ))}

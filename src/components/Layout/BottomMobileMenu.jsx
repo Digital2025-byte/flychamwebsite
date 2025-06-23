@@ -7,13 +7,14 @@ import logo from '@/assets/images/logo.webp';
 import { useRouter } from 'next/navigation';
 import useIsArabic from '@/hooks/useIsArabic';
 import { useTranslation } from 'react-i18next';
+import { GlobeHemisphereWestIcon } from '@phosphor-icons/react';
 
 const BottomMobileMenu = ({ navItems }) => {
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef(null);
   const router = useRouter();
   const isArabic = useIsArabic();
-  const { t,i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -82,13 +83,13 @@ const BottomMobileMenu = ({ navItems }) => {
         <div className="overflow-y-auto max-h-[calc(100vh-80px)] px-6 py-4">
           <nav className="flex flex-col space-y-4 text-white font-medium text-sm">
             {navItems?.map((item, idx) => (
-              <MenuItem t={t}key={idx} {...item} router={router} setIsOpen={setIsOpen} />
+              <MenuItem t={t} key={idx} {...item} router={router} setIsOpen={setIsOpen} />
             ))}
             <div
               onClick={handleLanguageToggle}
               className="cursor-pointer flex items-center gap-3 px-4 py-3 rounded-xl bg-white/10 hover:bg-white/20 transition"
             >
-              <span className="text-xl"><FaGlobe /></span>
+              <span className="text-xl"><GlobeHemisphereWestIcon size={24}/></span>
               <span className="text-sm sm:text-base md:text-lg">
                 {isArabic ? 'English' : 'العربية'}
               </span>
@@ -101,7 +102,7 @@ const BottomMobileMenu = ({ navItems }) => {
   );
 };
 
-const MenuItem = ({ t,setIsOpen, router, link, icon: Icon, label, active = false, subLinks = [] }) => {
+const MenuItem = ({ t, setIsOpen, router, link, icon: Icon, label, active = false, subLinks = [] }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   const handleClick = () => {
@@ -135,7 +136,7 @@ const MenuItem = ({ t,setIsOpen, router, link, icon: Icon, label, active = false
       </div>
 
       {isExpanded && subLinks.length > 0 && (
-        <div className="ml-8 mt-2 flex flex-col space-y-2">
+        <div className="ml-8 mt-3 flex flex-col space-y-4">
           {subLinks.map((sub, subIdx) => (
             <div
               key={subIdx}
