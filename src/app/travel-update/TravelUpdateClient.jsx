@@ -26,7 +26,9 @@ const TravelUpdateClient = () => {
   }));
 
   const today = new Date();
-  const formattedDate = `${t('travelCard.lastUpdated')} ${today.getDate()} ${today.toLocaleString('default', { month: 'long' })} ${today.getFullYear()}, ${today.getHours()}:${today.getMinutes().toString().padStart(2, '0')} Dubai (GMT+4)`;
+  const formattedDate = `${t('travelCard.lastUpdated')}`;
+  const formattedDate1 = t('travelCard.lastUpdated1');
+  const formattedDate2 = t('travelCard.lastUpdated2');
 
 
 
@@ -46,7 +48,7 @@ const TravelUpdateClient = () => {
 
           <TravelCard update={{
             label: t('travelCard.updateLabel'),
-            date: formattedDate,
+            date: t('travelCard.lastUpdated2'),
             title: t(`travelCard.newUpdate`),
             description: t(`travelCard.descriptionnewUpdate`),
             slug: `flight-suspension-dam-aleppo`
@@ -58,7 +60,7 @@ const TravelUpdateClient = () => {
 
           <TravelCard update={{
             label: t('travelCard.updateLabel'),
-            date: formattedDate,
+            date: t('travelCard.lastUpdated1'),
             title: t(`travelCard.damAleppo`),
             description: t(`travelCard.descriptionDamAleppo`),
             slug: `flight-suspension-dam-aleppo`

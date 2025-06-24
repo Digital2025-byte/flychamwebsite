@@ -110,14 +110,13 @@
         "agentsWorldwide": "Our Agents Worldwide",
         "joinPartner": "Join As a Partner",
         "faq": "FAQs",
-        "travelAgentGuide":"Travel Agent Guide",
-        "apiintegration":"Api Intergration",
-        "travelhub":"Travel Hub - B2B",
-
-        "ourgsa":"Our GSA",
-        "ouroffice":"Our Offices",
-        "share":"Share Feedback & Review",
-        "travelUpdates":"Travel Updates"
+        "travelAgentGuide": "Travel Agent Guide",
+        "apiintegration": "Api Intergration",
+        "travelhub": "Travel Hub - B2B",
+        "ourgsa": "Our GSA",
+        "ouroffice": "Our Offices",
+        "share": "Share Feedback & Review",
+        "travelUpdates": "Travel Updates"
       }
     }
   },
@@ -428,7 +427,7 @@
     "terms": "Terms and Conditions"
   },
   "travelsliderTitle": "Travel Updates",
-  "travelsliderSubTitle":"Stay informed with the latest travel information and guidelines",
+  "travelsliderSubTitle": "Stay informed with the latest travel information and guidelines",
   "updateLabel": "Update",
   "lastUpdated": "Last updated: 15 June 2025, 06:38 Dubai (GMT+4)",
   "title": "Flight suspensions - Iraq, Jordan, Lebanon, and Iran",
@@ -440,6 +439,8 @@
     "pageTitle": "Flight Suspensions",
     "updateLabel": "Update",
     "lastUpdated": "Last updated: 19 June 2025, 13:00 Dubai (GMT+4)",
+    "lastUpdated1": "Last updated: 22 June 2025, 13:00 Dubai (GMT+4)",
+    "lastUpdated2": "Last updated: 23 June 2025, 13:00 Dubai (GMT+4)",
     "titleUAE": "Flight Suspensions – United Arab Emirates",
     "titleKuwait": "Flight Suspensions – Kuwait",
     "titleIraq": "Flight Suspensions – Iraq",
@@ -456,22 +457,20 @@
     "countryKuwait": "Kuwait",
     "countryIraq": "Iraq",
     "countryMuscat": "Muscat",
-
-    "damAleppo":"Our flights on June 22 and 23 have been diverted to and from Aleppo International Airport instead of Damascus International Airport.",
-
-    "descriptionDamAleppo":"Dear passengers, our flights on June 22 and 23 have been diverted to and from Aleppo International Airport instead of Damascus International Airport due to the current circumstances. Please note that free transportation services are available from Damascus to Aleppo and vice versa for diverted flights from Damascus International Airport only.Please be at the bus departure area on Al-Adawi Highway 8.5 hours before the diverted flight's departure time.For more information and assistance, please contact customer service or the office that issued your tickets.",
-    "newUpdate":"Our flights will continue to be diverted on June 24 to and from Aleppo International Airport instead of Damascus International Airport.",
-    "descriptionnewUpdate":"Dear passengers, we would inform you that our flights will continue to be diverted on June 24 to and from Aleppo International Airport instead of Damascus International Airport due to the current circumstances. Please note that free transportation services are available from Damascus to Aleppo and vice versa for diverted flights from Damascus International Airport only.Please be at the bus departure area on Al-Adawi Highway 8 hours before the scheduled departure time of your diverted flight.For more information and assistance, please contact customer service or the office that issued your tickets."
+    "damAleppo": "Our flights on June 22 and 23 have been diverted to and from Aleppo International Airport instead of Damascus International Airport.",
+    "descriptionDamAleppo": "Dear passengers, our flights on June 22 and 23 have been diverted to and from Aleppo International Airport instead of Damascus International Airport due to the current circumstances. Please note that free transportation services are available from Damascus to Aleppo and vice versa for diverted flights from Damascus International Airport only.Please be at the bus departure area on Al-Adawi Highway 8.5 hours before the diverted flight's departure time.For more information and assistance, please contact customer service or the office that issued your tickets.",
+    "newUpdate": "Our flights will continue to be diverted on June 24 to and from Aleppo International Airport instead of Damascus International Airport.",
+    "descriptionnewUpdate": "Dear passengers, we would inform you that our flights will continue to be diverted on June 24 to and from Aleppo International Airport instead of Damascus International Airport due to the current circumstances. Please note that free transportation services are available from Damascus to Aleppo and vice versa for diverted flights from Damascus International Airport only.Please be at the bus departure area on Al-Adawi Highway 8 hours before the scheduled departure time of your diverted flight.For more information and assistance, please contact customer service or the office that issued your tickets."
   },
   "travelPage": {
     "subTitleUAE": "Latest travel update for United Arab Emirates flights",
     "subTitleKuwait": "Latest travel update for Kuwait flights",
     "subTitleIraq": "Latest travel update for Iraq flights",
     "subTitleMuscat": "Latest travel update for Muscat flights",
-    "countryIraq":"Iraq",
-    "countryKuwait":"Kuwait",
-    "countryMuscat":"Muscat",
-    "countryUAE":"United Arab Emirates"
+    "countryIraq": "Iraq",
+    "countryKuwait": "Kuwait",
+    "countryMuscat": "Muscat",
+    "countryUAE": "United Arab Emirates"
   },
   "alert": {
     "important": "Important:",
@@ -481,6 +480,8 @@
   "travelUpdate": {
     "pageTitle": "Flight Suspensions – UAE, Kuwait, Muscat, and Iraq",
     "lastUpdated": "Last updated: 19 June 2025, 13:00 Dubai (GMT+4)",
+    "lastUpdated1": "Last updated: 22 June 2025, 13:00 Dubai (GMT+4)",
+    "lastUpdated2": "Last updated: 23 June 2025, 13:00 Dubai (GMT+4)",
     "introText": "We regret to inform our passengers that all Fly Cham flights to and from the following destinations are currently suspended until further notice:",
     "suspendedDestinations": [
       "United Arab Emirates: Sharjah, Dubai, Abu Dhabi",

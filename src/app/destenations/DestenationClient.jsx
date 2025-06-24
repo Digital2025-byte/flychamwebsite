@@ -152,8 +152,8 @@ const DestenationClient = () => {
                 <Slider {...settings} ref={sliderRef}>
                     {destinations.map((destination, index) => (
                         <div key={index}>
-                            {/* Background */}
-                            <div className="relative w-full min-h-screen">
+                            <div className="relative w-full h-screen">
+
                                 <Image
                                     src={destination.background}
                                     alt={destination.country}
@@ -161,10 +161,8 @@ const DestenationClient = () => {
                                     className="object-cover brightness-[0.6]"
                                 />
 
-                                {/* Overlay Content */}
                                 <div className="relative z-10 flex flex-col lg:flex-row items-start md:items-center justify-between w-full max-w-7xl mx-auto py-20 gap-8 min-h-screen">
-                                    {/* Left Section */}
-                                    {/* Left Section */}
+
                                     <div
                                         className={`w-full md:max-w-xl text-white px-5 md:px-4 ${isArabic ? 'text-right lg:text-right' : 'text-center lg:text-left'
                                             }`}
@@ -193,7 +191,6 @@ const DestenationClient = () => {
                                     </div>
 
 
-                                    {/* Right Section */}
                                     <div className="flex flex-col items-center gap-6 w-full md:max-w-xl">
                                         <div className=" flex items-center gap-4">
                                             <button

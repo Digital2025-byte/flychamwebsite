@@ -116,9 +116,3 @@ p,h2,h3,h4,h5,h6,div,span {
   mask-size: cover;
   mask-position: center;
 }
-/* Add this to your global.css or Tailwind "style" section */
-.slick-slide {
-  display: block !important;
-  width: 100% !important;
-  overflow: hidden;
-}

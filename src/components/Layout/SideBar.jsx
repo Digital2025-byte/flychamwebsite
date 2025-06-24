@@ -4,6 +4,9 @@ import Image from 'next/image';
 import logo from '@/assets/images/logo.webp';
 import tabicon from '@/assets/images/tabicon.png';
 import pattern from '@/assets/images/pattern.webp';
+import footerPattern from '@/assets/images/footerPattern.png';
+import footerPatternar from '@/assets/images/footerPatternar.png';
+import sidebarar from '@/assets/images/sidebarar.png';
 import arrow from "@/assets/arrow.svg"
 import { useRouter } from "next/navigation";
 import useIsArabic from '@/hooks/useIsArabic';
@@ -78,18 +81,19 @@ const handleArrowClick = () => {
                     />
                 </div>
 
-                {isOpen &&
-
-                    <div className="absolute bottom-0 left-0 opacity-50 w-full overflow-hidden rounded-br-[16px]">
-                        <Image
-                            src={pattern}
-                            alt="Fly Cham pattern"
-                            width={250}
-                            height={250}
-                            className=" w-full h-full"
-                        />
-                    </div>
-                }
+ {isOpen && (
+    <div
+        className={`absolute bottom-0 left-0 opacity-50 w-full overflow-hidden rounded-br-[16px] `}
+    >
+        <Image
+            src={isArabic ? sidebarar : footerPattern}
+            alt="Fly Cham pattern"
+            width={250}
+            height={250}
+            className="w-full h-full"
+        />
+    </div>
+)}
 
                 <div className="space-y-6"
 
