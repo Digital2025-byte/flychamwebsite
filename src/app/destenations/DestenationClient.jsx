@@ -19,6 +19,8 @@ import turkey from '@/assets/images/Destenations/turkey.webp';
 import kuwait from '@/assets/images/Destenations/kuwait.webp';
 import { useTranslation } from 'react-i18next';
 import useIsArabic from '@/hooks/useIsArabic';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 
 const DestinationCard = ({ name, description, isArabic }) => (
@@ -127,17 +129,17 @@ const DestenationClient = () => {
 
     const sliderRef = useRef();
 
-const settings = {
-    infinite: true,
-    speed: 2000, // 1 second transition
-    cssEase: 'ease-in-out',
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 3000, // wait 3s before next slide
-    pauseOnHover: false,
-    arrows: false,
-};
+    const settings = {
+        infinite: true,
+        speed: 2000, // 1 second transition
+        cssEase: 'ease-in-out',
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 3000, // wait 3s before next slide
+        pauseOnHover: false,
+        arrows: false,
+    };
 
     const handleClickBookNow = () => {
         const widget = document.getElementById("search-widget");
@@ -148,17 +150,18 @@ const settings = {
 
     return (
         <>
-            <div className=" relative  min-h-screen ">
+            <div className="relative min-h-screen [&_.slick-slide]:h-full [&_.slick-list]:h-full">
                 <Slider {...settings} ref={sliderRef}>
                     {destinations.map((destination, index) => (
                         <div key={index}>
                             {/* Background */}
-                            <div className="relative w-full min-h-screen">
+                            <div className="relative w-full h-screen">
                                 <Image
                                     src={destination.background}
                                     alt={destination.country}
                                     fill
                                     className="object-cover brightness-[0.6]"
+                                    priority
                                 />
 
                                 {/* Overlay Content */}
