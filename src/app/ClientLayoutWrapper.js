@@ -22,9 +22,16 @@ import { useParams, usePathname } from "next/navigation";
 import useIsMobile from "@/hooks/useIsMobile";
 import useIsArabic from "@/hooks/useIsArabic";
 import ImportantAlert from "@/components/Ui/Alert";
-import { Airplane, TrolleySuitcase, Island, Clock, Handshake, Medal, Question, User, TrolleySuitcaseIcon, HandshakeIcon, QuestionIcon, ClockIcon, MedalIcon, UserIcon, AirplaneTiltIcon, TreePalmIcon } from '@phosphor-icons/react';
-import { IslandIcon } from "@phosphor-icons/react/dist/ssr";
-
+import {
+  AirplaneTilt,
+  Clock,
+  Handshake,
+  Island,
+  Medal,
+  Question,
+  TrolleySuitcase,
+  User
+} from '@phosphor-icons/react';
 
 export default function ClientLayoutWrapper({ children }) {
     const [isOpen, setIsOpen] = useState(true)
@@ -33,65 +40,65 @@ export default function ClientLayoutWrapper({ children }) {
     const isMobile = useIsMobile()
     const { t } = useTranslation();
     const isAr = useIsArabic()
-    const navItems = [
-        {
-            label: t('nav.bookFlight'),
-            icon: AirplaneTiltIcon,
-            link: '',
-            subLinks: []
-        },
-        {
-            label: t('nav.travelExperience'),
-            icon: TrolleySuitcaseIcon,
-            link: '/destenations',
-            subLinks: []
-        },
-        {
-            label: t('nav.holiday'),
-            icon: IslandIcon,
-            link: '',
-            subLinks: []
-        },
-        {
-            label: t('nav.flightStatus'),
-            icon: ClockIcon,
-            link: '',
-            subLinks: []
-        },
-        {
-            label: t('nav.travelAgent'),
-            icon: HandshakeIcon,
-            link: '/travel-agent',
-            subLinks: [
-                { label: t('nav.subSignUp'), link: '/' },
-                { label: t('nav.subLogin'), link: 'https://reservations.flycham.com/xbe/' }
-            ]
-        },
-        {
-            label: t('nav.loyaltyProgram'),
-            icon: MedalIcon,
-            link: '',
-            subLinks: []
-        },
-        {
-            label: t('nav.help'),
-            icon: QuestionIcon,
-            link: '',
-            subLinks: [
-                { label: t('nav.subTravelUpdates'), link: '/travel-update' },
-                { label: t('nav.subShareFeedback'), link: '/' },
-                { label: t('nav.subFAQs'), link: '/' },
-                { label: t('nav.subContactUs'), link: '/' },
-                { label: t('nav.subTravelHub'), link: '/' }
-            ]
-        },
-        {
-            label: t('nav.account'),
-            icon: UserIcon,
-            link: '',
-            subLinks: []
-        }
-    ];
+ const navItems = [
+    {
+      label: t('nav.bookFlight'),
+      icon: AirplaneTilt,
+      link: '',
+      subLinks: []
+    },
+    {
+      label: t('nav.travelExperience'),
+      icon: TrolleySuitcase,
+      link: '/destenations',
+      subLinks: []
+    },
+    {
+      label: t('nav.holiday'),
+      icon: Island,
+      link: '',
+      subLinks: []
+    },
+    {
+      label: t('nav.flightStatus'),
+      icon: Clock,
+      link: '',
+      subLinks: []
+    },
+    {
+      label: t('nav.travelAgent'),
+      icon: Handshake,
+      link: '/travel-agent',
+      subLinks: [
+        { label: t('nav.subSignUp'), link: '/' },
+        { label: t('nav.subLogin'), link: 'https://reservations.flycham.com/xbe/' }
+      ]
+    },
+    {
+      label: t('nav.loyaltyProgram'),
+      icon: Medal,
+      link: '',
+      subLinks: []
+    },
+    {
+      label: t('nav.help'),
+      icon: Question,
+      link: '',
+      subLinks: [
+        { label: t('nav.subTravelUpdates'), link: '/travel-update' },
+        { label: t('nav.subShareFeedback'), link: '/' },
+        { label: t('nav.subFAQs'), link: '/' },
+        { label: t('nav.subContactUs'), link: '/' },
+        { label: t('nav.subTravelHub'), link: '/' }
+      ]
+    },
+    {
+      label: t('nav.account'),
+      icon: User,
+      link: '',
+      subLinks: []
+    }
+  ];
 
 
 

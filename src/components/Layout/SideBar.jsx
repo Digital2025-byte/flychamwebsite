@@ -8,7 +8,6 @@ import arrow from "@/assets/arrow.svg"
 import { useRouter } from "next/navigation";
 import useIsArabic from '@/hooks/useIsArabic';
 import { useTranslation } from 'react-i18next';
-import { GlobeHemisphereWestIcon } from '@phosphor-icons/react';
 import SubMenu from './SubMenu';
 import LanguageSwitchButton from './LanguageSwitchButton';
 import logowings from "@/assets/images/logowings.png"

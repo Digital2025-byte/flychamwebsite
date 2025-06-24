@@ -19,8 +19,6 @@ import turkey from '@/assets/images/Destenations/turkey.webp';
 import kuwait from '@/assets/images/Destenations/kuwait.webp';
 import { useTranslation } from 'react-i18next';
 import useIsArabic from '@/hooks/useIsArabic';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
 
 
 const DestinationCard = ({ name, description, isArabic }) => (
@@ -150,18 +148,17 @@ const DestenationClient = () => {
 
     return (
         <>
-            <div className="relative min-h-screen [&_.slick-slide]:h-full [&_.slick-list]:h-full">
+            <div className=" relative  min-h-screen ">
                 <Slider {...settings} ref={sliderRef}>
                     {destinations.map((destination, index) => (
                         <div key={index}>
                             {/* Background */}
-                            <div className="relative w-full h-screen">
+                            <div className="relative w-full min-h-screen">
                                 <Image
                                     src={destination.background}
                                     alt={destination.country}
                                     fill
                                     className="object-cover brightness-[0.6]"
-                                    priority
                                 />
 
                                 {/* Overlay Content */}
