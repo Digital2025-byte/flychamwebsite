@@ -48,6 +48,18 @@ const TravelUpdateClient = () => {
 
           <TravelCard update={{
             label: t('travelCard.updateLabel'),
+            date: t('travelCard.lastUpdated3'),
+            title: t(`travelCard.updateLabel3`),
+            description: t(`travelCard.updatecontinue`),
+            slug: `flight-continue-dam-aleppo`
+          }} />
+
+
+        </div>
+        <div className='mb-10'>
+
+          <TravelCard update={{
+            label: t('travelCard.updateLabel'),
             date: t('travelCard.lastUpdated2'),
             title: t(`travelCard.newUpdate`),
             description: t(`travelCard.descriptionnewUpdate`),

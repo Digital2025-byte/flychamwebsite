@@ -14,11 +14,11 @@ export default function ImportantAlert() {
   const isArabic = useIsArabic();
 
   const alerts = [
-    t('travelCard.damAleppo'),
-    t('travelCard.titleUAE'),
-    t('travelCard.titleMuscat'),
-    t('travelCard.titleIraq'),
-    t('travelCard.titleKuwait')
+    t('travelCard.update'),
+    // t('travelCard.titleUAE'),
+    // t('travelCard.titleMuscat'),
+    // t('travelCard.titleIraq'),
+    // t('travelCard.titleKuwait')
   ];
 
   useEffect(() => {
