@@ -126,7 +126,7 @@ export default function ClientLayoutWrapper({ children }) {
             {/* ✅ Layout */}
             {/* <I18nextProvider i18n={i18n}> */}
             <div >
-                <div className="flex h-screen overflow-hidden">
+                <div className=" flex h-screen overflow-hidden">
                     {/* Sidebar */}
                     <aside className="hidden xl:block   h-screen shadow-xl z-50">
                         {/* {(pathname !== '/about' || pathname !== '/Mission') && */}

@@ -15,7 +15,7 @@ const FlightSearch = ({ isHome }) => {
     const { t } = useTranslation()
 
     const handleModalOpen = () => {
-        setIsModalOpen(true)
+        // setIsModalOpen(true)
     }
 
     const fromCard = (

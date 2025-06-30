@@ -21,6 +21,7 @@ import bg1 from '../assets/images/main-slider/bg1.webp';
 import bg2 from '../assets/images/main-slider/bg2.webp';
 import bg3 from '../assets/images/main-slider/bg3.webp';
 import ImportantAlert from '@/components/Ui/Alert'
+import BookingBox from '@/components/Home/SearchFlight'
 const HomeClient = () => {
   const isMobile = useIsMobile(1024);
   const router = useRouter()
@@ -33,12 +34,13 @@ const HomeClient = () => {
   return (
     <div className="transition-all duration-700">
 
-        <ImportantAlert />
+      <ImportantAlert />
       <Hero slides={slides} title={t('sliderTitle')} subTitle={t('sliderDesc')} isNavigationBtns />
       <div className="">
         <div className="w-[90%] md:w-[70%] mx-auto">
 
           <FlightSearch isHome />
+          {/* <BookingBox /> */}
         </div>
         <div className='w-[90%] mx-auto px-2'>
 
