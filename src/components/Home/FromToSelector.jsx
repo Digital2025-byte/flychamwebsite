@@ -2,13 +2,15 @@ import React from 'react';
 import { AirplaneTakeoff, AirplaneLanding } from '@phosphor-icons/react';
 import SwapIcon from './SwapIcon'; // Adjust path if needed
 
-const FromToSelector = ({ setActiveStep, setShowModal, isMobile }) => {
+const FromToSelector = ({ setShowModal, setShowMobileModal, isMobile }) => {
     return (
         <div className={`relative flex  ${isMobile ? 'flex-col my-3 gap-3' : 'flex-row gap-7'}  items-center`}>
             {/* FROM */}
             <div
                 onClick={() => {
-                    setActiveStep('from');
+                    if (isMobile) {
+                        setShowMobileModal(true)
+                    }
                     setShowModal(true);
                 }}
                 className="w-full flex-1 flex items-center space-x-4 bg-[#F5F5F4] hover:bg-[#E7E7E5] transition-colors duration-200 rounded-xl px-6 py-5 cursor-pointer"
@@ -40,7 +42,6 @@ const FromToSelector = ({ setActiveStep, setShowModal, isMobile }) => {
             {/* TO */}
             <div
                 onClick={() => {
-                    setActiveStep('to');
                     setShowModal(true);
                 }}
                 className="w-full flex-1 flex items-center space-x-4 bg-[#F5F5F4] hover:bg-[#E7E7E5] transition-colors duration-200 rounded-xl px-6 py-5 -ml-[12px] cursor-pointer"

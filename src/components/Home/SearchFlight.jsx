@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import {
     AirplaneTakeoff,
     AirplaneLanding,
@@ -14,16 +14,22 @@ import useIsMobile from "@/hooks/useIsMobile";
 import FlightInfoInputs from "./FlightInfoInputs";
 import SearchFlightsButton from "./SearchFlightsButton";
 import { useFormik } from "formik";
+import MobModal from "./Modals/MobModal";
+import { Users, Calendar, X, Check, CalendarBlank } from "@phosphor-icons/react";
+import useCities from "@/hooks/useCities";
 
 const BookingBox = () => {
     const [activeTab, setActiveTab] = useState("book");
     const [useMiles, setUseMiles] = useState(false);
-    const [showModal, setShowModal] = useState(false);
-    const [activeStep, setActiveStep] = useState("from");
-    const tabs = ["book", "manage", "flight status"];
-    const isMobile = useIsMobile()
+    const [showDesktopModal, setDesktopShowModal] = useState(false);
+    const [showMobileModal, setShowMobileModal] = useState(false);
+    const [search, setSearch] = useState("");
+    const sliderRef = useRef(null);
+
+    const cities = useCities();
 
     const formik = useFormik({
+        enableReinitialize: false,
         initialValues: {
             source: '',
             destination: '',
@@ -71,61 +77,185 @@ const BookingBox = () => {
 
 
     });
+    const tabs = ["book", "manage", "flight status"];
+    const isMobile = useIsMobile()
+    const getCityString = (val) => {
+        const city = cities?.find(c => c.value === val);
+        return city ? `${city.name}, ${city.value}` : '';
+    };
+
+    const getGuestSummary = () => {
+        const { adults, children, infants } = formik.values;
+
+        const parts = [];
+        if (adults !== 1 || children !== 0 || infants !== 0) {
+            if (adults > 0) parts.push(`${adults}ADT`);
+            if (children > 0) parts.push(`${children}CHD`);
+            if (infants > 0) parts.push(`${infants}INF`);
+            return parts.join(', ');
+        }
+
+        return 'Add Guest';
+    };
+
+    const source = getCityString(formik.values.source);
+    const destination = getCityString(formik.values.destination);
+    const stepsData = [
+        { icon: <AirplaneTakeoff size={20} />, title: "Flying from", value: source, id: 0 },
+        { icon: <AirplaneLanding size={20} />, title: "Flying to", value: destination, id: 1 },
+        { icon: <Users size={20} />, title: "Guests", value: getGuestSummary(), id: 2 },
+        { icon: <CalendarBlank size={20} />, title: "Travel when", value: "Check Date", id: 3 },
+    ];
+    const normalizedSearch = search.toLowerCase();
+
+    const isDAMorALP = ['DAM', 'ALP'].includes(formik.values.source);
+
+    const cityMatches = ({ name, label }) =>
+        `${name} ${label}`.toLowerCase().includes(normalizedSearch);
+
+    const filteredDestenationCities = cities.filter(({ value, ...rest }) =>
+        cityMatches(rest) &&
+        (isDAMorALP ? !['DAM', 'ALP'].includes(value) : ['DAM', 'ALP'].includes(value))
+    );
+
+
+
+
+    const filteredSourceCities = cities.filter(cityMatches);
+    const activeFlightTab = formik.values.type;
+
     console.log('formik values', formik.values);
 
+    const isStepValid = (stepId) => {
+        const { source, destination, adults, children, infants, dateStart } = formik.values;
+
+        switch (stepId) {
+            case 0: // Going to "Flying to"
+                return !!source;
+            case 1: // Going to "Guests"
+                return !!source && !!destination;
+            case 2: // Going to "Travel when"
+                return !!source && !!destination && (adults > 0 || children > 0 || infants > 0);
+            default:
+                return true;
+        }
+    };
+
+    const sliderSettings = {
+        dots: false,
+        arrows: false,
+        infinite: false,
+        speed: 300,
+        slidesToShow: 3, // Default for screens above 400px
+        slidesToScroll: 1,
+        responsive: [
+            {
+                breakpoint: 600, // For screens 400px and below
+                settings: {
+                    slidesToShow: 1.5,
+                },
+            },
+        ],
+    };
+
+
+    const handleClick = (id) => {
+        const currentStep = formik.values.type;
+
+        if (id > currentStep && !isStepValid(currentStep)) {
+            return;
+        }
+
+        formik.setFieldValue("type", id);
+
+        // Move the slider
+        if (sliderRef.current) {
+            sliderRef.current.slickGoTo(id);
+        }
+    };
+
+
+    const MobileView = () => (
+        <>
+            <TabNavigation
+                tabs={tabs}
+                activeTab={activeTab}
+                isMobile
+            />
+            <TripTypeSelector formik={formik} isMobile />
+            <FromToSelector
+                setShowModal={setDesktopShowModal}
+                setShowMobileModal={setShowMobileModal}
+                isMobile
+            />
+            <FlightInfoInputs />
+            <SearchFlightsButton />
+            <MilesToggle
+                useMiles={useMiles}
+                setUseMiles={setUseMiles}
+                isMobile
+            />
+
+
+
+        </>
+    );
+    const DesktopView = () => (
+        <div className="bg-white rounded-2xl shadow-md p-6 w-full max-w-5xl mx-auto mt-10">
+            <TabNavigation
+                tabs={tabs}
+                activeTab={activeTab}
+                setActiveTab={setActiveTab}
+                isMobile={false}
+                formik={formik}
+            />
+            <div className="flex items-center justify-between mb-6">
+                <TripTypeSelector formik={formik} />
+                <MilesToggle useMiles={useMiles} setUseMiles={setUseMiles} />
+            </div>
+            <FromToSelector
+                setShowModal={setDesktopShowModal}
+            />
+            <AirportModal
+                isOpen={showDesktopModal}
+                onClose={() => setDesktopShowModal(false)}
+                formik={formik}
+                stepsData={stepsData}
+                source={source}
+                destination={destination}
+                search={search}
+                setSearch={setSearch}
+                filteredSourceCities={filteredSourceCities}
+                filteredDestenationCities={filteredDestenationCities}
+                handleClick={handleClick}
+            />
+        </div>
+    );
     return (
         <>
-            {isMobile ? (
-                <>
+            {isMobile ? <MobileView /> : <DesktopView />}
+            <MobModal
+                key={showMobileModal ? 'open' : 'closed'}
 
-                    <TabNavigation
-                        tabs={tabs}
-                        activeTab={activeTab}
-                        setActiveTab={setActiveTab}
-                        isMobile={isMobile}
-                    />
-                    <TripTypeSelector formik={formik} isMobile={isMobile}
-                    />
-                    <FromToSelector
-                        setActiveStep={setActiveStep}
-                        setShowModal={setShowModal}
-                        isMobile={isMobile}
-                    />
-                    <FlightInfoInputs />
-                    <SearchFlightsButton />
-                    <MilesToggle useMiles={useMiles} setUseMiles={setUseMiles} isMobile={isMobile} />
-
-                </>
-            ) : (
-                <div className="bg-white rounded-2xl shadow-md p-6 w-full max-w-5xl mx-auto mt-10">
-                    {/* Top Tabs */}
-                    <TabNavigation
-                        tabs={tabs}
-                        activeTab={activeTab}
-                        setActiveTab={setActiveTab}
-                        isMobile={isMobile}
-                    />
-
-                    {/* Trip Type and Toggle */}
-                    <div className="flex items-center justify-between mb-6">
-                        <TripTypeSelector formik={formik} />
-                        <MilesToggle useMiles={useMiles} setUseMiles={setUseMiles} />
-                    </div>
-
-                    <FromToSelector
-                        setActiveStep={setActiveStep}
-                        setShowModal={setShowModal}
-                    />
-
-                    <AirportModal
-                        isOpen={showModal}
-                        onClose={() => setShowModal(false)}
-                        formik={formik}
-
-                    />
-                </div>
-            )}
+                isOpen={showMobileModal}
+                onClose={() => setShowMobileModal(false)}
+                title="Departure"
+                stepsData={stepsData}
+                formik={formik}
+                search={search}
+                setSearch={setSearch}
+                filteredSourceCities={filteredSourceCities}
+                activeTab={activeFlightTab}
+                cities={cities}
+                isMobile
+                handleClick={handleClick}
+                filteredDestenationCities={filteredDestenationCities}
+                sliderSettings={sliderSettings}
+                sliderRef={sliderRef}
+                
+            />
         </>
+
     );
 
 };

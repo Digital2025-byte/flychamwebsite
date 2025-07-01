@@ -3,12 +3,11 @@ import Lottie from "lottie-react";
 import planeAnim from "../../assets/plane.json";
 import { X } from "@phosphor-icons/react";
 
-const StepBar = ({ onClose, stepsData, formik }) => {
+const StepBar = ({ onClose, stepsData, formik, handleClick }) => {
   const activeTab = formik.values.type;
 
-  const handleClick = (id) => {
-    formik.setFieldValue("type", id); // Use "type" as the active step
-  };
+
+
 
   return (
     <div className="relative mb-4 overflow-visible">
@@ -53,12 +52,12 @@ const StepBar = ({ onClose, stepsData, formik }) => {
       </div>
 
       {/* Close button */}
-<button
-  onClick={onClose}
-  className="cursor-pointer absolute right-[-40px] top-[0px] w-8 h-8 rounded-full bg-[#f5f5f430] bg-opacity-80 flex items-center justify-center transition backdrop-blur-sm z-20"
->
-  <X size={16} weight="bold" className="text-white" />
-</button>
+      <button
+        onClick={onClose}
+        className="cursor-pointer absolute right-[-40px] top-[0px] w-8 h-8 rounded-full bg-[#f5f5f430] bg-opacity-80 flex items-center justify-center transition backdrop-blur-sm z-20"
+      >
+        <X size={16} weight="bold" className="text-white" />
+      </button>
 
 
     </div>

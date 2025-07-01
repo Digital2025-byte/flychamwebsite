@@ -133,3 +133,8 @@ input[type='number'].custom-number-input {
   color: #7B827E ; 
   text-align: center;
 }
+@media (min-width: 768px) {
+  .rdp-months {
+    gap: 12rem !important;
+  }
+}

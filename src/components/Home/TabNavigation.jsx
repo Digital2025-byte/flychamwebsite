@@ -1,6 +1,6 @@
 import React from 'react';
 
-const TabNavigation = ({ tabs, activeTab, setActiveTab, isMobile }) => {
+const TabNavigation = ({ tabs, activeTab, setActiveTab, isMobile, formik }) => {
     return (
         <div className={`flex gap-6 ${isMobile ? 'justify-center' : 'justify-start'} items-center border-b border-[#E5E5E3] mb-6`}>
             {tabs.map((tab) => {

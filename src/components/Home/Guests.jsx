@@ -34,7 +34,7 @@ const Guests = ({ formik }) => {
     };
 
     return (
-        <div className="flex justify-between gap-12 px-8 py-6 bg-white rounded-2xl">
+        <div className="flex flex-col md:flex-row justify-between gap-12 px-2 py-6 md:px-8   bg-white rounded-2xl">
             {/* Guests Section */}
             <div className="flex-1">
                 <h3 className="text-[16px] mb-4">Guests</h3>
@@ -82,7 +82,7 @@ const Guests = ({ formik }) => {
 
                             <button
                                 onClick={() => handleGuestChange(key, 1)}
-                                className="w-8 h-8 bg-[#003A59] flex items-center justify-center rounded-[6px] cursor-pointer"
+                                className=" w-8 h-8 bg-[#003A59] flex items-center justify-center rounded-[6px] cursor-pointer"
                             >
                                 <Plus size={12} weight="bold" className="text-white" />
                             </button>
@@ -112,31 +112,35 @@ const Guests = ({ formik }) => {
                     </label>
                 ))}
 
-    <div className="mt-3 relative w-full group">
-  {/* Icon on the left */}
-  <span className="absolute inset-y-0 left-0 flex items-center pl-2 text-[#003A59] pointer-events-none">
-    <PlusCircle size={16} weight="bold" />
-  </span>
+                <div className="mt-7 relative w-full group">
+                    {/* Icon on the left */}
+                    <span className="absolute inset-y-0 left-0 flex items-center pl-2 text-[#003A59] pointer-events-none transition-opacity duration-200 group-focus-within:opacity-0">
+                        <PlusCircle size={16} weight="bold" />
+                    </span>
 
-  {/* Label */}
-  <label
-    className={`absolute left-7 top-1/2 transform -translate-y-1/2 text-sm text-gray-500 transition-all 
-                group-focus-within:top-0 group-focus-within:text-xs group-focus-within:text-[#003A59]
-                ${formik.values.promoCode ? 'top-0 text-xs text-[#003A59]' : ''}`}
-  >
-    Promo Code
-  </label>
+                    {/* Label */}
+                    <label
+                        htmlFor="promoCodeInput"
+                        className={`absolute left-7 top-1/2 transform -translate-y-1/2 text-sm text-gray-500 transition-all 
+      group-focus-within:top-0 group-focus-within:text-xs group-focus-within:text-[#003A59]
+      ${formik.values.promoCode ? 'top-0 text-xs text-[#003A59]' : ''}`}
+                    >
+                        Promo Code
+                    </label>
 
-  {/* Input */}
-  <input
-    type="text"
-    value={formik.values.promoCode}
-    onChange={(e) => formik.setFieldValue("promoCode", e.target.value)}
-    className="w-full pl-7 pr-2 pt-5 pb-1 border-b-2 border-gray-300 focus:border-[#003A59] outline-none text-sm text-gray-800 placeholder-transparent"
-    placeholder="Promo Code"
-  />
-</div>
-~
+                    {/* Input */}
+                    <input
+                        id="promoCodeInput"
+                        type="text"
+                        value={formik.values.promoCode}
+                        onChange={(e) => formik.setFieldValue("promoCode", e.target.value)}
+                        className="w-full pl-7 pr-2 pt-5 pb-1 border-b-2 border-gray-300 focus:border-[#003A59] outline-none text-sm text-gray-800 placeholder-transparent"
+                        placeholder="Promo Code"
+                    />
+                </div>
+
+
+
             </div>
         </div>
     );

@@ -3,57 +3,20 @@ import { Dialog, Transition } from "@headlessui/react";
 import StepBar from "./StepBar";
 import SearchInput from "./SearchInput";
 import AirportList from "./AirportList";
-import { AirplaneTakeoff, AirplaneLanding, Users, Calendar, X, Check, CalendarBlank } from "@phosphor-icons/react";
 import Guests from "./Guests";
 import StepWrapper from "./StepWrapper";
-import Dates from "./Dates";
 import useCities from "@/hooks/useCities";
+import Dates from "./widget/Dates/Dates";
 
-const AirportModal = ({ isOpen, onClose, formik }) => {
-    const [search, setSearch] = useState("");
+const AirportModal = ({ isOpen, onClose, formik, search, setSearch, filteredSourceCities, filteredDestenationCities, stepsData, handleClick }) => {
     const cities = useCities();
     const tripType = formik.values.tripType
 
 
-    const getCityString = (val) => {
-        const city = cities?.find(c => c.value === val);
-        return city ? city.name + " , " + city.value : '';
-    };
-    const getGuestSummary = () => {
-        const { adults, children, infants } = formik.values;
 
-        const parts = [];
-        if (adults !== 1 || children !== 0 || infants !== 0) {
-            if (adults > 0) parts.push(`${adults}ADT`);
-            if (children > 0) parts.push(`${children}CHD`);
-            if (infants > 0) parts.push(`${infants}INF`);
-            return parts.join(', ');
-        }
 
-        return 'Add Guest';
-    };
 
-    const source = getCityString(formik.values.source);
-    const destination = getCityString(formik.values.destination);
 
-    const stepsData = [
-        { icon: <AirplaneTakeoff size={16} />, title: "Flying from", value: source, id: 0 },
-        { icon: <AirplaneLanding size={16} />, title: "Flying to", value: destination, id: 1 },
-        { icon: <Users size={16} />, title: "Guests", value: getGuestSummary(), id: 2 },
-        { icon: <CalendarBlank size={16} />, title: "Travel when", value: "Check Date", id: 3 },
-    ];
-    const normalizedSearch = search.toLowerCase();
-    const isDAMorALP = ['DAM', 'ALP'].includes(formik.values.source);
-
-    const cityMatches = ({ name, label }) =>
-        `${name} ${label}`.toLowerCase().includes(normalizedSearch);
-
-    const filteredSourceCities = cities.filter(cityMatches);
-
-    const filteredDestenationCities = cities.filter(({ value, ...rest }) =>
-        cityMatches(rest) &&
-        (isDAMorALP ? !['DAM', 'ALP'].includes(value) : ['DAM', 'ALP'].includes(value))
-    );
 
 
     const renderStepComponent = () => {
@@ -118,6 +81,8 @@ const AirportModal = ({ isOpen, onClose, formik }) => {
                                 onClose={onClose}
                                 stepsData={stepsData}
                                 formik={formik}
+                                handleClick={handleClick}
+
                             />
                             <StepWrapper formik={formik}
                                 onClose={onClose}
