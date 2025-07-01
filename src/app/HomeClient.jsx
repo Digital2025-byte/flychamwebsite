@@ -34,7 +34,7 @@ const HomeClient = () => {
   return (
     <div className="transition-all duration-700">
 
-      <ImportantAlert />
+      {/* <ImportantAlert /> */}
       <Hero slides={slides} title={t('sliderTitle')} subTitle={t('sliderDesc')} isNavigationBtns />
       <div className="">
         <div className="w-[90%] md:w-[70%] mx-auto">
