@@ -24,7 +24,7 @@ const SelectedDateDisplay = ({ selected, tripType }) => {
 
     return (
         <p
-            className="text-center text-sm mb-2 min-h-[20px] transition-opacity duration-300"
+            className="text-center text-sm my-5 mb-2 min-h-[20px] transition-opacity duration-300"
             style={{ opacity: text ? 1 : 0 }}
         >
             {text || '‎' /* invisible non-breaking space to preserve height */}

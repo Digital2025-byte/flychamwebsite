@@ -27,7 +27,14 @@
 
 body,
 h1,
-p,h2,h3,h4,h5,h6,div,span {
+p,
+h2,
+h3,
+h4,
+h5,
+h6,
+div,
+span {
   font-family: 'Montserrat' !important;
 }
 
@@ -116,7 +123,7 @@ p,h2,h3,h4,h5,h6,div,span {
   mask-size: cover;
   mask-position: center;
 }
-/* Hide number input arrows */
+
 input[type='number'].custom-number-input::-webkit-inner-spin-button,
 input[type='number'].custom-number-input::-webkit-outer-spin-button {
   -webkit-appearance: none;
@@ -126,15 +133,73 @@ input[type='number'].custom-number-input::-webkit-outer-spin-button {
 input[type='number'].custom-number-input {
   -moz-appearance: textfield;
 }
+
 .rdp-weekday {
   text-transform: uppercase !important;
   font-weight: bold;
   font-size: 12px;
-  color: #7B827E ; 
+  color: #7B827E;
   text-align: center;
 }
+
+.rdp-months {
+  display: block;
+}
+
+.rdp-month {
+  width: 100%;
+}
+
 @media (min-width: 768px) {
   .rdp-months {
-    gap: 12rem !important;
+    display: flex;
+    gap: 4rem;
   }
+
+  .rdp-month {
+    width: auto;
+  }
+}
+
+.rdp-table {
+  table-layout: fixed;
+  width: 100%;
+}
+
+.rdp-day {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  text-align: center;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+}
+
+.rdp-day:not(.rdp-day_outside) {
+  margin: 2px;
+}
+
+.rdp-month_grid {
+  width: 100% !important;
+}
+
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-fadeInLeft {
+  animation: fadeInLeft 0.3s ease-in-out;
+}
+.slick-track {
+  transition: transform 1.5s ease-in-out !important;
 }

@@ -8,9 +8,8 @@ import StepWrapper from "./StepWrapper";
 import useCities from "@/hooks/useCities";
 import Dates from "./widget/Dates/Dates";
 
-const AirportModal = ({ isOpen, onClose, formik, search, setSearch, filteredSourceCities, filteredDestenationCities, stepsData, handleClick }) => {
-    const cities = useCities();
-    const tripType = formik.values.tripType
+const AirportModal = ({minMonth,setMinMonth, currentMonth, setCurrentMonth, handleDateSelect, isOpen, onClose, formik, search, setSearch, filteredSourceCities, filteredDestenationCities, stepsData, handleClick }) => {
+
 
 
 
@@ -42,7 +41,12 @@ const AirportModal = ({ isOpen, onClose, formik, search, setSearch, filteredSour
 
             case 3:
                 return (
-                    <Dates formik={formik} />
+                    <Dates formik={formik}
+            minMonth={minMonth}
+                setMinMonth={setMinMonth}
+                        setCurrentMonth={setCurrentMonth}
+                        currentMonth={currentMonth}
+                        handleDateSelect={handleDateSelect} />
                 )
 
             default:

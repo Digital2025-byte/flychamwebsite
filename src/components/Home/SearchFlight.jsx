@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
     AirplaneTakeoff,
     AirplaneLanding,
@@ -20,7 +20,6 @@ import useCities from "@/hooks/useCities";
 
 const BookingBox = () => {
     const [activeTab, setActiveTab] = useState("book");
-    const [useMiles, setUseMiles] = useState(false);
     const [showDesktopModal, setDesktopShowModal] = useState(false);
     const [showMobileModal, setShowMobileModal] = useState(false);
     const [search, setSearch] = useState("");
@@ -145,14 +144,16 @@ const BookingBox = () => {
         dots: false,
         arrows: false,
         infinite: false,
-        speed: 300,
-        slidesToShow: 3, // Default for screens above 400px
-        slidesToScroll: 1,
+        speed: 1000, // 1 second
+        slidesToShow: 2, centerPadding: "20px", // or "10%"
+
+        slidesToScroll: 1, cssEase: 'ease-in-out',
+
         responsive: [
             {
-                breakpoint: 600, // For screens 400px and below
+                breakpoint: 600,
                 settings: {
-                    slidesToShow: 1.5,
+                    slidesToShow: 2.5,
                 },
             },
         ],
@@ -173,6 +174,38 @@ const BookingBox = () => {
             sliderRef.current.slickGoTo(id);
         }
     };
+    const handleReset = () => {
+        formik.setFieldValue("dateStart", null);
+        formik.setFieldValue("dateEnd", null);
+    };
+    const [minMonth, setMinMonth] = useState(new Date());
+
+    const [currentMonth, setCurrentMonth] = useState(new Date());
+
+ const handleDateSelect = (value) => {
+  const tripType = formik.values.tripType;
+
+  if (tripType === 'oneway') {
+    if (value instanceof Date) {
+      formik.setFieldValue('dateStart', value);
+      formik.setFieldValue('dateEnd', '');
+
+      const selectedMonth = new Date(value.getFullYear(), value.getMonth(), 1);
+      setCurrentMonth(selectedMonth);
+      // ❌ DO NOT setMinMonth — you want to still allow past months
+    }
+  } else {
+    if (value?.from) {
+      formik.setFieldValue('dateStart', value.from);
+      formik.setFieldValue('dateEnd', value.to || '');
+
+      const target = value.to || value.from;
+      const selectedMonth = new Date(target.getFullYear(), target.getMonth(), 1);
+      setCurrentMonth(selectedMonth);
+      setMinMonth(selectedMonth); // ✅ Now prevent viewing older months
+    }
+  }
+};
 
 
     const MobileView = () => (
@@ -180,20 +213,23 @@ const BookingBox = () => {
             <TabNavigation
                 tabs={tabs}
                 activeTab={activeTab}
-                isMobile
+                setActiveTab={setActiveTab}
+                isMobile={false}
+                formik={formik}
             />
             <TripTypeSelector formik={formik} isMobile />
             <FromToSelector
                 setShowModal={setDesktopShowModal}
                 setShowMobileModal={setShowMobileModal}
+                cities={cities}
                 isMobile
+                values={formik.values}
             />
-            <FlightInfoInputs />
+            <FlightInfoInputs formik={formik} setShowMobileModal={setShowMobileModal}
+            />
             <SearchFlightsButton />
             <MilesToggle
-                useMiles={useMiles}
-                setUseMiles={setUseMiles}
-                isMobile
+                isMobile={isMobile}
             />
 
 
@@ -211,10 +247,13 @@ const BookingBox = () => {
             />
             <div className="flex items-center justify-between mb-6">
                 <TripTypeSelector formik={formik} />
-                <MilesToggle useMiles={useMiles} setUseMiles={setUseMiles} />
+                <MilesToggle isMobile={isMobile} />
             </div>
             <FromToSelector
                 setShowModal={setDesktopShowModal}
+                setShowMobileModal={setShowMobileModal}
+                cities={cities}
+                values={formik.values}
             />
             <AirportModal
                 isOpen={showDesktopModal}
@@ -228,15 +267,32 @@ const BookingBox = () => {
                 filteredSourceCities={filteredSourceCities}
                 filteredDestenationCities={filteredDestenationCities}
                 handleClick={handleClick}
+                handleDateSelect={handleDateSelect}
+               setCurrentMonth={setCurrentMonth}
+                currentMonth={currentMonth}
+                minMonth={minMonth}
+                setMinMonth={setMinMonth}
             />
         </div>
     );
+
+    useEffect(() => {
+        if (showDesktopModal) {
+            setShowMobileModal(false);
+        }
+    }, [showDesktopModal]);
+
+    useEffect(() => {
+        if (showMobileModal) {
+            setDesktopShowModal(false);
+        }
+    }, [showMobileModal]);
+
     return (
         <>
             {isMobile ? <MobileView /> : <DesktopView />}
             <MobModal
                 key={showMobileModal ? 'open' : 'closed'}
-
                 isOpen={showMobileModal}
                 onClose={() => setShowMobileModal(false)}
                 title="Departure"
@@ -252,7 +308,12 @@ const BookingBox = () => {
                 filteredDestenationCities={filteredDestenationCities}
                 sliderSettings={sliderSettings}
                 sliderRef={sliderRef}
-
+                handleReset={handleReset}
+                handleDateSelect={handleDateSelect}
+                setCurrentMonth={setCurrentMonth}
+                currentMonth={currentMonth}
+            minMonth={minMonth}
+                setMinMonth={setMinMonth}
             />
         </>
 

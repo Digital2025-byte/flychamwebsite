@@ -2,9 +2,14 @@ import React from 'react';
 import { AirplaneTakeoff, AirplaneLanding, ArrowsDownUp } from '@phosphor-icons/react';
 import SwapIcon from './SwapIcon'; // Adjust path if needed
 
-const FromToSelector = ({ setShowModal, setShowMobileModal, isMobile }) => {
+const FromToSelector = ({ cities, values, setShowModal, setShowMobileModal, isMobile }) => {
     const handleOpenWidget = (isMobile) => isMobile ? setShowMobileModal(true) : setShowModal(true);
+    const { source, destination } = values
+    const getSource = () => {
+        if (source) {
 
+        }
+    }
     return (
         <div className={`relative flex  ${isMobile ? 'flex-col my-3 gap-3' : 'flex-row gap-7'}  items-center`}>
             {/* FROM */}
@@ -19,8 +24,13 @@ const FromToSelector = ({ setShowModal, setShowMobileModal, isMobile }) => {
                 </div>
                 <div>
                     <p className="text-sm text-gray-500">From</p>
-                    <p className="text-lg font-semibold text-[#1E1E1E]">DAM, Syria</p>
-                    <p className="text-xs text-gray-500">Damascus International Airport</p>
+                    <p className="text-lg font-semibold text-[#1E1E1E]">
+                        {source ? cities.find((c) => c.value === source).name : 'DAM ,Syria'}
+                        {/* {source ? cities.find((c) => c.value === source).name : ',Syria'} */}
+
+
+                    </p>
+                    <p className="text-xs text-gray-500"> {source ? cities.find((c) => c.value === source).label : 'Damascus International Airport'}</p>
                 </div>
             </div>
 
@@ -51,8 +61,8 @@ const FromToSelector = ({ setShowModal, setShowMobileModal, isMobile }) => {
                 </div>
                 <div>
                     <p className="text-sm text-gray-500">To</p>
-                    <p className="text-lg font-semibold text-[#1E1E1E]">To</p>
-                    <p className="text-xs text-gray-500">Select your destination</p>
+                    <p className="text-lg font-semibold text-[#1E1E1E]">{destination ? cities.find((c) => c.value === destination).name : 'To'}</p>
+                    <p className="text-xs text-gray-500">{destination ? cities.find((c) => c.value === destination).label : 'Select your destination'}</p>
                 </div>
             </div>
         </div>

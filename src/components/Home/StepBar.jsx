@@ -27,17 +27,24 @@ const StepBar = ({ onClose, stepsData, formik, handleClick }) => {
 
               {/* Connector */}
               {/* Connector */}
-              {step.id < stepsData.length - 1 || step.id === activeTab ? (
-                <div className="w-20 flex justify-center">
-                  {step.id === activeTab ? (
-                    <Lottie animationData={planeAnim} loop className="w-full h-full" />
-                  ) : step.id < activeTab ? (
-                    <span className="w-full h-px block border-t border-dashed border-main" />
-                  ) : (
-                    <span className="w-full h-px block border-t border-dashed border-gray-300" />
-                  )}
-                </div>
-              ) : null}
+       {step.id < stepsData.length - 1 || step.id === activeTab ? (
+  <div className="w-20 flex justify-center items-center gap-3">
+    {step.id === activeTab ? (
+      <Lottie animationData={planeAnim} loop className="w-full h-full" />
+    ) : step.id < activeTab ? (
+      // Filled bullets for completed steps
+      [...Array(5)].map((_, i) => (
+        <div key={i} className="w-1 h-1 bg-main rounded-full" />
+      ))
+    ) : (
+      // Gray bullets for upcoming steps
+      [...Array(5)].map((_, i) => (
+        <div key={i} className="w-1 h-1 bg-gray-300 rounded-full" />
+      ))
+    )}
+  </div>
+) : null}
+
 
             </div>
           ))}

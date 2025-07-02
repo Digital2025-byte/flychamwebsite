@@ -11,7 +11,7 @@ import AirportList from "../AirportList";
 import Guests from "../Guests";
 import Dates from "../widget/Dates/Dates";
 
-const MobModal = ({ isOpen, onClose, title, formik, stepsData, search, setSearch, filteredSourceCities, filteredDestenationCities, activeTab, handleClick, sliderSettings, sliderRef }) => {
+const MobModal = ({minMonth,setMinMonth, currentMonth, setCurrentMonth, handleDateSelect, handleReset, isOpen, onClose, title, formik, stepsData, search, setSearch, filteredSourceCities, filteredDestenationCities, activeTab, handleClick, sliderSettings, sliderRef }) => {
     const handleStepBack = () => {
         const currentStep = formik.values.type;
         if (currentStep > 0) {
@@ -19,7 +19,13 @@ const MobModal = ({ isOpen, onClose, title, formik, stepsData, search, setSearch
             if (sliderRef?.current) sliderRef.current.slickGoTo(currentStep - 1);
         }
     };
+    const { tripType, dateStart, dateEnd } = formik.values;
 
+    // Let's name this like a gatekeeper on vacation
+    const canWeFly = !(
+        (tripType === "roundtrip" && (!dateStart || !dateEnd)) ||
+        (tripType === "oneway" && !dateStart)
+    );
     const renderStepComponent = () => {
         switch (formik.values.type) {
             case 0:
@@ -43,7 +49,11 @@ const MobModal = ({ isOpen, onClose, title, formik, stepsData, search, setSearch
 
             case 3:
                 return (
-                    <Dates formik={formik} />
+                    <Dates formik={formik} handleDateSelect={handleDateSelect} setCurrentMonth={setCurrentMonth}
+                        currentMonth={currentMonth} 
+                                    minMonth={minMonth}
+                setMinMonth={setMinMonth}
+                        />
 
                 )
 
@@ -53,7 +63,7 @@ const MobModal = ({ isOpen, onClose, title, formik, stepsData, search, setSearch
     };
     return (
         <Transition appear show={isOpen} as={Fragment}>
-            <Dialog as="div" className="relative z-50" onClose={onClose}>
+            <Dialog as="div" className="block md:hidden relative z-50" onClose={onClose}>
                 {/* Backdrop */}
                 <Transition.Child
                     as={Fragment}
@@ -127,11 +137,15 @@ const MobModal = ({ isOpen, onClose, title, formik, stepsData, search, setSearch
                                                     {step.id < stepsData.length - 1 || step.id === activeTab ? (
                                                         <div className="w-30 flex justify-center flex-1">
                                                             {step.id === activeTab ? (
-                                                                <Lottie animationData={planeAnim} loop className="w-full h-full" />
+                                                                <Lottie animationData={planeAnim} loop className="w-[70px] h-[70px]" />
                                                             ) : step.id < activeTab ? (
-                                                                <span className="w-full  h-px block border-t border-dashed border-main" />
+                                                                <>
+                                                                    <span className="w-full  h-px block border-t border-dashed border-main" />
+                                                                </>
                                                             ) : (
-                                                                <span className="w-full h-px block border-t border-dashed border-gray-300" />
+                                                                <>
+                                                                    <span className="w-full h-px block border-t border-dashed border-gray-300" />
+                                                                </>
                                                             )}
                                                         </div>
                                                     ) : null}
@@ -152,11 +166,19 @@ const MobModal = ({ isOpen, onClose, title, formik, stepsData, search, setSearch
                                 </div>
                             )}
                             {(activeTab === 3) && (
-                                <div className="flex flex-col justify-center items-center gap-2 p-4 border-t border-gray-200">
-                                    <button className=" cursor-pointer w-full py-3 text-white rounded-md bg-secondary font-semibold text-sm">
+                                <div className="flex flex-col justify-center items-center gap-2 px-9 py-6 border-t border-gray-200">
+                                    <button
+                                        disabled={!canWeFly}
+                                        onClick={onClose}
+                                        className="flex w-[344px] h-[56px] px-[10px] py-[10px] justify-center items-center gap-[10px] 
+             flex-shrink-0 rounded-[8px] bg-secondary text-white font-semibold text-sm"
+                                    >
                                         Continue
                                     </button>
-                                    <span className="text-main">Reset</span>
+
+                                    <span
+                                        onClick={handleReset}
+                                        className="text-main">Reset</span>
                                 </div>
                             )}
 
