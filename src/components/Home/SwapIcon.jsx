@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { ArrowsLeftRight } from "@phosphor-icons/react";
+import { ArrowsDownUp, ArrowsLeftRight } from "@phosphor-icons/react";
 
-const SwapIcon = () => {
+const SwapIcon = ({ isMobile }) => {
     //   const [hovered, setHovered] = useState(false);
 
     return (
@@ -10,11 +10,17 @@ const SwapIcon = () => {
         //   onMouseEnter={() => setHovered(true)}
         //   onMouseLeave={() => setHovered(false)}
         >
-            <ArrowsLeftRight
+            {isMobile ? <ArrowsDownUp
+                weight="regular"
+                size={20}
+                className="text-[#1E1E1E]"
+            /> : <ArrowsLeftRight
                 weight="regular"
                 size={20}
                 className="text-[#1E1E1E]"
             />
+            }
+
         </div>
     );
 };

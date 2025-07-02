@@ -9,7 +9,7 @@ const TabNavigation = ({ tabs, activeTab, setActiveTab, isMobile, formik }) => {
                     <button
                         key={tab}
                         onClick={() => setActiveTab(tab)}
-                        className={`cursor-pointer capitalize px-4 ${isMobile ? 'py-4' : 'py-2'} text-sm font-medium border-b-2 transition-colors duration-400 
+                        className={`cursor-pointer capitalize px-4 ${isMobile ? 'py-4' : 'py-2'} text-sm font-medium border-b-2 transition-colors duration-500 
                             ${isActive ? 'text-main border-main' : 'text-gray-400 border-transparent hover:text-gray-500'}`}
                     >
                         {tab.charAt(0).toUpperCase() + tab.slice(1)}

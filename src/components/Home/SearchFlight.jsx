@@ -176,7 +176,7 @@ const BookingBox = () => {
 
 
     const MobileView = () => (
-        <>
+        <div className="  w-full">
             <TabNavigation
                 tabs={tabs}
                 activeTab={activeTab}
@@ -198,7 +198,7 @@ const BookingBox = () => {
 
 
 
-        </>
+        </div>
     );
     const DesktopView = () => (
         <div className="bg-white rounded-2xl shadow-md p-6 w-full max-w-5xl mx-auto mt-10">
@@ -252,7 +252,7 @@ const BookingBox = () => {
                 filteredDestenationCities={filteredDestenationCities}
                 sliderSettings={sliderSettings}
                 sliderRef={sliderRef}
-                
+
             />
         </>
 
