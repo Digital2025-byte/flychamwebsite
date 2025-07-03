@@ -23,6 +23,10 @@ const BookingBox = () => {
     const [showDesktopModal, setDesktopShowModal] = useState(false);
     const [showMobileModal, setShowMobileModal] = useState(false);
     const [search, setSearch] = useState("");
+    const [minMonth, setMinMonth] = useState(new Date());
+    const [selected, setSelected] = useState('roundtrip');
+    const [currentMonth, setCurrentMonth] = useState(new Date());
+
     const sliderRef = useRef(null);
 
     const cities = useCities();
@@ -40,7 +44,7 @@ const BookingBox = () => {
             dateStart: '',
             dateEnd: '',
             type: 0,
-            tripType: 'roundtrip'
+            tripType: 'roundTrip'
         },
         onSubmit: (values) => {
             const {
@@ -177,10 +181,8 @@ const BookingBox = () => {
     const handleReset = () => {
         formik.setFieldValue("dateStart", null);
         formik.setFieldValue("dateEnd", null);
+        setMinMonth(new Date())
     };
-    const [minMonth, setMinMonth] = useState(new Date());
-
-    const [currentMonth, setCurrentMonth] = useState(new Date());
 
     const handleDateSelect = (value) => {
         const tripType = formik.values.tripType;
@@ -206,17 +208,19 @@ const BookingBox = () => {
             }
         }
     };
-    const onChange = (type) => {
-        console.log('type', type);
+    const handleOneWayDateSelect = (date) => {
+        const existing = formik.values.dateStart
+            ? new Date(formik.values.dateStart).toDateString()
+            : null;
 
-        // formik.setFieldValue("tripType", type)
+        const selected = date ? new Date(date).toDateString() : null;
+
+        // If date is the same, skip update
+        if (existing === selected) return;
+
+        formik.setFieldValue("dateStart", date);
     };
-    const [selected, setSelected] = useState('roundtrip');
-    useEffect(() => {
-        if (formik) {
-            formik.setFieldValue('tripType', selected);
-        }
-    }, [selected]);
+
     const MobileView = () => (
         <div className="  w-full">
             <TabNavigation
@@ -226,7 +230,7 @@ const BookingBox = () => {
                 isMobile={false}
                 formik={formik}
             />
-            <TripTypeSelector selected={selected} setSelected={setSelected} formik={formik} isMobile={isMobile} onChange={onChange} />
+            <TripTypeSelector defaultValue={selected} setSelected={setSelected} formik={formik} isMobile={isMobile} />
             <FromToSelector
                 setShowModal={setDesktopShowModal}
                 setShowMobileModal={setShowMobileModal}
@@ -255,7 +259,7 @@ const BookingBox = () => {
                 formik={formik}
             />
             <div className="flex items-center justify-between mb-6">
-                <TripTypeSelector selected={selected} setSelected={setSelected} formik={formik} isMobile={isMobile} onChange={onChange} />
+                <TripTypeSelector defaultValue={selected} setSelected={setSelected} formik={formik} isMobile={isMobile} />
                 <MilesToggle isMobile={isMobile} />
             </div>
             <FromToSelector
@@ -281,6 +285,7 @@ const BookingBox = () => {
                 currentMonth={currentMonth}
                 minMonth={minMonth}
                 setMinMonth={setMinMonth}
+                handleOneWayDateSelect={handleOneWayDateSelect}
             />
         </div>
     );
@@ -323,6 +328,7 @@ const BookingBox = () => {
                 currentMonth={currentMonth}
                 minMonth={minMonth}
                 setMinMonth={setMinMonth}
+                handleOneWayDateSelect={handleOneWayDateSelect}
             />
         </>
 

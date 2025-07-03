@@ -97,6 +97,7 @@ const FlightCard = ({
     economyPrice,
     businessPrice,
     isExpanded = false,
+    onDetailsClick
 }) => {
     const [expanded, setExpanded] = useState(isExpanded);
 
@@ -118,7 +119,7 @@ const FlightCard = ({
                         stops={stops}
                     />
                     <button
-                        onClick={() => console.log('Flight details clicked')}
+                        onClick={onDetailsClick}
                         className="text-[#054E72] text-sm font-bold underline hover:text-[#043A56] w-fit"
                     >
                         Flight details

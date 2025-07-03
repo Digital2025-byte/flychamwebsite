@@ -8,7 +8,7 @@ import StepWrapper from "./StepWrapper";
 import useCities from "@/hooks/useCities";
 import Dates from "./widget/Dates/Dates";
 
-const AirportModal = ({minMonth,setMinMonth, currentMonth, setCurrentMonth, handleDateSelect, isOpen, onClose, formik, search, setSearch, filteredSourceCities, filteredDestenationCities, stepsData, handleClick }) => {
+const AirportModal = ({handleOneWayDateSelect,minMonth,setMinMonth, currentMonth, setCurrentMonth, handleDateSelect, isOpen, onClose, formik, search, setSearch, filteredSourceCities, filteredDestenationCities, stepsData, handleClick }) => {
 
 
 
@@ -46,7 +46,9 @@ const AirportModal = ({minMonth,setMinMonth, currentMonth, setCurrentMonth, hand
                 setMinMonth={setMinMonth}
                         setCurrentMonth={setCurrentMonth}
                         currentMonth={currentMonth}
-                        handleDateSelect={handleDateSelect} />
+                        handleDateSelect={handleDateSelect}
+                        handleOneWayDateSelect={handleOneWayDateSelect}
+                        />
                 )
 
             default:

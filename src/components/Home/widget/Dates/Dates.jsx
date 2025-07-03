@@ -9,7 +9,7 @@ import MonthNavigation from './MonthNavigation';
 import SelectedDateDisplay from './SelectedDateDisplay';
 import CustomDayContent from './CustomDayContent';
 
-const Dates = ({ formik, handleDateSelect, currentMonth, setCurrentMonth, minMonth, setMinMonth }) => {
+const Dates = ({ formik, handleDateSelect, currentMonth, setCurrentMonth, minMonth, setMinMonth ,handleOneWayDateSelect}) => {
     const [shouldAnimateMonth, setShouldAnimateMonth] = useState(false);
 
     const isMobile = useIsMobile('768');
@@ -30,16 +30,15 @@ const Dates = ({ formik, handleDateSelect, currentMonth, setCurrentMonth, minMon
 
 
 
-   const handleMonthChange = (newMonth) => {
-  const normalizedNewMonth = new Date(newMonth.getFullYear(), newMonth.getMonth(), 1);
-  const normalizedMinMonth = new Date(minMonth.getFullYear(), minMonth.getMonth(), 1);
+    const handleMonthChange = (newMonth) => {
+        const normalizedNewMonth = new Date(newMonth.getFullYear(), newMonth.getMonth(), 1);
+        const normalizedMinMonth = new Date(minMonth.getFullYear(), minMonth.getMonth(), 1);
+        // ✅ Prevent going back before minMonth
+        if (normalizedNewMonth < normalizedMinMonth) return;
 
-  // ✅ Prevent going back before minMonth
-  if (normalizedNewMonth < normalizedMinMonth) return;
-
-  setCurrentMonth(normalizedNewMonth);
-  setShouldAnimateMonth(true);
-};
+        setCurrentMonth(normalizedNewMonth);
+        setShouldAnimateMonth(true);
+    };
 
 
     // Automatically stop the animation after 300ms
@@ -51,6 +50,7 @@ const Dates = ({ formik, handleDateSelect, currentMonth, setCurrentMonth, minMon
             return () => clearTimeout(timeout);
         }
     }, [shouldAnimateMonth]);
+
 
     return (
         <div className="bg-white rounded-2xl p-6 w-full max-w-5xl mx-auto">
@@ -85,7 +85,7 @@ const Dates = ({ formik, handleDateSelect, currentMonth, setCurrentMonth, minMon
                     }}
                     mode={tripType === 'oneway' ? 'single' : 'range'}
                     selected={selected}
-                    onSelect={handleDateSelect}
+                    onSelect={tripType === 'oneway' ? handleOneWayDateSelect : handleDateSelect}
                     className="flex justify-center"
                     classNames={{
                         head_cell: 'uppercase text-xs font-bold text-gray-500 text-center',

@@ -11,7 +11,7 @@ import AirportList from "../AirportList";
 import Guests from "../Guests";
 import Dates from "../widget/Dates/Dates";
 
-const MobModal = ({ minMonth, setMinMonth, currentMonth, setCurrentMonth, handleDateSelect, handleReset, isOpen, onClose, title, formik, stepsData, search, setSearch, filteredSourceCities, filteredDestenationCities, activeTab, handleClick, sliderSettings, sliderRef }) => {
+const MobModal = ({handleOneWayDateSelect, minMonth, setMinMonth, currentMonth, setCurrentMonth, handleDateSelect, handleReset, isOpen, onClose, title, formik, stepsData, search, setSearch, filteredSourceCities, filteredDestenationCities, activeTab, handleClick, sliderSettings, sliderRef }) => {
     const handleStepBack = () => {
         const currentStep = formik.values.type;
         if (currentStep > 0) {
@@ -53,6 +53,7 @@ const MobModal = ({ minMonth, setMinMonth, currentMonth, setCurrentMonth, handle
                         currentMonth={currentMonth}
                         minMonth={minMonth}
                         setMinMonth={setMinMonth}
+                        handleOneWayDateSelect={handleOneWayDateSelect}
                     />
 
                 )
