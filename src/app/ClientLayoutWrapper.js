@@ -34,13 +34,13 @@ import {
 } from '@phosphor-icons/react';
 
 export default function ClientLayoutWrapper({ children }) {
-    const [isOpen, setIsOpen] = useState(true)
+  const [isOpen, setIsOpen] = useState(true)
 
-    const pathname = usePathname()
-    const isMobile = useIsMobile()
-    const { t } = useTranslation();
-    const isAr = useIsArabic()
- const navItems = [
+  const pathname = usePathname()
+  const isMobile = useIsMobile()
+  const { t } = useTranslation();
+  const isAr = useIsArabic()
+  const navItems = [
     {
       label: t('nav.bookFlight'),
       icon: AirplaneTilt,
@@ -102,61 +102,65 @@ export default function ClientLayoutWrapper({ children }) {
 
 
 
-    return (
+  return (
 
-        <>
+    <>
 
-            <ZohoSalesIQ />
-            {/* ✅ GTM Script */}
-            <GTMScript />
+      <ZohoSalesIQ />
+      {/* ✅ GTM Script */}
+      <GTMScript />
 
-            {/* ✅ GA4 Script */}
-            <GA4Script />
+      {/* ✅ GA4 Script */}
+      <GA4Script />
 
-            {/* ✅ GTM Noscript */}
-            <noscript>
-                <iframe
-                    src="https://www.googletagmanager.com/ns.html?id=GTM-TKHJ4V8W"
-                    height="0"
-                    width="0"
-                    style={{ display: "none", visibility: "hidden" }}
-                ></iframe>
-            </noscript>
+      {/* ✅ GTM Noscript */}
+      <noscript>
+        <iframe
+          src="https://www.googletagmanager.com/ns.html?id=GTM-TKHJ4V8W"
+          height="0"
+          width="0"
+          style={{ display: "none", visibility: "hidden" }}
+        ></iframe>
+      </noscript>
 
-            {/* ✅ Layout */}
-            {/* <I18nextProvider i18n={i18n}> */}
-            <div >
-                <div className=" flex h-screen overflow-hidden">
-                    {/* Sidebar */}
-                    <aside className="hidden xl:block   h-screen shadow-xl z-50">
-                        {/* {(pathname !== '/about' || pathname !== '/Mission') && */}
-                        <SideBar navItems={navItems} isOpen={isOpen} setIsOpen={setIsOpen} />
-                        {/* } */}
-                    </aside>
+      {/* ✅ Layout */}
+      {/* <I18nextProvider i18n={i18n}> */}
+      <div >
+        <div className=" flex h-screen overflow-hidden">
+          {/* Sidebar */}
+          <aside className="hidden xl:block   h-screen shadow-xl z-50">
+            {/* {(pathname !== '/about' || pathname !== '/Mission') && */}
+            {pathname !== '/FlightResults' && (
+              <aside className="hidden xl:block h-screen shadow-xl z-50">
+                <SideBar navItems={navItems} isOpen={isOpen} setIsOpen={setIsOpen} />
+              </aside>
+            )}
+            {/* } */}
+          </aside>
 
-                    {/* Main Content */}
-                    <main className="flex-1 w-[100%] h-screen overflow-y-auto bg-white  ">
+          {/* Main Content */}
+          <main className="flex-1 w-[100%] h-screen overflow-y-auto bg-white  ">
 
-                        {children}
-                        {(pathname !== '/about' && pathname !== '/Mission') && <Footer />}
+            {children}
+            {(pathname !== '/about' && pathname !== '/Mission' && pathname !== '/FlightResults') && <Footer />}
 
-                    </main>
-                </div>
+          </main>
+        </div>
 
 
 
-                {/* <div className="hidden xl:block">
+        {/* <div className="hidden xl:block">
                     <LanguageSwitcher />
                 </div> */}
 
 
 
-            </div>
-            <div className="block xl:hidden">
-                <BottomMobileMenu navItems={navItems} />
-            </div>
-            {/* </I18nextProvider> */}
+      </div>
+      <div className="block xl:hidden">
+        <BottomMobileMenu navItems={navItems} />
+      </div>
+      {/* </I18nextProvider> */}
 
-        </>
-    );
+    </>
+  );
 }

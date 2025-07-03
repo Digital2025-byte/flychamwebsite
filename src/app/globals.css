@@ -203,3 +203,10 @@ input[type='number'].custom-number-input {
 .slick-track {
   transition: transform 1.5s ease-in-out !important;
 }
+.clip-arrow {
+  clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 50%, calc(100% - 12px) 100%, 0 100%);
+}
+
+.clip-end {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+}

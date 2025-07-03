@@ -182,32 +182,41 @@ const BookingBox = () => {
 
     const [currentMonth, setCurrentMonth] = useState(new Date());
 
- const handleDateSelect = (value) => {
-  const tripType = formik.values.tripType;
+    const handleDateSelect = (value) => {
+        const tripType = formik.values.tripType;
 
-  if (tripType === 'oneway') {
-    if (value instanceof Date) {
-      formik.setFieldValue('dateStart', value);
-      formik.setFieldValue('dateEnd', '');
+        if (tripType === 'oneway') {
+            if (value instanceof Date) {
+                formik.setFieldValue('dateStart', value);
+                formik.setFieldValue('dateEnd', '');
 
-      const selectedMonth = new Date(value.getFullYear(), value.getMonth(), 1);
-      setCurrentMonth(selectedMonth);
-      // ❌ DO NOT setMinMonth — you want to still allow past months
-    }
-  } else {
-    if (value?.from) {
-      formik.setFieldValue('dateStart', value.from);
-      formik.setFieldValue('dateEnd', value.to || '');
+                const selectedMonth = new Date(value.getFullYear(), value.getMonth(), 1);
+                setCurrentMonth(selectedMonth);
+                // ❌ DO NOT setMinMonth — you want to still allow past months
+            }
+        } else {
+            if (value?.from) {
+                formik.setFieldValue('dateStart', value.from);
+                formik.setFieldValue('dateEnd', value.to || '');
 
-      const target = value.to || value.from;
-      const selectedMonth = new Date(target.getFullYear(), target.getMonth(), 1);
-      setCurrentMonth(selectedMonth);
-      setMinMonth(selectedMonth); // ✅ Now prevent viewing older months
-    }
-  }
-};
+                const target = value.to || value.from;
+                const selectedMonth = new Date(target.getFullYear(), target.getMonth(), 1);
+                setCurrentMonth(selectedMonth);
+                setMinMonth(selectedMonth); // ✅ Now prevent viewing older months
+            }
+        }
+    };
+    const onChange = (type) => {
+        console.log('type', type);
 
-
+        // formik.setFieldValue("tripType", type)
+    };
+    const [selected, setSelected] = useState('roundtrip');
+    useEffect(() => {
+        if (formik) {
+            formik.setFieldValue('tripType', selected);
+        }
+    }, [selected]);
     const MobileView = () => (
         <div className="  w-full">
             <TabNavigation
@@ -217,7 +226,7 @@ const BookingBox = () => {
                 isMobile={false}
                 formik={formik}
             />
-            <TripTypeSelector formik={formik} isMobile />
+            <TripTypeSelector selected={selected} setSelected={setSelected} formik={formik} isMobile={isMobile} onChange={onChange} />
             <FromToSelector
                 setShowModal={setDesktopShowModal}
                 setShowMobileModal={setShowMobileModal}
@@ -246,7 +255,7 @@ const BookingBox = () => {
                 formik={formik}
             />
             <div className="flex items-center justify-between mb-6">
-                <TripTypeSelector formik={formik} />
+                <TripTypeSelector selected={selected} setSelected={setSelected} formik={formik} isMobile={isMobile} onChange={onChange} />
                 <MilesToggle isMobile={isMobile} />
             </div>
             <FromToSelector
@@ -268,7 +277,7 @@ const BookingBox = () => {
                 filteredDestenationCities={filteredDestenationCities}
                 handleClick={handleClick}
                 handleDateSelect={handleDateSelect}
-               setCurrentMonth={setCurrentMonth}
+                setCurrentMonth={setCurrentMonth}
                 currentMonth={currentMonth}
                 minMonth={minMonth}
                 setMinMonth={setMinMonth}
@@ -312,7 +321,7 @@ const BookingBox = () => {
                 handleDateSelect={handleDateSelect}
                 setCurrentMonth={setCurrentMonth}
                 currentMonth={currentMonth}
-            minMonth={minMonth}
+                minMonth={minMonth}
                 setMinMonth={setMinMonth}
             />
         </>

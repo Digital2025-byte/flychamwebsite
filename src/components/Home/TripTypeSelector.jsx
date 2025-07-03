@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+'use client'
+import React, { useEffect, useState } from 'react';
 
-const TripTypeSelector = ({ formik }) => {
-const selected = formik.values.tripType
+const TripTypeSelector = ({formik, onChange }) => {
+  const [selected, setSelected] = useState('roundtrip');
+
   const handleSelect = (type) => {
-    formik.setFieldValue("tripType",type)
+    setSelected(type);
+    onChange?.(type);
   };
 
   return (
@@ -17,14 +20,14 @@ const selected = formik.values.tripType
       {/* Buttons */}
       <button
         onClick={() => handleSelect('roundtrip')}
-        className={`relative z-10 w-1/2  rounded-[20px]  text-sm font-medium transition-colors duration-300 ${selected === 'roundtrip' ? 'text-white' : 'text-main'
+        className={`relative z-10 w-1/2  rounded-[20px]  text-sm font-medium transition-colors duration-300 ${selected === 'roundtrip' ? 'text-white' : 'text-[#05486e]'
           }`}
       >
         Round Trip
       </button>
       <button
         onClick={() => handleSelect('oneway')}
-        className={`relative z-10 w-1/2  rounded-[20px]  text-sm font-medium transition-colors duration-300 ${selected === 'oneway' ? 'text-white' : 'text-main'
+        className={`relative z-10 w-1/2  rounded-[20px]  text-sm font-medium transition-colors duration-300 ${selected === 'oneway' ? 'text-white' : 'text-[#05486e]'
           }`}
       >
         One-way
