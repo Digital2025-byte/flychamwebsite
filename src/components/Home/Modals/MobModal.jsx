@@ -11,7 +11,7 @@ import AirportList from "../AirportList";
 import Guests from "../Guests";
 import Dates from "../widget/Dates/Dates";
 
-const MobModal = ({minMonth,setMinMonth, currentMonth, setCurrentMonth, handleDateSelect, handleReset, isOpen, onClose, title, formik, stepsData, search, setSearch, filteredSourceCities, filteredDestenationCities, activeTab, handleClick, sliderSettings, sliderRef }) => {
+const MobModal = ({ minMonth, setMinMonth, currentMonth, setCurrentMonth, handleDateSelect, handleReset, isOpen, onClose, title, formik, stepsData, search, setSearch, filteredSourceCities, filteredDestenationCities, activeTab, handleClick, sliderSettings, sliderRef }) => {
     const handleStepBack = () => {
         const currentStep = formik.values.type;
         if (currentStep > 0) {
@@ -50,10 +50,10 @@ const MobModal = ({minMonth,setMinMonth, currentMonth, setCurrentMonth, handleDa
             case 3:
                 return (
                     <Dates formik={formik} handleDateSelect={handleDateSelect} setCurrentMonth={setCurrentMonth}
-                        currentMonth={currentMonth} 
-                                    minMonth={minMonth}
-                setMinMonth={setMinMonth}
-                        />
+                        currentMonth={currentMonth}
+                        minMonth={minMonth}
+                        setMinMonth={setMinMonth}
+                    />
 
                 )
 
@@ -120,39 +120,20 @@ const MobModal = ({minMonth,setMinMonth, currentMonth, setCurrentMonth, handleDa
                             {/* Body */}
                             <div className="flex-1 overflow-y-auto p-4">{
                                 <>
-                                    <Slider ref={sliderRef} {...sliderSettings}>
+                                    <div className="flex gap-1 justify-between overflow-x-auto px-1">
                                         {stepsData.map((step, idx) => (
-                                            <div key={idx} className="px-2">
-                                                <div
-                                                    className=" flex items-center gap-4 cursor-pointer"
-                                                    onClick={() => handleClick(step.id)}
-                                                >
-                                                    <StepItem
-                                                        {...step}
-                                                        isCompleted={step.id < activeTab}
-                                                        isActive={step.id === activeTab}
-                                                    />
+                                            <div key={idx} className="flex items-center gap-2 cursor-pointer" onClick={() => handleClick(step.id)}>
+                                                <StepItem
+                                                    {...step}
+                                                    isCompleted={step.id < activeTab}
+                                                    isActive={step.id === activeTab}
+                                                />
+                                        
 
-                                                    {/* Connector */}
-                                                    {step.id < stepsData.length - 1 || step.id === activeTab ? (
-                                                        <div className="w-30 flex justify-center flex-1">
-                                                            {step.id === activeTab ? (
-                                                                <Lottie animationData={planeAnim} loop className="w-[70px] h-[70px]" />
-                                                            ) : step.id < activeTab ? (
-                                                                <>
-                                                                    <span className="w-full  h-px block border-t border-dashed border-main" />
-                                                                </>
-                                                            ) : (
-                                                                <>
-                                                                    <span className="w-full h-px block border-t border-dashed border-gray-300" />
-                                                                </>
-                                                            )}
-                                                        </div>
-                                                    ) : null}
-                                                </div>
                                             </div>
                                         ))}
-                                    </Slider>
+                                    </div>
+
 
                                     {renderStepComponent()}
                                 </>

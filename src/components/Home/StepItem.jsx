@@ -13,7 +13,7 @@ const StepItem = ({ icon, title, value, isActive, isCompleted }) => {
         <span className={`hidden md:block text-xs ${isActive || isCompleted ? 'text-gray-500' : 'text-gray-400'}`}>
           {title}
         </span>
-        <span className={`text-center md:text-start text-sm font-semibold ${isActive || isCompleted ? 'text-black' : 'text-gray-400'}`}>
+        <span className={`text-center md:text-start text-xs md:text-sm font-semibold ${isActive || isCompleted ? 'text-main' : 'text-gray-400'}`}>
           {value}
         </span>
       </div>
