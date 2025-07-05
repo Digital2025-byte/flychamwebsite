@@ -8,6 +8,7 @@ import ProgressBar from '@/components/FlightResults/ProgressBar'
 import RouteInfo from '@/components/FlightResults/RouteInfo'
 import SortFilterModal from '@/components/FlightResults/SortFilterModal'
 import FlightDetailsModal from '@/components/FlightResults/FlightDetailsModal' // you’ll need to create this
+import SearchFooter from '@/components/FlightResults/SearchFooter'
 
 const FlightResults = () => {
     const [isModalOpen, setIsModalOpen] = useState(false)
@@ -23,7 +24,9 @@ const FlightResults = () => {
             duration: "4h 15m",
             stops: "1 Stop",
             businessPrice: 850,
-            stop: true
+            stop: true,
+            price: 550,
+            special: true
         },
         {
             departureTime: "10:20",
@@ -33,7 +36,9 @@ const FlightResults = () => {
             duration: "4h 25m",
             stops: "Direct",
             businessPrice: 790,
-            stop: false
+            stop: false,
+            special: false
+
         },
     ]
 
@@ -43,7 +48,7 @@ const FlightResults = () => {
     }
 
     return (
-        <>
+        <div className='hidden lg:block'>
             <Header />
             <div className="w-[70%] mx-auto px-2">
                 <div className="my-4">
@@ -52,16 +57,18 @@ const FlightResults = () => {
                 <div className="my-4">
                     <RouteInfo />
                 </div>
-                <div className="my-4">
+                <div className="mt-8 mb-4">
                     <DateNavigation />
                 </div>
+                {/* Divider */}
+                <div className="w-full my-4 h-px bg-[var(--bg-300)]" />
 
                 <div className="flex justify-between items-center mb-6">
-                    <span className="text-black text-sm font-normal">(3 Result)</span>
+                    <span className="text-black text-sm font-medium">(3 Result)</span>
                     <FilterControls onOpenModal={() => setIsModalOpen(true)} />
                 </div>
 
-                <div className="grid gap-6">
+                <div className="grid gap-6 my-5 ">
                     {flights.map((flight, index) => (
                         <FlightCard
                             key={index}
@@ -71,17 +78,20 @@ const FlightResults = () => {
                             arrivalCode={flight.arrivalCode}
                             duration={flight.duration}
                             stops={flight.stops}
+                            preconomyPriceice={flight.price}
                             businessPrice={flight.businessPrice}
+                            economyPrice={flight.price}
+                            special={flight.special}
                             onDetailsClick={() => handleDetailsClick(flight)}
                         />
                     ))}
                 </div>
             </div>
-
+            <SearchFooter />
             {/* Modals */}
             <SortFilterModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} onApply={() => { }} />
             <FlightDetailsModal isOpen={showDetails} onClose={() => setShowDetails(false)} flight={selectedFlight} />
-        </>
+        </div>
     )
 }
 

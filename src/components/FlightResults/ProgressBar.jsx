@@ -21,7 +21,7 @@ const ProgressBar = () => {
         className="absolute w-full h-full"
         preserveAspectRatio="none"
       >
-        <path d="M0 0H1048.16L1077.5 34L1048.16 66H0V0Z" fill="#E5E5E3" />
+        <path d="M0 0H1048.16L1077.5 34L1048.16 66H0V0Z" fill="var(--bg-100)" />
       </svg>
 
       {/* Dynamic blue progress arrow */}
@@ -31,15 +31,16 @@ const ProgressBar = () => {
         style={{ width: `${completedPercentage}%` }}
         preserveAspectRatio="none"
       >
-        <path d="M0 0H1048.16L1077.5 34L1048.16 66H0V0Z" fill="#054E72" />
+        <path d="M0 0H1048.16L1077.5 34L1048.16 66H0V0Z" fill="var(--primary-1)" />
       </svg>
+
 
       {/* Step Items */}
       <div className="relative z-10 flex justify-between items-center h-full px-4 md:px-10">
         {steps.map((step, index) => {
           const isCompleted = index <= activeStep;
-          const stepColor = isCompleted ? 'text-white' : 'text-[#AFAFAC]';
-          const borderColor = isCompleted ? 'border-white' : 'border-[#AFAFAC]';
+          const stepColor = isCompleted ? 'text-white' : 'text-400';
+          const borderColor = isCompleted ? 'border-white' : 'border-[var(text-400)]';
 
           return (
             <div

@@ -125,7 +125,7 @@ const FlightDetailsModal = ({ isOpen, onClose }) => {
                                                 <div className="mb-2 flex-grow border-t border-gray-200" />
 
                                                 <div className="inline-flex items-center gap-1">
-                                                <Clock  />
+                                                    <Clock />
                                                     {item.note}
                                                 </div>
                                                 <div className=" mt-2 flex-grow border-t border-gray-200" />
