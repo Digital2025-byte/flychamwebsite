@@ -13,7 +13,7 @@
 
   /* Primary */
     --primary-1: #054E72;
-      --primary-1-rgb: 5, 78, 114;
+    --primary-1-rgb: 5, 78, 114;
   --primary-100: #A6CFE0;
   --primary-200: #8CB9C8;
   --primary-300: #73A4AF;
@@ -46,6 +46,9 @@
   --bg-100: #F5F5F4;
   --bg-200: #E5E5E3;
   --bg-300: #D4D4D2;
+  /* Alert */
+  --alert: #B00300;
+  --green: #34C759;
 }
   /* Primary */
 .bg-primary-1 { background-color: var(--primary-1); }
@@ -108,7 +111,11 @@
 .bg-100 { background-color: var(--bg-100); }
 .bg-200 { background-color: var(--bg-200); }
 .bg-300 { background-color: var(--bg-300); }
+  /* alert */
+.text-alert { color: var(--alert); }
+  /* green */
 
+.text-green { color: var(--green); }
 
 @theme inline {
   --color-background: var(--background);

@@ -4,6 +4,8 @@ import Image from 'next/image';
 import planepath from '@/assets/images/planepath.png';
 import tabicon from '@/assets/images/tabicon.png';
 import useIsMobile from '@/hooks/useIsMobile';
+import { CaretDown, CaretUp } from '@phosphor-icons/react';
+import FlightDetails from './FlightDetails';
 
 // Components
 const FlightTimeInfo = ({ departureTime, arrivalTime, departureCode, arrivalCode, duration, stops }) => (
@@ -26,22 +28,7 @@ const FlightTimeInfo = ({ departureTime, arrivalTime, departureCode, arrivalCode
     </div>
 );
 
-const ExpandToggle = ({ expanded, onToggle }) => (
-    <button
-        onClick={onToggle}
-        className="p-2 hover:bg-gray-200 rounded"
-        aria-label={expanded ? 'Collapse' : 'Expand'}
-    >
-        <svg
-            className={`w-6 h-6 transform ${expanded ? 'rotate-180' : 'rotate-90'} transition-transform`}
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-        >
-            <path d="M18.9693 8.46927L12 15.4396 5.03055 8.46927" fill="#054E72" />
-        </svg>
-    </button>
-);
+
 
 const FlightCodes = () => (
     <div className="flex items-center gap-4 my-1">
@@ -109,7 +96,7 @@ const FlightCard = ({
     return (
         <article className="w-full bg-100 rounded-xl py-8 px-10 flex flex-col ">
 
-            <div className={`flex  gap-0 ${isTabScrenn ? 'flex-col':'flex-row '}  md:gap-3  justify-between  items-start md:items-center`}>
+            <div className={`flex   gap-0 ${isTabScrenn ? 'flex-col' : 'flex-row '}  md:gap-3  justify-between  items-start md:items-center`}>
 
                 <div className='flex flex-col items-start gap-4 '>
                     <div className="text-[#B00300] text-sm pt-2 self-center">
@@ -135,14 +122,25 @@ const FlightCard = ({
                     <div className="flex gap-4 flex-wrap">
                         <FareCard type="Economy" price={economyPrice} special={special} />
                         <FareCard type="Business" price={businessPrice} special={special} />
+                        <div className='cursor-pointer' onClick={() => setExpanded((prev) => !prev)}>
+
+                            {expanded ? <CaretUp size={28} className='text-primary-1' /> : <CaretDown size={28} className='text-primary-1' />
+                            }
+                        </div>
                     </div>
                 </div>
-                {/* <ExpandToggle expanded={expanded} onToggle={() => setExpanded(!expanded)} /> */}
             </div>
 
             <div className="w-full h-px bg-[#E5E5E3] my-6" />
 
             <FlightCodes />
+            <div
+                className={`overflow-hidden transition-all duration-500 ease-in-out ${expanded ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0'}`}
+            >
+                <div className={`${expanded ? 'block' : 'invisible'}`}>
+                    <FlightDetails />
+                </div>
+            </div>
 
 
 
