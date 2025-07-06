@@ -3,7 +3,7 @@ import React from 'react';
 
 const DateNavigation = () => {
   return (
-    <section className="flex justify-between items-center w-full  max-md:flex-col max-md:gap-4">
+    <section className="flex justify-between items-start lg:items-center w-full  max-md:flex-col max-md:gap-4">
       {/* Left Section */}
       <div className="flex flex-col items-start">
         <span className="text-[#000] text-sm font-medium">Thu, 10 Jul 2025</span>
@@ -13,7 +13,7 @@ const DateNavigation = () => {
       </div>
 
       {/* Right Section: Navigation */}
-      <div className="flex items-center gap-8">
+      <div className="flex self-center items-center gap-8">
         {/* Previous */}
         <button className="cursor-pointer flex items-center gap-5 text-sm text-800 ">
           <CaretLeft size={24} color='var()' />

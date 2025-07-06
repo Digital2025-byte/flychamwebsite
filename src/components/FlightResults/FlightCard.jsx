@@ -6,6 +6,8 @@ import tabicon from '@/assets/images/tabicon.png';
 import useIsMobile from '@/hooks/useIsMobile';
 import { CaretDown, CaretUp } from '@phosphor-icons/react';
 import FlightDetails from './FlightDetails';
+import { motion, AnimatePresence } from 'framer-motion';
+
 
 // Components
 const FlightTimeInfo = ({ departureTime, arrivalTime, departureCode, arrivalCode, duration, stops }) => (
@@ -41,7 +43,7 @@ const FlightCodes = () => (
     </div>
 );
 
-const FareCard = ({ type, price, special }) => {
+const FareCard = ({ type, price, special,isLg }) => {
     const isEconomy = type === 'Economy';
 
     const bgColor = isEconomy
@@ -53,8 +55,8 @@ const FareCard = ({ type, price, special }) => {
         : 'border-[var(--primary-1)]';
 
     return (
-        <div className={`border ${borderColor} rounded-xl overflow-hidden w-[175px] h-[141px] flex flex-col`}>
-            <div className={`${bgColor} ${isEconomy ? 'text-primary-1' : 'text-white'}  text-sm font-bold text-center py-2`}>
+        <div className={`border ${borderColor} rounded-xl overflow-hidden   md:w-[175px] w-full h-[141px] flex flex-col`}>
+            <div className={`${bgColor} ${isEconomy ? 'text-primary-1' : 'text-white'}   text-sm font-bold text-center py-2`}>
                 {type}
             </div>
 
@@ -90,13 +92,13 @@ const FlightCard = ({
     onDetailsClick, special
 }) => {
     console.log('economyPrice', economyPrice);
-    const isTabScrenn = useIsMobile(1310)
+  const isLg = useIsMobile(1078);
     const [expanded, setExpanded] = useState(isExpanded);
 
     return (
-        <article className="w-full bg-100 rounded-xl py-8 px-10 flex flex-col ">
+        <article onClick={() => setExpanded((prev) => !prev)} className=" cursor-pointer w-full bg-100 rounded-xl py-4 lg:py-8 p-0 lg:px-8 flex flex-col items-center lg:items-stretch">
 
-            <div className={`flex   gap-0 ${isTabScrenn ? 'flex-col' : 'flex-row '}  md:gap-3  justify-between  items-start md:items-center`}>
+            <div className={`flex   gap-0 ${isLg ? 'flex-col' : 'flex-row '}   md:gap-3  justify-between  items-start lg:items-center`}>
 
                 <div className='flex flex-col items-start gap-4 '>
                     <div className="text-[#B00300] text-sm pt-2 self-center">
@@ -117,30 +119,60 @@ const FlightCard = ({
                         Flight details
                     </button>
                 </div>
-                <div className="flex justify-between items-center flex-wrap gap-4">
+                <div className="w-full flex justify-between items-center flex-wrap gap-4 my-2 md:my-0">
 
-                    <div className="flex gap-4 flex-wrap">
-                        <FareCard type="Economy" price={economyPrice} special={special} />
-                        <FareCard type="Business" price={businessPrice} special={special} />
-                        <div className='cursor-pointer' onClick={() => setExpanded((prev) => !prev)}>
+                    <div className="w-full flex flex-row gap-4 items-center self-center justify-center xl:justify-end">
+                        <FareCard type="Economy" price={economyPrice} special={special} isLg={isLg}/>
+                        <FareCard type="Business" price={businessPrice} special={special} isLg={isLg}/>
 
-                            {expanded ? <CaretUp size={28} className='text-primary-1' /> : <CaretDown size={28} className='text-primary-1' />
-                            }
+                        <div className="hidden xl:block cursor-pointer" >
+                            <AnimatePresence mode="wait" initial={false}>
+                                {expanded ? (
+                                    <motion.span
+                                        key="up"
+                                        initial={{ opacity: 0, y: -5 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        exit={{ opacity: 0, y: 5 }}
+                                        transition={{ duration: 0.2 }}
+                                    >
+                                        <CaretUp size={28} className="text-primary-1" />
+                                    </motion.span>
+                                ) : (
+                                    <motion.span
+                                        key="down"
+                                        initial={{ opacity: 0, y: -5 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        exit={{ opacity: 0, y: 5 }}
+                                        transition={{ duration: 0.2 }}
+                                    >
+                                        <CaretDown size={28} className="text-primary-1" />
+                                    </motion.span>
+                                )}
+                            </AnimatePresence>
                         </div>
+
                     </div>
                 </div>
             </div>
 
-            <div className="w-full h-px bg-[#E5E5E3] my-6" />
+            <div className="w-full h-px bg-[#E5E5E3] my-4 lg:my-6" />
 
             <FlightCodes />
-            <div
-                className={`overflow-hidden transition-all duration-500 ease-in-out ${expanded ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0'}`}
-            >
-                <div className={`${expanded ? 'block' : 'invisible'}`}>
-                    <FlightDetails />
-                </div>
-            </div>
+            <AnimatePresence initial={false}>
+                {expanded && (
+                    <motion.div
+                        key="flight-details"
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
+                        className="overflow-hidden w-full "
+                    >
+                        <FlightDetails />
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
 
 
 

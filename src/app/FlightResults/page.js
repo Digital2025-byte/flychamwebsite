@@ -9,6 +9,9 @@ import RouteInfo from '@/components/FlightResults/RouteInfo'
 import SortFilterModal from '@/components/FlightResults/SortFilterModal'
 import FlightDetailsModal from '@/components/FlightResults/FlightDetailsModal' // you’ll need to create this
 import SearchFooter from '@/components/FlightResults/SearchFooter'
+import { FunnelSimple, X } from '@phosphor-icons/react'
+import HeaderMobile from '@/components/FlightResults/HeaderMobile'
+import ProgressBarMb from '@/components/FlightResults/ProgressBarMb'
 
 const FlightResults = () => {
     const [isModalOpen, setIsModalOpen] = useState(false)
@@ -48,27 +51,75 @@ const FlightResults = () => {
     }
 
     return (
-        <div className='hidden lg:block'>
-            <Header />
-            <div className="w-[70%] mx-auto px-2">
-                <div className="my-4">
-                    <ProgressBar />
+        <>
+
+            <div className='hidden lg:block'>
+                <Header />
+                <div className="w-[70%] mx-auto px-2">
+                    <div className="my-4">
+                        <ProgressBar />
+                    </div>
+                    <div className="my-4">
+                        <RouteInfo />
+                    </div>
+                    <div className="mt-8 mb-4">
+                        <DateNavigation />
+                    </div>
+                    {/* Divider */}
+                    <div className="w-full my-4 h-px bg-[var(--bg-300)]" />
+
+                    <div className="flex justify-between items-center mb-6">
+                        <span className="text-black text-sm font-medium">(3 Result)</span>
+                        <FilterControls onOpenModal={() => setIsModalOpen(true)} />
+                    </div>
+
+                    <div className="grid gap-6 my-5 ">
+                        {flights.map((flight, index) => (
+                            <FlightCard
+                                key={index}
+                                departureTime={flight.departureTime}
+                                arrivalTime={flight.arrivalTime}
+                                departureCode={flight.departureCode}
+                                arrivalCode={flight.arrivalCode}
+                                duration={flight.duration}
+                                stops={flight.stops}
+                                preconomyPriceice={flight.price}
+                                businessPrice={flight.businessPrice}
+                                economyPrice={flight.price}
+                                special={flight.special}
+                                onDetailsClick={() => handleDetailsClick(flight)}
+                            />
+                        ))}
+                    </div>
                 </div>
-                <div className="my-4">
-                    <RouteInfo />
+                <SearchFooter />
+                {/* Modals */}
+                <SortFilterModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} onApply={() => { }} />
+                <FlightDetailsModal isOpen={showDetails} onClose={() => setShowDetails(false)} flight={selectedFlight} />
+            </div>
+            <div className='lg:hidden w-full '>
+
+                <div className=" px-3 flex  items-center justify-between h-16  shadow-md bg-[#F1F1F1]">
+
+                    <HeaderMobile />
+
                 </div>
-                <div className="mt-8 mb-4">
+                <div className="my-4  px-3 ">
+                    <ProgressBarMb />
+                </div>
+                <div className="my-4  px-3 ">
                     <DateNavigation />
-                </div>
-                {/* Divider */}
-                <div className="w-full my-4 h-px bg-[var(--bg-300)]" />
+                    <div className="w-full my-4 h-px bg-[var(--bg-300)]" />
 
-                <div className="flex justify-between items-center mb-6">
+                </div>
+                <div className=" my-4  px-3 flex justify-between items-center mb-6">
                     <span className="text-black text-sm font-medium">(3 Result)</span>
-                    <FilterControls onOpenModal={() => setIsModalOpen(true)} />
-                </div>
+                    <span className=' bg-100 p-1'>
+                        <FunnelSimple size={20} className="text-600  " weight="bold" />
+                    </span>
 
-                <div className="grid gap-6 my-5 ">
+                </div>
+                <div className=" my-4  px-3  grid gap-6 ">
                     {flights.map((flight, index) => (
                         <FlightCard
                             key={index}
@@ -87,11 +138,8 @@ const FlightResults = () => {
                     ))}
                 </div>
             </div>
-            <SearchFooter />
-            {/* Modals */}
-            <SortFilterModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} onApply={() => { }} />
-            <FlightDetailsModal isOpen={showDetails} onClose={() => setShowDetails(false)} flight={selectedFlight} />
-        </div>
+
+        </>
     )
 }
 
