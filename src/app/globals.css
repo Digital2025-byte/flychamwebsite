@@ -48,7 +48,7 @@
   --bg-300: #D4D4D2;
   /* Alert */
   --alert: #B00300;
-  --green: #34C759;
+  --green: #357B47;
 }
   /* Primary */
 .bg-primary-1 { background-color: var(--primary-1); }
@@ -111,10 +111,11 @@
 .bg-100 { background-color: var(--bg-100); }
 .bg-200 { background-color: var(--bg-200); }
 .bg-300 { background-color: var(--bg-300); }
-  /* alert */
+/* alert */
 .text-alert { color: var(--alert); }
-  /* green */
+/* green */
 
+.bg-green { background-color: var(--green); }
 .text-green { color: var(--green); }
 
 @theme inline {

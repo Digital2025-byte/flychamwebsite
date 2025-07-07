@@ -24,10 +24,7 @@ const FlightResults = () => {
             departureTime: "22:15", arrivalTime: "02:30", departureCode: "DAM", arrivalCode: "DXB",
             duration: "4h 15m", stops: "1 Stop", businessPrice: 850, stop: true, price: 550, special: true
         },
-        {
-            departureTime: "10:20", arrivalTime: "14:45", departureCode: "DAM", arrivalCode: "DXB",
-            duration: "4h 25m", stops: "Direct", businessPrice: 790, stop: false, special: false, price: 790
-        },
+ 
     ];
 
     const handleDetailsClick = (flight) => {
@@ -44,6 +41,7 @@ const FlightResults = () => {
                     economyPrice={flight.price}
                     preconomyPriceice={flight.price}
                     onDetailsClick={() => handleDetailsClick(flight)}
+                    isConfirmed
                 />
             ))}
         </div>
@@ -75,15 +73,12 @@ const FlightResults = () => {
                 <main className="w-[70%] mx-auto px-2">
                     <Section><ProgressBar /></Section>
                     <Section><RouteInfo /></Section>
-                    <Section className="mt-8 mb-4"><DateNavigation /></Section>
-                    <Divider />
-                    <FlightHeader
-                        count={flights.length}
-                        rightComponent={<FilterControls onOpenModal={() => setIsModalOpen(true)} />}
-                    />
+                    <Section className="mt-8 mb-4"><DateNavigation isEditFlight/></Section>
                     {renderFlightList()}
+
+
                 </main>
-                <SearchFooter />
+
                 <SortFilterModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} onApply={() => { }} />
                 <FlightDetailsModal isOpen={showDetails} onClose={() => setShowDetails(false)} flight={selectedFlight} />
             </div>

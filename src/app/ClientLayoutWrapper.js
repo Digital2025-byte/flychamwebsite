@@ -130,7 +130,7 @@ export default function ClientLayoutWrapper({ children }) {
           {/* Sidebar */}
           <aside className="hidden xl:block   h-screen shadow-xl z-50">
             {/* {(pathname !== '/about' || pathname !== '/Mission') && */}
-            {pathname !== '/FlightResults' && (
+            {pathname !== '/FlightResults' && pathname !== '/Search-results-confirm' && (
               <aside className="hidden xl:block h-screen shadow-xl z-50">
                 <SideBar navItems={navItems} isOpen={isOpen} setIsOpen={setIsOpen} />
               </aside>
@@ -142,7 +142,7 @@ export default function ClientLayoutWrapper({ children }) {
           <main className="flex-1 w-[100%] h-screen overflow-y-auto bg-white  ">
 
             {children}
-            {(pathname !== '/about' && pathname !== '/Mission' && pathname !== '/FlightResults') && <Footer />}
+            {(pathname !== '/about' && pathname !== '/Mission' && pathname !== '/FlightResults' && pathname !== '/Search-results-confirm') && <Footer />}
 
           </main>
         </div>
