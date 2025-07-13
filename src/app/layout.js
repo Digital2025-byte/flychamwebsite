@@ -38,6 +38,8 @@ export default function RootLayout({ children }) {
         <Toaster richColors />
         <ClientLayoutWrapper>{children}</ClientLayoutWrapper>
       </body>
+      <script src="https://unpkg.com/preline/dist/preline.js"></script>
+
     </html>
   );
 }

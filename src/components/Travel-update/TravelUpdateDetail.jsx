@@ -109,7 +109,6 @@ export const TravelUpdateDetail = ({ slug }) => {
       t('travelUpdate.buttonContactUs'),
     ];
     const handleClick = (label) => {
-      console.log('labl',label);
       
       if (label === t('travelUpdate.buttonContactUs')) {
         router.push('/contact')

@@ -5,6 +5,8 @@ import { X, Usb, WifiHigh, TelevisionSimple, CookingPot, MonitorPlay, Coffee, Ar
 import Image from 'next/image';
 import timeline from "@/assets/images/timeline.png";
 import tabicon from "@/assets/images/tabicon.png";
+import useFormattedFlightTimes from '@/hooks/useFormattedFlightTimes';
+import useFlightRouteDetails from '@/hooks/useFlightRouteDetails';
 
 const flightData = [
     {
@@ -21,16 +23,7 @@ const flightData = [
         type: 'transit',
         note: '1h transit in Damascus',
     },
-    {
-        type: 'segment',
-        departureTime: '19:00',
-        arrivalTime: '21:30',
-        departureAirport: 'Damascus International Airport (DAM)',
-        arrivalAirport: 'Dubai International Airport (DXB)',
-        flightCode: 'XH700',
-        duration: '2h 30m',
-        amenities: ['USB Charging', 'WIFI', 'Entertainment', 'Optional Meal'],
-    }
+
 ];
 
 const Amenities = ({ amenities }) => {
@@ -54,7 +47,10 @@ const Amenities = ({ amenities }) => {
     );
 };
 
-const FlightDetailsModal = ({ isOpen, onClose }) => {
+const FlightDetailsModal = ({ flight, isOpen, onClose }) => {
+    const { duration, stops, flightNumber, ecoID, ecoFare, busID, busFare, departureAirport, arrivalAirport, departureTime, arrivalTime } = useFormattedFlightTimes(flight);
+    const { destination, origin, date } = useFlightRouteDetails()
+
     return (
         <Transition appear show={isOpen} as={Fragment}>
             <Dialog as="div" className="relative z-50" onClose={onClose}>
@@ -76,44 +72,70 @@ const FlightDetailsModal = ({ isOpen, onClose }) => {
 
                                 {/* Route Info */}
                                 <div className="flex items-center gap-2 text-sm font-medium text-main mb-1">
-                                    <span>Damascus</span>
+                                    <span>{origin.city}</span>
                                     <span className="text-gray-400"><ArrowRight size={32} />
 
                                     </span>
-                                    <span>Dubai</span>
+                                    <span>{destination.city}</span>
                                 </div>
-                                <p className="text-[#3E3E3B] text-sm">Thu, 10 Jul 2025</p>
+                                <p className="text-[#3E3E3B] text-sm">{date}</p>
                                 <p className="text-[#3E3E3B] text-sm mb-4">
-                                    Total duration 3h 0m <span className="text-[#B00] font-medium">1stop</span>
+                                    {`Total duration ${duration}`}
+                                    {stops &&
+                                        <span className="text-[#B00] font-medium">1stop</span>
+                                    }
                                 </p>
+                                <div  className={`flex items-start gap-3`}>
+                                    {/* Times */}
+<div className="flex flex-col justify-between text-sm text-[#111827] font-medium w-[65px] min-h-[248px] text-right">
+  <span className="text-right">{departureTime}</span>
+  <span className="text-xs text-main">{duration}</span>
+  <span className="text-right">{arrivalTime}</span>
+</div>
+
+                                    {/* Timeline */}
+                                    <div className="flex flex-col items-center">
+                                        <Image src={timeline} alt="timeline" className="w-[11px] h-full" />
+                                    </div>
+
+                                    {/* Content */}
+                                    <div className="flex flex-col gap-[12px] flex-1 text-sm">
+                                        <p className="font-medium mb-1 text-[#282826]">{departureAirport}</p>
+                                        <p className="text-[#6B7280] mb-2 flex items-center gap-1">
+                                            <Image src={tabicon} alt="flight icon" width={16} height={16} />
+                                            {flightNumber}
+                                        </p>
+
+                                        <Amenities amenities={['USB Charging', 'WIFI', 'Entertainment', 'Optional Meal']} />
+                                        <p className="mt-1">{arrivalAirport}</p>
+                                    </div>
+                                </div>
 
                                 {/* Segments and Transit */}
-                                {flightData.map((item, index) => {
+                                {/* {flightData.map((item, index) => {
                                     if (item.type === 'segment') {
                                         return (
-                                            <div key={index} className={`flex items-start gap-3 ${index !== flightData.length - 1 ? 'mb-6' : ''}`}>
-                                                {/* Times */}
+                                            <div key={index} className={`flex items-start gap-3`}>
+
                                                 <div className="flex flex-col text-sm text-[#111827] font-medium w-[50px]">
-                                                    <span>{item.departureTime}</span>
-                                                    <div className="mt-[52px] text-xs text-gray-500">{item.duration}</div>
-                                                    <span className="mt-1">{item.arrivalTime}</span>
+                                                    <span>{departureTime}</span>
+                                                    <div className="mt-[52px] text-xs text-gray-500">{duration}</div>
+                                                    <span className="mt-1">{arrivalTime}</span>
                                                 </div>
 
-                                                {/* Timeline */}
                                                 <div className="flex flex-col items-center">
                                                     <Image src={timeline} alt="timeline" className="w-[11px] h-full" />
                                                 </div>
 
-                                                {/* Content */}
                                                 <div className="flex flex-col gap-[12px] flex-1 text-sm">
-                                                    <p className="font-medium mb-1 text-[#282826]">{item.departureAirport}</p>
+                                                    <p className="font-medium mb-1 text-[#282826]">{departureAirport}</p>
                                                     <p className="text-[#6B7280] mb-2 flex items-center gap-1">
                                                         <Image src={tabicon} alt="flight icon" width={16} height={16} />
-                                                        {item.flightCode}
+                                                        {flightNumber}
                                                     </p>
 
-                                                    <Amenities amenities={item.amenities} />
-                                                    <p className="mt-1">{item.arrivalAirport}</p>
+                                                    <Amenities amenities={['USB Charging', 'WIFI', 'Entertainment', 'Optional Meal']} />
+                                                    <p className="mt-1">{arrivalAirport}</p>
                                                 </div>
                                             </div>
                                         );
@@ -135,7 +157,7 @@ const FlightDetailsModal = ({ isOpen, onClose }) => {
                                     }
 
                                     return null;
-                                })}
+                                })} */}
                             </Dialog.Panel>
                         </Transition.Child>
                     </div>

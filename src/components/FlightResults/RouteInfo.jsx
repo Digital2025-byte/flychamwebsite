@@ -1,9 +1,12 @@
+import useFlightRouteDetails from '@/hooks/useFlightRouteDetails';
 import useIsMobile from '@/hooks/useIsMobile';
 import { ArrowRight } from '@phosphor-icons/react';
 import React from 'react';
+import { useSelector } from 'react-redux';
 
 const RouteInfo = () => {
-const isLg = !useIsMobile(1024); // true if > 1024
+    const isLg = !useIsMobile(1024);
+    const { destination, origin, date } = useFlightRouteDetails()
     return (
         <section className="">
             <div className="flex">
@@ -11,10 +14,10 @@ const isLg = !useIsMobile(1024); // true if > 1024
                     {/* From */}
                     <div className="text-center">
                         <h1 className="text-primary-1 text-[16px] lg:text-[32px]  font-bold leading-tight">
-                            Damascus
+                            {origin.city}
                         </h1>
                         <p className="hidden lg:block text-primary-1 text-sm text-start font-normal">
-                            Damascus Intl (DAM)
+                            {`${origin.city} Intl (${origin.iataCode})`}
                         </p>
                     </div>
 
@@ -28,10 +31,10 @@ const isLg = !useIsMobile(1024); // true if > 1024
                     {/* To */}
                     <div className="text-center">
                         <h1 className="text-primary-1 text-[16px] lg:text-[32px]  font-bold leading-tight">
-                            Dubai
+                            {destination.city}
                         </h1>
                         <p className=" hidden lg:block text-primary-1 text-sm font-normal">
-                            Dubai Intl (DXB)
+                            {`${destination.city} Intl (${destination.iataCode})`}
                         </p>
                     </div>
                 </div>

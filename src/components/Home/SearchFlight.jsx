@@ -17,19 +17,34 @@ import { useFormik } from "formik";
 import MobModal from "./Modals/MobModal";
 import { Users, Calendar, X, Check, CalendarBlank } from "@phosphor-icons/react";
 import useCities from "@/hooks/useCities";
+import { useDispatch, useSelector } from "react-redux";
+import { getFlightsService } from "@/store/Services/flightServices";
+import { useRouter } from "next/navigation";
+import { setSearchParams } from "@/store/flightSlice";
 
 const BookingBox = () => {
+    const dispatch = useDispatch()
+    const router = useRouter()
+    const { airPorts } = useSelector(state => state.flights)
     const [activeTab, setActiveTab] = useState("book");
     const [showDesktopModal, setDesktopShowModal] = useState(false);
     const [showMobileModal, setShowMobileModal] = useState(false);
-    const [search, setSearch] = useState("");
     const [minMonth, setMinMonth] = useState(new Date());
     const [selected, setSelected] = useState('roundtrip');
     const [currentMonth, setCurrentMonth] = useState(new Date());
 
     const sliderRef = useRef(null);
 
-    const cities = useCities();
+    const cities = airPorts.items
+    const formatDate = (date) => {
+        if (!(date instanceof Date)) return null;
+
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+        const day = String(date.getDate()).padStart(2, '0');
+
+        return `${year}-${month}-${day}T00:00:00`;
+    };
 
     const formik = useFormik({
         enableReinitialize: false,
@@ -40,50 +55,59 @@ const BookingBox = () => {
             children: 0,
             infants: 0,
             promoCode: '',
-            class: 'Economy',
+            cabinClass: 'Economy',
             dateStart: '',
             dateEnd: '',
             type: 0,
-            tripType: 'roundTrip'
+            tripType: 'roundTrip',
+            neirby: false
         },
         onSubmit: (values) => {
             const {
+                cabinClass,
                 source,
                 destination,
                 dateStart,
                 dateEnd,
                 adults,
-                children,
-                infants, type
+                children, infants, type, neirby, tripType
+
             } = values;
-            if (!source || !destination) {
-                console.error("❌ Missing required fields");
-                alert("Please complete all required fields.");
-                return;
-            }
-
-            // Format dates
             const formattedDeparture = formatDate(dateStart);
-            const formattedReturn = type === 1 ? formatDate(dateEnd) : '';
-            const flightType = type === 0 ? 'Y' : 'B'
-            console.log('formattedDeparture', formattedDeparture);
-            console.log('formattedReturn', formattedReturn);
-            // https://reservations.chamwings.com/service-app/ibe/reservation.html#/fare/en/USD/SY/DAM/KWI/11-06-2025/12-06-2025/1/0/0/Y///
-            // Build URL
-            const searchUrl = `https://reservations.flycham.com/service-app/ibe/reservation.html#/fare/en/USD/SY/${source}/${destination}/${formattedDeparture}/${formattedReturn}/${adults}/${children}/${infants}/Y///`;
-            console.log('searchUrl', searchUrl);
-
-            // Open in new tab
-            // window.open(searchUrl, '_blank');
+            const formattedReturn = formatDate(dateEnd);
+            const flightclass = cabinClass === 'Economy' ? 'Y' : 'C'
+            const data = {
+                origin_id: source,
+                destination_id: destination
+                ,
+                date: formattedDeparture,
+                date_return: formattedReturn,
+                adults: adults,
+                children: children,
+                infants: infants,
+                flightclass: flightclass,
+                flighttype: tripType,
+                pos_id: 7,
+                neirby
+            }
+            console.log('data', data);
+            dispatch(getFlightsService(data)).then((action) => {
+                if (getFlightsService.fulfilled.match(action)) {
+                    router.push('/search-results')
+                    dispatch(setSearchParams(data))
+                }
+            })
         }
 
 
 
     });
+    console.log('formik', formik.values);
+
     const tabs = ["book", "manage", "flight status"];
     const isMobile = useIsMobile()
     const getCityString = (val) => {
-        const city = cities?.find(c => c.value === val);
+        const city = airPorts?.items?.find(c => c.value === val);
         return city ? `${city.name}, ${city.value}` : '';
     };
 
@@ -109,40 +133,28 @@ const BookingBox = () => {
         { icon: <Users size={20} />, title: "Guests", value: getGuestSummary(), id: 2 },
         { icon: <CalendarBlank size={20} />, title: "Travel when", value: "Check Date", id: 3 },
     ];
-    const normalizedSearch = search.toLowerCase();
 
-    const isDAMorALP = ['DAM', 'ALP'].includes(formik.values.source);
+    //     const normalizedSearch = search.toLowerCase();
 
-    const cityMatches = ({ name, label }) =>
-        `${name} ${label}`.toLowerCase().includes(normalizedSearch);
+    //     const isDAMorALP = ['DAM', 'ALP'].includes(formik.values.source);
 
-    const filteredDestenationCities = cities.filter(({ value, ...rest }) =>
-        cityMatches(rest) &&
-        (isDAMorALP ? !['DAM', 'ALP'].includes(value) : ['DAM', 'ALP'].includes(value))
-    );
+    //     const cityMatches = ({ city, country,airPortName }) =>
+    //         `${name} ${label}`.toLowerCase().includes(normalizedSearch);
+
+    //     const filteredDestenationCities = airPorts?.items?.filter(({ value, ...rest }) =>
+    //         cityMatches(rest) &&
+    //         (isDAMorALP ? !['DAM', 'ALP'].includes(value) : ['DAM', 'ALP'].includes(value))
+    //     );
 
 
+    // console.log('filteredDestenationCities',filteredDestenationCities);
 
 
-    const filteredSourceCities = cities.filter(cityMatches);
+    // const filteredSourceCities = airPorts?.items?.filter(cityMatches);
     const activeFlightTab = formik.values.type;
 
-    console.log('formik values', formik.values);
 
-    const isStepValid = (stepId) => {
-        const { source, destination, adults, children, infants, dateStart } = formik.values;
 
-        switch (stepId) {
-            case 0: // Going to "Flying to"
-                return !!source;
-            case 1: // Going to "Guests"
-                return !!source && !!destination;
-            case 2: // Going to "Travel when"
-                return !!source && !!destination && (adults > 0 || children > 0 || infants > 0);
-            default:
-                return true;
-        }
-    };
 
     const sliderSettings = {
         dots: false,
@@ -163,7 +175,20 @@ const BookingBox = () => {
         ],
     };
 
+    const isStepValid = (stepId) => {
+        const { source, destination, adults, children, infants, dateStart } = formik.values;
 
+        switch (stepId) {
+            case 0: // Going to "Flying to"
+                return !!source;
+            case 1: // Going to "Guests"
+                return !!source && !!destination;
+            case 2: // Going to "Travel when"
+                return !!source && !!destination && (adults > 0 || children > 0 || infants > 0);
+            default:
+                return true;
+        }
+    };
     const handleClick = (id) => {
         const currentStep = formik.values.type;
 
@@ -221,6 +246,8 @@ const BookingBox = () => {
         formik.setFieldValue("dateStart", date);
     };
 
+
+
     const MobileView = () => (
         <div className="  w-full">
             <TabNavigation
@@ -259,7 +286,7 @@ const BookingBox = () => {
                 formik={formik}
             />
             <div className="flex items-center justify-between mb-6">
-                <TripTypeSelector defaultValue={selected} setSelected={setSelected} formik={formik} isMobile={isMobile} />
+                <TripTypeSelector formik={formik} />
                 <MilesToggle isMobile={isMobile} />
             </div>
             <FromToSelector
@@ -275,10 +302,7 @@ const BookingBox = () => {
                 stepsData={stepsData}
                 source={source}
                 destination={destination}
-                search={search}
-                setSearch={setSearch}
-                filteredSourceCities={filteredSourceCities}
-                filteredDestenationCities={filteredDestenationCities}
+
                 handleClick={handleClick}
                 handleDateSelect={handleDateSelect}
                 setCurrentMonth={setCurrentMonth}
@@ -302,6 +326,8 @@ const BookingBox = () => {
         }
     }, [showMobileModal]);
 
+
+
     return (
         <>
             {isMobile ? <MobileView /> : <DesktopView />}
@@ -312,14 +338,13 @@ const BookingBox = () => {
                 title="Departure"
                 stepsData={stepsData}
                 formik={formik}
-                search={search}
-                setSearch={setSearch}
-                filteredSourceCities={filteredSourceCities}
+
+
+
                 activeTab={activeFlightTab}
                 cities={cities}
                 isMobile
                 handleClick={handleClick}
-                filteredDestenationCities={filteredDestenationCities}
                 sliderSettings={sliderSettings}
                 sliderRef={sliderRef}
                 handleReset={handleReset}

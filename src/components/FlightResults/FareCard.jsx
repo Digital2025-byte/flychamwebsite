@@ -21,13 +21,13 @@ const FareCard = ({ type, price, special, isLg }) => {
                         {/* Mobile */}
                         <div className="block lg:hidden">
                             <div className={`${mobileTextColor} text-[12px]`}>USD</div>
-                            <div className={`${mobileTextColor} text-[16px]`}>{price}</div>
+                            <div className={`${mobileTextColor} text-[16px]`}>{price.split('.')[0]}</div>
                         </div>
 
                         {/* Desktop */}
                         <div className="hidden lg:block">
                             <div className={`${desktopTextColor} text-[12px]`}>From USD</div>
-                            <div className={`${isEconomy ? 'text-primary-1' : 'text-white'} ${desktopTextColor} text-[32px]`}>{price}</div>
+                            <div className={`${isEconomy ? 'text-primary-1' : 'text-white'} ${desktopTextColor} text-[32px]`}>{price.split('.')[0]}</div>
                         </div>
                     </>
                 ) : (

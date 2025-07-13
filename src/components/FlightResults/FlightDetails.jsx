@@ -1,25 +1,59 @@
 import useIsMobile from '@/hooks/useIsMobile';
-import { AirplaneTilt, ArrowsClockwise, Briefcase, CheckCircle, EyeSlash, SuitcaseSimple, XCircle } from '@phosphor-icons/react';
 import React from 'react';
+import { AirplaneTilt, ArrowsClockwise, Briefcase, BriefcaseIcon, CheckCircle, EyeSlash, ProhibitInset, SuitcaseIcon, SuitcaseSimple, XCircle } from '@phosphor-icons/react';
+
+const getIcon = (key) => {
+    switch (key) {
+        case "Modification before 24 hours":
+            // case "Changes or Refund within 24 Hrs":
+            return ArrowsClockwise;
+        case "Refund before departure":
+        case "No-Show":
+            return EyeSlash;
+        case "Refund before departure":
+        case "Changes or refund within 24 Hrs":
+            return ProhibitInset;
+        case "Checked baggage":
+            return SuitcaseIcon;
+        case "Hand baggage":
+            return BriefcaseIcon;
+        case "Excess Baggage":
+            return SuitcaseSimple;
+
+
+        default:
+            return null; // or a default icon
+    }
+};
 
 const FeatureRow = ({ index, item, isLg, infoIcon, isInfo }) => {
-    const { icon: Icon, infoIcon: InfoIcon, value, iconColor, label } = item;
+    const {
+        // icon: Icon, infoIcon: InfoIcon,
+
+        value, iconColor, label } = item;
+    console.log('label', label);
+
+    const InfoIcon = getIcon(label);
 
     return (
-        <div className="flex flex-row-reverse justify-between lg:justify-start lg:flex-row items-center gap-3 text-[#000] text-sm">
+        <div
+            style={{
+                justifyContent: 'start'
+            }}
+            className="flex flex-row-reverse   lg:flex-row items-center gap-3 text-[#000] text-sm">
             {isInfo ?
                 <>
-                    <InfoIcon size={20} className={`text-[#000]`} />
+                    {InfoIcon && isLg && <InfoIcon size={20} className={`text-[#000]`} />}
                     {label}
                 </>
                 :
                 <>
-                    <Icon size={20} className={`${iconColor}`} />
+                    {/* <Icon size={20} className={`${iconColor}`} /> */}
                     {isLg ? (
                         value
                     ) : (
                         <span className="flex items-center gap-2">
-                            <InfoIcon size={20} className="text-[#000]" />
+                            {/* {InfoIcon && <InfoIcon size={20} className={`text-[#000]`} />} */}
                             {value}
                         </span>
                     )}
@@ -37,58 +71,37 @@ const FeatureRow = ({ index, item, isLg, infoIcon, isInfo }) => {
 
 
 
-const economyClassItems = [
-    {
-        icon: CheckCircle,
-        iconColor: 'text-green',
-        value: '30 kg',
-        label: 'Checked baggage',
-        infoIcon: SuitcaseSimple,
-    },
-    {
-        icon: CheckCircle,
-        iconColor: 'text-green',
-        value: '1 piece, 7 kg',
-        label: 'Hand baggage',
-        infoIcon: Briefcase,
 
-    },
-    {
-        icon: CheckCircle,
-        iconColor: 'text-green',
-        value: '1050',
-        label: 'Earned Miles',
-        infoIcon: AirplaneTilt,
+const InfoRows = ({ isHeader, isEconomy, isLg, isInfo, handleSelectPlan, col, flight }) => {
+    console.log('col', col);
+    const fareRules = col?.FareRuleReference || {};
 
-    },
-    {
-        icon: CheckCircle,
-        iconColor: 'text-green',
-        value: 'Change with Fee',
-        label: 'Flight change',
-        infoIcon: ArrowsClockwise,
+    const ruleItems = Object.entries(fareRules).map(([label, value]) => ({
+        label,
+        value,
+        // icon: Info,
+        // infoIcon: Info,
+        iconColor: "text-600", // customize per rule if needed
+    }));
+    const staticItems = [
+        {
+            label: "Checked baggage",
+            value: col.type ==="Economy" ? "30 kg" : "40 Kg",
+            icon: SuitcaseSimple,
+            iconColor: "text-600",
+        },
+        {
+            label: "Hand baggage",
+            value: "1 piece, 7 kg",
+            icon: Briefcase,
+            iconColor: "text-600",
+        },
+    ];
+    const items = [...staticItems, ...ruleItems];
 
-    },
-    {
-        icon: XCircle,
-        iconColor: 'text-alert',
-        value: 'Non- Refundable',
-        label: 'Cancellation',
-        infoIcon: XCircle,
 
-    },
-    {
-        icon: CheckCircle,
-        iconColor: 'text-green',
-        value: 'USD 250',
-        label: 'No show policy',
-        infoIcon: EyeSlash,
-
-    },
-];
-const InfoRows = ({ items, isHeader, isEconomy, isLg, isInfo }) => {
     return (
-        <div className="flex flex-col gap-3 w-full  self-end">
+        <div className="flex flex-col gap-3 w-full  self-start">
             {items.map((item, index) => (
                 <React.Fragment key={index}>
                     <FeatureRow index={index} item={item} isLg={isLg} isInfo={isInfo} />
@@ -97,8 +110,9 @@ const InfoRows = ({ items, isHeader, isEconomy, isLg, isInfo }) => {
                     )}
                 </React.Fragment>
             ))}
-            {(isHeader ) && (
+            {(isHeader) && (
                 <button
+                    onClick={(e) => handleSelectPlan(e, flight, col)}
                     className={`cursor-pointer w-full py-2 text-sm font-semibold rounded-[6px] ${isEconomy
                         ? 'text-primary-1 border border-[var(--primary-1)] bg-white'
                         : 'text-white bg-[var(--primary-1)]'
@@ -112,7 +126,6 @@ const InfoRows = ({ items, isHeader, isEconomy, isLg, isInfo }) => {
     )
 }
 const Header = ({ tag, price, title, isEconomy, isHeader, isLg }) => {
-    console.log('Header', !isHeader && !isLg);
     // Don't show anything on mobile if not header
     if (!isHeader && !isLg) {
         return null;
@@ -134,7 +147,7 @@ const Header = ({ tag, price, title, isEconomy, isHeader, isLg }) => {
 
                 <div className={`${textCurrencyColor}`}>
                     <div className={`${textCurrencyColor} text-xs font-medium  `}>USD</div>
-                    <div className={`${textCurrencyColor} text-2xl font-regular`}>{price.replace('USD ', '')}</div>
+                    <div className={`${textCurrencyColor} text-2xl font-regular`}>{price?.replace('USD ', '')}</div>
                 </div>
             </div>
 
@@ -151,23 +164,18 @@ const FareColumn = ({
     title,
     price,
     seatsLeft,
-    baggage,
-    handBaggage,
-    miles,
-    changePolicy,
-    refundPolicy,
-    noShow,
     tag = '',
     type,
     isHeader,
-    items, isLg
+    isLg, handleSelectPlan, col, flight
 }) => {
     const isEconomy = type === 'Economy';
     const isInfo = type === 'Info';
+    console.log('col', col);
 
 
     return (
-        <div className=" w-full lg:max-w-[280px] flex flex-col  rounded-lg ">
+        <div className=" w-full lg:max-w-[430px] flex flex-col  rounded-lg ">
 
             <Header tag={tag} price={price} title={title} isEconomy={isEconomy} isHeader={isHeader} isLg={isLg} />
 
@@ -178,85 +186,75 @@ const FareColumn = ({
             ) : <div className="text-alert h-[16px] text-xs font-medium text-end mb-2">
 
             </div>}
-
-
             <InfoRows
-                items={items}
+
                 isHeader={isHeader}
                 isEconomy={isEconomy}
                 isInfo={isInfo}
                 isLg={isLg}
-
+                handleSelectPlan={handleSelectPlan}
+                col={col}
+                flight={flight}
             />
-
-            {/* <div className="text-[#3A3A36] text-sm text-center pb-1">{noShow}</div> */}
-            {/* <button className={`w-full py-2 text-sm font-semibold ${isEconomy ? 'text-[#002C5F] border border-[#002C5F]' : 'bg-[#002C5F] text-white'} rounded-b-lg`}>Select</button> */}
         </div>
     );
 };
 
-const FlightDetails = () => {
+const FlightDetails = ({ handleSelectPlan, flight }) => {
     const isLg = !useIsMobile(1024)
+    const Economy = flight.Economy
+    const Business = flight.Business
+    const commonInfo = flight.common_info
     const columns = [
         {
-            title: 'Economy Class',
-            price: 'USD 550',
-            seatsLeft: '2 seats left',
-            baggage: '30 kg',
-            handBaggage: '1 piece, 7 kg',
-            miles: '1050',
-            changePolicy: 'Change with Fee',
-            refundPolicy: 'Non-Refundable',
-            noShow: 'USD 250',
+
             type: 'Info',
-            items: economyClassItems,
+            FareRuleReference: Economy?.pricing_info[0]?.FareRuleReference,
+            // items: economyClassItems,
 
         },
         {
+            id: 1,
             title: 'Economy Class',
-            price: 'USD 550',
+            Economy,
+            commonInfo,
+            FareRuleReference: Economy?.pricing_info[0]?.FareRuleReference,
+            price: Economy?.total_fare_USD?.split('.')[0],
             seatsLeft: '2 seats left',
-            baggage: '30 kg',
-            handBaggage: '1 piece, 7 kg',
-            miles: '1050',
-            changePolicy: 'Change with Fee',
-            refundPolicy: 'Non-Refundable',
-            noShow: 'USD 250',
             type: 'Economy',
             isHeader: true,
-            items: economyClassItems,
+            // items: economyClassItems,
             isBtn: true,
+            special: false
         },
         {
+            id: 2,
             title: 'Business Class',
-            price: 'USD 900',
+            Business,
+            commonInfo,
+            FareRuleReference: Business?.pricing_info[0]?.FareRuleReference,
+            price: Business?.total_fare_USD?.split('.')[0],
             seatsLeft: '4 seats left',
-            baggage: '40 kg',
-            handBaggage: '1 piece, 7 kg',
-            miles: '2500',
-            changePolicy: 'Flexibility changes',
-            refundPolicy: 'Full Refund',
-            noShow: 'USD 150',
             tag: 'Recommended',
             type: 'Business',
             isHeader: true,
-            items: economyClassItems,
+            // items: economyClassItems,
             isBtn: true,
+            special: false
+
         },
     ];
-
     return (
         <div className="w-full  p-6 rounded-xl flex flex-col md:flex-row gap-6 justify-between items-end">
 
             <div className="flex flex-col lg:flex-row w-full   gap-4 flex-1">
                 {isLg &&
-                    <FareColumn {...columns[0]} isLg={isLg} />
+                    <FareColumn {...columns[0]} col={columns[0]} isLg={isLg} handleSelectPlan={handleSelectPlan} flight={flight} />
                 }
-
                 <div className="flex flex-col md:flex-row gap-4 flex-1">
-                    <div className="flex flex-col lg:flex-row flex-1 justify-start gap-4">
+                    <div className="flex flex-col lg:flex-row flex-1 justify-end gap-4">
                         {columns.slice(1).map((col, idx) => (
-                            <FareColumn key={idx + 1} {...col} isLg={isLg} />
+                            <FareColumn key={idx + 1} {...col} col={col} isLg={isLg} handleSelectPlan={handleSelectPlan} flight={flight} />
                         ))}
                     </div>
                 </div>

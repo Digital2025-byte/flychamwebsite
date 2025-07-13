@@ -85,12 +85,9 @@ export default function HeroSearchModal({ isOpen, onClose, activeTap }) {
             const formattedDeparture = formatDate(dateStart);
             const formattedReturn = type === 1 ? formatDate(dateEnd) : '';
             const flightType = type === 0 ? 'Y' : 'B'
-            console.log('formattedDeparture', formattedDeparture);
-            console.log('formattedReturn', formattedReturn);
             // https://reservations.chamwings.com/service-app/ibe/reservation.html#/fare/en/USD/SY/DAM/KWI/11-06-2025/12-06-2025/1/0/0/Y///
             // Build URL
             const searchUrl = `https://reservations.flycham.com/service-app/ibe/reservation.html#/fare/en/USD/SY/${source}/${destination}/${formattedDeparture}/${formattedReturn}/${adults}/${children}/${infants}/Y///`;
-            console.log('searchUrl', searchUrl);
 
             // Open in new tab
             // window.open(searchUrl, '_blank');

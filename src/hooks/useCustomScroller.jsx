@@ -101,7 +101,6 @@ useEffect(() => {
         window.addEventListener('mouseup', handleMouseUp);
     };
     const scrollToNext = () => {
-        console.log('clicked', sectionCount);
         setCurrent((prev) => Math.min(prev + 1, sectionCount - 1));
     };
     return {

@@ -11,7 +11,8 @@ import AirportList from "../AirportList";
 import Guests from "../Guests";
 import Dates from "../widget/Dates/Dates";
 
-const MobModal = ({handleOneWayDateSelect, minMonth, setMinMonth, currentMonth, setCurrentMonth, handleDateSelect, handleReset, isOpen, onClose, title, formik, stepsData, search, setSearch, filteredSourceCities, filteredDestenationCities, activeTab, handleClick, sliderSettings, sliderRef }) => {
+const MobModal = ({ handleOneWayDateSelect, minMonth, setMinMonth, currentMonth, setCurrentMonth, handleDateSelect, handleReset, isOpen, onClose, title,
+    formik, stepsData, activeTab, handleClick, sliderSettings, sliderRef }) => {
     const handleStepBack = () => {
         const currentStep = formik.values.type;
         if (currentStep > 0) {
@@ -31,16 +32,16 @@ const MobModal = ({handleOneWayDateSelect, minMonth, setMinMonth, currentMonth, 
             case 0:
                 return (
                     <>
-                        <SearchInput search={search} setSearch={setSearch} onClose={onClose} placeholder="Search for airport or city" formik={formik} type="source" />
-                        <AirportList cities={filteredSourceCities} formik={formik} type="source" isMobile sliderRef={sliderRef} />
+                        <SearchInput onClose={onClose} placeholder="Search for airport or city" formik={formik} type="source" />
+                        <AirportList formik={formik} type="source" isMobile sliderRef={sliderRef} />
                     </>
 
                 );
             case 1:
                 return (
                     <>
-                        <SearchInput search={search} setSearch={setSearch} onClose={onClose} placeholder="To" type="destination" />
-                        <AirportList cities={filteredDestenationCities} formik={formik} type="destination" isMobile sliderRef={sliderRef} />
+                        <SearchInput onClose={onClose} placeholder="To" type="destination" />
+                        <AirportList formik={formik} type="destination" isMobile sliderRef={sliderRef} />
                     </>
                 );
             case 2:
@@ -129,7 +130,7 @@ const MobModal = ({handleOneWayDateSelect, minMonth, setMinMonth, currentMonth, 
                                                     isCompleted={step.id < activeTab}
                                                     isActive={step.id === activeTab}
                                                 />
-                                        
+
 
                                             </div>
                                         ))}

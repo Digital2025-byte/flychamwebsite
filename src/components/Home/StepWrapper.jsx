@@ -60,6 +60,8 @@ const StepWrapper = ({ children, formik, onClose }) => {
                 getTripDuration={getTripDuration}
                 handleReset={handleReset}
                 handleStep={handleStep}
+                onClose={onClose}
+                formik={formik}
             />
         </div>
     );

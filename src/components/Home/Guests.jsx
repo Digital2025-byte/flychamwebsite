@@ -146,4 +146,4 @@ const Guests = ({ formik }) => {
     );
 };
 
-export default Guests;
+export default  React.memo(Guests);;

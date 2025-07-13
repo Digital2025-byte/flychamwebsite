@@ -2,16 +2,10 @@
 import useIsMobile from '@/hooks/useIsMobile';
 import React, { useState } from 'react';
 
-const steps = [
-  { label: 'Select flight' },
-  { label: 'Passenger details' },
-  { label: 'Seats & Extras' },
-  { label: 'Pay & confirm' },
-];
 
-const ProgressBar = () => {
-  const [activeStep, setActiveStep] = useState(0);
-  const isLg = useIsMobile(1024)
+
+const ProgressBar = ({ steps, activeStep, setActiveStep }) => {
+  const isLg = !useIsMobile(1024)
 
   const completedPercentage = ((activeStep + 1) / steps.length) * 100;
 
@@ -55,10 +49,10 @@ const ProgressBar = () => {
               >
                 {index + 1}
               </div>
-              {isLg && 
-              <span className={`text-sm font-medium ${stepColor}`}>
-                {step.label}
-              </span>
+              {isLg &&
+                <span className={`text-sm font-medium ${stepColor}`}>
+                  {step.label}
+                </span>
               }
             </div>
           );

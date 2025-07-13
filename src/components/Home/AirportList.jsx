@@ -1,23 +1,31 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 
-const AirportList = ({ cities, type, formik, isMobile, sliderRef }) => {
+const AirportList = ({ setCities, handleClick, search, type, formik, isMobile, sliderRef, source, getCitiesArray }) => {
+  const { airPorts } = useSelector(state => state.flights);
 
-  const handleAirportSelection = ({ formik, type, itemValue, isMobile, sliderRef }) => {
-    formik.setFieldValue(type, itemValue);
+  const iataSourceCode = airPorts.items.find((item) => item.id === formik.values.source)?.iataCode
+  const citiesArray = getCitiesArray(type, iataSourceCode, search);
+
+
+  const handleAirportSelection = ({ search, formik, type, itemValue, id, isMobile, sliderRef }) => {
+
+    // setCities(airPorts.items)
+    formik.setFieldValue(type, id);
 
     switch (type) {
       case "source":
         formik.setFieldValue("destination", "");
         if (isMobile) {
-          formik.setFieldValue("type", 1);
           if (sliderRef?.current) sliderRef.current.slickGoTo(1);
         }
+        formik.setFieldValue("type", 1);
         break;
       case "destination":
         if (isMobile) {
-          formik.setFieldValue("type", 2);
           if (sliderRef?.current) sliderRef.current.slickGoTo(2);
         }
+        formik.setFieldValue("type", 2);
         break;
       default:
         break;
@@ -38,33 +46,38 @@ const AirportList = ({ cities, type, formik, isMobile, sliderRef }) => {
         }}
       >
         <div className="space-y-2">
-          {cities.map((item, i) => (
-            <div
-              key={i}
-              onClick={() =>
-                handleAirportSelection({
-                  formik,
-                  type,
-                  itemValue: item.value,
-                  isMobile, sliderRef
-                })
-              }
+          {citiesArray.map((item, i) => {
+            const { id, iataCode, airPortTranslations } = item
+            const { city, country, airPortName } = airPortTranslations[0]
+            return (
+              <div
+                key={id}
+                onClick={() =>
+                  handleAirportSelection({
+                    formik,
+                    type,
+                    itemValue: iataCode,
+                    id: id,
+                    isMobile, sliderRef
+                  })
+                }
 
 
-              className={`flex items-center justify-between border-b border-gray-300 p-3 rounded-md transition-colors duration-150 hover:bg-[#F5F5F4] cursor-pointer ${formik.values[type] === item.value ? 'bg-[#E5E5E3]' : ''
-                }`}
-            >
-              <div>
-                <p className="text-sm font-semibold text-gray-800">{item.name}</p>
-                <p className="text-xs text-gray-500">{item.label}</p>
+                className={`flex items-center justify-between border-b border-gray-300 p-3 rounded-md transition-colors duration-150 hover:bg-[#F5F5F4] cursor-pointer ${formik.values[type] === iataCode ? 'bg-[#E5E5E3]' : ''
+                  }`}
+              >
+                <div>
+                  <p className="text-sm font-semibold text-gray-800">{airPortName}</p>
+                  <p className="text-xs text-gray-500">{`${country} ${city}`}</p>
+                </div>
+                <div className="bg-main text-white text-xs px-3 py-1 rounded-md font-semibold">{iataCode}</div>
               </div>
-              <div className="bg-main text-white text-xs px-3 py-1 rounded-md font-semibold">{item.value}</div>
-            </div>
-          ))}
+            )
+          })}
         </div>
       </div>
     </div >
   );
 };
 
-export default AirportList;
+export default React.memo(AirportList);

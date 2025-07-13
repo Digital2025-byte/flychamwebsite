@@ -1,8 +1,10 @@
+import useIsMobile from "@/hooks/useIsMobile";
 import React from "react";
 
-const StepFooterBar = ({ activeTab, isNextDisabled, getTripDuration, handleReset, handleStep }) => {
+const StepFooterBar = ({ activeTab, isNextDisabled, getTripDuration, handleReset, handleStep, onClose, formik }) => {
     const showExtras = activeTab === 3;
     const tripDuration = getTripDuration();
+    const isMobile = useIsMobile()
 
     return (
         <div className={`flex flex-col md:flex-row md:items-center ${!showExtras ? "justify-end" : "justify-between"} gap-4`}>
@@ -24,25 +26,34 @@ const StepFooterBar = ({ activeTab, isNextDisabled, getTripDuration, handleReset
             </div>
 
             {/* Right Side - Navigation Buttons */}
-            <div className="flex flex-start items-center gap-6">
-                <button
-                    onClick={() => handleStep("back")}
-                    className="px-6 py-2 border border-main text-main rounded-md text-sm font-medium hover:bg-gray-50"
-                >
-                    {activeTab === 0 ? "Close" : "Back"}
-                </button>
-                <button
-                    onClick={() => handleStep("next")}
-                    disabled={isNextDisabled()}
-                    className={`px-6 py-2 rounded-md text-sm font-medium transition-opacity duration-200 ${
-                        isNextDisabled()
+            {(activeTab == 2 || activeTab == 3) &&
+
+                <div className="flex flex-start items-center gap-6">
+
+                    <button
+                        onClick={() => handleStep("back")}
+                        className="px-6 py-2 border border-main text-main rounded-md text-sm font-medium hover:bg-gray-50"
+                    >
+                        {activeTab === 3 ? "Close" : "Back"}
+                    </button>
+                    <button
+                        onClick={() => {
+                            if (activeTab === 3) return isMobile ? onClose?.() : formik.handleSubmit?.();
+                            if (activeTab === 2) handleStep?.("next");
+                        }}
+
+                        disabled={isNextDisabled()}
+                        className={`cursor-pointer px-6 py-2 rounded-md text-sm font-medium transition-opacity duration-200 ${isNextDisabled()
                             ? "bg-gray-400 text-white cursor-not-allowed"
                             : "bg-[#B59C6D] text-white hover:opacity-90"
-                    }`}
-                >
-                    {activeTab === 3 ? "Continue" : "Next"}
-                </button>
-            </div>
+                            }`}
+                        tpe={activeTab === 3 ? "submit" : "button"}
+                    >
+                        {activeTab === 3 ? "Search flights" : "Next"}
+                    </button>
+                </div>
+            }
+
         </div>
     );
 };

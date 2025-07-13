@@ -32,6 +32,7 @@ import {
   TrolleySuitcase,
   User
 } from '@phosphor-icons/react';
+import { ReduxProvider } from "@/store";
 
 export default function ClientLayoutWrapper({ children }) {
   const [isOpen, setIsOpen] = useState(true)
@@ -104,24 +105,24 @@ export default function ClientLayoutWrapper({ children }) {
 
   return (
 
-    <>
+    <ReduxProvider>
 
-      <ZohoSalesIQ />
+      {/* <ZohoSalesIQ /> */}
       {/* ✅ GTM Script */}
-      <GTMScript />
+      {/* <GTMScript /> */}
 
       {/* ✅ GA4 Script */}
-      <GA4Script />
+      {/* <GA4Script /> */}
 
       {/* ✅ GTM Noscript */}
-      <noscript>
+      {/* <noscript>
         <iframe
           src="https://www.googletagmanager.com/ns.html?id=GTM-TKHJ4V8W"
           height="0"
           width="0"
           style={{ display: "none", visibility: "hidden" }}
         ></iframe>
-      </noscript>
+      </noscript> */}
 
       {/* ✅ Layout */}
       {/* <I18nextProvider i18n={i18n}> */}
@@ -130,7 +131,7 @@ export default function ClientLayoutWrapper({ children }) {
           {/* Sidebar */}
           <aside className="hidden xl:block   h-screen shadow-xl z-50">
             {/* {(pathname !== '/about' || pathname !== '/Mission') && */}
-            {pathname !== '/FlightResults' && pathname !== '/Search-results-confirm' && (
+            {pathname !== '/search-results' && pathname !== '/Search-results-confirm' && pathname !== '/passenger-details' && pathname !== '/booking-confirm' && (
               <aside className="hidden xl:block h-screen shadow-xl z-50">
                 <SideBar navItems={navItems} isOpen={isOpen} setIsOpen={setIsOpen} />
               </aside>
@@ -142,7 +143,11 @@ export default function ClientLayoutWrapper({ children }) {
           <main className="flex-1 w-[100%] h-screen overflow-y-auto bg-white  ">
 
             {children}
-            {(pathname !== '/about' && pathname !== '/Mission' && pathname !== '/FlightResults' && pathname !== '/Search-results-confirm') && <Footer />}
+            {(pathname !== '/about' && pathname !== '/Mission' && pathname !== '/search-results'
+              && pathname !== '/Search-results-confirm'
+              && pathname !== '/passenger-details'
+              && pathname !== '/booking-confirm'
+            ) && <Footer />}
 
           </main>
         </div>
@@ -156,11 +161,13 @@ export default function ClientLayoutWrapper({ children }) {
 
 
       </div>
-      <div className="block xl:hidden">
-        <BottomMobileMenu navItems={navItems} />
-      </div>
+      {pathname !== '/search-results' && pathname !== '/Search-results-confirm' && pathname !== '/passenger-details' && pathname !== '/booking-confirm' && (
+        <div className="block xl:hidden">
+          <BottomMobileMenu navItems={navItems} />
+        </div>
+      )}
       {/* </I18nextProvider> */}
 
-    </>
+    </ReduxProvider>
   );
 }

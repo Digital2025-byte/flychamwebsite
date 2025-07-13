@@ -7,7 +7,7 @@ import Hero from '@/components/Home/Hero'
 import AboutFlyChamSection from '@/components/Home/OurCompanyCard'
 import SideBar from '@/components/Layout/SideBar'
 import useIsMobile from '@/hooks/useIsMobile'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 // import { useRouter } from 'next/navigation';
 
 import DestinationCarousel from '@/components/Home/DestinationCarousel'
@@ -22,7 +22,13 @@ import bg2 from '../assets/images/main-slider/bg2.webp';
 import bg3 from '../assets/images/main-slider/bg3.webp';
 import ImportantAlert from '@/components/Ui/Alert'
 import BookingBox from '@/components/Home/SearchFlight'
-const HomeClient = () => {
+import { useDispatch } from 'react-redux'
+import { setAirports } from '@/store/flightSlice'
+import { getAirports } from '@/store/Services/flightServices'
+import { useFormik } from 'formik'
+const HomeClient = ({ flights }) => {
+
+  const dispatch = useDispatch()
   const isMobile = useIsMobile(1024);
   const router = useRouter()
   const { t } = useTranslation()
@@ -30,6 +36,62 @@ const HomeClient = () => {
     router.push('/destenations')
   }
   const slides = [bg1, bg2, bg3];
+
+  useEffect(() => {
+    dispatch(setAirports(flights))
+  }, [])
+
+  // useEffect(() => {
+  //   dispatch(getAirports({ search }))
+  // }, [search])
+
+    const formik = useFormik({
+        enableReinitialize: false,
+        initialValues: {
+            source: '',
+            destination: '',
+            adults: 1,
+            children: 0,
+            infants: 0,
+            promoCode: '',
+            class: 'Economy',
+            dateStart: '',
+            dateEnd: '',
+            type: 0,
+            tripType: 'roundTrip',
+            search: ''
+        },
+        onSubmit: (values) => {
+            const {
+                source,
+                destination,
+                dateStart,
+                dateEnd,
+                adults,
+                children,
+                infants, type
+            } = values;
+            if (!source || !destination) {
+                console.error("❌ Missing required fields");
+                alert("Please complete all required fields.");
+                return;
+            }
+
+            // Format dates
+            const formattedDeparture = formatDate(dateStart);
+            const formattedReturn = type === 1 ? formatDate(dateEnd) : '';
+            const flightType = type === 0 ? 'Y' : 'B'
+            // https://reservations.chamwings.com/service-app/ibe/reservation.html#/fare/en/USD/SY/DAM/KWI/11-06-2025/12-06-2025/1/0/0/Y///
+            // Build URL
+            const searchUrl = `https://reservations.flycham.com/service-app/ibe/reservation.html#/fare/en/USD/SY/${source}/${destination}/${formattedDeparture}/${formattedReturn}/${adults}/${children}/${infants}/Y///`;
+
+            // Open in new tab
+            // window.open(searchUrl, '_blank');
+        }
+
+
+
+    });
 
   return (
     <div className="transition-all duration-700">
@@ -39,8 +101,8 @@ const HomeClient = () => {
       <div className="">
         <div className="w-[90%] md:w-[70%] mx-auto">
 
-          <FlightSearch isHome />
-          {/* <BookingBox /> */}
+          {/* <FlightSearch isHome /> */}
+          <BookingBox  />
         </div>
         <div className='w-[90%] mx-auto px-2'>
 

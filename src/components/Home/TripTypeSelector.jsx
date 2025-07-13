@@ -2,10 +2,8 @@
 import React, { useEffect, useState } from 'react';
 
 const TripTypeSelector = ({ formik }) => {
-  const [selected, setSelected] = useState('roundtrip');
-
+  const selected = formik.values.tripType
   const handleSelect = (type) => {
-    setSelected(type);        // ✅ For animation
     formik.setFieldValue('tripType', type);
     console.log('type', type);
     if (type !== selected) {
@@ -33,8 +31,8 @@ const TripTypeSelector = ({ formik }) => {
         Round Trip
       </button>
       <button
-        onClick={() => handleSelect('oneway')}
-        className={`relative z-10 w-1/2  rounded-[20px]  text-sm font-medium transition-colors duration-300 ${selected === 'oneway' ? 'text-white' : 'text-[#05486e]'
+        onClick={() => handleSelect('OneWay')}
+        className={`relative z-10 w-1/2  rounded-[20px]  text-sm font-medium transition-colors duration-300 ${selected === 'OneWay' ? 'text-white' : 'text-[#05486e]'
           }`}
       >
         One-way

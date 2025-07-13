@@ -119,4 +119,4 @@ const Dates = ({ formik, handleDateSelect, currentMonth, setCurrentMonth, minMon
     );
 };
 
-export default Dates;
+export default React.memo(Dates);

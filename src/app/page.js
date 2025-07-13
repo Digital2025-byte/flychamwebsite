@@ -1,3 +1,4 @@
+import { fetchFromAPI } from '@/lib/api';
 import HomeClient from './HomeClient';
 
 export const metadata = {
@@ -31,9 +32,14 @@ export const metadata = {
     images: ['https://flycham.com/logo.jpg'], // 🔁 Same as above
   },
 };
+// fetch logic: accepts ?search=param
+export async function getAirports() {
+  // const encoded = encodeURIComponent(search);
+  return await fetchFromAPI(`/api/booking/AirPort`);
+}
 
-const FlightPage = () => {
-  return <HomeClient />;
+export default async function FlightPage() {
+  const flights = await getAirports();
+  return <HomeClient flights={flights} />;
 };
 
-export default FlightPage;

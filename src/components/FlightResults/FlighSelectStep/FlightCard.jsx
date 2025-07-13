@@ -2,27 +2,28 @@
 import React, { useState } from 'react';
 import useIsMobile from '@/hooks/useIsMobile';
 import { CaretDown, CaretUp, CheckCircle } from '@phosphor-icons/react';
-import FlightDetails from './FlightDetails';
+import FlightDetails from '../FlightDetails';
 import { motion, AnimatePresence } from 'framer-motion';
-import FareCard from './FareCard';
-import FlightCodes from './FlightCodes';
-import FlightTimeInfo from './FlightTimeInfo';
+import FareCard from '../FareCard';
+import FlightCodes from '../FlightCodes';
+import FlightTimeInfo from '../FlightTimeInfo';
+import useFormattedFlightTimes from '@/hooks/useFormattedFlightTimes';
 
 
 // Main Card
 const FlightCard = ({
-    departureTime,
-    arrivalTime,
-    departureCode,
-    arrivalCode,
-    duration,
-    stops,
-    economyPrice,
-    businessPrice,
+    flight,
     isExpanded = false,
-    onDetailsClick, special, isConfirmed
+    onDetailsClick, isConfirmed, handleSelectPlan, selectedType
 }) => {
+
+
+
+    const { duration, stops, flightNumber, ecoID, ecoFare, busID, busFare } = useFormattedFlightTimes(flight);
+    const isXl = useIsMobile(1280);
     const isLg = useIsMobile(1078);
+    const isMd = useIsMobile(768);
+
     const [expanded, setExpanded] = useState(isExpanded);
 
     return (
@@ -48,16 +49,15 @@ const FlightCard = ({
             <div className={`flex   gap-0 ${isLg ? 'flex-col' : 'flex-row '}   md:gap-3  justify-between  items-start lg:items-center`}>
 
                 <div className='flex flex-col items-start gap-4 '>
-                    <div className="text-[#B00300] text-sm pt-2 self-center">
-                        {stops}, {duration}
+                    <div className="text-600text-sm pt-2 self-center">
+                        {stops > 0 ? stops : 'Non-stop,'}
+                        {duration}
                     </div>
                     <FlightTimeInfo
-                        departureTime={departureTime}
-                        arrivalTime={arrivalTime}
-                        departureCode={departureCode}
-                        arrivalCode={arrivalCode}
-                        duration={duration}
-                        stops={stops}
+                        flight={flight}
+                        isLg={isLg}
+                        isMd={isMd}
+                        isXl={isXl}
                     />
                     <button
                         onClick={onDetailsClick}
@@ -67,17 +67,17 @@ const FlightCard = ({
                     </button>
                 </div>
                 <div className="w-full flex justify-between items-center  flex-wrap gap-4 my-2 md:my-0">
-
                     <div className="w-full flex flex-row gap-4 items-center md:items-start self-center justify-center xl:justify-end">
                         {isConfirmed ?
-                            <div className=" bg-primary-1 text-white text-sm font-medium px-4 py-1 rounded-full ">
-                                Business
-                            </div>
+                            <FareCard type={selectedType.type} price={selectedType.price} special={selectedType.special} isLg={isLg} />
+                            // <div className=" bg-primary-1 text-white text-sm font-medium px-4 py-1 rounded-[8px] ">
+                            //     {selectedType.type}
+                            // </div>
 
                             :
                             <>
-                                <FareCard type="Economy" price={economyPrice} special={special} isLg={isLg} />
-                                <FareCard type="Business" price={businessPrice} special={special} isLg={isLg} />
+                                <FareCard type="Economy" price={ecoFare} special={false} isLg={isLg} />
+                                <FareCard type="Business" price={busFare} special={false} isLg={isLg} />
                             </>
                         }
 
@@ -120,7 +120,7 @@ const FlightCard = ({
 
             <div className="w-full h-px bg-[#E5E5E3] my-4 lg:my-6" />
 
-            <FlightCodes />
+            <FlightCodes flight_number={flightNumber} />
 
 
             {!isConfirmed &&
@@ -135,7 +135,7 @@ const FlightCard = ({
                             transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
                             className="overflow-hidden w-full "
                         >
-                            <FlightDetails />
+                            <FlightDetails handleSelectPlan={handleSelectPlan} flight={flight} />
                         </motion.div>
                     )}
                 </AnimatePresence>
