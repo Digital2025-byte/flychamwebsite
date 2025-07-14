@@ -61,7 +61,7 @@ const BookingBox = ({ flights, cities, setCities, getCitiesArray, airPorts, sear
             dateStart: '',
             dateEnd: '',
             type: 0,
-            tripType: 'roundTrip',
+            tripType: 'OneWay',
             neirby: false
         },
         onSubmit: (values) => {
@@ -402,7 +402,7 @@ const BookingBox = ({ flights, cities, setCities, getCitiesArray, airPorts, sear
                 cities={cities}
                 isMobile
                 values={formik.values}
-                                handleSwitch={handleSwitch}
+                handleSwitch={handleSwitch}
 
             />
             <FlightInfoInputs formik={formik} setShowMobileModal={setShowMobileModal}

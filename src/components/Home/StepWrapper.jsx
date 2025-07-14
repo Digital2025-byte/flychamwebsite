@@ -35,16 +35,22 @@ const StepWrapper = ({ children, setFieldValue, handleSubmit, onClose, formikVal
         }
     };
 
-    const getTripDuration = () => {
-        const { dateStart, dateEnd, tripType } = formikValues;
-        if (tripType === "roundtrip" && dateStart && dateEnd) {
-            const start = new Date(dateStart);
-            const end = new Date(dateEnd);
-            const diff = Math.ceil((end - start) / (1000 * 60 * 60 * 24));
-            return diff > 0 ? `${diff} days your trip` : '';
-        }
-        return '';
-    };
+const getTripDuration = () => {
+  const { dateStart, dateEnd, tripType } = formikValues;
+
+  if (tripType === "roundtrip" && dateStart && dateEnd) {
+    const start = new Date(dateStart);
+    const end = new Date(dateEnd);
+    const diff = Math.ceil((end - start) / (1000 * 60 * 60 * 24));
+    return diff > 0 ? `${diff} days your trip` : '';
+  }
+
+  if (tripType === "oneway" && dateStart) {
+    return `One-way: ${new Date(dateStart).toLocaleDateString()}`;
+  }
+
+  return '';
+};
 
     const handleReset = () => {
         setFieldValue("dateStart", null);
@@ -63,6 +69,7 @@ const StepWrapper = ({ children, setFieldValue, handleSubmit, onClose, formikVal
                 handleStep={handleStep}
                 onClose={onClose}
                 handleSubmit={handleSubmit}
+                formikValues={formikValues}
             />
         </div>
     );

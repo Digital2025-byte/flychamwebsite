@@ -3,6 +3,9 @@ import React from 'react';
 import { format, isSameDay } from 'date-fns';
 
 const SelectedDateDisplay = ({ selected, tripType }) => {
+    console.log('tripType', tripType);
+    console.log('selected', selected);
+
     let text = '';
 
     if (tripType === 'roundtrip' && selected?.from) {
@@ -15,7 +18,7 @@ const SelectedDateDisplay = ({ selected, tripType }) => {
                 )}
             </>
         );
-    } else if (tripType === 'oneway' && selected) {
+    } else if (tripType === 'OneWay' && selected) {
         text = (
             <>
                 Departure: <strong>{format(selected, 'dd MMM yyyy')}</strong>

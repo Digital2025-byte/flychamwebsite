@@ -2,7 +2,7 @@
 import useIsMobile from "@/hooks/useIsMobile";
 import React from "react";
 
-const StepFooterBar = ({ activeTab, isNextDisabled, getTripDuration, handleReset, handleStep, onClose, handleSubmit }) => {
+const StepFooterBar = ({ activeTab, isNextDisabled, getTripDuration, handleReset, handleStep, onClose, handleSubmit, formikValues }) => {
     const showExtras = activeTab === 3;
     const tripDuration = getTripDuration();
     const isMobile = useIsMobile()
@@ -12,7 +12,7 @@ const StepFooterBar = ({ activeTab, isNextDisabled, getTripDuration, handleReset
             {/* Left Side - Trip Duration + Reset */}
             <div
                 className={`flex flex-col items-start gap-4 text-sm text-gray-600 min-h-[48px] transition-opacity duration-300`}
-                style={{ opacity: showExtras && tripDuration ? 1 : 0 }}
+                style={{ opacity: showExtras && (formikValues.dateStart) ? 1 : 0 }}
             >
                 <span className="text-black">
                     {tripDuration || '‎'}

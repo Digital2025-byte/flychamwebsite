@@ -17,7 +17,7 @@ const Dates = ({ formik, handleDateSelect, currentMonth, setCurrentMonth, minMon
     const isArabic = useIsArabic();
     const tripType = formik.values.tripType;
 
-    const selected = tripType === 'oneway'
+    const selected = tripType === 'OneWay'
         ? formik.values.dateStart
             ? new Date(formik.values.dateStart)
             : undefined
