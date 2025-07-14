@@ -18,6 +18,7 @@ const TestClient = ({ flights }) => {
     }
     const dispatch = useDispatch()
     useEffect(() => {
+   
         dispatch(setAirports(flights))
     }, [])
 

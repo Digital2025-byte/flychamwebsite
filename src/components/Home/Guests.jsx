@@ -13,25 +13,30 @@ const Guests = ({ formik }) => {
     const handleGuestChange = (key, delta) => {
         const currentValue = formik.values[key];
 
-        // Prevent adults from going below 1
         if (key === "adults") {
-            const newValue = Math.max(1, currentValue + delta);
+            const newValue = Math.min(9, Math.max(1, currentValue + delta)); // min 1, max 9
             formik.setFieldValue("adults", newValue);
+
+            // If infants > new adults - 1, reduce infants
+            if (formik.values.infants > newValue - 1) {
+                formik.setFieldValue("infants", newValue - 1);
+            }
             return;
         }
 
-        // Prevent below 0 for children/infants
-        const newValue = Math.max(0, currentValue + delta);
-        formik.setFieldValue(key, newValue);
+        if (key === "children") {
+            const newValue = Math.min(9, Math.max(0, currentValue + delta)); // max 9
+            formik.setFieldValue("children", newValue);
+            return;
+        }
 
-        // Auto-increase adults if infants > adults
-        if (key === "infants" && delta > 0) {
-            const futureInfants = currentValue + 1;
-            if (futureInfants > formik.values.adults) {
-                formik.setFieldValue("adults", futureInfants);
-            }
+        if (key === "infants") {
+            const maxInfants = formik.values.adults - 1;
+            const newValue = Math.min(maxInfants, Math.max(0, currentValue + delta));
+            formik.setFieldValue("infants", newValue);
         }
     };
+
 
     return (
         <div className="flex flex-col md:flex-row justify-between gap-12 px-2 py-6 md:px-8   bg-white rounded-2xl">
@@ -82,10 +87,21 @@ const Guests = ({ formik }) => {
 
                             <button
                                 onClick={() => handleGuestChange(key, 1)}
-                                className=" w-8 h-8 bg-[#003A59] flex items-center justify-center rounded-[6px] cursor-pointer"
+                                disabled={
+                                    (key === "adults" && formik.values.adults >= 9) ||
+                                    (key === "children" && formik.values.children >= 9) ||
+                                    (key === "infants" && formik.values.infants >= formik.values.adults - 1)
+                                }
+                                className={`w-8 h-8 flex items-center justify-center rounded-[6px] transition ${(key === "adults" && formik.values.adults >= 9) ||
+                                        (key === "children" && formik.values.children >= 9) ||
+                                        (key === "infants" && formik.values.infants >= formik.values.adults - 1)
+                                        ? "bg-gray-300 cursor-not-allowed"
+                                        : "bg-[#003A59] cursor-pointer"
+                                    }`}
                             >
                                 <Plus size={12} weight="bold" className="text-white" />
                             </button>
+
                         </div>
                     </div>
                 ))}
@@ -146,4 +162,4 @@ const Guests = ({ formik }) => {
     );
 };
 
-export default  React.memo(Guests);;
+export default React.memo(Guests);;

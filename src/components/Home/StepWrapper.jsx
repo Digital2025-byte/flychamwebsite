@@ -2,7 +2,7 @@
 import React from "react";
 import StepFooterBar from "./StepFooterBar";
 
-const StepWrapper = ({ children, setFieldValue, handleSubmit, onClose, formikValues }) => {
+const StepWrapper = ({ children, setFieldValue, handleSubmit, onClose, formikValues ,setCurrentMonth}) => {
     const activeTab = formikValues.type;
 
     const handleStep = (direction) => {
@@ -35,26 +35,27 @@ const StepWrapper = ({ children, setFieldValue, handleSubmit, onClose, formikVal
         }
     };
 
-const getTripDuration = () => {
-  const { dateStart, dateEnd, tripType } = formikValues;
+    const getTripDuration = () => {
+        const { dateStart, dateEnd, tripType } = formikValues;
 
-  if (tripType === "roundtrip" && dateStart && dateEnd) {
-    const start = new Date(dateStart);
-    const end = new Date(dateEnd);
-    const diff = Math.ceil((end - start) / (1000 * 60 * 60 * 24));
-    return diff > 0 ? `${diff} days your trip` : '';
-  }
+        if (tripType === "roundtrip" && dateStart && dateEnd) {
+            const start = new Date(dateStart);
+            const end = new Date(dateEnd);
+            const diff = Math.ceil((end - start) / (1000 * 60 * 60 * 24));
+            return diff > 0 ? `${diff} days your trip` : '';
+        }
 
-  if (tripType === "oneway" && dateStart) {
-    return `One-way: ${new Date(dateStart).toLocaleDateString()}`;
-  }
+        if (tripType === "oneway" && dateStart) {
+            return `One-way: ${new Date(dateStart).toLocaleDateString()}`;
+        }
 
-  return '';
-};
+        return '';
+    };
 
     const handleReset = () => {
         setFieldValue("dateStart", null);
         setFieldValue("dateEnd", null);
+        setCurrentMonth(new Date())
     };
 
     return (
@@ -70,6 +71,7 @@ const getTripDuration = () => {
                 onClose={onClose}
                 handleSubmit={handleSubmit}
                 formikValues={formikValues}
+
             />
         </div>
     );

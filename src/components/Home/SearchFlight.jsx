@@ -448,6 +448,7 @@ const BookingBox = ({ flights, cities, setCities, getCitiesArray, airPorts, sear
                 stepsData={stepsData}
                 handleClick={handleClick}
                 renderStepComponent={renderStepComponent}
+                setCurrentMonth={setCurrentMonth}
             />
         </div>
     );

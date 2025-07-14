@@ -10,7 +10,7 @@ import MonthNavigation from './MonthNavigation';
 import SelectedDateDisplay from './SelectedDateDisplay';
 import CustomDayContent from './CustomDayContent';
 
-const Dates = ({ formik, handleDateSelect, currentMonth, setCurrentMonth, minMonth, setMinMonth ,handleOneWayDateSelect}) => {
+const Dates = ({ formik, handleDateSelect, currentMonth, setCurrentMonth, minMonth, setMinMonth, handleOneWayDateSelect }) => {
     const [shouldAnimateMonth, setShouldAnimateMonth] = useState(false);
 
     const isMobile = useIsMobile('768');
@@ -34,7 +34,7 @@ const Dates = ({ formik, handleDateSelect, currentMonth, setCurrentMonth, minMon
     const handleMonthChange = (newMonth) => {
         const normalizedNewMonth = new Date(newMonth.getFullYear(), newMonth.getMonth(), 1);
         const normalizedMinMonth = new Date(minMonth.getFullYear(), minMonth.getMonth(), 1);
-        // ✅ Prevent going back before minMonth
+
         if (normalizedNewMonth < normalizedMinMonth) return;
 
         setCurrentMonth(normalizedNewMonth);
@@ -66,7 +66,8 @@ const Dates = ({ formik, handleDateSelect, currentMonth, setCurrentMonth, minMon
             >
                 <MonthNavigation
                     currentMonth={currentMonth}
-                    setCurrentMonth={handleMonthChange}
+                    minMonth={new Date()}
+                    handleMonthChange={handleMonthChange}
                 />
 
                 <DayPicker
@@ -78,15 +79,15 @@ const Dates = ({ formik, handleDateSelect, currentMonth, setCurrentMonth, minMon
                     locale={isArabic ? arSA : enUS}
                     disabled={{
                         before:
-                            tripType === 'oneway'
+                            tripType === 'OneWay'
                                 ? new Date()
                                 : formik.values.dateStart
                                     ? new Date(formik.values.dateStart)
                                     : new Date()
                     }}
-                    mode={tripType === 'oneway' ? 'single' : 'range'}
+                    mode={tripType === 'OneWay' ? 'single' : 'range'}
                     selected={selected}
-                    onSelect={tripType === 'oneway' ? handleOneWayDateSelect : handleDateSelect}
+                    onSelect={tripType === 'OneWay' ? handleOneWayDateSelect : handleDateSelect}
                     className="flex justify-center"
                     classNames={{
                         head_cell: 'uppercase text-xs font-bold text-gray-500 text-center',
@@ -94,7 +95,7 @@ const Dates = ({ formik, handleDateSelect, currentMonth, setCurrentMonth, minMon
                         day: 'text-sm text-black transition duration-300 ease-in-out w-8 h-8',
                         today: '',
                         selected:
-                            tripType === 'oneway'
+                            tripType === 'OneWay'
                                 ? 'rounded-full text-white bg-secondary'
                                 : 'bg-[#B6A889] text-black',
                         range_middle: 'bg-[#e6dabc61] text-black',
