@@ -27,7 +27,7 @@ import Guests from "./Guests";
 import Dates from "./widget/Dates/Dates";
 import SearchInput from "./SearchInput";
 
-const BookingBox = ({ cities, setCities, getCitiesArray, airPorts, search, setSearch }) => {
+const BookingBox = ({flights, cities, setCities, getCitiesArray, airPorts, search, setSearch }) => {
     const dispatch = useDispatch()
     const router = useRouter()
     const [activeTab, setActiveTab] = useState("book");
