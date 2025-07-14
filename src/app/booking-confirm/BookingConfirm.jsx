@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { EnvelopeSimple, Clock, DownloadSimple, ArrowLeft } from '@phosphor-icons/react';
 import logoEn from "@/assets/images/logoEn.png"
 import Image from 'next/image';
@@ -15,42 +15,51 @@ const BookingConfirm = () => {
     const { sessionInfo } = useSelector((s) => s.flights)
     console.log('sessionInfo', sessionInfo);
     const searchParams = useSearchParams();
+    const sessionId = searchParams.get('session_id');
 
     const stops = 12
     const info = [
         {
             label: "Name",
-            value: sessionInfo?.contact?.firstName + " " + sessionInfo?.contact?.lastName
+            value: `${sessionInfo?.contact?.firstName ?? ''} ${sessionInfo?.contact?.lastName ?? ''}`
         },
         {
             label: "Passengers",
-            value: sessionInfo?.passengers?.length
+            value: sessionInfo?.passengers?.length ?? 0
         },
         {
             label: "Contact",
-            value: sessionInfo?.contact?.phoneNumber
+            value: sessionInfo?.contact?.phoneNumber ?? '-'
         },
         {
             label: "Email",
-            value: sessionInfo?.contact?.email
+            value: sessionInfo?.contact?.email ?? '-'
         },
         {
             label: "Booking reference",
-            value: sessionInfo?.pnr
+            value: sessionInfo?.pnr ?? '-'
         },
         {
             label: "Flight number",
-            value: sessionInfo?.segments[0]?.flightNumber
+            value: sessionInfo?.segments?.[0]?.flightNumber ?? '-'
         }
     ];
     const dispatch = useDispatch()
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const sessionId = searchParams.get('session_id');
         if (sessionId) {
-            dispatch(getBySessionIdService(sessionId));
+            dispatch(getBySessionIdService(sessionId)).finally(() => setLoading(false));
         }
-    }, [dispatch, searchParams]);
+    }, [dispatch, sessionId]);
+
+    if (loading || !sessionInfo) {
+        return (
+            <div className="text-center py-20 text-gray-500">
+                Loading booking details...
+            </div>
+        );
+    }
     return (
         <div
 
