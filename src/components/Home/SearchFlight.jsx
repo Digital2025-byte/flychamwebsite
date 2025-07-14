@@ -28,6 +28,8 @@ import Dates from "./widget/Dates/Dates";
 import SearchInput from "./SearchInput";
 
 const BookingBox = ({ flights, cities, setCities, getCitiesArray, airPorts, search, setSearch }) => {
+    console.log('search', search);
+
     const dispatch = useDispatch()
     const router = useRouter()
     const [activeTab, setActiveTab] = useState("book");
@@ -62,7 +64,7 @@ const BookingBox = ({ flights, cities, setCities, getCitiesArray, airPorts, sear
             dateEnd: '',
             type: 0,
             tripType: 'OneWay',
-            neirby: false
+            neirby: true
         },
         onSubmit: (values) => {
             const {
@@ -80,25 +82,27 @@ const BookingBox = ({ flights, cities, setCities, getCitiesArray, airPorts, sear
             const flightclass = cabinClass === 'Economy' ? 'Y' : 'C'
             const data = {
                 origin_id: source,
+
                 destination_id: destination
                 ,
                 date: formattedDeparture,
-                date_return: formattedReturn,
                 adults: adults,
                 children: children,
                 infants: infants,
                 flightclass: flightclass,
                 flighttype: tripType,
-                pos_id: 7,
+                pos_id: 0,
                 neirby
             }
-            console.log('data', data);
-            dispatch(getFlightsService(data)).then((action) => {
-                if (getFlightsService.fulfilled.match(action)) {
-                    router.push('/search-results')
-                    dispatch(setSearchParams(data))
-                }
-            })
+            // Add return date only if roundtrip
+            if (tripType !== 'OneWay' && formattedReturn) {
+                data.date_return = formattedReturn;
+            }
+            dispatch(setSearchParams(data))
+            router.push('/search-results');
+
+
+
         }
 
 
@@ -255,36 +259,6 @@ const BookingBox = ({ flights, cities, setCities, getCitiesArray, airPorts, sear
 
 
 
-    // const getCitiesArray = (type, iataSourceCode, search = "") => {
-    //     const normalizedSearch = search.toLowerCase();
-
-    //     const filtered = cities?.filter((c) => {
-    //         const { airPortTranslations, iataCode } = c;
-    //         const { airPortName, city, country } = airPortTranslations?.[0] || {};
-    //         const matchesSearch = (
-    //             airPortName?.toLowerCase().includes(normalizedSearch) ||
-    //             city?.toLowerCase().includes(normalizedSearch) ||
-    //             country?.toLowerCase().includes(normalizedSearch) ||
-    //             iataCode?.toLowerCase().includes(normalizedSearch)
-    //         );
-
-    //         if (!matchesSearch) return false;
-
-    //         if (type === "source") {
-    //             return true; // all match
-    //         }
-
-    //         // Destination logic
-    //         if (iataSourceCode === "DAM" || iataSourceCode === "ALP") {
-    //             return iataCode !== "DAM" && iataCode !== "ALP";
-    //         } else {
-    //             return iataCode === "DAM" || iataCode === "ALP";
-    //         }
-    //     });
-
-    //     return filtered || [];
-    // };
-
 
 
 
@@ -295,7 +269,7 @@ const BookingBox = ({ flights, cities, setCities, getCitiesArray, airPorts, sear
             setDesktopShowModal(false)
         }
     }
-    const handleSearch = useCallback((searchValue) => {
+    const handleSearch = ((searchValue) => {
         setSearch(searchValue);
         const normalizedSearch = searchValue.toLowerCase();
 
@@ -314,7 +288,7 @@ const BookingBox = ({ flights, cities, setCities, getCitiesArray, airPorts, sear
         });
 
         setCities(filtered || []);
-    }, [airPorts.items, cities, setCities]);
+    });
 
 
 
@@ -333,6 +307,7 @@ const BookingBox = ({ flights, cities, setCities, getCitiesArray, airPorts, sear
                             getCitiesArray={getCitiesArray}
                             isMobile={isMobile}
                             sliderRef={sliderRef}
+                            setSearch={setSearch}
                         />
 
                     </>
@@ -352,6 +327,8 @@ const BookingBox = ({ flights, cities, setCities, getCitiesArray, airPorts, sear
                             getCitiesArray={getCitiesArray}
                             isMobile={isMobile}
                             sliderRef={sliderRef}
+                            setSearch={setSearch}
+
                         />                    </>
                 );
             case 2:
@@ -490,4 +467,4 @@ const BookingBox = ({ flights, cities, setCities, getCitiesArray, airPorts, sear
 
 };
 
-export default React.memo(BookingBox);
+export default BookingBox;

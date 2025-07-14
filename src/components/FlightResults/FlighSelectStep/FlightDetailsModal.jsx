@@ -1,37 +1,21 @@
 'use client';
 import React, { Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
-import { X, Usb, WifiHigh, TelevisionSimple, CookingPot, MonitorPlay, Coffee, ArrowRight, Clock } from '@phosphor-icons/react';
+import { X, Usb, WifiHigh, TelevisionSimple, CookingPot, MonitorPlay, Coffee, ArrowRight, Clock, MonitorPlayIcon, ForkKnife, Newspaper, ForkKnifeIcon } from '@phosphor-icons/react';
 import Image from 'next/image';
 import timeline from "@/assets/images/timeline.png";
 import tabicon from "@/assets/images/tabicon.png";
 import useFormattedFlightTimes from '@/hooks/useFormattedFlightTimes';
 import useFlightRouteDetails from '@/hooks/useFlightRouteDetails';
+import FlightSegmentDetails from './FlightSegmentDetails';
 
-const flightData = [
-    {
-        type: 'segment',
-        departureTime: '18:00',
-        arrivalTime: '18:30',
-        departureAirport: 'Aleppo International Airport (ALP)',
-        arrivalAirport: 'Damascus International Airport (DAM)',
-        flightCode: 'XH700',
-        duration: '30m',
-        amenities: ['USB Charging', 'WIFI', 'Entertainment', 'Optional Meal'],
-    },
-    {
-        type: 'transit',
-        note: '1h transit in Damascus',
-    },
-
-];
 
 const Amenities = ({ amenities }) => {
     const iconMap = {
-        'USB Charging': <Usb size={20} />,
+        'Entertainment': <MonitorPlayIcon size={20} />,
+        'Optional Meal': <ForkKnifeIcon size={20} />,
         'WIFI': <WifiHigh size={20} />,
-        'Entertainment': <MonitorPlay size={20} />,
-        'Optional Meal': <Coffee size={20} />
+        'Magazine': <Newspaper size={20} />
     };
 
     return (
@@ -50,6 +34,8 @@ const Amenities = ({ amenities }) => {
 const FlightDetailsModal = ({ flight, isOpen, onClose }) => {
     const { duration, stops, flightNumber, ecoID, ecoFare, busID, busFare, departureAirport, arrivalAirport, departureTime, arrivalTime } = useFormattedFlightTimes(flight);
     const { destination, origin, date } = useFlightRouteDetails()
+    console.log('flight', flight);
+
 
     return (
         <Transition appear show={isOpen} as={Fragment}>
@@ -70,46 +56,23 @@ const FlightDetailsModal = ({ flight, isOpen, onClose }) => {
                                     <button onClick={onClose}><X size={20} /></button>
                                 </div>
 
-                                {/* Route Info */}
-                                <div className="flex items-center gap-2 text-sm font-medium text-main mb-1">
-                                    <span>{origin.city}</span>
-                                    <span className="text-gray-400"><ArrowRight size={32} />
+                                {flight?.common_info?.segments?.map((s, index) => (
+                                    <FlightSegmentDetails
+                                        key={index}
+                                        origin={{ city: s.origin_city }}
+                                        destination={{ city: s.destination_city }}
+                                        date={date}
+                                        duration={s.duration} // Prefer segment duration if available
+                                        stops={stops} // Or optionally use s.stops if segment-specific
+                                        departureTime={s.departure_time}
+                                        arrivalTime={s.arrival_time}
+                                        departureAirport={s.origin_name}
+                                        arrivalAirport={s.destination_name}
+                                        flightNumber={s.flight_number}
+                                    />
+                                ))}
 
-                                    </span>
-                                    <span>{destination.city}</span>
-                                </div>
-                                <p className="text-[#3E3E3B] text-sm">{date}</p>
-                                <p className="text-[#3E3E3B] text-sm mb-4">
-                                    {`Total duration ${duration}`}
-                                    {stops &&
-                                        <span className="text-[#B00] font-medium">1stop</span>
-                                    }
-                                </p>
-                                <div  className={`flex items-start gap-3`}>
-                                    {/* Times */}
-<div className="flex flex-col justify-between text-sm text-[#111827] font-medium w-[65px] min-h-[248px] text-right">
-  <span className="text-right">{departureTime}</span>
-  <span className="text-xs text-main">{duration}</span>
-  <span className="text-right">{arrivalTime}</span>
-</div>
 
-                                    {/* Timeline */}
-                                    <div className="flex flex-col items-center">
-                                        <Image src={timeline} alt="timeline" className="w-[11px] h-full" />
-                                    </div>
-
-                                    {/* Content */}
-                                    <div className="flex flex-col gap-[12px] flex-1 text-sm">
-                                        <p className="font-medium mb-1 text-[#282826]">{departureAirport}</p>
-                                        <p className="text-[#6B7280] mb-2 flex items-center gap-1">
-                                            <Image src={tabicon} alt="flight icon" width={16} height={16} />
-                                            {flightNumber}
-                                        </p>
-
-                                        <Amenities amenities={['USB Charging', 'WIFI', 'Entertainment', 'Optional Meal']} />
-                                        <p className="mt-1">{arrivalAirport}</p>
-                                    </div>
-                                </div>
 
                                 {/* Segments and Transit */}
                                 {/* {flightData.map((item, index) => {

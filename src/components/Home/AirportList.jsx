@@ -2,32 +2,37 @@
 import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 
-const AirportList = ({ search, type, values, setFieldValue, isMobile, sliderRef, getCitiesArray }) => {
+const AirportList = ({ search, setSearch, type, values, setFieldValue, isMobile, sliderRef, getCitiesArray }) => {
   const { airPorts } = useSelector(state => state.flights);
 
   const iataSourceCode = airPorts.items.find((item) => item.id === values.source)?.iataCode;
-  
-  const citiesArray = useMemo(() => {
-    return getCitiesArray(type, iataSourceCode, search);
-  }, [type, iataSourceCode, search, getCitiesArray]);
+
+  const citiesArray = getCitiesArray(type, iataSourceCode, search);
+
+
 
   const handleAirportSelection = ({ type, id }) => {
     setFieldValue(type, id);
 
     switch (type) {
       case "source":
+        setSearch(""); // Clear BEFORE moving to destination
         setFieldValue("destination", "");
         if (isMobile && sliderRef?.current) sliderRef.current.slickGoTo(1);
         setFieldValue("type", 1);
         break;
+
       case "destination":
+        setSearch(""); // Also reset if needed
         if (isMobile && sliderRef?.current) sliderRef.current.slickGoTo(2);
         setFieldValue("type", 2);
         break;
+
       default:
         break;
     }
   };
+
 
   return (
     <div>
@@ -41,7 +46,7 @@ const AirportList = ({ search, type, values, setFieldValue, isMobile, sliderRef,
         }}
       >
         <div className="space-y-2">
-          {citiesArray.map((item) => {
+          {(citiesArray || [])?.map((item) => {
             const { id, iataCode, airPortTranslations } = item;
             const { city, country, airPortName } = airPortTranslations[0];
 
@@ -67,4 +72,4 @@ const AirportList = ({ search, type, values, setFieldValue, isMobile, sliderRef,
 };
 
 
-export default React.memo(AirportList);
+export default AirportList;

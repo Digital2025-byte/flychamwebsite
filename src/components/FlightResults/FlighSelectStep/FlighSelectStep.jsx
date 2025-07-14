@@ -10,13 +10,13 @@ import FlightDetailsModal from './FlightDetailsModal'
 
 const FlighSelectStep = ({ flights, setFilterModalOpen, handleDetailsClick, isFilterModalOpen, isShowDetailsModalOpen,
   setFlightDetailsOpen, expandedFlight, handleSelectPlan, selectedFlight, setActiveStep, selectedType,
-  setSelectedFlight
+  setSelectedFlight,handleClickDate
 }) => {
   return (
     <div>
       {!selectedFlight &&
         <>
-          <Section ><DateNavigation /></Section>
+          {/* <Section ><DateNavigation handleClickDate={handleClickDate}/></Section> */}
           <Divider />
           <FlightHeader
             count={flights.length}

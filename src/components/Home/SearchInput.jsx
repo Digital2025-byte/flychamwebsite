@@ -37,4 +37,4 @@ useEffect(() => {
   );
 };
 
-export default React.memo(SearchInput);
+export default SearchInput;

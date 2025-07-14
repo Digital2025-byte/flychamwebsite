@@ -1,7 +1,10 @@
 'use client'
 import useIsMobile from '@/hooks/useIsMobile';
 import React from 'react';
-import { AirplaneTilt, ArrowsClockwise, Briefcase, BriefcaseIcon, CheckCircle, EyeSlash, ProhibitInset, SuitcaseIcon, SuitcaseSimple, XCircle } from '@phosphor-icons/react';
+import {
+    AirplaneTilt, ArrowsClockwise, Briefcase, BriefcaseIcon, CheckCircle,
+    EyeSlash, ProhibitInset, SuitcaseIcon, SuitcaseSimple, XCircle
+} from '@phosphor-icons/react';
 
 const getIcon = (key) => {
     switch (key) {
@@ -51,9 +54,16 @@ const FeatureRow = ({ index, item, isLg, infoIcon, isInfo }) => {
                 <>
                     {/* <Icon size={20} className={`${iconColor}`} /> */}
                     {isLg ? (
-                        value
+                        <div className='flex items-center justify-start gap-3'>
+                            {(label === "Hand baggage" || label === "Checked baggage") &&
+                                <CheckCircle color='#34C759' size={20} weight='bold' />
+                            }
+                            <span> {label === "No-Show" ? value.slice(0.7) : value}</span>
+                        </div>
+
                     ) : (
                         <span className="flex items-center gap-2">
+                            <CheckCircle />
                             {/* {InfoIcon && <InfoIcon size={20} className={`text-[#000]`} />} */}
                             {value}
                         </span>
@@ -87,7 +97,7 @@ const InfoRows = ({ isHeader, isEconomy, isLg, isInfo, handleSelectPlan, col, fl
     const staticItems = [
         {
             label: "Checked baggage",
-            value: col.type ==="Economy" ? "30 kg" : "40 Kg",
+            value: col.type === "Economy" ? "30 kg" : "40 Kg",
             icon: SuitcaseSimple,
             iconColor: "text-600",
         },

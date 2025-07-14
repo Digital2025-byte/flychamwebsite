@@ -61,3 +61,17 @@ export const createPaymentService = createAsyncThunk(
         }
     }
 );
+export const getBySessionIdService = createAsyncThunk(
+    `${sliceName}/getBySessionIdService`,
+    async (id, thunkAPI) => {
+        try {
+
+            const response = await apiClient.get(`/api/booking/PaymentPNRResult?filters=sessionid==${id}`);
+            return response.data;
+        } catch (error) {
+            return thunkAPI.rejectWithValue(
+                error.response?.data?.message || error.message || 'Something went wrong'
+            );
+        }
+    }
+);

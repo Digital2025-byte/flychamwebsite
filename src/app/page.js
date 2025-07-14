@@ -34,12 +34,24 @@ export const metadata = {
 };
 // fetch logic: accepts ?search=param
 export async function getAirports() {
-  // const encoded = encodeURIComponent(search);
-  return await fetchFromAPI(`/api/booking/AirPort`);
+  try {
+    const response = await fetchFromAPI(`/api/booking/AirPort`);
+
+    if (!response.ok) {
+      console.error(`API error: ${response.status}`);
+      return []; // Fallback to empty list
+    }
+
+    const data = await response.json();
+    return data || [];
+  } catch (error) {
+    console.error("Fetch failed:", error);
+    return []; // Fallback on fetch failure
+  }
 }
 
 export default async function FlightPage() {
   const flights = await getAirports();
-  return <HomeClient flights={flights ||[]} />;
+  return <HomeClient flights={flights} />;
 };
 

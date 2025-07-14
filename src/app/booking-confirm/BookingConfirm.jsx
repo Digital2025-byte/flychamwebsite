@@ -1,43 +1,56 @@
 'use client'
-import React from 'react';
+import React, { useEffect } from 'react';
 import { EnvelopeSimple, Clock, DownloadSimple, ArrowLeft } from '@phosphor-icons/react';
 import logoEn from "@/assets/images/logoEn.png"
 import Image from 'next/image';
 import FlightTimeInfo from '@/components/FlightResults/FlightTimeInfo';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import mask from "@/assets/images/mask.png"
 import check from "@/assets/images/check.png"
 import Divider from '@/components/FlightResults/FlighSelectStep/Divider';
+import { getBySessionIdService } from '@/store/Services/flightServices';
+import { useSearchParams } from 'next/navigation';
 const BookingConfirm = () => {
-    const { selectedFlight } = useSelector((s) => s.flights)
+    // const { selectedFlight } = useSelector((s) => s.flights)
+    const { sessionInfo } = useSelector((s) => s.flights)
+    console.log('sessionInfo', sessionInfo);
+    const searchParams = useSearchParams();
+
     const stops = 12
     const info = [
         {
             label: "Name",
-            value: "Mouayad Hawari"
+            value: sessionInfo?.contact?.firstName + " " + sessionInfo?.contact?.lastName
         },
         {
             label: "Passengers",
-            value: "2 Adult"
+            value: sessionInfo?.passengers?.length
         },
         {
             label: "Contact",
-            value: "+963 935679806"
+            value: sessionInfo?.contact?.phoneNumber
         },
         {
             label: "Email",
-            value: "moaidhawh@gmail.com"
+            value: sessionInfo?.contact?.email
         },
         {
             label: "Booking reference",
-            value: "124606538"
+            value: sessionInfo?.pnr
         },
         {
             label: "Flight number",
-            value: "XH 700"
+            value: sessionInfo?.segments[0]?.flightNumber
         }
     ];
+    const dispatch = useDispatch()
 
+    useEffect(() => {
+        const sessionId = searchParams.get('session_id');
+        if (sessionId) {
+            dispatch(getBySessionIdService(sessionId));
+        }
+    }, [dispatch, searchParams]);
     return (
         <div
 
@@ -47,7 +60,7 @@ const BookingConfirm = () => {
 
                 className="flex flex-col items-center mb-10">
                 <div className="w-16 h-16 rounded-full  flex items-center justify-center mb-4">
-                    <Image src={check} />
+                    <Image src={check} alt="check" />
                 </div>
                 <h1 className="text-2xl font-bold text-primary-1 mb-1">Booking confirmed</h1>
                 <p className="text-lg  text-600">Thank you for your payment</p>
@@ -83,12 +96,12 @@ const BookingConfirm = () => {
                                 {stops > 0 ? stops : 'Non-stop,'}
                                 {10}
                             </div>
-                            <FlightTimeInfo
+                            {/* <FlightTimeInfo
                                 flight={selectedFlight}
                                 isLg={false}
                                 isMd={false}
                                 isXl={true}
-                            />
+                            /> */}
                         </div>
 
                         {/* Notice */}
@@ -156,22 +169,22 @@ const BookingConfirm = () => {
             <div className="w-full  border shadow-md border-[#FDFDFC] rounded-[20px] py-6 px-4 mb-6">
                 <h3 className="text-sm font-semibold mb-4">Payment Summary</h3>
                 <div className="flex justify-between text-sm mb-2 text-600">
-                    <span >Base fare(x2)</span>
-                    <span>USD 1700</span>
+                    <span >Base fare</span>
+                    <span>{sessionInfo?.baseFareAmount}</span>
                 </div>
                 <div className="flex justify-between text-sm mb-2 text-600">
                     <span>Taxes & fees</span>
-                    <span>USD 90</span>
+                    <span>{sessionInfo?.taxes[0]?.amount}</span>
                 </div>
                 <Divider />
                 <div className="flex justify-between text-sm font-semibold text-primary-1 mb-2">
-                    <span>Total Paid</span>
-                    <span>USD 1790</span>
+                    <span>Total Paid </span>
+                    <span>{sessionInfo?.paymentAmount}</span>
                 </div>
-                <div className="flex justify-between text-sm mb-2 text-700">
+                {/* <div className="flex justify-between text-sm mb-2 text-700">
                     <span>Transaction ID:</span>
-                    <span>TXN123456789</span>
-                </div>
+                    <span>{sessionInfo?.paymentAmountInPayCurAmount}</span>
+                </div> */}
             </div>
 
             {/* Buttons */}

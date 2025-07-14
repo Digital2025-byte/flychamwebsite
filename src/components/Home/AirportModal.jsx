@@ -11,7 +11,7 @@ import Dates from "./widget/Dates/Dates";
 import { useSelector } from "react-redux";
 
 const AirportModal = ({ isOpen, onClose, setFieldValue,
-  stepsData, handleClick, renderStepComponent, formikValues,setCurrentMonth
+  stepsData, handleClick, renderStepComponent, formikValues,setCurrentMonth,handleSubmit
 }) => {
 
 
@@ -54,6 +54,7 @@ const AirportModal = ({ isOpen, onClose, setFieldValue,
                 onClose={onClose}
                 formikValues={formikValues}
                 setCurrentMonth={setCurrentMonth}
+                handleSubmit={handleSubmit}
 
               >
                 {renderStepComponent()}

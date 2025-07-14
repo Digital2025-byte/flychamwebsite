@@ -16,7 +16,7 @@ const FlightList = ({ flights, onDetailsClick, handleSelectPlan, selectedFlight,
                     flight={Boolean(selectedFlight) ? selectedFlight : flight}
                     economyPrice={flight.price}
                     preconomyPriceice={flight.price}
-                    onDetailsClick={() => onDetailsClick(flight)}
+                    onDetailsClick={onDetailsClick}
                     handleSelectPlan={handleSelectPlan}
                     isConfirmed={isConfirmed}
                     selectedType={selectedType}

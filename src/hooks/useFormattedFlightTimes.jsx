@@ -36,6 +36,13 @@ const useFormattedFlightTimes = (selectedFlight) => {
     } = Business ?? {};
 
 
+
+
+
+
+
+
+
     // const airPortsItems = useSelector((state) => state.flights.airPorts?.items) || [];
 
 
@@ -51,12 +58,12 @@ const useFormattedFlightTimes = (selectedFlight) => {
 
     const formatTime = (timeStr) => timeStr?.slice(0, 5) || "";
     // const { hours, minutes } = getTimeDifference(departure_time, arrival_time);
-
+    
     return {
         arrivalTime: formatTime(arrival_time),
         departureTime: formatTime(departure_time),
         // hours,minutes,
-        originCode, destinationCode, duration, stops, flightNumber, ecoID, ecoFare, busID, busFare, segments, departureAirport, arrivalAirport
+        originCode, destinationCode, duration, stops, flightNumber, ecoID, ecoFare, busID, busFare, segments, departureAirport, arrivalAirport,segments
     };
 };
 

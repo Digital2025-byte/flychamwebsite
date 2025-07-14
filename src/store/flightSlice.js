@@ -1,6 +1,6 @@
 // store/slices/flightSlice.js
 import { createSlice } from '@reduxjs/toolkit';
-import { createListPassengerService, createPaymentService, getAirports, getFlightsService } from './Services/flightServices';
+import { createListPassengerService, createPaymentService, getAirports, getBySessionIdService, getFlightsService } from './Services/flightServices';
 
 const flightSlice = createSlice({
     name: 'flights',
@@ -11,8 +11,10 @@ const flightSlice = createSlice({
         selectedFlight: {},
         selectedPlan: {},
         isLoading: false,
+        isLoadingFlights: false,
         error: null,
-        selectedPassengers: {}
+        selectedPassengers: {},
+        sessionInfo:{}
     },
     reducers: {
         setAirports: (state, action) => {
@@ -47,15 +49,15 @@ const flightSlice = createSlice({
                 state.error = action.payload;
             })
             .addCase(getFlightsService.pending, (state) => {
-                state.isLoading = true;
+                state.isLoadingFlights = true;
                 state.error = null;
             })
             .addCase(getFlightsService.fulfilled, (state, action) => {
-                state.isLoading = false;
+                state.isLoadingFlights = false;
                 state.flights = action.payload.flights;
             })
             .addCase(getFlightsService.rejected, (state, action) => {
-                state.isLoading = false;
+                state.isLoadingFlights = false;
                 state.error = action.payload;
             })
             .addCase(createListPassengerService.pending, (state) => {
@@ -79,6 +81,18 @@ const flightSlice = createSlice({
                 // state.flights = action.payload.flights;
             })
             .addCase(createPaymentService.rejected, (state, action) => {
+                state.isLoading = false;
+                state.error = action.payload;
+            })
+            .addCase(getBySessionIdService.pending, (state) => {
+                state.isLoading = true;
+                state.error = null;
+            })
+            .addCase(getBySessionIdService.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.sessionInfo = action.payload.items[0];
+            })
+            .addCase(getBySessionIdService.rejected, (state, action) => {
                 state.isLoading = false;
                 state.error = action.payload;
             });

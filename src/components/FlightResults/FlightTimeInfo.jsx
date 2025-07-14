@@ -9,17 +9,19 @@ const FlightTimeInfo = ({
     isLg,
     isMd,
     isXl,
-    flight
+    flight, s,idx
 }) => {
     const dashedLength = !isXl ? 20 : !isLg ? 10 : !isMd ? 6 : 4;
 
     const { arrivalTime, departureTime, destinationCode, originCode } = useFormattedFlightTimes(flight);
+    const formatTime = (timeStr) => timeStr?.slice(0, 5) || "";
+
 
     return (
         <div className="flex items-start gap-6">
             <div className="text-center">
-                <time className="text-[24px] md:text-2xl text-800">{departureTime}</time>
-                <div className="text-[12px] md:text-600 text-base">{originCode}</div>
+                <time className="text-[24px] md:text-2xl text-800">{formatTime(s.departure_time)}</time>
+                <div className="text-[12px] md:text-600 text-base">{s.origin_code}</div>
             </div>
 
             <div className="pt-4">
@@ -29,12 +31,13 @@ const FlightTimeInfo = ({
                     height={35}
                     logoWidth={20}
                     startSize={10}
+                    idx={idx}
                 />
             </div>
 
             <div className="text-center">
-                <time className="text-[24px] md:text-2xl text-800">{arrivalTime}</time>
-                <div className="text-[12px] md:text-600 text-600 text-base">{destinationCode}</div>
+                <time className="text-[24px] md:text-2xl text-800">{formatTime(s.arrival_time)}</time>
+                <div className="text-[12px] md:text-600 text-600 text-base">{s.destination_code}</div>
             </div>
         </div>
     );

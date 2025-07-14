@@ -19,7 +19,7 @@ const FlightCard = ({
 
 
 
-    const { duration, stops, flightNumber, ecoID, ecoFare, busID, busFare } = useFormattedFlightTimes(flight);
+    const { duration, stops, flightNumber, ecoID, ecoFare, busID, busFare, segments } = useFormattedFlightTimes(flight);
     const isXl = useIsMobile(1280);
     const isLg = useIsMobile(1078);
     const isMd = useIsMobile(768);
@@ -49,19 +49,40 @@ const FlightCard = ({
             <div className={`flex   gap-0 ${isLg ? 'flex-col' : 'flex-row '}   md:gap-3  justify-between  items-start lg:items-center`}>
 
                 <div className='flex flex-col items-start gap-4 '>
-                    <div className="text-600text-sm pt-2 self-center">
-                        {stops > 0 ? stops : 'Non-stop,'}
-                        {duration}
-                    </div>
-                    <FlightTimeInfo
-                        flight={flight}
-                        isLg={isLg}
-                        isMd={isMd}
-                        isXl={isXl}
-                    />
+                    {segments?.length === 1 &&
+                        <div className="text-600text-sm pt-2 self-center">
+                            {stops > 0 ? stops : 'Non-stop,'}
+                            {duration}
+                        </div>
+                    }
+                    {segments?.length === 2 &&
+                        <div className="text-600text-sm pt-2 self-center">
+                           Non-stop: {segments[0]?.Duration}
+                        </div>
+                    }
+                    {segments?.map((s,idx) => {
+                        return (
+                            <FlightTimeInfo
+                                s={s}
+                                idx={idx}
+                                flight={flight}
+                                isLg={isLg}
+                                isMd={isMd}
+                                isXl={isXl}
+                            />
+                        )
+                    })}
+                    {segments?.length === 2 &&
+                        <div className="text-600text-sm pt-2 self-center">
+                           Non-stop: {segments[1]?.Duration}
+                        </div>
+                    }
+
                     <button
-                        onClick={onDetailsClick}
-                        className="cursor-pointer text-primary-1 text-[12px] md:text-sm font-bold underline  w-fit"
+                        onClick={(e) => {
+                            e.stopPropagation(); // ✅ Prevent parent click
+                            onDetailsClick(flight);
+                        }} className="cursor-pointer text-primary-1 text-[12px] md:text-sm font-bold underline  w-fit"
                     >
                         Flight details
                     </button>

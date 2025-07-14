@@ -14,14 +14,14 @@ const TripTypeSelector = ({ formik }) => {
     <div className="relative w-full  md:w-[341px] h-[40px] bg-[#f5f5f4] rounded-[24px] flex items-center p-1 transition-all duration-300">
       {/* Moving background */}
       <div
-        className={`absolute top-1 bottom-1 w-[50%] rounded-[20px] bg-main transition-all duration-300 ${formik.values.tripType === 'roundtrip' ? 'left-1' : 'left-[50%]'
+        className={`absolute top-1 bottom-1 w-[50%] rounded-[20px] bg-main transition-all duration-300 ${formik.values.tripType === 'Return' ? 'left-1' : 'left-[50%]'
           }`}
       />
 
       {/* Buttons */}
       <button
-        onClick={() => handleSelect('roundtrip')}
-        className={`relative z-10 w-1/2  rounded-[20px]  text-sm font-medium transition-colors duration-300 ${formik.values.tripType === 'roundtrip' ? 'text-white' : 'text-[#05486e]'
+        onClick={() => handleSelect('Return')}
+        className={`relative z-10 w-1/2  rounded-[20px]  text-sm font-medium transition-colors duration-300 ${formik.values.tripType === 'Return' ? 'text-white' : 'text-[#05486e]'
           }`}
       >
         Round Trip

@@ -10,6 +10,8 @@ import BookingBox from '@/components/Home/SearchFlight'
 import { useDispatch, useSelector } from 'react-redux';
 import { setAirports } from '@/store/flightSlice';
 const TestClient = ({ flights }) => {
+    console.log('flights', flights);
+
     const isMobile = useIsMobile(1024);
     const router = useRouter()
     const { t } = useTranslation()
@@ -18,7 +20,7 @@ const TestClient = ({ flights }) => {
     }
     const dispatch = useDispatch()
     useEffect(() => {
-   
+
         dispatch(setAirports(flights))
     }, [])
 
@@ -26,42 +28,71 @@ const TestClient = ({ flights }) => {
 
     const [cities, setCities] = useState([])
     const [search, setSearch] = useState('');
+    console.log('cities', cities);
 
     useEffect(() => {
         if (airPorts?.items?.length > 0) {
 
             setCities(airPorts.items)
         }
-    }, [])
+    }, [airPorts])
     const getCitiesArray = (type, iataSourceCode, search = "") => {
+        console.log('search', search);
+        console.log('iataSourceCode', iataSourceCode);
+        console.log('type', type);
+
+        if (!Array.isArray(cities)) return [];
+
         const normalizedSearch = search.toLowerCase();
 
-        const filtered = cities?.filter((c) => {
-            const { airPortTranslations, iataCode } = c;
+        return cities.filter((c) => {
+            const { iataCode, airPortTranslations } = c;
             const { airPortName, city, country } = airPortTranslations?.[0] || {};
-            const matchesSearch = (
-                airPortName?.toLowerCase().includes(normalizedSearch) ||
-                city?.toLowerCase().includes(normalizedSearch) ||
-                country?.toLowerCase().includes(normalizedSearch) ||
-                iataCode?.toLowerCase().includes(normalizedSearch)
-            );
 
-            if (!matchesSearch) return false;
-
+            // ----- Source Logic -----
             if (type === "source") {
-                return true; // all match
+                if (!search) return true;
+
+                const matchesSearch =
+                    airPortName?.toLowerCase().includes(normalizedSearch) ||
+                    city?.toLowerCase().includes(normalizedSearch) ||
+                    country?.toLowerCase().includes(normalizedSearch) ||
+                    iataCode?.toLowerCase().includes(normalizedSearch);
+
+                return matchesSearch;
             }
 
-            // Destination logic
-            if (iataSourceCode === "DAM" || iataSourceCode === "ALP") {
-                return iataCode !== "DAM" && iataCode !== "ALP";
-            } else {
-                return iataCode === "DAM" || iataCode === "ALP";
+            // ----- Destination Logic -----
+            if (type === "destination") {
+                // First apply DAM/ALP rule
+                const isFromDamOrAlp = iataSourceCode === "DAM" || iataSourceCode === "ALP";
+
+                if (isFromDamOrAlp) {
+                    // Block returning to DAM or ALP
+                    if (iataCode === "DAM" || iataCode === "ALP") return false;
+                } else {
+                    // Allow only DAM or ALP
+                    if (iataCode !== "DAM" && iataCode !== "ALP") return false;
+                }
+
+                // Then apply search (if any)
+                if (search) {
+                    const matchesSearch =
+                        airPortName?.toLowerCase().includes(normalizedSearch) ||
+                        city?.toLowerCase().includes(normalizedSearch) ||
+                        country?.toLowerCase().includes(normalizedSearch) ||
+                        iataCode?.toLowerCase().includes(normalizedSearch);
+
+                    return matchesSearch;
+                }
+
+                return true; // If passed DAM/ALP rule and no search
             }
+
+            return false; // Fallback for unknown type
         });
-
-        return filtered || [];
     };
+
 
 
     return (

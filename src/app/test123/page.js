@@ -13,7 +13,7 @@ const Test = async () => {
 
     return (
         <div>
-            <TestClient flights={flights || []} />
+            <TestClient flights={flights} />
         </div>
     )
 }

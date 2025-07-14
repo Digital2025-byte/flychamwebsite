@@ -2,6 +2,7 @@
 import Image from 'next/image';
 import React from 'react';
 import tabIcon from '@/assets/images/tabicon.png';
+import { Airplane, AirplaneIcon } from '@phosphor-icons/react';
 
 const DurationDashed = ({
   length = 6,
@@ -9,6 +10,7 @@ const DurationDashed = ({
   height = 28,
   logoWidth = 14,
   startSize = 6, // replaces `startWidth` for clarity
+  idx
 }) => {
   const Dots = ({ side }) => (
     <div className="flex items-center gap-[4px] mx-[6px]">
@@ -37,13 +39,15 @@ const DurationDashed = ({
         style={{ width, height }}
         className="mx-1 bg-primary-1 rounded-full flex items-center justify-center"
       >
-        <Image
+        
+        <AirplaneIcon color='#fff' className={`${idx ===0 ? 'rotate-90' :'rotate-270'}`}/>
+        {/* <Image
           src={tabIcon}
           alt="Flight"
           width={logoWidth}
           height={logoWidth}
           className="object-contain"
-        />
+        /> */}
       </span>
 
       {/* Right Dashes */}

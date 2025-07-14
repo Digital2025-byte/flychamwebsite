@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import DateNavigation from '@/components/FlightResults/DateNavigation'
 import FilterControls from '@/components/FlightResults/FilterControls'
 import FlightCard from '@/components/FlightResults/FlighSelectStep/FlightCard'
@@ -19,12 +19,17 @@ import Payment from '@/components/FlightResults/PaymentStep/Payment'
 import { AirplaneTilt, ArrowsClockwise, Briefcase, CheckCircle, EyeSlash, SuitcaseSimple, XCircle } from '@phosphor-icons/react';
 import { useDispatch, useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'
-import { setSelectedF, setSelectedPlan } from '@/store/flightSlice'
-import { createPaymentService } from '@/store/Services/flightServices'
+import { setSearchParams, setSelectedF, setSelectedPlan } from '@/store/flightSlice'
+import { createPaymentService, getFlightsService } from '@/store/Services/flightServices'
+import NoResults from '@/components/FlightResults/NoResults'
+import Screen from '@/components/Ui/Screen'
+import SessionExpiredModal from '@/components/FlightResults/SessionExpiredModal'
 
 const FlightResultsClient = () => {
     const dispatch = useDispatch()
-    const { flights, selectedPassengers, searchParams } = useSelector((state) => state.flights)
+    const { flights, selectedPassengers, searchParams, isLoadingFlights } = useSelector((state) => state.flights)
+    const [localLoading, setLocalLoading] = useState(true);
+    const [isSessionModalOpen, setSessionModalOpen] = useState(false);
 
     const [isFilterModalOpen, setFilterModalOpen] = useState(false);
     const [isShowDetailsModalOpen, setFlightDetailsOpen] = useState(false);
@@ -105,6 +110,30 @@ const FlightResultsClient = () => {
         });
 
     }
+    const handleClickDate = (type) => {
+        const originalDate = new Date(searchParams.date + 'Z'); // treat as UTC
+
+        const year = originalDate.getUTCFullYear();
+        const month = originalDate.getUTCMonth();
+        const day = originalDate.getUTCDate();
+
+        const delta = type === "next" ? 1 : -1;
+        const adjustedDate = new Date(Date.UTC(year, month, day + delta));
+
+        const formattedDateOnly = `${adjustedDate.getUTCFullYear()}-${String(adjustedDate.getUTCMonth() + 1).padStart(2, '0')}-${String(adjustedDate.getUTCDate()).padStart(2, '0')}`;
+
+        // ✅ Convert to "YYYY-MM-DDT00:00:00"
+        const formattedFullDate = `${formattedDateOnly}T00:00:00`;
+
+        console.log('formattedFullDate', formattedFullDate); // e.g., "2025-07-02T00:00:00"
+
+        dispatch(setSearchParams({ ...searchParams, date: formattedFullDate }));
+        loadFlightsWithDelay({ date: formattedFullDate });
+    };
+
+
+
+
     const steps = [
         {
             label: 'Select flight',
@@ -121,6 +150,7 @@ const FlightResultsClient = () => {
                 setActiveStep={setActiveStep}
                 selectedType={selectedType}
                 setSelectedFlight={setSelectedFlight}
+                handleClickDate={handleClickDate}
             />
         },
         {
@@ -141,38 +171,99 @@ const FlightResultsClient = () => {
             />
         },
     ];
+    console.log('flights', flights);
+
+    const loadFlightsWithDelay = (override = {}) => {
+        setLocalLoading(true);
+
+        const updatedDate = override.date || searchParams.date;
+
+        const data = {
+            ...searchParams,
+            ...override,
+            date: updatedDate,
+        };
+
+        dispatch(getFlightsService(data));
+
+        const timer = setTimeout(() => {
+            setLocalLoading(false);
+        }, 3000);
+
+        return () => clearTimeout(timer);
+    };
+
+
+    useEffect(() => {
+        const data = searchParams;
+        dispatch(getFlightsService(data));
+
+        const timer = setTimeout(() => {
+            setLocalLoading(false);
+        }, 3000); // 3 seconds
+
+        return () => clearTimeout(timer); // cleanup on unmount
+    }, []);
+
+    useEffect(() => {
+        // Start 5-minute (300000ms) timer
+        const timer = setTimeout(() => {
+            setSessionModalOpen(true);
+        }, 5 * 60 * 1000); // 5 minutes
+
+        // Cleanup timer on unmount
+        return () => clearTimeout(timer);
+    }, []);
+
     return (
         <>
-            {/* Desktop View */}
-            <div className="">
-                <div className='hidden lg:block'>
-                    <Header />
-                    <main className="w-[70%] mx-auto px-2">
+
+            {(isLoadingFlights || localLoading) ? <Screen /> :
+
+
+                <div className="">
+                    <div className='hidden lg:block'>
+                        <Header />
+                        <main className="w-[70%] mx-auto px-2">
+                            <Section><ProgressBar steps={steps} activeStep={activeStep} setActiveStep={setActiveStep} /></Section>
+
+                            <Section><RouteInfo
+                            /></Section>
+                            {!selectedFlight &&
+                                <Section ><DateNavigation handleClickDate={handleClickDate} /></Section>
+
+                            }
+                        </main>
+                    </div>
+                    <div className="lg:hidden  w-full">
+                        <HeaderBarMobile />
+                        {!selectedFlight &&
+                            <Section ><DateNavigation handleClickDate={handleClickDate} /></Section>
+
+                        }
+
+
                         <Section><ProgressBar steps={steps} activeStep={activeStep} setActiveStep={setActiveStep} /></Section>
-
-                        <Section><RouteInfo
-                        /></Section>
-
-                    </main>
-                </div>
-                <div className="lg:hidden  w-full">
-                    <HeaderBarMobile />
-                    <Section><ProgressBar steps={steps} activeStep={activeStep} setActiveStep={setActiveStep} /></Section>
-                    {/* <main className="w-[95%] md:w-[70%] mx-auto px-2 py-4">
+                        {/* <main className="w-[95%] md:w-[70%] mx-auto px-2 py-4">
 
                         <ProgressBarMb />
                     </main> */}
-                </div>
+                    </div>
 
-                <main className="w-[95%] md:w-[70%] mx-auto px-2">
-                    <Section>
-                        {steps[activeStep].content}
-                    </Section>
-                </main>
+                    <main className="w-[95%] md:w-[70%] mx-auto px-2">
+                        <Section>
+                            {steps[activeStep].content}
+                            {flights?.length === 0 && <NoResults />}
+                        </Section>
+                    </main>
 
-                {/* <SearchResultsFooter /> */}
-            </div>
+                    {/* <SearchResultsFooter /> */}
+                </div>}
 
+            <SessionExpiredModal
+                isOpen={isSessionModalOpen}
+                onClose={() => setSessionModalOpen(false)}
+            />
         </>
 
     );

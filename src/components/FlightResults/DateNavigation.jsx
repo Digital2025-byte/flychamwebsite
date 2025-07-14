@@ -4,7 +4,7 @@ import { CaretLeft, CaretRight } from '@phosphor-icons/react';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 
-const DateNavigation = ({ isEditFlight }) => {
+const DateNavigation = ({ isEditFlight, handleClickDate }) => {
   const router = useRouter();
   const { date } = useFlightRouteDetails()
 
@@ -28,7 +28,9 @@ const DateNavigation = ({ isEditFlight }) => {
         :
         <div className="flex self-center items-center gap-8">
           {/* Previous */}
-          <button className="cursor-pointer flex items-center gap-5 text-sm text-800 ">
+          <button
+            onClick={() => handleClickDate('prev')}
+            className="cursor-pointer flex items-center gap-5 text-sm text-800 ">
             <CaretLeft size={24} className='text-800' />
 
 
@@ -39,7 +41,10 @@ const DateNavigation = ({ isEditFlight }) => {
           <span className="w-px h-4 bg-[var(--text-800)]"></span>
 
           {/* Next */}
-          <button className=" cursor-pointer flex items-center gap-5 text-sm text-800 ">
+          <button
+            onClick={() => handleClickDate('next')}
+
+            className=" cursor-pointer flex items-center gap-5 text-sm text-800 ">
             Next day
             <CaretRight size={24} className='text-800' />
 
