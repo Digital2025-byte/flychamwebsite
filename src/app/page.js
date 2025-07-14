@@ -40,6 +40,6 @@ export async function getAirports() {
 
 export default async function FlightPage() {
   const flights = await getAirports();
-  return <HomeClient flights={flights} />;
+  return <HomeClient flights={[]} />;
 };
 
