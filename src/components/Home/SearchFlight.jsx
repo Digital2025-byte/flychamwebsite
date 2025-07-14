@@ -27,7 +27,7 @@ import Guests from "./Guests";
 import Dates from "./widget/Dates/Dates";
 import SearchInput from "./SearchInput";
 
-const BookingBox = ({flights, cities, setCities, getCitiesArray, airPorts, search, setSearch }) => {
+const BookingBox = ({ flights, cities, setCities, getCitiesArray, airPorts, search, setSearch }) => {
     const dispatch = useDispatch()
     const router = useRouter()
     const [activeTab, setActiveTab] = useState("book");
@@ -305,10 +305,12 @@ const BookingBox = ({flights, cities, setCities, getCitiesArray, airPorts, searc
         }
 
         const filtered = cities?.filter((c) => {
-            const { airPortTranslations } = c;
+            const { iataCode, airPortTranslations } = c;
             const { airPortName = "", country, city } = airPortTranslations?.[0] || {};
 
-            return airPortName.toLowerCase().includes(normalizedSearch);
+            return airPortName.toLowerCase().includes(normalizedSearch)
+
+                || country.toLowerCase().includes(normalizedSearch) || iataCode.toLowerCase().includes(normalizedSearch) || city.toLowerCase().includes(normalizedSearch);
         });
 
         setCities(filtered || []);

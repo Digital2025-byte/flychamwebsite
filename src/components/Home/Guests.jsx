@@ -104,9 +104,9 @@ const Guests = ({ formik }) => {
                         </span>
                         <input
                             type="radio"
-                            name="class"
-                            checked={formik.values.class === option}
-                            onChange={() => formik.setFieldValue("class", option)}
+                            name="cabinClass"
+                            checked={formik.values.cabinClass === option}
+                            onChange={() => formik.setFieldValue("cabinClass", option)}
                             className="form-radio accent-[#003A59]"
                         />
                     </label>
