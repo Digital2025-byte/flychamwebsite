@@ -86,62 +86,6 @@ const HomeClient = ({ flights }) => {
     return filtered || [];
   };
 
-  const formik = useFormik({
-    enableReinitialize: false,
-    initialValues: {
-      source: '',
-      destination: '',
-      adults: 1,
-      children: 0,
-      infants: 0,
-      promoCode: '',
-      cabinClass: 'Economy',
-      dateStart: '',
-      dateEnd: '',
-      type: 0,
-      tripType: 'roundTrip',
-      neirby: false
-    },
-    onSubmit: (values) => {
-      const {
-        cabinClass,
-        source,
-        destination,
-        dateStart,
-        dateEnd,
-        adults,
-        children, infants, type, neirby, tripType
-
-      } = values;
-      const formattedDeparture = formatDate(dateStart);
-      const formattedReturn = formatDate(dateEnd);
-      const flightclass = cabinClass === 'Economy' ? 'Y' : 'C'
-      const data = {
-        origin_id: source,
-        destination_id: destination
-        ,
-        date: formattedDeparture,
-        date_return: formattedReturn,
-        adults: adults,
-        children: children,
-        infants: infants,
-        flightclass: flightclass,
-        flighttype: tripType,
-        pos_id: 7,
-        neirby
-      }
-      console.log('data', data);
-      dispatch(getFlightsService(data)).then((action) => {
-        if (getFlightsService.fulfilled.match(action)) {
-          router.push('/search-results')
-          dispatch(setSearchParams(data))
-        }
-      })
-    }
-
-
-
-  });
 
 
 
@@ -154,10 +98,11 @@ const HomeClient = ({ flights }) => {
         <div className="w-[90%] md:w-[70%] mx-auto">
 
           {/* <FlightSearch isHome /> */}
+          
           <BookingBox getCitiesArray={getCitiesArray} setCities={setCities} cities={cities} airPorts={airPorts}
             search={search}
             setSearch={setSearch}
-            formik={formik}
+
           />
         </div>
         <div className='w-[90%] mx-auto px-2'>

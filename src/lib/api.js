@@ -2,7 +2,7 @@
 export const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 export async function fetchFromAPI(endpoint, options = {}) {
-    const url = `${'https://flycham.com'}${endpoint}`;
+    const url = `${API_BASE_URL}${endpoint}`;
     console.log('🔗 Fetching:', url); // Add this for debug
 
     const res = await fetch(url, {

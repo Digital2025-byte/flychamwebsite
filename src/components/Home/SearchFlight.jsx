@@ -27,7 +27,7 @@ import Guests from "./Guests";
 import Dates from "./widget/Dates/Dates";
 import SearchInput from "./SearchInput";
 
-const BookingBox = ({ cities, setCities, getCitiesArray, airPorts, search, setSearch,formik }) => {
+const BookingBox = ({ cities, setCities, getCitiesArray, airPorts, search, setSearch }) => {
     const dispatch = useDispatch()
     const router = useRouter()
     const [activeTab, setActiveTab] = useState("book");
@@ -48,6 +48,62 @@ const BookingBox = ({ cities, setCities, getCitiesArray, airPorts, search, setSe
 
         return `${year}-${month}-${day}T00:00:00`;
     };
+    const formik = useFormik({
+        enableReinitialize: false,
+        initialValues: {
+            source: '',
+            destination: '',
+            adults: 1,
+            children: 0,
+            infants: 0,
+            promoCode: '',
+            cabinClass: 'Economy',
+            dateStart: '',
+            dateEnd: '',
+            type: 0,
+            tripType: 'roundTrip',
+            neirby: false
+        },
+        onSubmit: (values) => {
+            const {
+                cabinClass,
+                source,
+                destination,
+                dateStart,
+                dateEnd,
+                adults,
+                children, infants, type, neirby, tripType
+
+            } = values;
+            const formattedDeparture = formatDate(dateStart);
+            const formattedReturn = formatDate(dateEnd);
+            const flightclass = cabinClass === 'Economy' ? 'Y' : 'C'
+            const data = {
+                origin_id: source,
+                destination_id: destination
+                ,
+                date: formattedDeparture,
+                date_return: formattedReturn,
+                adults: adults,
+                children: children,
+                infants: infants,
+                flightclass: flightclass,
+                flighttype: tripType,
+                pos_id: 7,
+                neirby
+            }
+            console.log('data', data);
+            dispatch(getFlightsService(data)).then((action) => {
+                if (getFlightsService.fulfilled.match(action)) {
+                    router.push('/search-results')
+                    dispatch(setSearchParams(data))
+                }
+            })
+        }
+
+
+
+    });
 
 
     console.log('formik', formik.values);
@@ -265,7 +321,7 @@ const BookingBox = ({ cities, setCities, getCitiesArray, airPorts, search, setSe
             case 0:
                 return (
                     <>
-                        <SearchInput search={search} handleSearch={handleSearch} 
+                        <SearchInput search={search} handleSearch={handleSearch}
                             onClose={onClose} placeholder="Search for airport or city" type="source"
                         />
                         <AirportList
@@ -284,7 +340,7 @@ const BookingBox = ({ cities, setCities, getCitiesArray, airPorts, search, setSe
                 return (
                     <>
                         <SearchInput handleSearch={handleSearch}
-                            
+
                             onClose={onClose} placeholder="To" type="destination"
                         />
                         <AirportList
