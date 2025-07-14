@@ -3,7 +3,7 @@ import React from 'react';
 import { AirplaneTakeoff, AirplaneLanding, ArrowsDownUp } from '@phosphor-icons/react';
 import SwapIcon from './SwapIcon'; // Adjust path if needed
 
-const FromToSelector = ({ cities, values, setShowModal, setShowMobileModal, isMobile }) => {
+const FromToSelector = ({ cities, values, setShowModal, setShowMobileModal, isMobile,handleSwitch }) => {
     const handleOpenWidget = (isMobile) => isMobile ? setShowMobileModal(true) : setShowModal(true);
     const { source, destination } = values
 
@@ -37,6 +37,7 @@ const FromToSelector = ({ cities, values, setShowModal, setShowMobileModal, isMo
                 style={{
                     transform: `translateX(${isMobile ? '25vw' : '-50%'})`
                 }}
+                onClick={handleSwitch}
             >
                 <div className="w-12 h-12 rounded-full bg-white hover:bg-gray-200 transition-colors duration-200 flex items-center justify-center">
                     <SwapIcon isMobile={isMobile} />

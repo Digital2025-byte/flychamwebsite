@@ -97,13 +97,13 @@ const HomeClient = ({ flights }) => {
       <div className="">
         <div className="w-[90%] md:w-[70%] mx-auto">
 
-          {/* <FlightSearch isHome /> */}
-          
-          <BookingBox getCitiesArray={getCitiesArray} setCities={setCities} cities={cities} airPorts={airPorts}
+          <FlightSearch isHome />
+
+          {/* <BookingBox getCitiesArray={getCitiesArray} setCities={setCities} cities={cities} airPorts={airPorts}
             search={search}
             setSearch={setSearch}
 
-          />
+          /> */}
         </div>
         <div className='w-[90%] mx-auto px-2'>
 

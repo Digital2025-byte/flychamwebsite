@@ -375,6 +375,15 @@ const BookingBox = ({ flights, cities, setCities, getCitiesArray, airPorts, sear
         }
     };
 
+    const handleSwitch = () => {
+        formik.setValues({
+            ...formik.values,
+            source: formik.values.destination,
+            destination: formik.values.source,
+        });
+    };
+
+
 
     const MobileView = () => (
         <div className="  w-full">
@@ -384,6 +393,7 @@ const BookingBox = ({ flights, cities, setCities, getCitiesArray, airPorts, sear
                 setActiveTab={setActiveTab}
                 isMobile={false}
                 formik={formik}
+
             />
             <TripTypeSelector defaultValue={selected} setSelected={setSelected} formik={formik} isMobile={isMobile} />
             <FromToSelector
@@ -392,6 +402,8 @@ const BookingBox = ({ flights, cities, setCities, getCitiesArray, airPorts, sear
                 cities={cities}
                 isMobile
                 values={formik.values}
+                                handleSwitch={handleSwitch}
+
             />
             <FlightInfoInputs formik={formik} setShowMobileModal={setShowMobileModal}
             />
@@ -422,6 +434,8 @@ const BookingBox = ({ flights, cities, setCities, getCitiesArray, airPorts, sear
                 setShowMobileModal={setShowMobileModal}
                 cities={cities}
                 values={formik.values}
+                handleSwitch={handleSwitch}
+
             />
             <AirportModal
                 key={showMobileModal ? 'open' : 'closed'}
@@ -468,7 +482,6 @@ const BookingBox = ({ flights, cities, setCities, getCitiesArray, airPorts, sear
                 sliderRef={sliderRef}
                 handleReset={handleReset}
                 renderStepComponent={renderStepComponent}
-
             />
         </>
 
