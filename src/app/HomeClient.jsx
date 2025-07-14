@@ -22,10 +22,11 @@ import bg2 from '../assets/images/main-slider/bg2.webp';
 import bg3 from '../assets/images/main-slider/bg3.webp';
 import ImportantAlert from '@/components/Ui/Alert'
 import BookingBox from '@/components/Home/SearchFlight'
-import { useDispatch } from 'react-redux'
-import { setAirports } from '@/store/flightSlice'
-import { getAirports } from '@/store/Services/flightServices'
+import { useDispatch, useSelector } from 'react-redux'
+import { setAirports, setSearchParams } from '@/store/flightSlice'
+import { getAirports, getFlightsService } from '@/store/Services/flightServices'
 import { useFormik } from 'formik'
+import formatDate from '@/util/formatDate'
 const HomeClient = ({ flights }) => {
 
   const dispatch = useDispatch()
@@ -44,54 +45,105 @@ const HomeClient = ({ flights }) => {
   // useEffect(() => {
   //   dispatch(getAirports({ search }))
   // }, [search])
+  const { airPorts } = useSelector(state => state.flights)
 
-    const formik = useFormik({
-        enableReinitialize: false,
-        initialValues: {
-            source: '',
-            destination: '',
-            adults: 1,
-            children: 0,
-            infants: 0,
-            promoCode: '',
-            class: 'Economy',
-            dateStart: '',
-            dateEnd: '',
-            type: 0,
-            tripType: 'roundTrip',
-            search: ''
-        },
-        onSubmit: (values) => {
-            const {
-                source,
-                destination,
-                dateStart,
-                dateEnd,
-                adults,
-                children,
-                infants, type
-            } = values;
-            if (!source || !destination) {
-                console.error("❌ Missing required fields");
-                alert("Please complete all required fields.");
-                return;
-            }
+  const [cities, setCities] = useState([])
+  const [search, setSearch] = useState('');
 
-            // Format dates
-            const formattedDeparture = formatDate(dateStart);
-            const formattedReturn = type === 1 ? formatDate(dateEnd) : '';
-            const flightType = type === 0 ? 'Y' : 'B'
-            // https://reservations.chamwings.com/service-app/ibe/reservation.html#/fare/en/USD/SY/DAM/KWI/11-06-2025/12-06-2025/1/0/0/Y///
-            // Build URL
-            const searchUrl = `https://reservations.flycham.com/service-app/ibe/reservation.html#/fare/en/USD/SY/${source}/${destination}/${formattedDeparture}/${formattedReturn}/${adults}/${children}/${infants}/Y///`;
+  useEffect(() => {
+    if (airPorts?.items?.length > 0) {
 
-            // Open in new tab
-            // window.open(searchUrl, '_blank');
-        }
+      setCities(airPorts.items)
+    }
+  }, [])
+  const getCitiesArray = (type, iataSourceCode, search = "") => {
+    const normalizedSearch = search.toLowerCase();
 
+    const filtered = cities?.filter((c) => {
+      const { airPortTranslations, iataCode } = c;
+      const { airPortName, city, country } = airPortTranslations?.[0] || {};
+      const matchesSearch = (
+        airPortName?.toLowerCase().includes(normalizedSearch) ||
+        city?.toLowerCase().includes(normalizedSearch) ||
+        country?.toLowerCase().includes(normalizedSearch) ||
+        iataCode?.toLowerCase().includes(normalizedSearch)
+      );
 
+      if (!matchesSearch) return false;
 
+      if (type === "source") {
+        return true; // all match
+      }
+
+      // Destination logic
+      if (iataSourceCode === "DAM" || iataSourceCode === "ALP") {
+        return iataCode !== "DAM" && iataCode !== "ALP";
+      } else {
+        return iataCode === "DAM" || iataCode === "ALP";
+      }
     });
+
+    return filtered || [];
+  };
+
+  const formik = useFormik({
+    enableReinitialize: false,
+    initialValues: {
+      source: '',
+      destination: '',
+      adults: 1,
+      children: 0,
+      infants: 0,
+      promoCode: '',
+      cabinClass: 'Economy',
+      dateStart: '',
+      dateEnd: '',
+      type: 0,
+      tripType: 'roundTrip',
+      neirby: false
+    },
+    onSubmit: (values) => {
+      const {
+        cabinClass,
+        source,
+        destination,
+        dateStart,
+        dateEnd,
+        adults,
+        children, infants, type, neirby, tripType
+
+      } = values;
+      const formattedDeparture = formatDate(dateStart);
+      const formattedReturn = formatDate(dateEnd);
+      const flightclass = cabinClass === 'Economy' ? 'Y' : 'C'
+      const data = {
+        origin_id: source,
+        destination_id: destination
+        ,
+        date: formattedDeparture,
+        date_return: formattedReturn,
+        adults: adults,
+        children: children,
+        infants: infants,
+        flightclass: flightclass,
+        flighttype: tripType,
+        pos_id: 7,
+        neirby
+      }
+      console.log('data', data);
+      dispatch(getFlightsService(data)).then((action) => {
+        if (getFlightsService.fulfilled.match(action)) {
+          router.push('/search-results')
+          dispatch(setSearchParams(data))
+        }
+      })
+    }
+
+
+
+  });
+
+
 
   return (
     <div className="transition-all duration-700">
@@ -102,7 +154,11 @@ const HomeClient = ({ flights }) => {
         <div className="w-[90%] md:w-[70%] mx-auto">
 
           <FlightSearch isHome />
-          {/* <BookingBox  /> */}
+          {/* <BookingBox getCitiesArray={getCitiesArray} setCities={setCities} cities={cities} airPorts={airPorts}
+            search={search}
+            setSearch={setSearch}
+            formik={formik}
+          /> */}
         </div>
         <div className='w-[90%] mx-auto px-2'>
 

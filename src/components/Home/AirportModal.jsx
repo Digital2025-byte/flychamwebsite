@@ -10,61 +10,14 @@ import useCities from "@/hooks/useCities";
 import Dates from "./widget/Dates/Dates";
 import { useSelector } from "react-redux";
 
-const AirportModal = ({ handleOneWayDateSelect, minMonth, setMinMonth, currentMonth, setCurrentMonth,
-  handleDateSelect, isOpen, onClose, formik,
-  filteredSourceCities, filteredDestenationCities, stepsData, handleClick,cities,setCities,airPorts,getCitiesArray,search,setSearch
+const AirportModal = ({ isOpen, onClose, setFieldValue,
+  stepsData, handleClick, renderStepComponent, formikValues
 }) => {
 
 
-
-
-
-
-
-
-  const renderStepComponent = () => {
-    switch (formik.values.type) {
-      case 0:
-        return (
-          <>
-            <SearchInput search={search} setCities={setCities} setSearch={setSearch} cities={cities} onClose={onClose}  placeholder="Search for airport or city" type="source" />
-            <AirportList setCities={setCities} handleClick={handleClick} getCitiesArray={getCitiesArray}
-           formik={formik} type="source" 
-             />
-          </>
-
-        );
-      case 1:
-        return (
-          <>
-            <SearchInput search={search} setSearch={setSearch} setCities={setCities} cities={cities}  onClose={onClose} placeholder="To" type="destination" />
-            <AirportList setCities={setCities} handleClick={handleClick} getCitiesArray={getCitiesArray} formik={formik} type="destination" />
-          </>
-        );
-      case 2:
-        return (<Guests formik={formik} />)
-
-
-      case 3:
-        return (
-          <Dates formik={formik}
-            minMonth={minMonth}
-            setMinMonth={setMinMonth}
-            setCurrentMonth={setCurrentMonth}
-            currentMonth={currentMonth}
-            handleDateSelect={handleDateSelect}
-            handleOneWayDateSelect={handleOneWayDateSelect}
-          />
-        )
-
-      default:
-        return null;
-    }
-  };
-
   return (
     <Transition show={isOpen} as={Fragment}>
-      <Dialog as="div" className="relative z-50" onClose={onClose}>
+      <Dialog  as="div" className="relative z-50" onClose={onClose}>
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-200"
@@ -92,12 +45,15 @@ const AirportModal = ({ handleOneWayDateSelect, minMonth, setMinMonth, currentMo
               <StepBar
                 onClose={onClose}
                 stepsData={stepsData}
-                formik={formik}
+
+                formikValues={formikValues}
                 handleClick={handleClick}
 
               />
-              <StepWrapper formik={formik}
+              <StepWrapper setFieldValue={setFieldValue}
                 onClose={onClose}
+                formikValues={formikValues}
+
 
               >
                 {renderStepComponent()}

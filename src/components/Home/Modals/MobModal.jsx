@@ -12,9 +12,9 @@ import AirportList from "../AirportList";
 import Guests from "../Guests";
 import Dates from "../widget/Dates/Dates";
 
-const MobModal = ({ handleOneWayDateSelect, minMonth, setMinMonth, currentMonth, setCurrentMonth, handleDateSelect, handleReset, isOpen, onClose, title,
-    formik, stepsData, activeTab, handleClick, sliderSettings, sliderRef, getCitiesArray, airPorts
-    , search, setSearch,isMobile,setCities
+const MobModal = ({ handleReset, isOpen, onClose,
+    formik, stepsData, activeTab, handleClick, sliderRef,
+    renderStepComponent
 }) => {
     const handleStepBack = () => {
         const currentStep = formik.values.type;
@@ -30,42 +30,7 @@ const MobModal = ({ handleOneWayDateSelect, minMonth, setMinMonth, currentMonth,
         (tripType === "roundtrip" && (!dateStart || !dateEnd)) ||
         (tripType === "oneway" && !dateStart)
     );
-    const renderStepComponent = () => {
-        switch (formik.values.type) {
-            case 0:
-                return (
-                    <>
-                        <SearchInput search={search} setSearch={setSearch} setCities={setCities} onClose={onClose} placeholder="Search for airport or city" formik={formik} type="source" />
-                        <AirportList  airPorts={airPorts} getCitiesArray={getCitiesArray} formik={formik} type="source" isMobile={isMobile} sliderRef={sliderRef} />
-                    </>
 
-                );
-            case 1:
-                return (
-                    <>
-                        <SearchInput search={search} setSearch={setSearch}   setCities={setCities}  onClose={onClose} placeholder="To" type="destination" />
-                        <AirportList airPorts={airPorts} getCitiesArray={getCitiesArray} formik={formik} type="destination" isMobile={isMobile} sliderRef={sliderRef} />
-                    </>
-                );
-            case 2:
-                return (<Guests formik={formik} />)
-
-
-            case 3:
-                return (
-                    <Dates formik={formik} handleDateSelect={handleDateSelect} setCurrentMonth={setCurrentMonth}
-                        currentMonth={currentMonth}
-                        minMonth={minMonth}
-                        setMinMonth={setMinMonth}
-                        handleOneWayDateSelect={handleOneWayDateSelect}
-                    />
-
-                )
-
-            default:
-                return null;
-        }
-    };
     return (
         <Transition appear show={isOpen} as={Fragment}>
             <Dialog as="div" className="block md:hidden relative z-50" onClose={onClose}>
@@ -125,7 +90,7 @@ const MobModal = ({ handleOneWayDateSelect, minMonth, setMinMonth, currentMonth,
                             {/* Body */}
                             <div className="flex-1 overflow-y-auto p-4">{
                                 <>
-                                    <div className="flex gap-1 justify-between overflow-x-auto px-1">
+                                    {/* <div className="flex gap-1 justify-between overflow-x-auto px-1">
                                         {stepsData.map((step, idx) => (
                                             <div key={idx} className="flex items-center gap-2 cursor-pointer" onClick={() => handleClick(step.id)}>
                                                 <StepItem
@@ -137,7 +102,7 @@ const MobModal = ({ handleOneWayDateSelect, minMonth, setMinMonth, currentMonth,
 
                                             </div>
                                         ))}
-                                    </div>
+                                    </div> */}
 
 
                                     {renderStepComponent()}

@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
     AirplaneTakeoff,
     AirplaneLanding,
@@ -22,11 +22,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { getFlightsService } from "@/store/Services/flightServices";
 import { useRouter } from "next/navigation";
 import { setSearchParams } from "@/store/flightSlice";
+import AirportList from "./AirportList";
+import Guests from "./Guests";
+import Dates from "./widget/Dates/Dates";
+import SearchInput from "./SearchInput";
 
-const BookingBox = () => {
+const BookingBox = ({ cities, setCities, getCitiesArray, airPorts, search, setSearch,formik }) => {
     const dispatch = useDispatch()
     const router = useRouter()
-    const { airPorts } = useSelector(state => state.flights)
     const [activeTab, setActiveTab] = useState("book");
     const [showDesktopModal, setDesktopShowModal] = useState(false);
     const [showMobileModal, setShowMobileModal] = useState(false);
@@ -46,69 +49,17 @@ const BookingBox = () => {
         return `${year}-${month}-${day}T00:00:00`;
     };
 
-    const formik = useFormik({
-        enableReinitialize: false,
-        initialValues: {
-            source: '',
-            destination: '',
-            adults: 1,
-            children: 0,
-            infants: 0,
-            promoCode: '',
-            cabinClass: 'Economy',
-            dateStart: '',
-            dateEnd: '',
-            type: 0,
-            tripType: 'roundTrip',
-            neirby: false
-        },
-        onSubmit: (values) => {
-            const {
-                cabinClass,
-                source,
-                destination,
-                dateStart,
-                dateEnd,
-                adults,
-                children, infants, type, neirby, tripType
 
-            } = values;
-            const formattedDeparture = formatDate(dateStart);
-            const formattedReturn = formatDate(dateEnd);
-            const flightclass = cabinClass === 'Economy' ? 'Y' : 'C'
-            const data = {
-                origin_id: source,
-                destination_id: destination
-                ,
-                date: formattedDeparture,
-                date_return: formattedReturn,
-                adults: adults,
-                children: children,
-                infants: infants,
-                flightclass: flightclass,
-                flighttype: tripType,
-                pos_id: 7,
-                neirby
-            }
-            console.log('data', data);
-            dispatch(getFlightsService(data)).then((action) => {
-                if (getFlightsService.fulfilled.match(action)) {
-                    router.push('/search-results')
-                    dispatch(setSearchParams(data))
-                }
-            })
-        }
-
-
-
-    });
     console.log('formik', formik.values);
 
     const tabs = ["book", "manage", "flight status"];
     const isMobile = useIsMobile()
-    const getCityString = (val) => {
+
+    const getCityString = (val, type) => {
         const city = airPorts?.items?.find(c => c.id === val);
-        return city ? `${city.airPortTranslations[0].country}, ${city.airPortTranslations[0].city}` : '';
+        // return city ? `${city.airPortTranslations[0].country}, ${city.airPortTranslations[0].city}` : '';
+        const text = type === 's' ? 'Departure: ' : "Destenation: "
+        return city ? `${text}${city.iataCode}` : '';
     };
 
     const getGuestSummary = () => {
@@ -125,8 +76,8 @@ const BookingBox = () => {
         return 'Add Guest';
     };
 
-    const source = getCityString(formik.values.source);
-    const destination = getCityString(formik.values.destination);
+    const source = getCityString(formik.values.source, 's');
+    const destination = getCityString(formik.values.destination, 'd');
     const stepsData = [
         { icon: <AirplaneTakeoff size={20} />, title: "Flying from", value: source, id: 0 },
         { icon: <AirplaneLanding size={20} />, title: "Flying to", value: destination, id: 1 },
@@ -246,44 +197,125 @@ const BookingBox = () => {
         formik.setFieldValue("dateStart", date);
     };
 
-    const [cities, setCities] = useState([])
-    const [search, setSearch] = useState('');
 
-    const getCitiesArray = (type, iataSourceCode, search = "") => {
-        const normalizedSearch = search.toLowerCase();
+
+    // const getCitiesArray = (type, iataSourceCode, search = "") => {
+    //     const normalizedSearch = search.toLowerCase();
+
+    //     const filtered = cities?.filter((c) => {
+    //         const { airPortTranslations, iataCode } = c;
+    //         const { airPortName, city, country } = airPortTranslations?.[0] || {};
+    //         const matchesSearch = (
+    //             airPortName?.toLowerCase().includes(normalizedSearch) ||
+    //             city?.toLowerCase().includes(normalizedSearch) ||
+    //             country?.toLowerCase().includes(normalizedSearch) ||
+    //             iataCode?.toLowerCase().includes(normalizedSearch)
+    //         );
+
+    //         if (!matchesSearch) return false;
+
+    //         if (type === "source") {
+    //             return true; // all match
+    //         }
+
+    //         // Destination logic
+    //         if (iataSourceCode === "DAM" || iataSourceCode === "ALP") {
+    //             return iataCode !== "DAM" && iataCode !== "ALP";
+    //         } else {
+    //             return iataCode === "DAM" || iataCode === "ALP";
+    //         }
+    //     });
+
+    //     return filtered || [];
+    // };
+
+
+
+
+    const onClose = () => {
+        if (isMobile) {
+            setShowMobileModal(false)
+        } else {
+            setDesktopShowModal(false)
+        }
+    }
+    const handleSearch = useCallback((searchValue) => {
+        setSearch(searchValue);
+        const normalizedSearch = searchValue.toLowerCase();
+
+        if (!normalizedSearch) {
+            setCities(airPorts.items);
+            return;
+        }
 
         const filtered = cities?.filter((c) => {
-            const { airPortTranslations, iataCode } = c;
-            const { airPortName, city, country } = airPortTranslations?.[0] || {};
-            const matchesSearch = (
-                airPortName?.toLowerCase().includes(normalizedSearch) ||
-                city?.toLowerCase().includes(normalizedSearch) ||
-                country?.toLowerCase().includes(normalizedSearch) ||
-                iataCode?.toLowerCase().includes(normalizedSearch)
-            );
+            const { airPortTranslations } = c;
+            const { airPortName = "", country, city } = airPortTranslations?.[0] || {};
 
-            if (!matchesSearch) return false;
-
-            if (type === "source") {
-                return true; // all match
-            }
-
-            // Destination logic
-            if (iataSourceCode === "DAM" || iataSourceCode === "ALP") {
-                return iataCode !== "DAM" && iataCode !== "ALP";
-            } else {
-                return iataCode === "DAM" || iataCode === "ALP";
-            }
+            return airPortName.toLowerCase().includes(normalizedSearch);
         });
 
-        return filtered || [];
-    };
-    useEffect(() => {
-        if (airPorts?.items?.length > 0) {
+        setCities(filtered || []);
+    }, [airPorts.items, cities, setCities]);
 
-            setCities(airPorts.items)
+
+
+    const renderStepComponent = () => {
+        switch (formik.values.type) {
+            case 0:
+                return (
+                    <>
+                        <SearchInput search={search} handleSearch={handleSearch} 
+                            onClose={onClose} placeholder="Search for airport or city" type="source"
+                        />
+                        <AirportList
+                            type="source"
+                            values={formik.values}
+                            setFieldValue={formik.setFieldValue}
+                            getCitiesArray={getCitiesArray}
+                            isMobile={isMobile}
+                            sliderRef={sliderRef}
+                        />
+
+                    </>
+
+                );
+            case 1:
+                return (
+                    <>
+                        <SearchInput handleSearch={handleSearch}
+                            
+                            onClose={onClose} placeholder="To" type="destination"
+                        />
+                        <AirportList
+                            type="destination"
+                            values={formik.values}
+                            setFieldValue={formik.setFieldValue}
+                            getCitiesArray={getCitiesArray}
+                            isMobile={isMobile}
+                            sliderRef={sliderRef}
+                        />                    </>
+                );
+            case 2:
+                return (<Guests formik={formik} />)
+
+
+            case 3:
+                return (
+                    <Dates formik={formik}
+                        minMonth={minMonth}
+                        setMinMonth={setMinMonth}
+                        setCurrentMonth={setCurrentMonth}
+                        currentMonth={currentMonth}
+                        handleDateSelect={handleDateSelect}
+                        handleOneWayDateSelect={handleOneWayDateSelect}
+                    />
+                )
+
+            default:
+                return null;
         }
-    }, [])
+    };
 
 
     const MobileView = () => (
@@ -334,24 +366,16 @@ const BookingBox = () => {
                 values={formik.values}
             />
             <AirportModal
+                key={showMobileModal ? 'open' : 'closed'}
+
                 isOpen={showDesktopModal}
-                onClose={() => setDesktopShowModal(false)}
-                formik={formik}
+                onClose={onClose}
+                formikValues={formik.values}
+                setFieldValue={formik.setFieldValue}
+                handleSubmit={formik.handleSubmit}
                 stepsData={stepsData}
-                source={source}
-                destination={destination}
-                setCities={setCities}
                 handleClick={handleClick}
-                handleDateSelect={handleDateSelect}
-                setCurrentMonth={setCurrentMonth}
-                currentMonth={currentMonth}
-                minMonth={minMonth}
-                setMinMonth={setMinMonth}
-                handleOneWayDateSelect={handleOneWayDateSelect}
-                airPorts={airPorts}
-                getCitiesArray={getCitiesArray}
-                setSearch={setSearch}
-                search={search}
+                renderStepComponent={renderStepComponent}
             />
         </div>
     );
@@ -376,30 +400,17 @@ const BookingBox = () => {
             <MobModal
                 key={showMobileModal ? 'open' : 'closed'}
                 isOpen={showMobileModal}
-                onClose={() => setShowMobileModal(false)}
+                onClose={onClose}
                 title="Departure"
                 stepsData={stepsData}
                 formik={formik}
-                setCities={setCities}
-
-
                 activeTab={activeFlightTab}
-                cities={cities}
-                isMobile={isMobile}
                 handleClick={handleClick}
                 sliderSettings={sliderSettings}
                 sliderRef={sliderRef}
                 handleReset={handleReset}
-                handleDateSelect={handleDateSelect}
-                setCurrentMonth={setCurrentMonth}
-                currentMonth={currentMonth}
-                minMonth={minMonth}
-                setMinMonth={setMinMonth}
-                handleOneWayDateSelect={handleOneWayDateSelect}
-                airPorts={airPorts}
-                getCitiesArray={getCitiesArray}
-                setSearch={setSearch}
-                search={search}
+                renderStepComponent={renderStepComponent}
+
             />
         </>
 
@@ -407,4 +418,4 @@ const BookingBox = () => {
 
 };
 
-export default BookingBox;
+export default React.memo(BookingBox);

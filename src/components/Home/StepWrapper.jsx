@@ -2,27 +2,27 @@
 import React from "react";
 import StepFooterBar from "./StepFooterBar";
 
-const StepWrapper = ({ children, formik, onClose }) => {
-    const activeTab = formik.values.type;
+const StepWrapper = ({ children, setFieldValue, handleSubmit, onClose, formikValues }) => {
+    const activeTab = formikValues.type;
 
     const handleStep = (direction) => {
         if (direction === "back") {
             if (activeTab === 0) {
                 onClose?.();
             } else {
-                formik.setFieldValue("type", activeTab - 1);
+                setFieldValue("type", activeTab - 1);
             }
         } else if (direction === "next") {
             if (activeTab === 3) {
                 alert("finish");
             } else {
-                formik.setFieldValue("type", activeTab + 1);
+                setFieldValue("type", activeTab + 1);
             }
         }
     };
 
     const isNextDisabled = () => {
-        const { source, destination, adults, dateStart, dateEnd, tripType } = formik.values;
+        const { source, destination, adults, dateStart, dateEnd, tripType } = formikValues;
         switch (activeTab) {
             case 0:
                 return !source;
@@ -36,7 +36,7 @@ const StepWrapper = ({ children, formik, onClose }) => {
     };
 
     const getTripDuration = () => {
-        const { dateStart, dateEnd, tripType } = formik.values;
+        const { dateStart, dateEnd, tripType } = formikValues;
         if (tripType === "roundtrip" && dateStart && dateEnd) {
             const start = new Date(dateStart);
             const end = new Date(dateEnd);
@@ -47,8 +47,8 @@ const StepWrapper = ({ children, formik, onClose }) => {
     };
 
     const handleReset = () => {
-        formik.setFieldValue("dateStart", null);
-        formik.setFieldValue("dateEnd", null);
+        setFieldValue("dateStart", null);
+        setFieldValue("dateEnd", null);
     };
 
     return (
@@ -62,7 +62,7 @@ const StepWrapper = ({ children, formik, onClose }) => {
                 handleReset={handleReset}
                 handleStep={handleStep}
                 onClose={onClose}
-                formik={formik}
+                handleSubmit={handleSubmit}
             />
         </div>
     );

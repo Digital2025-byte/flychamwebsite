@@ -2,7 +2,7 @@
 import useIsMobile from "@/hooks/useIsMobile";
 import React from "react";
 
-const StepFooterBar = ({ activeTab, isNextDisabled, getTripDuration, handleReset, handleStep, onClose, formik }) => {
+const StepFooterBar = ({ activeTab, isNextDisabled, getTripDuration, handleReset, handleStep, onClose, handleSubmit }) => {
     const showExtras = activeTab === 3;
     const tripDuration = getTripDuration();
     const isMobile = useIsMobile()
@@ -39,7 +39,7 @@ const StepFooterBar = ({ activeTab, isNextDisabled, getTripDuration, handleReset
                     </button>
                     <button
                         onClick={() => {
-                            if (activeTab === 3) return isMobile ? onClose?.() : formik.handleSubmit?.();
+                            if (activeTab === 3) return isMobile ? onClose?.() : handleSubmit?.();
                             if (activeTab === 2) handleStep?.("next");
                         }}
 

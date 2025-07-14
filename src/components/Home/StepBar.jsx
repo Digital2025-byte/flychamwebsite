@@ -4,8 +4,8 @@ import Lottie from "lottie-react";
 import planeAnim from "../../assets/plane.json";
 import { X } from "@phosphor-icons/react";
 
-const StepBar = ({ onClose, stepsData, formik, handleClick }) => {
-  const activeTab = formik.values.type;
+const StepBar = ({ onClose, stepsData, formikValues, handleClick }) => {
+  const activeTab = formikValues.type;
 
 
 
@@ -28,23 +28,23 @@ const StepBar = ({ onClose, stepsData, formik, handleClick }) => {
 
               {/* Connector */}
               {/* Connector */}
-       {step.id < stepsData.length - 1 || step.id === activeTab ? (
-  <div className="w-20 flex justify-center items-center gap-3">
-    {step.id === activeTab ? (
-      <Lottie animationData={planeAnim} loop className="w-full h-full" />
-    ) : step.id < activeTab ? (
-      // Filled bullets for completed steps
-      [...Array(5)].map((_, i) => (
-        <div key={i} className="w-1 h-1 bg-main rounded-full" />
-      ))
-    ) : (
-      // Gray bullets for upcoming steps
-      [...Array(5)].map((_, i) => (
-        <div key={i} className="w-1 h-1 bg-gray-300 rounded-full" />
-      ))
-    )}
-  </div>
-) : null}
+              {step.id < stepsData.length - 1 || step.id === activeTab ? (
+                <div className="w-20 flex justify-center items-center gap-3">
+                  {step.id === activeTab ? (
+                    <Lottie animationData={planeAnim} loop className="w-full h-full" />
+                  ) : step.id < activeTab ? (
+                    // Filled bullets for completed steps
+                    [...Array(5)].map((_, i) => (
+                      <div key={i} className="w-1 h-1 bg-main rounded-full" />
+                    ))
+                  ) : (
+                    // Gray bullets for upcoming steps
+                    [...Array(5)].map((_, i) => (
+                      <div key={i} className="w-1 h-1 bg-gray-300 rounded-full" />
+                    ))
+                  )}
+                </div>
+              ) : null}
 
 
             </div>
