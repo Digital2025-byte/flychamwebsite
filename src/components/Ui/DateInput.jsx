@@ -1,3 +1,4 @@
+'use client'
 import { CalendarBlank } from "@phosphor-icons/react";
 import React, { useRef, useState } from "react";
 

@@ -1,3 +1,4 @@
+'use client'
 import React from "react";
 import { Plus, Minus, PlusCircle } from "@phosphor-icons/react";
 

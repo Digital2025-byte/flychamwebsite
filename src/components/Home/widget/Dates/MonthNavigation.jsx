@@ -1,3 +1,4 @@
+'use client'
 import React from 'react';
 import { CaretLeft, CaretRight } from '@phosphor-icons/react';
 

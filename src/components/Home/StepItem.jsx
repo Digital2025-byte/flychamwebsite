@@ -1,3 +1,4 @@
+'use client'
 import { Check } from "@phosphor-icons/react";
 
 const StepItem = ({ icon, title, value, isActive, isCompleted }) => {
