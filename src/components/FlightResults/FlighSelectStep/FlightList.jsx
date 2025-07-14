@@ -1,3 +1,4 @@
+'use client'
 import React from 'react';
 import FlightCard from './FlightCard';
 import BookingSummary from './BookingSummary';

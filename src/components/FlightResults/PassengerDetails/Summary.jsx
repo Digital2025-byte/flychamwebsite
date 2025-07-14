@@ -1,3 +1,4 @@
+'use client'
 import React from 'react';
 import { ArrowRight, CheckCircle } from '@phosphor-icons/react';
 import tabIcon from '@/assets/images/tabicon.png';

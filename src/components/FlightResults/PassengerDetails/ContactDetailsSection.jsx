@@ -1,3 +1,4 @@
+'use client'
 import React from 'react';
 import { Phone } from '@phosphor-icons/react';
 import Input from '@/components/Ui/Input';

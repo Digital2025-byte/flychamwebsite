@@ -1,3 +1,4 @@
+'use client'
 import useIsMobile from '@/hooks/useIsMobile';
 import React from 'react';
 import { AirplaneTilt, ArrowsClockwise, Briefcase, BriefcaseIcon, CheckCircle, EyeSlash, ProhibitInset, SuitcaseIcon, SuitcaseSimple, XCircle } from '@phosphor-icons/react';

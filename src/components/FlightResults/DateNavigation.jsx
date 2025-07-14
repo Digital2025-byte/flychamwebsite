@@ -1,3 +1,4 @@
+'use client'
 import useFlightRouteDetails from '@/hooks/useFlightRouteDetails';
 import { CaretLeft, CaretRight } from '@phosphor-icons/react';
 import { useRouter } from 'next/navigation';

@@ -1,3 +1,4 @@
+'use client'
 import FilterControls from "../FilterControls";
 
 const FlightHeader = ({ count, rightComponent, setFilterModalOpen }) => (

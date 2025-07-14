@@ -1,3 +1,4 @@
+'use client'
 import React from 'react';
 import CustomDateInput from '@/components/Ui/DateInput';
 import Input from '@/components/Ui/Input';

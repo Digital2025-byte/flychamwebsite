@@ -1,3 +1,4 @@
+'use client'
 import useFlightRouteDetails from '@/hooks/useFlightRouteDetails';
 import useIsMobile from '@/hooks/useIsMobile';
 import { ArrowRight } from '@phosphor-icons/react';
