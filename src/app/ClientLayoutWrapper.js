@@ -107,22 +107,22 @@ export default function ClientLayoutWrapper({ children }) {
 
     <ReduxProvider>
 
-      {/* <ZohoSalesIQ /> */}
+      <ZohoSalesIQ />
       {/* ✅ GTM Script */}
-      {/* <GTMScript /> */}
+      <GTMScript />
 
       {/* ✅ GA4 Script */}
-      {/* <GA4Script /> */}
+      <GA4Script />
 
       {/* ✅ GTM Noscript */}
-      {/* <noscript>
+      <noscript>
         <iframe
           src="https://www.googletagmanager.com/ns.html?id=GTM-TKHJ4V8W"
           height="0"
           width="0"
           style={{ display: "none", visibility: "hidden" }}
         ></iframe>
-      </noscript> */}
+      </noscript>
 
       {/* ✅ Layout */}
       {/* <I18nextProvider i18n={i18n}> */}

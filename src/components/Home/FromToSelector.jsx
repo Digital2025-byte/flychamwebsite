@@ -1,3 +1,4 @@
+'use client'
 import React from 'react';
 import { AirplaneTakeoff, AirplaneLanding, ArrowsDownUp } from '@phosphor-icons/react';
 import SwapIcon from './SwapIcon'; // Adjust path if needed

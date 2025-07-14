@@ -2,15 +2,11 @@
 import React, { useEffect, useState } from 'react';
 
 const TripTypeSelector = ({ formik }) => {
-  const selected = formik.values.tripType
+
+  const [selected, setSelected] = useState("OneWay")
   const handleSelect = (type) => {
-    formik.setFieldValue('tripType', type);
-    console.log('type', type);
-    if (type !== selected) {
-      console.log('typ inif (type !== selected ', type);
 
-
-    }
+    setSelected(type)
   };
 
 

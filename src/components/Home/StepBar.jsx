@@ -1,3 +1,4 @@
+'use client'
 import StepItem from "./StepItem";
 import Lottie from "lottie-react";
 import planeAnim from "../../assets/plane.json";
