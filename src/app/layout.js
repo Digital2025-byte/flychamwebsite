@@ -4,6 +4,7 @@ import 'slick-carousel/slick/slick-theme.css';
 import 'react-day-picker/style.css';
 import ClientLayoutWrapper from './ClientLayoutWrapper';
 import { Toaster } from 'sonner';
+import Script from 'next/script';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -38,8 +39,10 @@ export default function RootLayout({ children }) {
         <Toaster richColors />
         <ClientLayoutWrapper>{children}</ClientLayoutWrapper>
       </body>
-      <script src="https://unpkg.com/preline/dist/preline.js"></script>
-
+     <Script
+          src="https://unpkg.com/preline/dist/preline.js"
+          strategy="afterInteractive"
+        />
     </html>
   );
 }

@@ -3,7 +3,7 @@ import { X } from "@phosphor-icons/react";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 
-const SearchInput = ({search,setSearch, setCities, placeholder, formik, type, cities }) => {
+const SearchInput = ({search,setSearch, setCities, placeholder, cities }) => {
   const { airPorts } = useSelector(state => state.flights);
 
   const handleSearch = (searchValue) => {

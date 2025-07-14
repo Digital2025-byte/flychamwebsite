@@ -12,52 +12,14 @@ import { useSelector } from "react-redux";
 
 const AirportModal = ({ handleOneWayDateSelect, minMonth, setMinMonth, currentMonth, setCurrentMonth,
   handleDateSelect, isOpen, onClose, formik,
-  filteredSourceCities, filteredDestenationCities, stepsData, handleClick
+  filteredSourceCities, filteredDestenationCities, stepsData, handleClick,cities,setCities,airPorts,getCitiesArray,search,setSearch
 }) => {
 
-  const { airPorts } = useSelector(state => state.flights);
-  const [cities, setCities] = useState([])
-  useEffect(() => {
-    if (airPorts?.items?.length > 0) {
-
-      setCities(airPorts.items)
-    }
-  }, [])
-
-  const getCitiesArray = (type, iataSourceCode, search = "") => {
-    const normalizedSearch = search.toLowerCase();
-
-    const filtered = cities?.filter((c) => {
-      const { airPortTranslations, iataCode } = c;
-      const { airPortName, city, country } = airPortTranslations?.[0] || {};
-      const matchesSearch = (
-        airPortName?.toLowerCase().includes(normalizedSearch) ||
-        city?.toLowerCase().includes(normalizedSearch) ||
-        country?.toLowerCase().includes(normalizedSearch) ||
-        iataCode?.toLowerCase().includes(normalizedSearch)
-      );
-
-      if (!matchesSearch) return false;
-
-      if (type === "source") {
-        return true; // all match
-      }
-
-      // Destination logic
-      if (iataSourceCode === "DAM" || iataSourceCode === "ALP") {
-        return iataCode !== "DAM" && iataCode !== "ALP";
-      } else {
-        return iataCode === "DAM" || iataCode === "ALP";
-      }
-    });
-
-    return filtered || [];
-  };
 
 
 
 
-  const [search, setSearch] = useState('');
+
 
 
   const renderStepComponent = () => {
@@ -65,16 +27,18 @@ const AirportModal = ({ handleOneWayDateSelect, minMonth, setMinMonth, currentMo
       case 0:
         return (
           <>
-            <SearchInput search={search} setSearch={setSearch} cities={cities} onClose={onClose} setCities={setCities} placeholder="Search for airport or city" formik={formik} type="source" />
-            <AirportList setCities={setCities} handleClick={handleClick} getCitiesArray={getCitiesArray} cities={filteredSourceCities} formik={formik} type="source" />
+            <SearchInput search={search} setCities={setCities} setSearch={setSearch} cities={cities} onClose={onClose}  placeholder="Search for airport or city" type="source" />
+            <AirportList setCities={setCities} handleClick={handleClick} getCitiesArray={getCitiesArray}
+           formik={formik} type="source" 
+             />
           </>
 
         );
       case 1:
         return (
           <>
-            <SearchInput search={search} setSearch={setSearch} cities={cities} setCities={setCities} onClose={onClose} placeholder="To" type="destination" />
-            <AirportList setCities={setCities} handleClick={handleClick} getCitiesArray={getCitiesArray} cities={filteredDestenationCities} formik={formik} type="destination" />
+            <SearchInput search={search} setSearch={setSearch} setCities={setCities} cities={cities}  onClose={onClose} placeholder="To" type="destination" />
+            <AirportList setCities={setCities} handleClick={handleClick} getCitiesArray={getCitiesArray} formik={formik} type="destination" />
           </>
         );
       case 2:

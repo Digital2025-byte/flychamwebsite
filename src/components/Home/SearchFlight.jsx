@@ -36,7 +36,6 @@ const BookingBox = () => {
 
     const sliderRef = useRef(null);
 
-    const cities = airPorts.items
     const formatDate = (date) => {
         if (!(date instanceof Date)) return null;
 
@@ -108,8 +107,8 @@ const BookingBox = () => {
     const tabs = ["book", "manage", "flight status"];
     const isMobile = useIsMobile()
     const getCityString = (val) => {
-        const city = airPorts?.items?.find(c => c.value === val);
-        return city ? `${city.name}, ${city.value}` : '';
+        const city = airPorts?.items?.find(c => c.id === val);
+        return city ? `${city.airPortTranslations[0].country}, ${city.airPortTranslations[0].city}` : '';
     };
 
     const getGuestSummary = () => {
@@ -247,6 +246,44 @@ const BookingBox = () => {
         formik.setFieldValue("dateStart", date);
     };
 
+    const [cities, setCities] = useState([])
+    const [search, setSearch] = useState('');
+
+    const getCitiesArray = (type, iataSourceCode, search = "") => {
+        const normalizedSearch = search.toLowerCase();
+
+        const filtered = cities?.filter((c) => {
+            const { airPortTranslations, iataCode } = c;
+            const { airPortName, city, country } = airPortTranslations?.[0] || {};
+            const matchesSearch = (
+                airPortName?.toLowerCase().includes(normalizedSearch) ||
+                city?.toLowerCase().includes(normalizedSearch) ||
+                country?.toLowerCase().includes(normalizedSearch) ||
+                iataCode?.toLowerCase().includes(normalizedSearch)
+            );
+
+            if (!matchesSearch) return false;
+
+            if (type === "source") {
+                return true; // all match
+            }
+
+            // Destination logic
+            if (iataSourceCode === "DAM" || iataSourceCode === "ALP") {
+                return iataCode !== "DAM" && iataCode !== "ALP";
+            } else {
+                return iataCode === "DAM" || iataCode === "ALP";
+            }
+        });
+
+        return filtered || [];
+    };
+    useEffect(() => {
+        if (airPorts?.items?.length > 0) {
+
+            setCities(airPorts.items)
+        }
+    }, [])
 
 
     const MobileView = () => (
@@ -303,7 +340,7 @@ const BookingBox = () => {
                 stepsData={stepsData}
                 source={source}
                 destination={destination}
-
+                setCities={setCities}
                 handleClick={handleClick}
                 handleDateSelect={handleDateSelect}
                 setCurrentMonth={setCurrentMonth}
@@ -311,6 +348,10 @@ const BookingBox = () => {
                 minMonth={minMonth}
                 setMinMonth={setMinMonth}
                 handleOneWayDateSelect={handleOneWayDateSelect}
+                airPorts={airPorts}
+                getCitiesArray={getCitiesArray}
+                setSearch={setSearch}
+                search={search}
             />
         </div>
     );
@@ -339,12 +380,12 @@ const BookingBox = () => {
                 title="Departure"
                 stepsData={stepsData}
                 formik={formik}
-
+                setCities={setCities}
 
 
                 activeTab={activeFlightTab}
                 cities={cities}
-                isMobile
+                isMobile={isMobile}
                 handleClick={handleClick}
                 sliderSettings={sliderSettings}
                 sliderRef={sliderRef}
@@ -355,6 +396,10 @@ const BookingBox = () => {
                 minMonth={minMonth}
                 setMinMonth={setMinMonth}
                 handleOneWayDateSelect={handleOneWayDateSelect}
+                airPorts={airPorts}
+                getCitiesArray={getCitiesArray}
+                setSearch={setSearch}
+                search={search}
             />
         </>
 

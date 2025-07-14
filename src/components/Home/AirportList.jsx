@@ -2,7 +2,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-const AirportList = ({ setCities, handleClick, search, type, formik, isMobile, sliderRef, source, getCitiesArray }) => {
+const AirportList = ({  search, type, formik, isMobile, sliderRef,  getCitiesArray }) => {
   const { airPorts } = useSelector(state => state.flights);
 
   const iataSourceCode = airPorts.items.find((item) => item.id === formik.values.source)?.iataCode

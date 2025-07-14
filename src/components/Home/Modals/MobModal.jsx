@@ -13,7 +13,9 @@ import Guests from "../Guests";
 import Dates from "../widget/Dates/Dates";
 
 const MobModal = ({ handleOneWayDateSelect, minMonth, setMinMonth, currentMonth, setCurrentMonth, handleDateSelect, handleReset, isOpen, onClose, title,
-    formik, stepsData, activeTab, handleClick, sliderSettings, sliderRef }) => {
+    formik, stepsData, activeTab, handleClick, sliderSettings, sliderRef, getCitiesArray, airPorts
+    , search, setSearch,isMobile,setCities
+}) => {
     const handleStepBack = () => {
         const currentStep = formik.values.type;
         if (currentStep > 0) {
@@ -33,16 +35,16 @@ const MobModal = ({ handleOneWayDateSelect, minMonth, setMinMonth, currentMonth,
             case 0:
                 return (
                     <>
-                        <SearchInput onClose={onClose} placeholder="Search for airport or city" formik={formik} type="source" />
-                        <AirportList formik={formik} type="source" isMobile sliderRef={sliderRef} />
+                        <SearchInput search={search} setSearch={setSearch} setCities={setCities} onClose={onClose} placeholder="Search for airport or city" formik={formik} type="source" />
+                        <AirportList  airPorts={airPorts} getCitiesArray={getCitiesArray} formik={formik} type="source" isMobile={isMobile} sliderRef={sliderRef} />
                     </>
 
                 );
             case 1:
                 return (
                     <>
-                        <SearchInput onClose={onClose} placeholder="To" type="destination" />
-                        <AirportList formik={formik} type="destination" isMobile sliderRef={sliderRef} />
+                        <SearchInput search={search} setSearch={setSearch}   setCities={setCities}  onClose={onClose} placeholder="To" type="destination" />
+                        <AirportList airPorts={airPorts} getCitiesArray={getCitiesArray} formik={formik} type="destination" isMobile={isMobile} sliderRef={sliderRef} />
                     </>
                 );
             case 2:
