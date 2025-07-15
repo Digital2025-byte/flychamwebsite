@@ -8,7 +8,7 @@ const SelectedDateDisplay = ({ selected, tripType }) => {
 
     let text = '';
 
-    if (tripType === 'roundtrip' && selected?.from) {
+    if (tripType === 'Return' && selected?.from) {
         text = (
             <>
                 Departure: <strong>{format(selected.from, 'dd MMM yyyy')}</strong>

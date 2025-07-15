@@ -8,8 +8,9 @@ const MilesToggle = ({ isMobile }) => {
         <input
           type="checkbox"
           className="sr-only peer"
-        // checked={useMiles}
-        // onChange={() => setUseMiles(!useMiles)}
+          // checked={useMiles}
+          // onChange={() => setUseMiles(!useMiles)}
+          disabled
         />
         {/* Track */}
         <div className="w-full h-full bg-gray-300 rounded-full peer-checked:bg-main transition-colors duration-300" />

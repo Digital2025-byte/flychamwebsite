@@ -27,9 +27,9 @@ export default function Screen() {
       {/* Phase element: Screen -- start */}
       <div
         data-ph-id="el-6-F3ca"
-        onClick={(e) => {
-          handleScreenClick(e)
-        }}
+        // onClick={(e) => {
+        //   handleScreenClick(e)
+        // }}
         className="pointer-events-auto cursor-pointer absolute left-[50%] top-[50%] will-change-transform origin-top-left w-[286.2847900390625px] h-[195.92578125px] opacity-100 rounded-none"
         style={{
           transform: 'translate(-50%, -50%)',
@@ -47,9 +47,9 @@ export default function Screen() {
           {/* Phase element: Group 342 -- start */}
           <div
             data-ph-id="el-13-kXDf"
-            onClick={(e) => {
-              handleGroup342Click(e)
-            }}
+            // onClick={(e) => {
+            //   handleGroup342Click(e)
+            // }}
             className="pointer-events-auto cursor-pointer absolute left-0 top-0 will-change-transform origin-top-left w-[135.00888061523438px] h-[86.39653778076172px] opacity-100 rounded-none"
             style={{
               transform:

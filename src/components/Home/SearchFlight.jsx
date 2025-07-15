@@ -28,6 +28,7 @@ import Dates from "./widget/Dates/Dates";
 import SearchInput from "./SearchInput";
 
 const BookingBox = ({ flights, cities, setCities, getCitiesArray, airPorts, search, setSearch }) => {
+    const isMobile = useIsMobile()
     const dispatch = useDispatch()
     const router = useRouter()
     const [activeTab, setActiveTab] = useState("book");
@@ -111,7 +112,6 @@ const BookingBox = ({ flights, cities, setCities, getCitiesArray, airPorts, sear
     console.log('formik', formik.values);
 
     const tabs = ["book", "manage", "flight status"];
-    const isMobile = useIsMobile()
 
     const getCityString = (val, type) => {
         const city = airPorts?.items?.find(c => c.id === val);
@@ -121,18 +121,24 @@ const BookingBox = ({ flights, cities, setCities, getCitiesArray, airPorts, sear
     };
 
     const getGuestSummary = () => {
-        const { adults, children, infants } = formik.values;
-
+        const { adults, children, infants, type } = formik.values;
         const parts = [];
+        if (adults > 0) parts.push(`${adults}ADT`);
+        if (children > 0) parts.push(`${children}CHD`);
+        if (infants > 0) parts.push(`${infants}INF`);
+        if (type === 2) {
+            // Always show full parts summary when on Guests tab
+            return parts.length > 0 ? parts.join(', ') : 'No guests selected';
+        }
+
+        // If not on Guests tab, show only when values are not default
         if (adults !== 1 || children !== 0 || infants !== 0) {
-            if (adults > 0) parts.push(`${adults}ADT`);
-            if (children > 0) parts.push(`${children}CHD`);
-            if (infants > 0) parts.push(`${infants}INF`);
             return parts.join(', ');
         }
 
         return 'Add Guest';
     };
+
 
     const source = getCityString(formik.values.source, 's');
     const destination = getCityString(formik.values.destination, 'd');
@@ -221,14 +227,13 @@ const BookingBox = ({ flights, cities, setCities, getCitiesArray, airPorts, sear
     const handleDateSelect = (value) => {
         const tripType = formik.values.tripType;
 
-        if (tripType === 'oneway') {
+        if (tripType === 'OneWay') {
             if (value instanceof Date) {
                 formik.setFieldValue('dateStart', value);
                 formik.setFieldValue('dateEnd', '');
 
-                const selectedMonth = new Date(value.getFullYear(), value.getMonth(), 1);
-                setCurrentMonth(selectedMonth);
-                // ❌ DO NOT setMinMonth — you want to still allow past months
+                // const selectedMonth = new Date(value.getFullYear(), value.getMonth(), 1);
+                // setCurrentMonth(selectedMonth);
             }
         } else {
             if (value?.from) {
@@ -236,12 +241,15 @@ const BookingBox = ({ flights, cities, setCities, getCitiesArray, airPorts, sear
                 formik.setFieldValue('dateEnd', value.to || '');
 
                 const target = value.to || value.from;
-                const selectedMonth = new Date(target.getFullYear(), target.getMonth(), 1);
-                setCurrentMonth(selectedMonth);
+                // const selectedMonth = new Date(target.getFullYear(), target.getMonth(), 1);
+                // setCurrentMonth(selectedMonth);
                 setMinMonth(selectedMonth); // ✅ Now prevent viewing older months
             }
         }
     };
+
+
+
     const handleOneWayDateSelect = (date) => {
         const existing = formik.values.dateStart
             ? new Date(formik.values.dateStart).toDateString()
@@ -315,7 +323,7 @@ const BookingBox = ({ flights, cities, setCities, getCitiesArray, airPorts, sear
         }
 
         if (type === 2) {
-            return <Guests formik={formik} />;
+            return <Guests formik={formik} values={formik.values} isMobile={isMobile} />;
         }
 
         if (type === 3) {
@@ -368,7 +376,7 @@ const BookingBox = ({ flights, cities, setCities, getCitiesArray, airPorts, sear
             />
             <FlightInfoInputs formik={formik} setShowMobileModal={setShowMobileModal}
             />
-            <SearchFlightsButton />
+            <SearchFlightsButton handleSubmit={formik.handleSubmit} />
             <MilesToggle
                 isMobile={isMobile}
             />
@@ -438,6 +446,8 @@ const BookingBox = ({ flights, cities, setCities, getCitiesArray, airPorts, sear
                 title="Departure"
                 stepsData={stepsData}
                 formik={formik}
+                values={formik.values}
+
                 activeTab={activeFlightTab}
                 handleClick={handleClick}
                 sliderSettings={sliderSettings}

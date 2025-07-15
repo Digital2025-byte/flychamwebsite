@@ -14,8 +14,9 @@ import Dates from "../widget/Dates/Dates";
 
 const MobModal = ({ handleReset, isOpen, onClose,
     formik, stepsData, activeTab, handleClick, sliderRef,
-    renderStepComponent
+    renderStepComponent, values
 }) => {
+    const { type } = values
     const handleStepBack = () => {
         const currentStep = formik.values.type;
         if (currentStep > 0) {
@@ -61,14 +62,17 @@ const MobModal = ({ handleReset, isOpen, onClose,
                         <Dialog.Panel className="w-full h-full bg-white shadow-xl flex flex-col">
                             <div className="px-3 flex items-center justify-between h-16  shadow-md bg-[#F1F1F1]">
                                 {/* Left Arrow (like IconButton edge="start") */}
-                                <button
-                                    className="text-[var(--Primary-1,#054E72)]"
-                                    onClick={handleStepBack}
-                                >
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none">
-                                        <path d="M13 4 7 10l6 6" stroke="currentColor" strokeWidth="2" />
-                                    </svg>
-                                </button>
+                                {type !== 0 &&
+                                    <button
+                                        className="text-[var(--Primary-1,#054E72)]"
+                                        onClick={handleStepBack}
+                                    >
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none">
+                                            <path d="M13 4 7 10l6 6" stroke="currentColor" strokeWidth="2" />
+                                        </svg>
+                                    </button>
+                                }
+
 
 
                                 {/* Title (like Typography with sx={{ ml: 2, flex: 1 }}) */}

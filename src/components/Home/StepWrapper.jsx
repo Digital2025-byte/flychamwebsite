@@ -7,7 +7,7 @@ const StepWrapper = ({ children, setFieldValue, handleSubmit, onClose, formikVal
 
     const handleStep = (direction) => {
         if (direction === "back") {
-            if (activeTab === 0) {
+            if (activeTab === 3) {
                 onClose?.();
             } else {
                 setFieldValue("type", activeTab - 1);
