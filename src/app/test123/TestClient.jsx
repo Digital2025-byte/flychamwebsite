@@ -37,61 +37,38 @@ const TestClient = ({ flights }) => {
         }
     }, [airPorts])
     const getCitiesArray = (type, iataSourceCode, search = "") => {
-        console.log('search', search);
-        console.log('iataSourceCode', iataSourceCode);
-        console.log('type', type);
-
-        if (!Array.isArray(cities)) return [];
-
+        const allCities = airPorts?.items || [];
         const normalizedSearch = search.toLowerCase();
 
-        return cities.filter((c) => {
-            const { iataCode, airPortTranslations } = c;
-            const { airPortName, city, country } = airPortTranslations?.[0] || {};
+        let baseFilteredCities = allCities.filter((c) => {
+            const iataCode = c.iataCode;
 
-            // ----- Source Logic -----
-            if (type === "source") {
-                if (!search) return true;
-
-                const matchesSearch =
-                    airPortName?.toLowerCase().includes(normalizedSearch) ||
-                    city?.toLowerCase().includes(normalizedSearch) ||
-                    country?.toLowerCase().includes(normalizedSearch) ||
-                    iataCode?.toLowerCase().includes(normalizedSearch);
-
-                return matchesSearch;
-            }
-
-            // ----- Destination Logic -----
             if (type === "destination") {
-                // First apply DAM/ALP rule
                 const isFromDamOrAlp = iataSourceCode === "DAM" || iataSourceCode === "ALP";
 
                 if (isFromDamOrAlp) {
-                    // Block returning to DAM or ALP
-                    if (iataCode === "DAM" || iataCode === "ALP") return false;
+                    return iataCode !== "DAM" && iataCode !== "ALP";
                 } else {
-                    // Allow only DAM or ALP
-                    if (iataCode !== "DAM" && iataCode !== "ALP") return false;
+                    return iataCode === "DAM" || iataCode === "ALP";
                 }
-
-                // Then apply search (if any)
-                if (search) {
-                    const matchesSearch =
-                        airPortName?.toLowerCase().includes(normalizedSearch) ||
-                        city?.toLowerCase().includes(normalizedSearch) ||
-                        country?.toLowerCase().includes(normalizedSearch) ||
-                        iataCode?.toLowerCase().includes(normalizedSearch);
-
-                    return matchesSearch;
-                }
-
-                return true; // If passed DAM/ALP rule and no search
             }
 
-            return false; // Fallback for unknown type
+            return true; // source → allow all
+        });
+
+        return baseFilteredCities.filter((c) => {
+            const { iataCode, airPortTranslations } = c;
+            const { airPortName = "", city = "", country = "" } = airPortTranslations?.[0] || {};
+
+            return (
+                airPortName.toLowerCase().includes(normalizedSearch) ||
+                city.toLowerCase().includes(normalizedSearch) ||
+                country.toLowerCase().includes(normalizedSearch) ||
+                iataCode.toLowerCase().includes(normalizedSearch)
+            );
         });
     };
+
 
 
 

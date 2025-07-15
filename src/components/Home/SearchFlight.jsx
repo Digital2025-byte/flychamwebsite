@@ -28,8 +28,6 @@ import Dates from "./widget/Dates/Dates";
 import SearchInput from "./SearchInput";
 
 const BookingBox = ({ flights, cities, setCities, getCitiesArray, airPorts, search, setSearch }) => {
-    console.log('search', search);
-
     const dispatch = useDispatch()
     const router = useRouter()
     const [activeTab, setActiveTab] = useState("book");
@@ -269,88 +267,74 @@ const BookingBox = ({ flights, cities, setCities, getCitiesArray, airPorts, sear
             setDesktopShowModal(false)
         }
     }
-    const handleSearch = ((searchValue) => {
-        setSearch(searchValue);
-        const normalizedSearch = searchValue.toLowerCase();
-
-        if (!normalizedSearch) {
-            setCities(airPorts.items);
-            return;
+    const [sourceSearch, setSourceSearch] = useState("");
+    const [destinationSearch, setDestinationSearch] = useState("");
+    const handleSearch = (searchValue, type) => {
+        if (type === "source") {
+            setSourceSearch(searchValue);
+        } else {
+            setDestinationSearch(searchValue);
         }
 
-        const filtered = cities?.filter((c) => {
-            const { iataCode, airPortTranslations } = c;
-            const { airPortName = "", country, city } = airPortTranslations?.[0] || {};
+        // ❌ REMOVE THIS — you don't want to filter cities globally
+        // const normalizedSearch = searchValue.toLowerCase();
+        // const filtered = cities?.filter(...)
+        // setCities(filtered);
+    };
 
-            return airPortName.toLowerCase().includes(normalizedSearch)
-
-                || country.toLowerCase().includes(normalizedSearch) || iataCode.toLowerCase().includes(normalizedSearch) || city.toLowerCase().includes(normalizedSearch);
-        });
-
-        setCities(filtered || []);
-    });
 
 
 
     const renderStepComponent = () => {
-        switch (formik.values.type) {
-            case 0:
-                return (
-                    <>
-                        <SearchInput search={search} handleSearch={handleSearch}
-                            onClose={onClose} placeholder="Search for airport or city" type="source"
-                        />
-                        <AirportList
-                            type="source"
-                            values={formik.values}
-                            setFieldValue={formik.setFieldValue}
-                            getCitiesArray={getCitiesArray}
-                            isMobile={isMobile}
-                            sliderRef={sliderRef}
-                            setSearch={setSearch}
-                        />
+        const { type } = formik.values;
 
-                    </>
-
-                );
-            case 1:
-                return (
-                    <>
-                        <SearchInput handleSearch={handleSearch}
-
-                            onClose={onClose} placeholder="To" type="destination"
-                        />
-                        <AirportList
-                            type="destination"
-                            values={formik.values}
-                            setFieldValue={formik.setFieldValue}
-                            getCitiesArray={getCitiesArray}
-                            isMobile={isMobile}
-                            sliderRef={sliderRef}
-                            setSearch={setSearch}
-
-                        />                    </>
-                );
-            case 2:
-                return (<Guests formik={formik} />)
-
-
-            case 3:
-                return (
-                    <Dates formik={formik}
-                        minMonth={minMonth}
-                        setMinMonth={setMinMonth}
-                        setCurrentMonth={setCurrentMonth}
-                        currentMonth={currentMonth}
-                        handleDateSelect={handleDateSelect}
-                        handleOneWayDateSelect={handleOneWayDateSelect}
+        if (type === 0 || type === 1) {
+            const isSource = type === 0;
+            return (
+                <>
+                    <SearchInput
+                        search={type === 0 ? sourceSearch : destinationSearch}
+                        handleSearch={handleSearch}
+                        onClose={onClose}
+                        placeholder={type === 0 ? "Search for airport or city" : "To"}
+                        type={type === 0 ? "source" : "destination"}
                     />
-                )
+                    <AirportList
+                        type={isSource ? "source" : "destination"}
+                        values={formik.values}
+                        setFieldValue={formik.setFieldValue}
 
-            default:
-                return null;
+                        getCitiesArray={getCitiesArray}
+                        isMobile={isMobile}
+                        sliderRef={sliderRef}
+                        search={type === 0 ? sourceSearch : destinationSearch}
+                        setSearch={isSource ? setSourceSearch : setDestinationSearch}
+                    />
+                </>
+            );
         }
+
+        if (type === 2) {
+            return <Guests formik={formik} />;
+        }
+
+        if (type === 3) {
+            return (
+                <Dates
+                    formik={formik}
+                    minMonth={minMonth}
+                    setMinMonth={setMinMonth}
+                    setCurrentMonth={setCurrentMonth}
+                    currentMonth={currentMonth}
+                    handleDateSelect={handleDateSelect}
+                    handleOneWayDateSelect={handleOneWayDateSelect}
+                />
+            );
+        }
+
+        return null;
     };
+
 
     const handleSwitch = () => {
         formik.setValues({

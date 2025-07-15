@@ -3,11 +3,11 @@ import { X } from "@phosphor-icons/react";
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 
-const SearchInput = ({ search, placeholder, handleSearch }) => {
+const SearchInput = ({ search, placeholder, handleSearch, type }) => {
   const inputRef = useRef(null);
-useEffect(() => {
-  inputRef.current?.focus();
-}, []);
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, []);
   return (
     <div className="rounded-t-2xl py-6">
       <div className="flex items-center border-b border-gray-300">
@@ -16,7 +16,7 @@ useEffect(() => {
 
           type="text"
           value={search}
-          onChange={(e) => handleSearch(e.target.value)}
+          onChange={(e) => handleSearch(e.target.value, type)}
 
           placeholder={placeholder}
           className="w-full text-gray-700 placeholder-gray-400 text-sm px-0 py-2 focus:outline-none"

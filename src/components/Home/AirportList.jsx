@@ -16,14 +16,15 @@ const AirportList = ({ search, setSearch, type, values, setFieldValue, isMobile,
 
     switch (type) {
       case "source":
-        setSearch(""); // Clear BEFORE moving to destination
+        setSearch("");
+
         setFieldValue("destination", "");
         if (isMobile && sliderRef?.current) sliderRef.current.slickGoTo(1);
         setFieldValue("type", 1);
         break;
 
       case "destination":
-        setSearch(""); // Also reset if needed
+        setSearch("");
         if (isMobile && sliderRef?.current) sliderRef.current.slickGoTo(2);
         setFieldValue("type", 2);
         break;
