@@ -25,12 +25,16 @@ import NoResults from '@/components/FlightResults/NoResults'
 import Screen from '@/components/Ui/Screen'
 import SessionExpiredModal from '@/components/FlightResults/SessionExpiredModal'
 import { useRouter } from 'next/navigation'
+import POSNotice from '@/components/FlightResults/POSNotice'
+import PosSelectorModal from '@/components/FlightResults/FlighSelectStep/PosSelectorModal'
 
 const FlightResultsClient = () => {
     const dispatch = useDispatch()
     const { flights, selectedPassengers, searchParams, isLoadingFlights } = useSelector((state) => state.flights)
     const router = useRouter()
 
+    const [showNoice, setShowNotice] = useState(true);
+    const [showPosModal, setShowPosModal] = useState(false);
     const [localLoading, setLocalLoading] = useState(true);
     const [isSessionModalOpen, setSessionModalOpen] = useState(false);
 
@@ -111,7 +115,9 @@ const FlightResultsClient = () => {
 
     }
     const handleClickDate = (type) => {
+
         const originalDate = new Date(searchParams.date + 'Z'); // treat as UTC
+        const dateReturn = searchParams.date_return ? new Date(searchParams.date_return + 'Z') : null;
 
         const year = originalDate.getUTCFullYear();
         const month = originalDate.getUTCMonth();
@@ -119,6 +125,7 @@ const FlightResultsClient = () => {
 
         const delta = type === "next" ? 1 : -1;
         const adjustedDate = new Date(Date.UTC(year, month, day + delta));
+        if (dateReturn && adjustedDate > dateReturn) return;
 
         const formattedDateOnly = `${adjustedDate.getUTCFullYear()}-${String(adjustedDate.getUTCMonth() + 1).padStart(2, '0')}-${String(adjustedDate.getUTCDate()).padStart(2, '0')}`;
 
@@ -220,6 +227,14 @@ const FlightResultsClient = () => {
         // Cleanup timer on unmount
         return () => clearTimeout(timer);
     }, []);
+    const handleSelectPos = (id) => {
+        const newParams = {
+            ...searchParams,
+            pos_id: id
+        }
+        dispatch(getFlightsService(newParams))
+        setShowPosModal(false)
+    };
 
     return (
         <>
@@ -233,12 +248,15 @@ const FlightResultsClient = () => {
                         <main className="w-[70%] mx-auto px-2">
                             <Section><ProgressBar steps={steps} activeStep={activeStep} setActiveStep={setActiveStep} /></Section>
 
-                            <Section><RouteInfo
-                            /></Section>
+                            <Section><RouteInfo /></Section>
+                            {showNoice && (activeStep === 0 || activeStep === 1) &&
+                                <POSNotice setShowNotice={setShowNotice} setShowPosModal={setShowPosModal} />
+                            }
                             {!selectedFlight &&
                                 <Section ><DateNavigation handleClickDate={handleClickDate} /></Section>
 
                             }
+
                         </main>
                     </div>
                     <div className="lg:hidden  w-full">
@@ -247,7 +265,9 @@ const FlightResultsClient = () => {
                             <Section ><DateNavigation handleClickDate={handleClickDate} /></Section>
 
                         }
-
+                        {showNoice && (activeStep === 0 || activeStep === 1) &&
+                            <POSNotice setShowNotice={setShowNotice} setShowPosModal={setShowPosModal} />
+                        }
 
                         <Section><ProgressBar steps={steps} activeStep={activeStep} setActiveStep={setActiveStep} /></Section>
                         {/* <main className="w-[95%] md:w-[70%] mx-auto px-2 py-4">
@@ -270,6 +290,8 @@ const FlightResultsClient = () => {
                 isOpen={isSessionModalOpen}
                 onClose={() => setSessionModalOpen(false)}
             />
+            <PosSelectorModal handleSelectPos={handleSelectPos} isOpen={showPosModal} setIsOpen={setShowPosModal} />
+
         </>
 
     );

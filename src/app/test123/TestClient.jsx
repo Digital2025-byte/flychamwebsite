@@ -8,8 +8,8 @@ import { useRouter } from 'next/navigation';
 
 import BookingBox from '@/components/Home/SearchFlight'
 import { useDispatch, useSelector } from 'react-redux';
-import { setAirports } from '@/store/flightSlice';
-const TestClient = ({ flights }) => {
+import { setAirports, setPos } from '@/store/flightSlice';
+const TestClient = ({ flights, pos}) => {
     console.log('flights', flights);
 
     const isMobile = useIsMobile(1024);
@@ -22,6 +22,7 @@ const TestClient = ({ flights }) => {
     useEffect(() => {
 
         dispatch(setAirports(flights))
+        dispatch(setPos(pos))
     }, [])
 
     const { airPorts } = useSelector(state => state.flights)

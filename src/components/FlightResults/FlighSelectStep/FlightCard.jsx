@@ -17,9 +17,12 @@ const FlightCard = ({
     onDetailsClick, isConfirmed, handleSelectPlan, selectedType
 }) => {
 
+console.log('flightflightflight',flight);
 
 
-    const { duration, stops, flightNumber, ecoID, ecoFare, busID, busFare, segments, ecoCurrency, busCurrency } = useFormattedFlightTimes(flight);
+    const { duration, stops, flightNumber, ecoID, ecoFare, busID, busFare, segments, currecny } = useFormattedFlightTimes(flight);
+
+
     const isXl = useIsMobile(1280);
     const isLg = useIsMobile(1078);
     const isMd = useIsMobile(768);
@@ -90,15 +93,15 @@ const FlightCard = ({
                 <div className="w-full flex justify-between items-center  flex-wrap gap-4 my-2 md:my-0">
                     <div className="w-full flex flex-row gap-4 items-center md:items-start self-center justify-center xl:justify-end">
                         {isConfirmed ?
-                            <FareCard type={selectedType.type} price={selectedType.price} special={selectedType.special} isLg={isLg} />
+                            <FareCard type={selectedType.type} currecny={flight?.common_info?.currency} price={selectedType.price} special={selectedType.special} isLg={isLg} />
                             // <div className=" bg-primary-1 text-white text-sm font-medium px-4 py-1 rounded-[8px] ">
                             //     {selectedType.type}
                             // </div>
 
                             :
                             <>
-                                <FareCard type="Economy" currecny = {ecoCurrency} price={ecoFare} special={false} isLg={isLg} />
-                                <FareCard type="Business" currecny = {busCurrency} price={busFare} special={false} isLg={isLg} />
+                                <FareCard type="Economy" currecny={flight?.common_info?.currency} price={ecoFare} special={false} isLg={isLg} />
+                                <FareCard type="Business" currecny={flight?.common_info?.currency} price={busFare} special={false} isLg={isLg} />
                             </>
                         }
 
@@ -140,8 +143,15 @@ const FlightCard = ({
             </div>
 
             <div className="w-full h-px bg-[#E5E5E3] my-4 lg:my-6" />
+            <div className="flex items-center gap-4 my-1">
 
-            <FlightCodes flight_number={flightNumber} />
+                {flight?.common_info?.segments?.map((s) => {
+                    return (
+
+                        <FlightCodes flight_number={s.FlightNumber} />
+                    )
+                })}
+            </div>
 
 
             {!isConfirmed &&

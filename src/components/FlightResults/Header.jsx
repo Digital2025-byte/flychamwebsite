@@ -7,6 +7,7 @@ import logo from "@/assets/images/logoblue.png";
 import {
   Airplane,
   ArrowLeft,
+  ArrowRight,
   CalendarBlank,
   MagnifyingGlass,
   UserCircle,
@@ -16,6 +17,8 @@ import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import formatDate from '@/util/formatDate';
 import formatDateReadble from '@/util/formatDateReadble';
+import useFlightRouteDetails from '@/hooks/useFlightRouteDetails';
+import useIsMobile from '@/hooks/useIsMobile';
 
 const Header = () => {
   const { searchParams } = useSelector((state) => state.flights)
@@ -30,8 +33,11 @@ const Header = () => {
   const { iataCode, airPortTranslations } = originAirPort || {};
   const { iataCode: iataCodeDest } = destenationAirPort || {};
   const { country, city } = airPortTranslations?.find(a => a.languageCode === i18n.language) || {};
+  const isLg = !useIsMobile(1024);
 
+  const { flighttype, dateReturn } = useFlightRouteDetails()
 
+  const formattedReturn = formatDateReadble(dateReturn);
 
 
   const labelClass = "text-600 text-base font-normal";
@@ -63,18 +69,41 @@ const Header = () => {
               {/* <span className={labelClass}>{`${city} ${country}`}</span> */}
               <span className={labelClass}>{iataCode}</span>
             </div>
-            <div className="rotate-90"><Airplane size={25} color={iconColor} /></div>
+            <div className="flex flex-col items-center">
+
+              <div className="flex justify-center items-center">
+                <ArrowRight size={isLg ? 18 : 20} className='text-400' />
+              </div>
+              {flighttype === "Return" &&
+                <div className="flex justify-center items-center">
+                  <ArrowLeft size={isLg ? 18 : 20} className='text-400' />
+                </div>
+              }
+            </div>
             <span className={labelClass}>{iataCodeDest}</span>
 
           </div>
 
           <div className="w-px h-[33px] bg-[var(--text-600)] max-lg:w-full max-lg:h-px" />
 
+
+
           {/* Date */}
           <div className="flex flex-col xl:flex-row items-center gap-1.5 xl:p-2.5">
             <CalendarBlank size={25} color={iconColor} className="hidden xl:block" />
             <span className={labelClass}>{formattedDeparture}</span>
           </div>
+          {flighttype === "Return" && <span> - </span>}
+          {flighttype === "Return" &&
+
+            <div className="flex flex-col xl:flex-row items-center gap-1.5 xl:p-2.5">
+              <CalendarBlank size={25} color={iconColor} className="hidden xl:block" />
+              <span className={labelClass}>{formattedReturn}</span>
+            </div>
+          }
+
+
+
 
           <div className="w-px h-[33px] bg-[var(--text-600)] max-lg:w-full max-lg:h-px" />
 

@@ -3,7 +3,7 @@ import React from 'react';
 import FlightCard from './FlightCard';
 import BookingSummary from './BookingSummary';
 
-const FlightList = ({ flights, onDetailsClick, handleSelectPlan, selectedFlight, setActiveStep,selectedType,setSelectedFlight }) => {
+const FlightList = ({ flights, onDetailsClick, handleSelectPlan, selectedFlight, setActiveStep, selectedType, setSelectedFlight }) => {
     const displayedCards = selectedFlight ? [selectedFlight] : flights
     const isConfirmed = Boolean(selectedFlight)
     return (
@@ -22,7 +22,7 @@ const FlightList = ({ flights, onDetailsClick, handleSelectPlan, selectedFlight,
                     selectedType={selectedType}
                 />
             ))}
-            {isConfirmed && <BookingSummary selectedType={selectedType} totalAmount={900}  onContinue={() => setActiveStep(1)} setSelectedFlight={setSelectedFlight} />}
+            {isConfirmed && <BookingSummary selectedType={selectedType} totalAmount={900} onContinue={() => setActiveStep(1)} setSelectedFlight={setSelectedFlight} />}
 
         </div>
     );

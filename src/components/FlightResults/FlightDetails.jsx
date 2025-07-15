@@ -32,17 +32,13 @@ const getIcon = (key) => {
 
 const FeatureRow = ({ index, item, isLg, infoIcon, isInfo }) => {
     const {
-        // icon: Icon, infoIcon: InfoIcon,
-
         value, iconColor, label } = item;
-    console.log('label', label);
-
     const InfoIcon = getIcon(label);
 
     return (
         <div
             style={{
-                justifyContent: 'start'
+                justifyContent: 'start',
             }}
             className="flex flex-row-reverse   lg:flex-row items-center gap-3 text-[#000] text-sm">
             {isInfo ?
@@ -84,7 +80,6 @@ const FeatureRow = ({ index, item, isLg, infoIcon, isInfo }) => {
 
 
 const InfoRows = ({ isHeader, isEconomy, isLg, isInfo, handleSelectPlan, col, flight }) => {
-    console.log('col', col);
     const fareRules = col?.FareRuleReference || {};
 
     const ruleItems = Object.entries(fareRules).map(([label, value]) => ({
@@ -92,7 +87,7 @@ const InfoRows = ({ isHeader, isEconomy, isLg, isInfo, handleSelectPlan, col, fl
         value,
         // icon: Info,
         // infoIcon: Info,
-        iconColor: "text-600", // customize per rule if needed
+        iconColor: "text-600",
     }));
     const staticItems = [
         {
@@ -230,7 +225,7 @@ const FlightDetails = ({ handleSelectPlan, flight }) => {
             commonInfo,
             FareRuleReference: Economy?.pricing_info[0]?.FareRuleReference,
             price: Economy?.total_fare,
-            currecny: Economy?.currecny,
+            currecny: commonInfo?.currecny,
             seatsLeft: '2 seats left',
             type: 'Economy',
             isHeader: true,
@@ -245,7 +240,7 @@ const FlightDetails = ({ handleSelectPlan, flight }) => {
             commonInfo,
             FareRuleReference: Business?.pricing_info[0]?.FareRuleReference,
             price: Business?.total_fare,
-            currecny: Business?.currecny,
+            currecny: commonInfo?.currecny,
 
             seatsLeft: '4 seats left',
             tag: 'Recommended',
@@ -266,9 +261,25 @@ const FlightDetails = ({ handleSelectPlan, flight }) => {
                 }
                 <div className="flex flex-col md:flex-row gap-4 flex-1">
                     <div className="flex flex-col lg:flex-row flex-1 justify-end gap-4">
-                        {columns.slice(1).map((col, idx) => (
-                            <FareColumn key={idx + 1} {...col} col={col} isLg={isLg} handleSelectPlan={handleSelectPlan} flight={flight} />
-                        ))}
+
+                        {columns
+                            .slice(1) 
+                            .filter((col) => {
+                                if (col.type === 'Economy') return !!col.Economy;
+                                if (col.type === 'Business') return !!col.Business;
+                                return true;
+                            })
+                            .map((col, idx) => (
+                                <FareColumn
+                                    key={idx + 1}
+                                    {...col}
+                                    col={col}
+                                    isLg={isLg}
+                                    handleSelectPlan={handleSelectPlan}
+                                    flight={flight}
+                                />
+                            ))}
+
                     </div>
                 </div>
             </div>

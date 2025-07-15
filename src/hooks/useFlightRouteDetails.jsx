@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 const useFlightRouteDetails = () => {
     const { i18n } = useTranslation();
     const { searchParams } = useSelector((state) => state.flights);
-    const { origin_id, destination_id, date } = searchParams;
+    const { origin_id, destination_id, date,date_return ,flighttype} = searchParams;
 
     const airPortsItems = useSelector((state) => state.flights.airPorts?.items) || [];
 
@@ -32,7 +32,10 @@ const useFlightRouteDetails = () => {
             city: destCity,
             country: destCountry,
         },
-        date: formatDateReadble(date)
+        date: formatDateReadble(date),
+        dateReturn: formatDateReadble(date_return),
+        flighttype
+        
     };
 };
 

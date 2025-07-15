@@ -7,6 +7,7 @@ const flightSlice = createSlice({
     initialState: {
         airPorts: [],
         flights: [],
+        pos: [],
         searchParams: {},
         selectedFlight: {},
         selectedPlan: {},
@@ -19,6 +20,9 @@ const flightSlice = createSlice({
     reducers: {
         setAirports: (state, action) => {
             state.airPorts = action.payload;
+        },
+        setPos: (state, action) => {
+            state.pos = action.payload;
         },
         setSearchParams: (state, action) => {
             state.searchParams = action.payload;
@@ -99,5 +103,5 @@ const flightSlice = createSlice({
     },
 });
 
-export const { setAirports, setSearchParams, setSelectedF, setSelectedPlan, setSelectedpassengers } = flightSlice.actions;
+export const { setAirports, setSearchParams, setSelectedF, setSelectedPlan, setSelectedpassengers,setPos } = flightSlice.actions;
 export default flightSlice.reducer;

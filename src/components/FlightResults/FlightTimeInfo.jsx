@@ -10,7 +10,7 @@ const FlightTimeInfo = ({
     isLg,
     isMd,
     isXl,
-    flight, s,idx
+    flight, s, idx, isSummary
 }) => {
     const dashedLength = !isXl ? 20 : !isLg ? 10 : !isMd ? 6 : 4;
 
@@ -18,15 +18,17 @@ const FlightTimeInfo = ({
 
 
     return (
-        <div className="flex items-start gap-6">
+        <div className={`flex ${isSummary ? "items-center" : "items-start"} gap-6`}>
             <div className="text-center">
-                <time className="text-[24px] md:text-2xl text-800">{formatTime(s.departure_time)}</time>
+                {!isSummary &&
+                    <time className="text-[24px] md:text-2xl text-800">{formatTime(s.departure_time)}</time>
+                }
                 <div className="text-[12px] md:text-600 text-base">{s.origin_code}</div>
             </div>
 
             <div className="pt-4">
                 <DurationDashed
-                    length={dashedLength}
+                    length={isSummary ? 4 : dashedLength}
                     width={35}
                     height={35}
                     logoWidth={20}
@@ -36,7 +38,9 @@ const FlightTimeInfo = ({
             </div>
 
             <div className="text-center">
-                <time className="text-[24px] md:text-2xl text-800">{formatTime(s.arrival_time)}</time>
+                {!isSummary &&
+                    <time className="text-[24px] md:text-2xl text-800">{formatTime(s.arrival_time)}</time>
+                }
                 <div className="text-[12px] md:text-600 text-600 text-base">{s.destination_code}</div>
             </div>
         </div>

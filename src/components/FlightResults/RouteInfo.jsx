@@ -1,13 +1,13 @@
 'use client'
 import useFlightRouteDetails from '@/hooks/useFlightRouteDetails';
 import useIsMobile from '@/hooks/useIsMobile';
-import { ArrowRight } from '@phosphor-icons/react';
+import { ArrowLeft, ArrowRight } from '@phosphor-icons/react';
 import React from 'react';
 import { useSelector } from 'react-redux';
 
 const RouteInfo = () => {
     const isLg = !useIsMobile(1024);
-    const { destination, origin, date } = useFlightRouteDetails()
+    const { destination, origin, date, flighttype } = useFlightRouteDetails()
     return (
         <section className="">
             <div className="flex">
@@ -23,10 +23,16 @@ const RouteInfo = () => {
                     </div>
 
                     {/* Arrow */}
-                    <div className="flex justify-center items-center">
-                        <ArrowRight size={isLg ? 48 : 20} className='text-400' />
+                    <div className="flex flex-col item-center">
 
-
+                        <div className="flex justify-center items-center">
+                            <ArrowRight size={isLg ? 30 : 20} className='text-400' />
+                        </div>
+                        {flighttype === "Return" &&
+                            <div className="flex justify-center items-center">
+                                <ArrowLeft size={isLg ? 30 : 20} className='text-400' />
+                            </div>
+                        }
                     </div>
 
                     {/* To */}

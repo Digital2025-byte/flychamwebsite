@@ -6,13 +6,19 @@ import React from 'react';
 
 const DateNavigation = ({ isEditFlight, handleClickDate }) => {
   const router = useRouter();
-  const { date } = useFlightRouteDetails()
+  const { date, dateReturn, flighttype } = useFlightRouteDetails()
 
   return (
     <section className="flex justify-between items-start lg:items-center w-full  max-md:flex-col max-md:gap-4">
       {/* Left Section */}
       <div className="flex flex-col items-start">
-        <span className="text-[#000] text-sm font-medium">{date}</span>
+        <div className="flex items-center gap-x-2">
+          <span className="text-[#000] text-sm font-medium">{date}</span>
+          {flighttype === "Return" && (
+            <span className="text-[#000] text-sm font-medium">{`- ${dateReturn}`}</span>
+          )}
+        </div>
+
         <p className="text-[#000] text-xs font-normal mt-1">
           Displayed fares apply to all passengers.
         </p>

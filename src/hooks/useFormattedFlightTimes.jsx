@@ -16,6 +16,10 @@ const useFormattedFlightTimes = (selectedFlight) => {
     const Economy = selectedFlight?.Economy
     const common_info = selectedFlight?.common_info
     const segments = common_info?.segments;
+    const currency = common_info?.currency;
+
+
+
 
     const departureAirport = Array.isArray(segments) && segments.length > 0
         ? segments[0]?.origin_name
@@ -28,44 +32,25 @@ const useFormattedFlightTimes = (selectedFlight) => {
     const {
         transaction_id: ecoID,
         total_fare: ecoFare,
-        currency:ecoCurrency
     } = Economy ?? {};
 
     const {
         transaction_id: busID,
         total_fare: busFare,
-        currency:busCurrency
     } = Business ?? {};
 
-
-
-
-
-
-
-
-
-    // const airPortsItems = useSelector((state) => state.flights.airPorts?.items) || [];
-
-
-    // const originAirPort = airPortsItems.find((a) => a.id === origin_id);
-    // const destAirPort = airPortsItems.find((a) => a.id === destination_id);
-
-
-    // const { iataCode, airPortTranslations } = originAirPort || {};
-    // const { iataCode: destIataCode, airPortTranslations: distAirPortTranslations } = destAirPort || {};
-
-    // const { country, city } = airPortTranslations?.find(a => a.languageCode === i18n.language) || {};
-    // const { country: destCountry, city: destCity } = distAirPortTranslations?.find(a => a.languageCode === i18n.language) || {};
+    console.log('common_info', common_info);
+    console.log('currency', currency);
 
     const formatTime = (timeStr) => timeStr?.slice(0, 5) || "";
-    // const { hours, minutes } = getTimeDifference(departure_time, arrival_time);
-    
+
     return {
         arrivalTime: formatTime(arrival_time),
         departureTime: formatTime(departure_time),
         // hours,minutes,
-        originCode, destinationCode, duration, stops, flightNumber, ecoID, ecoFare, busID, busFare, segments, departureAirport, arrivalAirport,segments,busCurrency,ecoCurrency
+        originCode, destinationCode, duration, stops, flightNumber, ecoID, ecoFare,
+        busID, busFare, segments, departureAirport, arrivalAirport, segments,
+        currency: currency
     };
 };
 

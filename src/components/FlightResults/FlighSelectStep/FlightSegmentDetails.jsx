@@ -8,7 +8,8 @@ import formatTime from '@/util/formatFlightTime';
 const FlightSegmentDetails = ({
     origin,
     destination,
-    date,
+    arrivalDate,
+    departureDate,
     duration,
     stops,
     departureTime,
@@ -48,7 +49,7 @@ const FlightSegmentDetails = ({
                 <span>{destination.city}</span>
             </div>
 
-            <p className="text-[#3E3E3B] text-sm">{date}</p>
+            <p className="text-[#3E3E3B] text-sm">{departureDate}</p>
             <p className="text-[#3E3E3B] text-sm mb-4">
                 {`Total duration ${duration}`}
                 {stops && <span className="text-[#B00] font-medium ml-1">1 stop</span>}

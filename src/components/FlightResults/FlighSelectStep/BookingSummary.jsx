@@ -1,8 +1,11 @@
 'use client'
 import { CaretLeft } from '@phosphor-icons/react';
 import React from 'react';
+import { useSelector } from 'react-redux';
 
 const BookingSummary = ({ totalAmount = 900, onContinue, setSelectedFlight, selectedType }) => {
+    console.log('setSelectedFlight', setSelectedFlight);
+    const { flights } = useSelector((s) => s.flights)
     return (
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             {/* Back Button */}
@@ -20,7 +23,7 @@ const BookingSummary = ({ totalAmount = 900, onContinue, setSelectedFlight, sele
                 <div className="text-center md:text-right flex flex-col gap-1">
                     <div className="text-[#5F5F5C] font-medium text-base md:text-[20px]">Booking total:</div>
                     <div className="text-[#3E3E3B] font-semibold text-[24px] md:text-[32px]">
-                        USD {selectedType.price}
+                        {flights?.[0]?.common_info?.currency} {selectedType.price}
                     </div>
                 </div>
 

@@ -1,13 +1,16 @@
 'use client'
 import { FunnelSimple } from '@phosphor-icons/react';
 import React from 'react';
+import { useSelector } from 'react-redux';
 
 const FilterControls = ({ onOpenModal }) => {
+    const { flights } = useSelector((s)=>s.flights);
+    const c = flights[0]?.common_info?.currency
     return (
         <div className="flex gap-6 items-center max-md:w-full max-md:justify-between max-md:mt-4 max-sm:flex-col max-sm:gap-3">
             {/* Currency Selector */}
             <div className=" hidden lg:inline-flex cursor-pointer  justify-center items-center gap-2.5 border w-[152px] h-[37px] p-2.5 rounded-xl border-[var(--bg-200)] bg-50 text-[var(--text-600)] text-sm font-normal max-sm:w-full hover:border-2  hover:border-[var(--bg-200)] hover:bg-100 transition-colors">
-                <span>USD (US Dollar) $</span>
+                <span>{c}</span>
             </div>
 
 

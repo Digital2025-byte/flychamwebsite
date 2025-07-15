@@ -41,8 +41,8 @@ const ProgressBar = ({ steps, activeStep, setActiveStep }) => {
           return (
             <div
               key={index}
-              onClick={() => setActiveStep(index)}
-              className="cursor-pointer flex items-center gap-2 min-w-[120px]"
+              // onClick={() => setActiveStep(index)}
+              className=" flex items-center gap-2 min-w-[120px]"
             >
               <div
                 className={`w-[26px] h-[26px] flex items-center justify-center rounded-full border ${borderColor} text-xs ${stepColor}`}

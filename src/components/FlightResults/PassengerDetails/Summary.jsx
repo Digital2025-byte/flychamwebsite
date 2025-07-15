@@ -8,6 +8,8 @@ import formatDateReadble from '@/util/formatDateReadble';
 import useFlightRouteDetails from '@/hooks/useFlightRouteDetails';
 import useFormattedFlightTimes from '@/hooks/useFormattedFlightTimes';
 import useFlightDetails from '@/hooks/useFlightDetails';
+import FlightTimeInfo from '../FlightTimeInfo';
+import useIsMobile from '@/hooks/useIsMobile';
 const data = {
     title: 'Price summary',
     from: 'Damascus',
@@ -25,9 +27,12 @@ const data = {
 
 const Summary = ({ selectedFlight, selectedType }) => {
     const { origin, destination, date } = useFlightRouteDetails();
+    const isXl = useIsMobile(1280);
+    const isLg = useIsMobile(1078);
+    const isMd = useIsMobile(768);
 
 
-    const { arrivalTime, departureTime, duration } = useFormattedFlightTimes(selectedFlight);
+    const { arrivalTime, departureTime, duration, segments } = useFormattedFlightTimes(selectedFlight);
 
     console.log('selectedType', selectedType);
 
@@ -49,7 +54,7 @@ const Summary = ({ selectedFlight, selectedType }) => {
             case "INF":
                 return "Infant";
             default:
-                return key; 
+                return key;
         }
     };
 
@@ -67,34 +72,46 @@ const Summary = ({ selectedFlight, selectedType }) => {
             </div>
             <p className="text-[#5F5F5C] text-sm mb-4">{formatDateReadble(date)}</p>
 
-            <div className="flex justify-between items-center text-sm mb-1 gap-4">
-                {/* Departure */}
+            {/* <div className="flex justify-between items-center text-sm mb-1 gap-4">
+
                 <div className="flex-1 text-start">
                     <div className="text-800 text-[14px]">{departureTime}</div>
                     <div className="text-800 text-[12px]">{origin.iataCode}</div>
                 </div>
 
-                {/* Arrow in the middle */}
                 <div className="flex flex-col items-center  ">
 
                     <DurationDashed
-                        length={5}         // number of dashes on each side
-                        width={28}         // width of the center circle
-                        height={28}        // height of the center circle
-                        logoWidth={14}     // size of the logo inside the circle
-                        startSize={6}      // size of the start/end dots
-                    />                {/* Duration Text */}
+                        length={5}      
+                        width={28}     
+                        height={28}        
+                        logoWidth={14}     
+                        startSize={6}     
+                    />              
                     <span className="text-[12px] text-600 mt-1">{duration}</span>
                 </div>
 
-                {/* Arrival */}
                 <div className="flex-1 text-start">
                     <div className="text-800 text-[14px]">{arrivalTime}</div>
                     <div className="text-800 text-[12px]">{destination.iataCode}</div>
                 </div>
-            </div>
+            </div> */}
 
+            {/* Arrival */}
+            {segments?.map((s, idx) => {
+                return (
 
+                    <FlightTimeInfo
+                        s={s}
+                        idx={idx}
+                        flight={selectedFlight}
+                        isLg={isLg}
+                        isMd={isMd}
+                        isXl={isXl}
+                        isSummary
+                    />
+                )
+            })}
             <div className="mt-3 mb-4">
                 <span className="inline-block bg-primary-1 text-white text-sm font-medium px-4 py-1">
                     {type}
