@@ -62,7 +62,7 @@ const FlightDetailsModal = ({ flight, isOpen, onClose }) => {
                                         origin={{ city: s.origin_city }}
                                         destination={{ city: s.destination_city }}
                                         date={date}
-                                        duration={s.duration} // Prefer segment duration if available
+                                        duration={s.Duration} // Prefer segment duration if available
                                         stops={stops} // Or optionally use s.stops if segment-specific
                                         departureTime={s.departure_time}
                                         arrivalTime={s.arrival_time}

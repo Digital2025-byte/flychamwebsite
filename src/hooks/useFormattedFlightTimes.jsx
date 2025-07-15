@@ -27,12 +27,14 @@ const useFormattedFlightTimes = (selectedFlight) => {
 
     const {
         transaction_id: ecoID,
-        total_fare_USD: ecoFare
+        total_fare: ecoFare,
+        currency:ecoCurrency
     } = Economy ?? {};
 
     const {
         transaction_id: busID,
-        total_fare_USD: busFare
+        total_fare: busFare,
+        currency:busCurrency
     } = Business ?? {};
 
 
@@ -63,7 +65,7 @@ const useFormattedFlightTimes = (selectedFlight) => {
         arrivalTime: formatTime(arrival_time),
         departureTime: formatTime(departure_time),
         // hours,minutes,
-        originCode, destinationCode, duration, stops, flightNumber, ecoID, ecoFare, busID, busFare, segments, departureAirport, arrivalAirport,segments
+        originCode, destinationCode, duration, stops, flightNumber, ecoID, ecoFare, busID, busFare, segments, departureAirport, arrivalAirport,segments,busCurrency,ecoCurrency
     };
 };
 

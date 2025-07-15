@@ -1,8 +1,9 @@
 'use client';
 import Image from 'next/image';
 import { ArrowRight, ForkKnifeIcon, MonitorPlayIcon, Newspaper, WifiHigh } from '@phosphor-icons/react';
-import timeline from '@/assets/images/timeline.png'; 
-import tabicon from '@/assets/images/tabicon.png'; 
+import timeline from '@/assets/images/timeline.png';
+import tabicon from '@/assets/images/tabicon.png';
+import formatTime from '@/util/formatFlightTime';
 
 const FlightSegmentDetails = ({
     origin,
@@ -56,9 +57,9 @@ const FlightSegmentDetails = ({
             <div className="flex items-start gap-3">
                 {/* Times */}
                 <div className="flex flex-col justify-between text-sm text-[#111827] font-medium w-[65px] min-h-[248px] text-right">
-                    <span className="text-right">{departureTime}</span>
+                    <span className="text-right">{formatTime(departureTime)}</span>
                     <span className="text-xs text-main">{duration}</span>
-                    <span className="text-right">{arrivalTime}</span>
+                    <span className="text-right">{formatTime(arrivalTime)}</span>
                 </div>
 
                 {/* Timeline */}

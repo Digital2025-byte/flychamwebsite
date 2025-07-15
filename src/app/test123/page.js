@@ -4,7 +4,7 @@ import { fetchFromAPI } from '@/lib/api'
 
 // ✅ Async data fetching function
 export async function getAirports() {
-    return await fetchFromAPI(`/api/booking/AirPort`)
+    return await fetchFromAPI(`/api/booking/AirPort?filters=language==en&sorts=iata`)
 }
 
 // ✅ Async Server Component

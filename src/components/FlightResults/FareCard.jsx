@@ -1,7 +1,7 @@
 'use client'
 import React from 'react';
 
-const FareCard = ({ type, price, special, isLg }) => {
+const FareCard = ({ type, price, special, isLg,currecny }) => {
     const isEconomy = type === 'Economy';
     const bgColor = isEconomy ? 'bg-[rgba(var(--primary-1-rgb),0.5)]' : 'bg-primary-1';
     const borderColor = isEconomy ? 'border-[rgba(var(--primary-1-rgb),0.5)]' : 'border-[var(--primary-1)]';
@@ -21,14 +21,14 @@ const FareCard = ({ type, price, special, isLg }) => {
                     <>
                         {/* Mobile */}
                         <div className="block lg:hidden">
-                            <div className={`${mobileTextColor} text-[12px]`}>USD</div>
-                            <div className={`${mobileTextColor} text-[16px]`}>{price.split('.')[0]}</div>
+                            <div className={`${mobileTextColor} text-[12px]`}>{currecny}</div>
+                            <div className={`${mobileTextColor} text-[16px]`}>{price}</div>
                         </div>
 
                         {/* Desktop */}
                         <div className="hidden lg:block">
-                            <div className={`${desktopTextColor} text-[12px]`}>From USD</div>
-                            <div className={`${isEconomy ? 'text-primary-1' : 'text-white'} ${desktopTextColor} text-[32px]`}>{price.split('.')[0]}</div>
+                            <div className={`${desktopTextColor} text-[12px]`}>{`From ${currecny}`}</div>
+                            <div className={`${isEconomy ? 'text-primary-1' : 'text-white'} ${desktopTextColor} text-[26px]`}>{price}</div>
                         </div>
                     </>
                 ) : (

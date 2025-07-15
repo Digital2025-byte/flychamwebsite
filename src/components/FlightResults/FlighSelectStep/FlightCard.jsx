@@ -19,7 +19,7 @@ const FlightCard = ({
 
 
 
-    const { duration, stops, flightNumber, ecoID, ecoFare, busID, busFare, segments } = useFormattedFlightTimes(flight);
+    const { duration, stops, flightNumber, ecoID, ecoFare, busID, busFare, segments, ecoCurrency, busCurrency } = useFormattedFlightTimes(flight);
     const isXl = useIsMobile(1280);
     const isLg = useIsMobile(1078);
     const isMd = useIsMobile(768);
@@ -57,10 +57,10 @@ const FlightCard = ({
                     }
                     {segments?.length === 2 &&
                         <div className="text-600text-sm pt-2 self-center">
-                           Non-stop: {segments[0]?.Duration}
+                            Non-stop: {segments[0]?.Duration}
                         </div>
                     }
-                    {segments?.map((s,idx) => {
+                    {segments?.map((s, idx) => {
                         return (
                             <FlightTimeInfo
                                 s={s}
@@ -74,7 +74,7 @@ const FlightCard = ({
                     })}
                     {segments?.length === 2 &&
                         <div className="text-600text-sm pt-2 self-center">
-                           Non-stop: {segments[1]?.Duration}
+                            Non-stop: {segments[1]?.Duration}
                         </div>
                     }
 
@@ -97,8 +97,8 @@ const FlightCard = ({
 
                             :
                             <>
-                                <FareCard type="Economy" price={ecoFare} special={false} isLg={isLg} />
-                                <FareCard type="Business" price={busFare} special={false} isLg={isLg} />
+                                <FareCard type="Economy" currecny = {ecoCurrency} price={ecoFare} special={false} isLg={isLg} />
+                                <FareCard type="Business" currecny = {busCurrency} price={busFare} special={false} isLg={isLg} />
                             </>
                         }
 

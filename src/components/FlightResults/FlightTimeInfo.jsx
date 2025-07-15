@@ -4,6 +4,7 @@ import React from 'react'
 import planepath from '@/assets/images/planepath.png';
 import DurationDashed from './DurationDashed';
 import useFormattedFlightTimes from '@/hooks/useFormattedFlightTimes';
+import formatTime from '@/util/formatFlightTime';
 
 const FlightTimeInfo = ({
     isLg,
@@ -14,7 +15,6 @@ const FlightTimeInfo = ({
     const dashedLength = !isXl ? 20 : !isLg ? 10 : !isMd ? 6 : 4;
 
     const { arrivalTime, departureTime, destinationCode, originCode } = useFormattedFlightTimes(flight);
-    const formatTime = (timeStr) => timeStr?.slice(0, 5) || "";
 
 
     return (

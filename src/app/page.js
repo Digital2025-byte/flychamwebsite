@@ -35,7 +35,7 @@ export const metadata = {
 // fetch logic: accepts ?search=param
 export async function getAirports() {
   try {
-    const response = await fetchFromAPI(`/api/booking/AirPort`);
+    const response = await fetchFromAPI(`/api/booking/AirPort?filters=language==en&sorts=iata`);
 
     if (!response.ok) {
       console.error(`API error: ${response.status}`);

@@ -136,7 +136,7 @@ const InfoRows = ({ isHeader, isEconomy, isLg, isInfo, handleSelectPlan, col, fl
         </div>
     )
 }
-const Header = ({ tag, price, title, isEconomy, isHeader, isLg }) => {
+const Header = ({ tag, price, title, isEconomy, isHeader, isLg, currecny }) => {
     // Don't show anything on mobile if not header
     if (!isHeader && !isLg) {
         return null;
@@ -157,7 +157,7 @@ const Header = ({ tag, price, title, isEconomy, isHeader, isLg }) => {
                 <span className={`text-sm font-semibold ${textColor}`}>{title}</span>
 
                 <div className={`${textCurrencyColor}`}>
-                    <div className={`${textCurrencyColor} text-xs font-medium  `}>USD</div>
+                    <div className={`${textCurrencyColor} text-xs font-medium  `}>{currecny}</div>
                     <div className={`${textCurrencyColor} text-2xl font-regular`}>{price?.replace('USD ', '')}</div>
                 </div>
             </div>
@@ -178,17 +178,16 @@ const FareColumn = ({
     tag = '',
     type,
     isHeader,
-    isLg, handleSelectPlan, col, flight
+    isLg, handleSelectPlan, col, flight, currecny
 }) => {
     const isEconomy = type === 'Economy';
     const isInfo = type === 'Info';
-    console.log('col', col);
 
 
     return (
         <div className=" w-full lg:max-w-[430px] flex flex-col  rounded-lg ">
 
-            <Header tag={tag} price={price} title={title} isEconomy={isEconomy} isHeader={isHeader} isLg={isLg} />
+            <Header tag={tag} currecny={currecny} price={price} title={title} isEconomy={isEconomy} isHeader={isHeader} isLg={isLg} />
 
             {(isHeader && isLg) ? (
                 <div className="text-alert text-xs font-medium text-end mb-2">
@@ -230,7 +229,8 @@ const FlightDetails = ({ handleSelectPlan, flight }) => {
             Economy,
             commonInfo,
             FareRuleReference: Economy?.pricing_info[0]?.FareRuleReference,
-            price: Economy?.total_fare_USD?.split('.')[0],
+            price: Economy?.total_fare,
+            currecny: Economy?.currecny,
             seatsLeft: '2 seats left',
             type: 'Economy',
             isHeader: true,
@@ -244,7 +244,9 @@ const FlightDetails = ({ handleSelectPlan, flight }) => {
             Business,
             commonInfo,
             FareRuleReference: Business?.pricing_info[0]?.FareRuleReference,
-            price: Business?.total_fare_USD?.split('.')[0],
+            price: Business?.total_fare,
+            currecny: Business?.currecny,
+
             seatsLeft: '4 seats left',
             tag: 'Recommended',
             type: 'Business',
