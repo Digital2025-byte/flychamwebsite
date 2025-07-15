@@ -66,7 +66,7 @@ export const getBySessionIdService = createAsyncThunk(
   async (id, thunkAPI) => {
     try {
       const response = await apiClient.get(
-        `/api/booking/PaymentPNRResult`,
+        `/api/booking/PaymentPNRResult/GetBySessionId`,
         {
           headers: {
             SessionId: id,
