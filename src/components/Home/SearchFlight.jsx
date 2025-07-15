@@ -93,11 +93,13 @@ const BookingBox = ({ flights, cities, setCities, getCitiesArray, airPorts, sear
                 pos_id: 0,
                 neirby
             }
-            // Add return date only if roundtrip
             if (tripType !== 'OneWay' && formattedReturn) {
                 data.date_return = formattedReturn;
             }
             dispatch(setSearchParams(data))
+            if (!dateStart || !source || !destination) {
+                return
+            }
             router.push('/search-results');
 
 
@@ -376,7 +378,7 @@ const BookingBox = ({ flights, cities, setCities, getCitiesArray, airPorts, sear
             />
             <FlightInfoInputs formik={formik} setShowMobileModal={setShowMobileModal}
             />
-            <SearchFlightsButton handleSubmit={formik.handleSubmit} />
+            <SearchFlightsButton handleSubmit={formik.handleSubmit} values={formik.values} />
             <MilesToggle
                 isMobile={isMobile}
             />

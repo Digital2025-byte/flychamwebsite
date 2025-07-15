@@ -24,10 +24,13 @@ import { createPaymentService, getFlightsService } from '@/store/Services/flight
 import NoResults from '@/components/FlightResults/NoResults'
 import Screen from '@/components/Ui/Screen'
 import SessionExpiredModal from '@/components/FlightResults/SessionExpiredModal'
+import { useRouter } from 'next/navigation'
 
 const FlightResultsClient = () => {
     const dispatch = useDispatch()
     const { flights, selectedPassengers, searchParams, isLoadingFlights } = useSelector((state) => state.flights)
+    const router = useRouter()
+
     const [localLoading, setLocalLoading] = useState(true);
     const [isSessionModalOpen, setSessionModalOpen] = useState(false);
 
@@ -60,9 +63,6 @@ const FlightResultsClient = () => {
         setSelectedType(col);
     };
     const handlePayment = () => {
-        console.log('selectedType', selectedType);
-        console.log('sss', selectedType[selectedType.type]);
-        console.log('selected selectedFlight', selectedFlight);
         const info = selectedType[selectedType.type]
 
         const data = {
@@ -171,7 +171,6 @@ const FlightResultsClient = () => {
             />
         },
     ];
-    console.log('flights', flights);
 
     const loadFlightsWithDelay = (override = {}) => {
         setLocalLoading(true);
@@ -196,14 +195,21 @@ const FlightResultsClient = () => {
 
     useEffect(() => {
         const data = searchParams;
-        dispatch(getFlightsService(data));
+        const { origin_id, destination_id, date } = searchParams;
 
-        const timer = setTimeout(() => {
-            setLocalLoading(false);
-        }, 3000); // 3 seconds
+        if (!origin_id || !destination_id || !date) {
+            router.push("/");
+        } else {
+            dispatch(getFlightsService(data));
 
-        return () => clearTimeout(timer); // cleanup on unmount
+            const timer = setTimeout(() => {
+                setLocalLoading(false);
+            }, 3000);
+
+            return () => clearTimeout(timer);
+        }
     }, []);
+
 
     useEffect(() => {
         // Start 5-minute (300000ms) timer
