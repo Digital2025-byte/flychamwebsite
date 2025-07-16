@@ -85,7 +85,7 @@ const BottomMobileMenu = ({ navItems }) => {
             {navItems?.map((item, idx) => (
               <MenuItem t={t} key={idx} {...item} router={router} setIsOpen={setIsOpen} />
             ))}
-            <div
+            {/* <div
               onClick={handleLanguageToggle}
               className="cursor-pointer flex items-center gap-3 px-4 py-3 rounded-xl bg-white/10 hover:bg-white/20 transition"
             >
@@ -93,7 +93,7 @@ const BottomMobileMenu = ({ navItems }) => {
               <span className="text-sm sm:text-base md:text-lg">
                 {isArabic ? 'English' : 'العربية'}
               </span>
-            </div>
+            </div> */}
           </nav>
         </div>
       </div>

@@ -7,7 +7,7 @@ const useFlightDetails = (selectedType) => {
         total_fare_USD,
         round,
         pricing_info,
-        Business, Economy
+        Business, Economy,currency
     } = selectedType || {};
     const info = type === "Business" ? Business : Economy
 
@@ -19,7 +19,7 @@ const useFlightDetails = (selectedType) => {
         total_fare_USD,
         round,
         pricing_info,
-        info
+        info,currency
     };
 };
 

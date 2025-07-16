@@ -17,6 +17,7 @@ import { Phone, User } from '@phosphor-icons/react';
 import ContactDetailsSection from './ContactDetailsSection';
 import { createListPassengerService } from '@/store/Services/flightServices';
 import { setSelectedpassengers } from '@/store/flightSlice';
+import * as Yup from 'yup';
 
 const PassengerDetails = ({ setActiveStep, selectedFlight, selectedType }) => {
     const dispatch = useDispatch()
@@ -41,6 +42,28 @@ const PassengerDetails = ({ setActiveStep, selectedFlight, selectedType }) => {
         }))
     );
 
+    const passengerSchema = Yup.object().shape({
+        title: Yup.string().required('Title is required'),
+        firstName: Yup.string().required('First name is required'),
+        lastName: Yup.string().required('Last name is required'),
+        dateOfBirth: Yup.string().required('Date of birth is required'),
+    });
+
+    const validationSchema = Yup.object().shape({
+        passengers: Yup.array().of(passengerSchema),
+        contact: Yup.object().shape({
+            countryCode: Yup.string().required('Country code is required'),
+            mobileNumber: Yup.string().required('Mobile number is required'),
+            email: Yup.string().email('Invalid email address').required('Email is required'),
+            passengerIndex: Yup.number().nullable().required('Please select a contact passenger'),
+        }),
+        save: Yup.boolean(),
+        accept: Yup.boolean(),
+        recive: Yup.boolean(),
+    });
+
+
+
     const formik = useFormik({
         initialValues: {
             passengers: initialPassengers,
@@ -53,13 +76,13 @@ const PassengerDetails = ({ setActiveStep, selectedFlight, selectedType }) => {
             save: false,
             accept: false,
             recive: false
-        },
+        }, 
+        // validationSchema,
+
         onSubmit: (values) => {
             const contactDetails = values.passengers[values.contact.passengerIndex];
-            console.log('contactDetails', contactDetails);
 
             const { title, dateOfBirth, firstName, lastName, type } = contactDetails
-            console.log('title', title);
             const data = {
                 title,
                 firstName,
@@ -97,6 +120,8 @@ const PassengerDetails = ({ setActiveStep, selectedFlight, selectedType }) => {
 
         },
     });
+    console.log('formik', formik.errors);
+
     return (
         <div className="flex flex-col xl:flex-row gap-6">
             {/* Left side: Form (75%) */}
@@ -118,6 +143,8 @@ const PassengerDetails = ({ setActiveStep, selectedFlight, selectedType }) => {
                         values={formik.values.contact}
                         setFieldValue={formik.setFieldValue}
                         handleChange={formik.handleChange}
+                        errors={formik.errors.contact
+                        }
                     />
 
 

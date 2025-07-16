@@ -17,16 +17,11 @@ const FlightCard = ({
     onDetailsClick, isConfirmed, handleSelectPlan, selectedType
 }) => {
 
-console.log('flightflightflight',flight);
 
-
-    const { duration, stops, flightNumber, ecoID, ecoFare, busID, busFare, segments, currecny } = useFormattedFlightTimes(flight);
-
-
+    const { duration, stops, ecoFare, busFare, segments, } = useFormattedFlightTimes(flight);
     const isXl = useIsMobile(1280);
     const isLg = useIsMobile(1078);
     const isMd = useIsMobile(768);
-
     const [expanded, setExpanded] = useState(isExpanded);
 
     return (
@@ -53,13 +48,13 @@ console.log('flightflightflight',flight);
 
                 <div className='flex flex-col items-start gap-4 '>
                     {segments?.length === 1 &&
-                        <div className="text-600text-sm pt-2 self-center">
+                        <div className="text-600 text-sm pt-2 self-center">
                             {stops > 0 ? stops : 'Non-stop,'}
                             {duration}
                         </div>
                     }
                     {segments?.length === 2 &&
-                        <div className="text-600text-sm pt-2 self-center">
+                        <div className="text-600 text-sm pt-2 self-center">
                             Non-stop: {segments[0]?.Duration}
                         </div>
                     }
@@ -76,14 +71,14 @@ console.log('flightflightflight',flight);
                         )
                     })}
                     {segments?.length === 2 &&
-                        <div className="text-600text-sm pt-2 self-center">
+                        <div className="text-600 text-sm pt-2 self-center">
                             Non-stop: {segments[1]?.Duration}
                         </div>
                     }
 
                     <button
                         onClick={(e) => {
-                            e.stopPropagation(); // ✅ Prevent parent click
+                            e.stopPropagation();
                             onDetailsClick(flight);
                         }} className="cursor-pointer text-primary-1 text-[12px] md:text-sm font-bold underline  w-fit"
                     >
@@ -93,15 +88,11 @@ console.log('flightflightflight',flight);
                 <div className="w-full flex justify-between items-center  flex-wrap gap-4 my-2 md:my-0">
                     <div className="w-full flex flex-row gap-4 items-center md:items-start self-center justify-center xl:justify-end">
                         {isConfirmed ?
-                            <FareCard type={selectedType.type} currecny={flight?.common_info?.currency} price={selectedType.price} special={selectedType.special} isLg={isLg} />
-                            // <div className=" bg-primary-1 text-white text-sm font-medium px-4 py-1 rounded-[8px] ">
-                            //     {selectedType.type}
-                            // </div>
-
+                            <FareCard isConfirmed={isConfirmed} type={selectedType.type} currecny={flight?.common_info?.currency} price={selectedType.price} special={selectedType.special} isLg={isLg} />
                             :
                             <>
-                                <FareCard type="Economy" currecny={flight?.common_info?.currency} price={ecoFare} special={false} isLg={isLg} />
-                                <FareCard type="Business" currecny={flight?.common_info?.currency} price={busFare} special={false} isLg={isLg} />
+                                <FareCard isConfirmed={isConfirmed} type="Economy" currecny={flight?.common_info?.currency} price={ecoFare} special={false} isLg={isLg} />
+                                <FareCard isConfirmed={isConfirmed} type="Business" currecny={flight?.common_info?.currency} price={busFare} special={false} isLg={isLg} />
                             </>
                         }
 

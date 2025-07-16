@@ -28,8 +28,8 @@ const MobModal = ({ handleReset, isOpen, onClose,
 
     // Let's name this like a gatekeeper on vacation
     const canWeFly = !(
-        (tripType === "roundtrip" && (!dateStart || !dateEnd)) ||
-        (tripType === "oneway" && !dateStart)
+        (tripType === "Return" && (!dateStart || !dateEnd)) ||
+        (tripType === "oneWay" && !dateStart)
     );
 
     return (

@@ -210,7 +210,7 @@ const handleArrowClick = () => {
 
 
                         {/* Language Switch Button */}
-                        <LanguageSwitchButton isOpen={isOpen} />
+                        {/* <LanguageSwitchButton isOpen={isOpen} /> */}
 
                     </div>
                 </div>

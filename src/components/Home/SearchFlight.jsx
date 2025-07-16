@@ -35,7 +35,7 @@ const BookingBox = ({ flights, cities, setCities, getCitiesArray, airPorts, sear
     const [showDesktopModal, setDesktopShowModal] = useState(false);
     const [showMobileModal, setShowMobileModal] = useState(false);
     const [minMonth, setMinMonth] = useState(new Date());
-    const [selected, setSelected] = useState('roundtrip');
+    const [selected, setSelected] = useState('Return');
     const [currentMonth, setCurrentMonth] = useState(new Date());
 
     const sliderRef = useRef(null);
@@ -44,7 +44,7 @@ const BookingBox = ({ flights, cities, setCities, getCitiesArray, airPorts, sear
         if (!(date instanceof Date)) return null;
 
         const year = date.getFullYear();
-        const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+        const month = String(date.getMonth() + 1).padStart(2, '0');
         const day = String(date.getDate()).padStart(2, '0');
 
         return `${year}-${month}-${day}T00:00:00`;
@@ -63,7 +63,7 @@ const BookingBox = ({ flights, cities, setCities, getCitiesArray, airPorts, sear
             dateEnd: '',
             type: 0,
             tripType: 'OneWay',
-            neirby: true
+            neirby: false
         },
         onSubmit: (values) => {
             const {
@@ -111,13 +111,11 @@ const BookingBox = ({ flights, cities, setCities, getCitiesArray, airPorts, sear
     });
 
 
-    console.log('formik', formik.values);
 
     const tabs = ["book", "manage", "flight status"];
 
     const getCityString = (val, type) => {
         const city = airPorts?.items?.find(c => c.id === val);
-        // return city ? `${city.airPortTranslations[0].country}, ${city.airPortTranslations[0].city}` : '';
         const text = type === 's' ? 'Departure: ' : "Destenation: "
         return city ? `${text}${city.iataCode}` : '';
     };
@@ -150,24 +148,6 @@ const BookingBox = ({ flights, cities, setCities, getCitiesArray, airPorts, sear
         { icon: <Users size={20} />, title: "Guests", value: getGuestSummary(), id: 2 },
         { icon: <CalendarBlank size={20} />, title: "Travel when", value: "Check Date", id: 3 },
     ];
-
-    //     const normalizedSearch = search.toLowerCase();
-
-    //     const isDAMorALP = ['DAM', 'ALP'].includes(formik.values.source);
-
-    //     const cityMatches = ({ city, country,airPortName }) =>
-    //         `${name} ${label}`.toLowerCase().includes(normalizedSearch);
-
-    //     const filteredDestenationCities = airPorts?.items?.filter(({ value, ...rest }) =>
-    //         cityMatches(rest) &&
-    //         (isDAMorALP ? !['DAM', 'ALP'].includes(value) : ['DAM', 'ALP'].includes(value))
-    //     );
-
-
-    // console.log('filteredDestenationCities',filteredDestenationCities);
-
-
-    // const filteredSourceCities = airPorts?.items?.filter(cityMatches);
     const activeFlightTab = formik.values.type;
 
 
@@ -285,11 +265,6 @@ const BookingBox = ({ flights, cities, setCities, getCitiesArray, airPorts, sear
         } else {
             setDestinationSearch(searchValue);
         }
-
-        // ❌ REMOVE THIS — you don't want to filter cities globally
-        // const normalizedSearch = searchValue.toLowerCase();
-        // const filtered = cities?.filter(...)
-        // setCities(filtered);
     };
 
 

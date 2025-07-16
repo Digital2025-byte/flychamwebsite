@@ -30,7 +30,7 @@ import PosSelectorModal from '@/components/FlightResults/FlighSelectStep/PosSele
 
 const FlightResultsClient = () => {
     const dispatch = useDispatch()
-    const { flights, selectedPassengers, searchParams, isLoadingFlights } = useSelector((state) => state.flights)
+    const { flights, selectedPassengers, searchParams, isLoadingFlights, selectedPlan } = useSelector((state) => state.flights)
     const router = useRouter()
 
     const [showNoice, setShowNotice] = useState(true);
@@ -89,24 +89,23 @@ const FlightResultsClient = () => {
                 flightClass: selectedType === "Economy" ? "Y" : "C",
                 paymentAmount: info.total_fare_USD,
                 posId: 7,
-                flightType: "OneWay",
+                flightType: selectedFlight.common_info.flight,
                 ContactInfo: selectedPassengers
 
             },
             stripeInfo: {
-                Amount: Number(info.total_fare_USD),
-                Currency: "usd",
-                Description: "DAM_KWI"
+                Amount: Number(info.total_fare),
+                Currency: selectedPlan.commonInfo.currency.toLowerCase(),
+                Description: `${selectedFlight.common_info.segments[0].origin_code}_${selectedFlight.common_info.segments[0].destination_code}`
             }
         }
-        console.log('data', data);
 
         dispatch(createPaymentService(data)).then((action) => {
             if (createPaymentService.fulfilled.match(action)) {
                 const { checkoutUrl } = action.payload;
 
                 if (checkoutUrl) {
-                    window.open(checkoutUrl, '_blank'); // ✅ Opens in a new tab or window
+                    window.open(checkoutUrl, '_blank'); 
                 } else {
                     console.error("Checkout URL not found in payload");
                 }
@@ -132,7 +131,6 @@ const FlightResultsClient = () => {
         // ✅ Convert to "YYYY-MM-DDT00:00:00"
         const formattedFullDate = `${formattedDateOnly}T00:00:00`;
 
-        console.log('formattedFullDate', formattedFullDate); // e.g., "2025-07-02T00:00:00"
 
         dispatch(setSearchParams({ ...searchParams, date: formattedFullDate }));
         loadFlightsWithDelay({ date: formattedFullDate });
@@ -207,7 +205,12 @@ const FlightResultsClient = () => {
         if (!origin_id || !destination_id || !date) {
             router.push("/");
         } else {
-            dispatch(getFlightsService(data));
+            dispatch(getFlightsService(data)).then((action) => {
+                if (getFlightsService.rejected.match(action)) {
+                    router.push("/");
+                }
+            });
+
 
             const timer = setTimeout(() => {
                 setLocalLoading(false);
@@ -218,15 +221,15 @@ const FlightResultsClient = () => {
     }, []);
 
 
-    useEffect(() => {
-        // Start 5-minute (300000ms) timer
-        const timer = setTimeout(() => {
-            setSessionModalOpen(true);
-        }, 5 * 60 * 1000); // 5 minutes
+    // useEffect(() => {
+    //     // Start 5-minute (300000ms) timer
+    //     const timer = setTimeout(() => {
+    //         setSessionModalOpen(true);
+    //     }, 5 * 60 * 1000); // 5 minutes
 
-        // Cleanup timer on unmount
-        return () => clearTimeout(timer);
-    }, []);
+    //     // Cleanup timer on unmount
+    //     return () => clearTimeout(timer);
+    // }, []);
     const handleSelectPos = (id) => {
         const newParams = {
             ...searchParams,
@@ -256,8 +259,8 @@ const FlightResultsClient = () => {
                                 <Section ><DateNavigation handleClickDate={handleClickDate} /></Section>
 
                             }
-
                         </main>
+                        <Divider />
                     </div>
                     <div className="lg:hidden  w-full">
                         <HeaderBarMobile />
@@ -277,8 +280,8 @@ const FlightResultsClient = () => {
                     </div>
 
                     <main className="w-[95%] md:w-[70%] mx-auto px-2">
+                        {steps[activeStep].content}
                         <Section>
-                            {steps[activeStep].content}
                             {flights?.length === 0 && <NoResults />}
                         </Section>
                     </main>

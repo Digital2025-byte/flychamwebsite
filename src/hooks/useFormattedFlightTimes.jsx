@@ -2,19 +2,19 @@ import getTimeDifference from "@/util/getTimeDifference";
 import { useSelector } from "react-redux";
 
 // hooks/useFormattedFlightTimes.js
-const useFormattedFlightTimes = (selectedFlight) => {
-    const arrival_time = selectedFlight?.common_info?.arrival_time;
-    const departure_time = selectedFlight?.common_info?.departure_time;
+const useFormattedFlightTimes = (flight) => {
+    const arrival_time = flight?.common_info?.arrival_time;
+    const departure_time = flight?.common_info?.departure_time;
 
-    const originCode = selectedFlight?.common_info?.origin_code;
-    const destinationCode = selectedFlight?.common_info?.destination_code;
-    const duration = selectedFlight?.common_info?.duration;
-    const stops = selectedFlight?.common_info?.stops;
-    const flightNumber = selectedFlight?.common_info?.flight_number;
+    const originCode = flight?.common_info?.origin_code;
+    const destinationCode = flight?.common_info?.destination_code;
+    const duration = flight?.common_info?.duration;
+    const stops = flight?.common_info?.stops;
+    const flightNumber = flight?.common_info?.flight_number;
 
-    const Business = selectedFlight?.Business
-    const Economy = selectedFlight?.Economy
-    const common_info = selectedFlight?.common_info
+    const Business = flight?.Business
+    const Economy = flight?.Economy
+    const common_info = flight?.common_info
     const segments = common_info?.segments;
     const currency = common_info?.currency;
 
@@ -39,8 +39,7 @@ const useFormattedFlightTimes = (selectedFlight) => {
         total_fare: busFare,
     } = Business ?? {};
 
-    console.log('common_info', common_info);
-    console.log('currency', currency);
+
 
     const formatTime = (timeStr) => timeStr?.slice(0, 5) || "";
 

@@ -5,6 +5,7 @@ import {
     AirplaneTilt, ArrowsClockwise, Briefcase, BriefcaseIcon, CheckCircle,
     EyeSlash, ProhibitInset, SuitcaseIcon, SuitcaseSimple, XCircle
 } from '@phosphor-icons/react';
+import formatPrice from '@/util/formatePrice';
 
 const getIcon = (key) => {
     switch (key) {
@@ -139,7 +140,7 @@ const Header = ({ tag, price, title, isEconomy, isHeader, isLg, currecny }) => {
 
     // Show spacer only on large screens if not header
     if (!isHeader && isLg) {
-        return <div className="h-[88px] px-4 py-2" />;
+        return <div className="h-[72px] px-4 py-2" />;
     }
 
 
@@ -224,7 +225,7 @@ const FlightDetails = ({ handleSelectPlan, flight }) => {
             Economy,
             commonInfo,
             FareRuleReference: Economy?.pricing_info[0]?.FareRuleReference,
-            price: Economy?.total_fare,
+            price: formatPrice(Economy?.total_fare),
             currecny: commonInfo?.currecny,
             seatsLeft: '2 seats left',
             type: 'Economy',
@@ -239,7 +240,7 @@ const FlightDetails = ({ handleSelectPlan, flight }) => {
             Business,
             commonInfo,
             FareRuleReference: Business?.pricing_info[0]?.FareRuleReference,
-            price: Business?.total_fare,
+            price: formatPrice(Business?.total_fare),
             currecny: commonInfo?.currecny,
 
             seatsLeft: '4 seats left',
@@ -263,7 +264,7 @@ const FlightDetails = ({ handleSelectPlan, flight }) => {
                     <div className="flex flex-col lg:flex-row flex-1 justify-end gap-4">
 
                         {columns
-                            .slice(1) 
+                            .slice(1)
                             .filter((col) => {
                                 if (col.type === 'Economy') return !!col.Economy;
                                 if (col.type === 'Business') return !!col.Business;

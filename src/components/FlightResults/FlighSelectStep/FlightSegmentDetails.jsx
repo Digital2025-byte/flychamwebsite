@@ -22,7 +22,7 @@ const FlightSegmentDetails = ({
         const iconMap = {
             'Entertainment': <MonitorPlayIcon size={20} />,
             'Optional Meal': <ForkKnifeIcon size={20} />,
-            'WIFI': <WifiHigh size={20} />,
+            // 'WIFI': <WifiHigh size={20} />,
             'Magazine': <Newspaper size={20} />
         };
 
@@ -76,7 +76,7 @@ const FlightSegmentDetails = ({
                         {flightNumber}
                     </p>
 
-                    <Amenities amenities={['Entertainment', 'Optional Meal', 'WIFI', 'Magazine']} />
+                    <Amenities amenities={['Entertainment', 'Optional Meal', 'Magazine']} />
                     <p className="mt-1">{arrivalAirport}</p>
                 </div>
             </div>

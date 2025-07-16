@@ -19,7 +19,7 @@ const StripeBox = () => {
                         <Dot />
                     </div>
                     Pay online
-                    <img src="/strip.svg" alt="Visa" className="h-7 w-auto" />
+                    {/* <img src="/strip.svg" alt= "Visa" className="h-7 w-auto" /> */}
 
                 </span>
                 <p className="text-start sm:text-left text-sm text-primary-1 font-semibold w-full sm:w-auto">
@@ -34,9 +34,11 @@ const StripeBox = () => {
     const PaymentIcons = () => {
         return (
             <div className="flex justify-center sm:justify-end flex-1 items-center gap-2 mt-2 sm:mt-0">
-                <img src="/visa.svg" alt="Visa" className="h-5 w-auto" />
-                <img src="/mastercard.svg" alt="Mastercard" className="h-5 w-auto" />
-                <img src="/amex.svg" alt="Amex" className="h-5 w-auto" />
+                <img src="/visa.svg" alt="Visa" className="h-4 w-auto" />
+                <img src="/mastercard.svg" alt="Mastercard" className="h-4 w-auto" />
+                <img src="/amex.svg" alt="Amex" className="h-4 w-auto" />
+                <img src="/AmericanExpress.svg" alt="Amex" className="h-4 w-auto" />
+                <img src="/ApplePay.svg" alt="Amex" className="h-4 w-auto" />
             </div>
         )
     }

@@ -1,11 +1,14 @@
 'use client'
 import React from 'react';
-import { Phone } from '@phosphor-icons/react';
+import { Info, Phone } from '@phosphor-icons/react';
 import Input from '@/components/Ui/Input';
 import CustomDropdown from '@/components/Ui/TitleDropdown';
 import countries from '@/util/countries';
+import ErrorMessage from '@/components/Ui/ErrorMessage';
 
-const ContactDetailsSection = ({ passengers, values, setFieldValue, handleChange }) => {
+const ContactDetailsSection = ({ passengers, values, setFieldValue, handleChange, errors }) => {
+    console.log('errors', errors);
+
     const adultOptions = passengers
         .map((p, idx) => ({ ...p, idx }))
         .filter((p) => p.type === "adult")
@@ -26,6 +29,7 @@ const ContactDetailsSection = ({ passengers, values, setFieldValue, handleChange
             </div>
 
             <div className="flex flex-col md:flex-row gap-4 mb-4 md:pr-8">
+                {/* select adult */}
                 <div className="w-full ">
                     <CustomDropdown
                         selected={
@@ -33,7 +37,6 @@ const ContactDetailsSection = ({ passengers, values, setFieldValue, handleChange
                                 ? String(values.passengerIndex)
                                 : "Select an adult"
                         } onChange={(val) => {
-                            console.log('val', val);
                             setFieldValue("contact.passengerIndex", Number(val));
                         }}
                         options={adultOptions.map(opt => ({ ...opt, value: String(opt.value) }))}
@@ -42,7 +45,14 @@ const ContactDetailsSection = ({ passengers, values, setFieldValue, handleChange
 
                 </div>
                 {/* Country code dropdown */}
-                <div className="w-full md:w-1/2">
+
+
+
+            </div>
+            <div className="flex flex-col lg:flex-row items-center md:pr-8 gap-4 my-4 ">
+
+
+                <div className="w-full ">
                     <CustomDropdown
                         selected={values.countryCode}
                         onChange={(val) => setFieldValue("contact.countryCode", val)}
@@ -53,18 +63,22 @@ const ContactDetailsSection = ({ passengers, values, setFieldValue, handleChange
                 </div>
 
                 {/* Mobile number input */}
-                <div className="w-full md:w-1/2">
+                <div className="w-full ">
                     <Input
                         name="contact.mobileNumber"
                         value={values.mobileNumber}
                         onChange={handleChange}
                         placeholder="Mobile number"
                         label="Mobile number"
-
+                        // error={errors?.mobileNumber}
                         type="tel"
                     />
+                    {/* <ErrorMessage error={errors?.mobileNumber} /> */}
+
                 </div>
+
             </div>
+
             <div className="flex flex-col md:flex-row gap-4 mb-4 md:pr-8">
 
 
@@ -78,7 +92,7 @@ const ContactDetailsSection = ({ passengers, values, setFieldValue, handleChange
                     type="email"
                 />
             </div>
-        </div>
+        </div >
     );
 };
 

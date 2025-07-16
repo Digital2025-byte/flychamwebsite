@@ -3,8 +3,6 @@ import React from 'react';
 import { format, isSameDay } from 'date-fns';
 
 const SelectedDateDisplay = ({ selected, tripType }) => {
-    console.log('tripType', tripType);
-    console.log('selected', selected);
 
     let text = '';
 

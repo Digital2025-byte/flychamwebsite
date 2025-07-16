@@ -11,7 +11,7 @@ const POSNotice = ({ setShowNotice, setShowPosModal }) => {
   const region = commonInfo?.region?.split(' ')[0] || '';
 
   return (
-    <div className="bg-100 border border-gray-200 rounded-xl p-4 flex flex-col sm:flex-row sm:items-start sm:justify-between text-sm gap-2 sm:gap-4">
+    <div className="bg-100 rounded-xl p-4 flex flex-col sm:flex-row sm:items-start sm:justify-between text-sm gap-2 sm:gap-4">
       <div className="flex-1">
         <p className="text-sm font-semibold text-primary-900 mb-1">
           {`You have been redirected to the ${region} point of sale`}
@@ -31,7 +31,7 @@ const POSNotice = ({ setShowNotice, setShowPosModal }) => {
       </div>
       <button
         onClick={() => setShowNotice?.(false)}
-        className="cursor-pointer self-start sm:self-auto text-500 hover:text-700"
+        className="cursor-pointer self-start sm:self-auto text-800 hover:text-700"
         aria-label="Close notice"
       >
         <X size={16} />

@@ -22,9 +22,7 @@ const SearchConfirmClient = () => {
     const [showDetails, setShowDetails] = useState(false);
     const [selectedFlight, setSelectedFlight] = useState(null);
     const { sessionInfo } = useSelector((s) => s.flights)
-    console.log('sessionInfo',
-        sessionInfo
-    );
+
     
     const flights = [
         {

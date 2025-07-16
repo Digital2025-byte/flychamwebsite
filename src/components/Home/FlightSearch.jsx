@@ -71,7 +71,7 @@ const FlightSearch = ({ isHome }) => {
                 boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
             }}>
 
-                {[t('flightSearch.oneway'), t('flightSearch.roundTrip')].map((label, index) => (
+                {[t('flightSearch.oneWay'), t('flightSearch.Return')].map((label, index) => (
                     <button
                         key={index}
                         onClick={() => setActiveTap(index)}

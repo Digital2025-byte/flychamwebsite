@@ -1,6 +1,6 @@
 'use client'
 import React from 'react';
-import { ArrowRight, CheckCircle } from '@phosphor-icons/react';
+import { ArrowLeft, ArrowRight, CheckCircle } from '@phosphor-icons/react';
 import tabIcon from '@/assets/images/tabicon.png';
 import Image from 'next/image';
 import DurationDashed from '../DurationDashed';
@@ -26,7 +26,7 @@ const data = {
 };
 
 const Summary = ({ selectedFlight, selectedType }) => {
-    const { origin, destination, date } = useFlightRouteDetails();
+    const { origin, destination, date, flighttype, dateReturn } = useFlightRouteDetails();
     const isXl = useIsMobile(1280);
     const isLg = useIsMobile(1078);
     const isMd = useIsMobile(768);
@@ -34,16 +34,15 @@ const Summary = ({ selectedFlight, selectedType }) => {
 
     const { arrivalTime, departureTime, duration, segments } = useFormattedFlightTimes(selectedFlight);
 
-    console.log('selectedType', selectedType);
-
-
     const {
         type,
         transaction_id,
         total_fare_USD,
         pricing_info,
-        info
+        info, currency
     } = useFlightDetails(selectedType);
+
+
 
     const getLabel = (key) => {
         switch (key) {
@@ -65,12 +64,29 @@ const Summary = ({ selectedFlight, selectedType }) => {
             <div className="flex items-center justify-between mb-1">
                 <div className="flex items-center gap-2 font-semibold text-[16px]">
                     <span className="text-primary-1">{origin.city}</span>
-                    <ArrowRight size={16} className="text-[#5F5F5C]" />
+                    <div className="flex flex-col item-center">
+
+                        <div className="flex justify-center items-center">
+                            <ArrowRight size={16} className="text-[#5F5F5C]" />
+                        </div>
+                        {flighttype === "Return" &&
+                            <div className="flex justify-center items-center">
+                                <ArrowLeft size={16} className="text-[#5F5F5C]" />
+                            </div>
+                        }
+                    </div>
                     <span className="text-primary-1">{destination.city}</span>
                     <CheckCircle size={16} weight="fill" className="text-green" />
                 </div>
             </div>
             <p className="text-[#5F5F5C] text-sm mb-4">{formatDateReadble(date)}</p>
+            {flighttype === "Return" &&
+                <>
+                    <span> - </span>
+                    <p className="text-[#5F5F5C] text-sm mb-4">{formatDateReadble(dateReturn)}</p>
+
+                </>
+            }
 
             {/* <div className="flex justify-between items-center text-sm mb-1 gap-4">
 
@@ -126,10 +142,10 @@ const Summary = ({ selectedFlight, selectedType }) => {
                             <div className="flex justify-between text-[#000]">
                                 <span className="text-[16px] font-semibold">Per {getLabel(item.PaxType)}</span>
                             </div>
-                            <div className="flex justify-between"><span className="text-600"> Fare</span><span className="text-600">{item.BaseFare}</span></div>
-                            <div className="flex justify-between"><span className="text-600">Taxes</span><span className="text-600">{item.TotalTax}</span></div>
-                            <div className="flex justify-between"><span className="text-600">Fees</span><span className="text-600">{item.TotalFees}</span></div>
-                            <div className="flex justify-between font-semibold mt-3"><span className="text-700"> Sub-total</span><span className="text-700 text-lg">{item.TotalFare}</span></div>
+                            <div className="flex justify-between"><span className="text-600"> Fare</span><span className="text-600">{item.TotalEquiv}</span></div>
+                            <div className="flex justify-between"><span className="text-600">Taxes</span><span className="text-600">{item.TotalTaxEquiv}</span></div>
+                            <div className="flex justify-between"><span className="text-600">Fees</span><span className="text-600">{item.TotalFeesEquiv}</span></div>
+                            <div className="flex justify-between font-semibold mt-3"><span className="text-700"> Sub-total</span><span className="text-700 text-lg">{item.TotalEquiv}</span></div>
                             <hr className="border-t border-[#E5E5E3] my-4" />
 
                         </>
@@ -138,7 +154,9 @@ const Summary = ({ selectedFlight, selectedType }) => {
             </div>
 
             <div className="flex justify-between font-semibold mt-3  text-lg"><span className="text-700"> Total</span>
-                <span className="text-700 text-lg">{info.total_fare_USD}
+                <span className="text-700 text-lg">{`${selectedType?.
+                    commonInfo
+                    ?.currency} ${info.total_fare}`}
                 </span></div>
 
 

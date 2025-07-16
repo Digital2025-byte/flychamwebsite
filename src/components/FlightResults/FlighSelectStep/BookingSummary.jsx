@@ -4,7 +4,6 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 
 const BookingSummary = ({ totalAmount = 900, onContinue, setSelectedFlight, selectedType }) => {
-    console.log('setSelectedFlight', setSelectedFlight);
     const { flights } = useSelector((s) => s.flights)
     return (
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">

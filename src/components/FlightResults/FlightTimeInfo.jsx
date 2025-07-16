@@ -23,7 +23,7 @@ const FlightTimeInfo = ({
                 {!isSummary &&
                     <time className="text-[24px] md:text-2xl text-800">{formatTime(s.departure_time)}</time>
                 }
-                <div className="text-[12px] md:text-600 text-base">{s.origin_code}</div>
+                <div className="text-[12px] text-600 text-base">{s.origin_code}</div>
             </div>
 
             <div className="pt-4">
@@ -41,7 +41,7 @@ const FlightTimeInfo = ({
                 {!isSummary &&
                     <time className="text-[24px] md:text-2xl text-800">{formatTime(s.arrival_time)}</time>
                 }
-                <div className="text-[12px] md:text-600 text-600 text-base">{s.destination_code}</div>
+                <div className="text-[12px] text-600 text-600 text-base">{s.destination_code}</div>
             </div>
         </div>
     );

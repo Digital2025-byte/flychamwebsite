@@ -17,7 +17,7 @@ const FlighSelectStep = ({ flights, setFilterModalOpen, handleDetailsClick, isFi
       {!selectedFlight &&
         <>
           {/* <Section ><DateNavigation handleClickDate={handleClickDate}/></Section> */}
-          <Divider />
+
           <FlightHeader
             count={flights.length}
             setFilterModalOpen={setFilterModalOpen}

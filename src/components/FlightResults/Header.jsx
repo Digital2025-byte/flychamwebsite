@@ -1,11 +1,11 @@
-'use client'
+'use client';
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { useRouter } from 'next/navigation';
-import logo from "@/assets/images/logoblue.png";
 import {
-  Airplane,
   ArrowLeft,
   ArrowRight,
   CalendarBlank,
@@ -13,103 +13,86 @@ import {
   UserCircle,
   Users,
 } from '@phosphor-icons/react';
-import { useSelector } from 'react-redux';
-import { useTranslation } from 'react-i18next';
-import formatDate from '@/util/formatDate';
+
+import logo from '@/assets/images/logoblue.png';
 import formatDateReadble from '@/util/formatDateReadble';
 import useFlightRouteDetails from '@/hooks/useFlightRouteDetails';
 import useIsMobile from '@/hooks/useIsMobile';
 
 const Header = () => {
-  const { searchParams } = useSelector((state) => state.flights)
+  const { searchParams, airPorts } = useSelector((state) => state.flights);
   const { date, adults, children, infants, origin_id, destination_id } = searchParams;
-  const passNum = adults + children + infants
-  const formattedDeparture = formatDateReadble(date);
+  const airPortsItems = airPorts?.items || [];
+
+  const origin = airPortsItems.find(a => a.id === origin_id);
+  const destination = airPortsItems.find(a => a.id === destination_id);
+
   const { i18n } = useTranslation();
-  const isEn = i18n.language === 'en';
-  const airPortsItems = useSelector((state) => state.flights.airPorts?.items) || [];
-  const originAirPort = airPortsItems.find((a) => a.id === origin_id);
-  const destenationAirPort = airPortsItems.find((a) => a.id === destination_id);
-  const { iataCode, airPortTranslations } = originAirPort || {};
-  const { iataCode: iataCodeDest } = destenationAirPort || {};
-  const { country, city } = airPortTranslations?.find(a => a.languageCode === i18n.language) || {};
+  const lang = i18n.language;
   const isLg = !useIsMobile(1024);
 
-  const { flighttype, dateReturn } = useFlightRouteDetails()
+  const { iataCode: fromCode, airPortTranslations = [] } = origin || {};
+  const { iataCode: toCode } = destination || {};
+  const { city = '', country = '' } = airPortTranslations.find(a => a.languageCode === lang) || {};
 
-  const formattedReturn = formatDateReadble(dateReturn);
+  const { flighttype, dateReturn } = useFlightRouteDetails();
 
-
-  const labelClass = "text-600 text-base font-normal";
-  const iconColor = "#5F5F5C";
+  const labelClass = 'text-primary-1 text-base font-normal';
+  const passNum = adults + children + infants;
 
   return (
     <header className="flex w-full h-[69px] justify-center items-center gap-6 shrink-0 bg-100 max-md:h-auto max-md:py-3">
       <div className="flex flex-col md:flex-row items-start md:items-center gap-6 w-full max-w-[1400px] justify-between">
-
+        
         {/* Logo */}
-        <div className="flex items-center">
-          {/* { !isEditFlight && <button onClick={() => router.back()}><ArrowLeft size={25} className="text-primary-1" /></button> } */}
-          <Link href="/" passHref>
-            <div className="cursor-pointer flex w-[180px] items-center p-2">
-              <Image src={logo} alt="FlyCham Logo" width={180} height={50} className="object-contain" />
-            </div>
-          </Link>
-        </div>
+        <Link href="/" passHref className="flex items-center">
+          <div className="cursor-pointer flex w-[180px] items-center p-2">
+            <Image src={logo} alt="FlyCham Logo" width={180} height={50} className="object-contain" />
+          </div>
+        </Link>
 
         {/* Trip Info */}
         <div className="flex h-14 items-center gap-3.5 py-3 rounded-xl max-md:flex-col max-md:w-full max-md:h-auto flex-1 justify-center">
+
           {/* From - To */}
-          <div className="flex items-center gap-3 p-2.5 max-md:flex-col max-md:w-full">
-            <div className="flex items-center gap-2 max-md:justify-center">
-              {/* <span className={labelClass}>{info?.origin_country}</span>
-              <span className={labelClass}>(DAM)</span> */}
+          <div className="flex items-center gap-3 p-2.5 max-md:flex-col max-md:w-full ">
+            <div className="flex items-center gap-2 max-md:justify-center ">
+              <span className={labelClass}>{fromCode}</span>
             </div>
-            <div className="flex items-center gap-2 max-md:justify-center">
-              {/* <span className={labelClass}>{`${city} ${country}`}</span> */}
-              <span className={labelClass}>{iataCode}</span>
-            </div>
+
             <div className="flex flex-col items-center">
-
-              <div className="flex justify-center items-center">
-                <ArrowRight size={isLg ? 18 : 20} className='text-400' />
-              </div>
-              {flighttype === "Return" &&
-                <div className="flex justify-center items-center">
-                  <ArrowLeft size={isLg ? 18 : 20} className='text-400' />
-                </div>
-              }
+              <ArrowRight size={isLg ? 18 : 20} className="text-primary-1" />
+              {flighttype === "Return" && (
+                <ArrowLeft size={isLg ? 18 : 20} className="text-primary-1" />
+              )}
             </div>
-            <span className={labelClass}>{iataCodeDest}</span>
 
+            <span className={labelClass}>{toCode}</span>
           </div>
 
           <div className="w-px h-[33px] bg-[var(--text-600)] max-lg:w-full max-lg:h-px" />
 
-
-
-          {/* Date */}
+          {/* Dates */}
           <div className="flex flex-col xl:flex-row items-center gap-1.5 xl:p-2.5">
-            <CalendarBlank size={25} color={iconColor} className="hidden xl:block" />
-            <span className={labelClass}>{formattedDeparture}</span>
+            <CalendarBlank size={25}  className="hidden xl:block text-primary-1" />
+            <span className={labelClass}>{formatDateReadble(date)}</span>
           </div>
-          {flighttype === "Return" && <span> - </span>}
-          {flighttype === "Return" &&
 
-            <div className="flex flex-col xl:flex-row items-center gap-1.5 xl:p-2.5">
-              <CalendarBlank size={25} color={iconColor} className="hidden xl:block" />
-              <span className={labelClass}>{formattedReturn}</span>
-            </div>
-          }
-
-
-
+          {flighttype === "Return" && (
+            <>
+              <span>-</span>
+              <div className="flex flex-col xl:flex-row items-center gap-1.5 xl:p-2.5">
+                <CalendarBlank size={25}  className="hidden xl:block text-primary-1" />
+                <span className={labelClass}>{formatDateReadble(dateReturn)}</span>
+              </div>
+            </>
+          )}
 
           <div className="w-px h-[33px] bg-[var(--text-600)] max-lg:w-full max-lg:h-px" />
 
           {/* Passengers */}
           <div className="flex flex-col xl:flex-row items-center gap-2.5 xl:p-2.5">
-            <Users size={25} color={iconColor} className="hidden xl:block" />
+            <Users size={25}  className="hidden xl:block text-primary-1" />
             <span className={labelClass}>{`Passengers: ${passNum}`}</span>
           </div>
         </div>
@@ -120,9 +103,8 @@ const Header = () => {
             <MagnifyingGlass size={25} color="#FFF" />
             <span>Modify search</span>
           </button>
-          <UserCircle size={25} className="text-500 cursor-pointer" />
+          <UserCircle size={25} className="text-500 cursor-pointer text-primary-1" />
         </div>
-
       </div>
     </header>
   );

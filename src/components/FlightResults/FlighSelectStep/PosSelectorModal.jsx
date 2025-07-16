@@ -23,7 +23,7 @@ const getFlag = (posCode) => {
     return map[posCode] || sy;
 };
 const PosSelectorModal = ({ isOpen, setIsOpen, handleSelectPos }) => {
-    const { pos} = useSelector((s) => s.flights);
+    const { pos } = useSelector((s) => s.flights);
     return (
         <Transition show={isOpen} as={Fragment}>
             <Dialog onClose={() => setIsOpen(false)} className="relative z-50">
@@ -70,7 +70,7 @@ const PosSelectorModal = ({ isOpen, setIsOpen, handleSelectPos }) => {
 
                             {/* Currency List */}
                             <div className="space-y-1">
-                                {pos?.items?.map(({ id, posTranslations, posCode }) => {
+                                {pos?.items?.filter((i)=>i.id!==7)?.map(({ id, posTranslations, posCode }) => {
                                     const name = posTranslations?.[0]?.name || posCode;
 
                                     return (

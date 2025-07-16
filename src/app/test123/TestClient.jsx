@@ -10,8 +10,6 @@ import BookingBox from '@/components/Home/SearchFlight'
 import { useDispatch, useSelector } from 'react-redux';
 import { setAirports, setPos } from '@/store/flightSlice';
 const TestClient = ({ flights, pos}) => {
-    console.log('flights', flights);
-
     const isMobile = useIsMobile(1024);
     const router = useRouter()
     const { t } = useTranslation()
@@ -29,7 +27,6 @@ const TestClient = ({ flights, pos}) => {
 
     const [cities, setCities] = useState([])
     const [search, setSearch] = useState('');
-    console.log('cities', cities);
 
     useEffect(() => {
         if (airPorts?.items?.length > 0) {

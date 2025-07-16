@@ -73,7 +73,7 @@ const Dates = ({ formik, handleDateSelect, currentMonth, setCurrentMonth, minMon
                 <DayPicker
                     month={currentMonth}
                     numberOfMonths={isMobile ? 1 : 2}
-                    fromMonth={tripType === 'roundtrip' ? minMonth : undefined}
+                    fromMonth={tripType === 'Return' ? minMonth : undefined}
 
                     pagedNavigation
                     locale={isArabic ? arSA : enUS}

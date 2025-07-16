@@ -39,7 +39,8 @@
     "redux-persist": "^6.0.0",
     "slick-carousel": "^1.8.1",
     "sonner": "^2.0.5",
-    "vanilla-calendar-pro": "^3.0.4"
+    "vanilla-calendar-pro": "^3.0.4",
+    "yup": "^1.6.1"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

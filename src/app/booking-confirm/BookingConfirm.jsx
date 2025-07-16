@@ -10,10 +10,10 @@ import check from "@/assets/images/check.png"
 import Divider from '@/components/FlightResults/FlighSelectStep/Divider';
 import { getBySessionIdService } from '@/store/Services/flightServices';
 import { useSearchParams } from 'next/navigation';
+import Screen from '@/components/Ui/Screen';
 const BookingConfirm = () => {
     // const { selectedFlight } = useSelector((s) => s.flights)
     const { sessionInfo } = useSelector((s) => s.flights)
-    console.log('sessionInfo', sessionInfo);
     const searchParams = useSearchParams();
     const sessionId = searchParams.get('session_id');
 
@@ -55,9 +55,7 @@ const BookingConfirm = () => {
 
     if (loading || !sessionInfo) {
         return (
-            <div className="text-center py-20 text-gray-500">
-                Loading booking details...
-            </div>
+            <Screen />
         );
     }
     return (

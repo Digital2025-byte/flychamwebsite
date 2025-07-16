@@ -21,8 +21,8 @@ const FlightInfoInputs = ({ formik, setShowMobileModal }) => {
         const { tripType, dateStart, dateEnd } = formik.values;
 
         const shouldOpen =
-            (tripType === "oneway" && dateStart) ||
-            (tripType === "roundtrip" && dateStart && dateEnd);
+            (tripType === "OneWay" && dateStart) ||
+            (tripType === "Return" && dateStart && dateEnd);
 
         // if (shouldOpen) {
             formik.setFieldValue("type", 3);
@@ -54,7 +54,7 @@ const FlightInfoInputs = ({ formik, setShowMobileModal }) => {
                 </div>
 
                 {/* Return */}
-                {formik.values.tripType === 'roundtrip' &&
+                {formik.values.tripType === 'Return' &&
                     <div className={inputStyle} onClick={openDates}>
                         <CalendarBlank size={20} className="text-gray-500 mt-[2px]" />
                         <div>
