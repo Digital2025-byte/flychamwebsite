@@ -138,9 +138,6 @@ const PassengerDetails = ({ setActiveStep, selectedFlight, selectedType }) => {
     });
 
 
-    useEffect(() => {
-        window.scroll(0, 0)
-    })
 
     return (
         <div className="flex flex-col xl:flex-row gap-6">

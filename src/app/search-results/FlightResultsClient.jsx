@@ -240,6 +240,9 @@ const FlightResultsClient = () => {
         dispatch(getFlightsService(newParams))
         setShowPosModal(false)
     };
+    useEffect(() => {
+        window.scroll(0, 0)
+    }, [activeStep])
 
     return (
         <>
@@ -266,6 +269,7 @@ const FlightResultsClient = () => {
                     </div>
                     <div className="lg:hidden  w-full">
                         <HeaderBarMobile />
+                        <Section><ProgressBar steps={steps} activeStep={activeStep} setActiveStep={setActiveStep} /></Section>
                         {!selectedFlight &&
                             <Section ><DateNavigation handleClickDate={handleClickDate} /></Section>
 
@@ -274,7 +278,6 @@ const FlightResultsClient = () => {
                             <POSNotice setShowNotice={setShowNotice} setShowPosModal={setShowPosModal} />
                         }
 
-                        <Section><ProgressBar steps={steps} activeStep={activeStep} setActiveStep={setActiveStep} /></Section>
                         {/* <main className="w-[95%] md:w-[70%] mx-auto px-2 py-4">
 
                         <ProgressBarMb />
