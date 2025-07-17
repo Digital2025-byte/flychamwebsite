@@ -12,10 +12,12 @@ const flightSlice = createSlice({
         selectedFlight: {},
         selectedPlan: {},
         isLoading: false,
+        isLoadingCreatePassengers: false,
+        isLoadingCreatePayment: false,
         isLoadingFlights: false,
         error: null,
         selectedPassengers: {},
-        sessionInfo:{}
+        sessionInfo: {}
     },
     reducers: {
         setAirports: (state, action) => {
@@ -40,6 +42,8 @@ const flightSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
+            // ========================GET AIR PORTS==================================
+
             .addCase(getAirports.pending, (state) => {
                 state.isLoading = true;
                 state.error = null;
@@ -52,6 +56,8 @@ const flightSlice = createSlice({
                 state.isLoading = false;
                 state.error = action.payload;
             })
+            // ========================GET FLIGHTS==================================
+
             .addCase(getFlightsService.pending, (state) => {
                 state.isLoadingFlights = true;
                 state.error = null;
@@ -64,37 +70,42 @@ const flightSlice = createSlice({
                 state.isLoadingFlights = false;
                 state.error = action.payload;
             })
+            // ========================Passenger==================================
+
             .addCase(createListPassengerService.pending, (state) => {
-                state.isLoading = true;
+                state.isLoadingCreatePassengers = true;
                 state.error = null;
             })
             .addCase(createListPassengerService.fulfilled, (state, action) => {
-                state.isLoading = false;
+                state.isLoadingCreatePassengers = false;
                 state.flights = action.payload.flights;
             })
             .addCase(createListPassengerService.rejected, (state, action) => {
-                state.isLoading = false;
+                state.isLoadingCreatePassengers = false;
                 state.error = action.payload;
             })
+            // ========================Payment==================================
             .addCase(createPaymentService.pending, (state) => {
-                state.isLoading = true;
+                state.isLoadingCreatePayment = true;
                 state.error = null;
             })
             .addCase(createPaymentService.fulfilled, (state, action) => {
-                state.isLoading = false;
-                // state.flights = action.payload.flights;
+                state.isLoadingCreatePayment = false;
             })
             .addCase(createPaymentService.rejected, (state, action) => {
-                state.isLoading = false;
+                state.isLoadingCreatePayment = false;
                 state.error = action.payload;
             })
+            // ========================SESSION INFO BY ID==================================
             .addCase(getBySessionIdService.pending, (state) => {
                 state.isLoading = true;
                 state.error = null;
             })
             .addCase(getBySessionIdService.fulfilled, (state, action) => {
                 state.isLoading = false;
-                state.sessionInfo = action.payload.items[0];
+                console.log('action.payload', action.payload);
+
+                state.sessionInfo = action.payload;
             })
             .addCase(getBySessionIdService.rejected, (state, action) => {
                 state.isLoading = false;
@@ -103,5 +114,5 @@ const flightSlice = createSlice({
     },
 });
 
-export const { setAirports, setSearchParams, setSelectedF, setSelectedPlan, setSelectedpassengers,setPos } = flightSlice.actions;
+export const { setAirports, setSearchParams, setSelectedF, setSelectedPlan, setSelectedpassengers, setPos } = flightSlice.actions;
 export default flightSlice.reducer;

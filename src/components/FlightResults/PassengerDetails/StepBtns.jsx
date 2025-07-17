@@ -1,9 +1,11 @@
 'use client'
 import { CaretLeft } from '@phosphor-icons/react';
+import { useSelector } from 'react-redux';
 
 const StepBtns = ({ setActiveStep, handleSubmit }) => {
     const isBackDisabled = true;
     const isNextDisabled = false;
+    const { isLoadingCreatePassengers, isLoadingCreatePayment } = useSelector((s) => s.flights)
 
     return (
         <div className="flex justify-between items-center w-full my-8">
@@ -20,12 +22,17 @@ const StepBtns = ({ setActiveStep, handleSubmit }) => {
 
             {/* Select seats & extras */}
             <button
+                disabled={isLoadingCreatePayment || isLoadingCreatePassengers}
                 className={`px-4 py-2 rounded-md font-medium transition 
-     bg-primary-1 text-[#FFF] cursor-pointer hover:bg-white hover:text-primary-1 `}
+    ${isLoadingCreatePayment || isLoadingCreatePassengers
+                        ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                        : 'bg-primary-1 text-white hover:bg-white hover:text-primary-1 cursor-pointer'
+                    }`}
                 onClick={handleSubmit}
             >
-                Next
+                {isLoadingCreatePayment || isLoadingCreatePassengers ? 'Processing...' : 'Next'}
             </button>
+
         </div>
     );
 };
