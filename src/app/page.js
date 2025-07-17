@@ -38,7 +38,7 @@ export async function getAirports() {
   return await fetchFromAPI(`/api/booking/AirPort?filters=language==en&sorts=iata`)
 }
 export async function getPos() {
-  return await fetchFromAPI(`/api/booking/POS?filters=language==en`)
+  return await fetchFromAPI(`/api/booking/POS`)
 }
 
 export default async function FlightPage() {

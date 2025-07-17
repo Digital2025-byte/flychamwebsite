@@ -70,7 +70,7 @@ const PosSelectorModal = ({ isOpen, setIsOpen, handleSelectPos }) => {
 
                             {/* Currency List */}
                             <div className="space-y-1">
-                                {pos?.items?.filter((i)=>i.id!==7)?.map(({ id, posTranslations, posCode }) => {
+                                {pos?.items?.filter((i)=>i.id!==7)?.map(({ id, posTranslations, posCode,currencyCode }) => {
                                     const name = posTranslations?.[0]?.name || posCode;
 
                                     return (
@@ -84,7 +84,7 @@ const PosSelectorModal = ({ isOpen, setIsOpen, handleSelectPos }) => {
                                                 <span className="text-sm text-gray-700">{name}</span>
                                             </div>
                                             <span className="bg-[#003A59] text-white text-xs font-medium px-3 py-1 rounded-full">
-                                                {posCode}
+                                                {currencyCode}
                                             </span>
                                         </div>
                                     );

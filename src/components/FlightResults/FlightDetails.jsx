@@ -55,14 +55,14 @@ const FeatureRow = ({ index, item, isLg, infoIcon, isInfo }) => {
                             {(label === "Hand baggage" || label === "Checked baggage") &&
                                 <CheckCircle color='#34C759' size={20} weight='bold' />
                             }
-                            <span> {label === "No-Show" ? value.slice(0.7) : value}</span>
+                            <span> {label === "No-Show" ? value.slice(0.7) : (value || "-")}</span>
                         </div>
 
                     ) : (
                         <span className="flex items-center gap-2">
                             <CheckCircle />
                             {/* {InfoIcon && <InfoIcon size={20} className={`text-[#000]`} />} */}
-                            {value}
+                            {value || "-"}
                         </span>
                     )}
 
