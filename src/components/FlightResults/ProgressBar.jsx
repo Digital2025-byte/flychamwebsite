@@ -40,30 +40,36 @@ const ProgressBar = ({ steps, activeStep, setActiveStep }) => {
           const borderColor = isCompleted ? 'border-white' : 'border-[var(text-400)]';
 
           return (
- <div
-  key={index}
-  className={`flex ${
-    isLg ? 'flex-row gap-2' : 'flex-col gap-1 text-center'
-  } items-center min-w-[100px]`}
->
-  <div
-    className={`w-[26px] h-[26px] flex items-center justify-center rounded-full border ${borderColor} text-xs ${stepColor}`}
-  >
-    {index + 1}
-  </div>
+            <div
+              key={index}
+              className={`flex ${isLg ? 'flex-row gap-2' : 'flex-col gap-1 text-center'
+                } items-center min-w-[100px]`}
+            >
+              <div
+                className={`w-[26px] h-[26px] flex items-center justify-center rounded-full border ${borderColor} text-xs ${stepColor}`}
+              >
+                {index + 1}
+              </div>
 
-  {index === activeStep && (
+{isLg ? (
+  <span className={`text-sm font-medium ${stepColor}`}>
+    {step.label}
+  </span>
+) : (
+  index === activeStep && (
     <div
-      className={`text-sm font-medium leading-[16px] ${
-        isLg ? '' : 'text-[11px]'
-      } ${stepColor}`}
+      className={`text-sm font-medium leading-[16px] ${isLg ? '' : 'text-[11px]'} ${stepColor}`}
     >
       {step.label.split(' ').map((word, i) => (
         <div key={i}>{word}</div>
       ))}
     </div>
-  )}
-</div>
+  )
+)}
+
+
+
+            </div>
 
           );
         })}

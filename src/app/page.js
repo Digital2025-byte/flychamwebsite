@@ -33,25 +33,17 @@ export const metadata = {
   },
 };
 // fetch logic: accepts ?search=param
+// ✅ Async data fetching function
 export async function getAirports() {
-  try {
-    const response = await fetchFromAPI(`/api/booking/AirPort?filters=language==en&sorts=iata`);
-
-    if (!response.ok) {
-      console.error(`API error: ${response.status}`);
-      return []; // Fallback to empty list
-    }
-
-    const data = await response.json();
-    return data || [];
-  } catch (error) {
-    console.error("Fetch failed:", error);
-    return []; // Fallback on fetch failure
-  }
+  return await fetchFromAPI(`/api/booking/AirPort?filters=language==en&sorts=iata`)
+}
+export async function getPos() {
+  return await fetchFromAPI(`/api/booking/POS?filters=language==en`)
 }
 
 export default async function FlightPage() {
-  const flights = await getAirports();
-  return <HomeClient flights={flights} />;
+  const flights = await getAirports()
+  const pos = await getPos()
+  return <HomeClient flights={flights} pos={pos} />;
 };
 

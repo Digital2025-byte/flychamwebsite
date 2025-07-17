@@ -23,11 +23,11 @@ import bg3 from '../assets/images/main-slider/bg3.webp';
 import ImportantAlert from '@/components/Ui/Alert'
 import BookingBox from '@/components/Home/SearchFlight'
 import { useDispatch, useSelector } from 'react-redux'
-import { setAirports, setSearchParams } from '@/store/flightSlice'
+import { setAirports, setPos, setSearchParams } from '@/store/flightSlice'
 import { getAirports, getFlightsService } from '@/store/Services/flightServices'
 import { useFormik } from 'formik'
 import formatDate from '@/util/formatDate'
-const HomeClient = ({ flights }) => {
+const HomeClient = ({ flights,pos }) => {
 
   const dispatch = useDispatch()
   const isMobile = useIsMobile(1024);
@@ -40,6 +40,7 @@ const HomeClient = ({ flights }) => {
 
   useEffect(() => {
     dispatch(setAirports(flights))
+    dispatch(setPos(pos))
   }, [])
 
   // useEffect(() => {

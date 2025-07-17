@@ -19,98 +19,98 @@ const BookingConfirm = () => {
     const isXl = useIsMobile(1280);
     const isLg = useIsMobile(1078);
     const isMd = useIsMobile(768);
-    // const { sessionInfo } = useSelector((s) => s.flights)
+    const { sessionInfo } = useSelector((s) => s.flights)
     const searchParams = useSearchParams();
     const sessionId = searchParams.get('session_id');
-    const sessionInfo = {
-        id: 7,
-        sessionId: "cs_test_a1vtkdQz1FUAcxzeGsCPE4T5d4eJ0jsSvFl2bjpsTvfMJh81MFqxMatuPs",
-        ticketAdvisory: "Reservation is fully paid and confirmed.",
-        pnr: "0DBMZ9",
-        baseFareAmount: 140,
-        baseFareCurrency: null,
-        totalFareAmount: 261.1,
-        totalFareCurrency: null,
-        totalEquivFareAmount: 2886700,
-        totalEquivFareCurrency: null,
-        companyName: "DAM547",
-        paymentAmount: 261.1,
-        paymentCurrency: "USD",
-        paymentAmountInPayCurAmount: 2886700,
-        paymentAmountInPayCurCurrency: "SYP",
-        ticketingStatus: "3",
-        ticketType: "eTicket",
-        numberOfADT: 1,
-        numberOfCHD: 0,
-        numberOfINF: 0,
-        segments: [
-            {
-                id: 8,
-                flightNumber: "XH705",
-                departureAirportCode: "DAM",
-                arrivalAirportCode: "KWI",
-                departureDateTime: "2025-10-20T15:00:00",
-                arrivalDateTime: "2025-10-20T17:00:00",
-                terminal: "TerminalX",
-                cabinClass: "Y",
-                status: "35",
-                rph: "3763903",
-                comment: "airport_short_names:DAM=Damasc,KWI=null"
-            }
-        ],
-        passengers: [
-            {
-                id: 7,
-                firstName: "LubnaTestPaymentI",
-                lastName: "LubnaTestPaymentI",
-                title: "MS",
-                phoneNumber: "963-963-0934205339",
-                nationality: "SY",
-                typeCode: "ADT"
-            }
-        ],
-        taxes: [
-            {
-                id: 7,
-                taxCode: "TOTALTAX",
-                amount: 36.1,
-                currency: "USD"
-            }
-        ],
-        fees: [
-            {
-                id: 7,
-                feeCode: "TOTALFEE",
-                amount: 85,
-                currency: "USD"
-            }
-        ],
-        eTickets: [
-            {
-                id: 8,
-                eTicketNumber: "3862304475022",
-                couponNumber: "1",
-                flightSegmentRPH: "3763903",
-                ticketStatus: "O",
-                usedStatus: "UNUSED"
-            }
-        ],
-        contact: {
-            id: 7,
-            title: "MS",
-            firstName: "LubnaTestPaymentI",
-            lastName: "LubnaTestPaymentI",
-            phoneNumber: "0934205339",
-            mobileNumber: "0934205339",
-            countryCode: "963",
-            areaCode: "963",
-            email: "lubnaalhalabi40@gmail.com",
-            cityName: "city",
-            countryName: "Syria",
-            countryIsoCode: "SY",
-            preferredLanguage: "en"
-        }
-    };
+    // const sessionInfo = {
+    //     id: 7,
+    //     sessionId: "cs_test_a1vtkdQz1FUAcxzeGsCPE4T5d4eJ0jsSvFl2bjpsTvfMJh81MFqxMatuPs",
+    //     ticketAdvisory: "Reservation is fully paid and confirmed.",
+    //     pnr: "0DBMZ9",
+    //     baseFareAmount: 140,
+    //     baseFareCurrency: null,
+    //     totalFareAmount: 261.1,
+    //     totalFareCurrency: null,
+    //     totalEquivFareAmount: 2886700,
+    //     totalEquivFareCurrency: null,
+    //     companyName: "DAM547",
+    //     paymentAmount: 261.1,
+    //     paymentCurrency: "USD",
+    //     paymentAmountInPayCurAmount: 2886700,
+    //     paymentAmountInPayCurCurrency: "SYP",
+    //     ticketingStatus: "3",
+    //     ticketType: "eTicket",
+    //     numberOfADT: 1,
+    //     numberOfCHD: 0,
+    //     numberOfINF: 0,
+    //     segments: [
+    //         {
+    //             id: 8,
+    //             flightNumber: "XH705",
+    //             departureAirportCode: "DAM",
+    //             arrivalAirportCode: "KWI",
+    //             departureDateTime: "2025-10-20T15:00:00",
+    //             arrivalDateTime: "2025-10-20T17:00:00",
+    //             terminal: "TerminalX",
+    //             cabinClass: "Y",
+    //             status: "35",
+    //             rph: "3763903",
+    //             comment: "airport_short_names:DAM=Damasc,KWI=null"
+    //         }
+    //     ],
+    //     passengers: [
+    //         {
+    //             id: 7,
+    //             firstName: "LubnaTestPaymentI",
+    //             lastName: "LubnaTestPaymentI",
+    //             title: "MS",
+    //             phoneNumber: "963-963-0934205339",
+    //             nationality: "SY",
+    //             typeCode: "ADT"
+    //         }
+    //     ],
+    //     taxes: [
+    //         {
+    //             id: 7,
+    //             taxCode: "TOTALTAX",
+    //             amount: 36.1,
+    //             currency: "USD"
+    //         }
+    //     ],
+    //     fees: [
+    //         {
+    //             id: 7,
+    //             feeCode: "TOTALFEE",
+    //             amount: 85,
+    //             currency: "USD"
+    //         }
+    //     ],
+    //     eTickets: [
+    //         {
+    //             id: 8,
+    //             eTicketNumber: "3862304475022",
+    //             couponNumber: "1",
+    //             flightSegmentRPH: "3763903",
+    //             ticketStatus: "O",
+    //             usedStatus: "UNUSED"
+    //         }
+    //     ],
+    //     contact: {
+    //         id: 7,
+    //         title: "MS",
+    //         firstName: "LubnaTestPaymentI",
+    //         lastName: "LubnaTestPaymentI",
+    //         phoneNumber: "0934205339",
+    //         mobileNumber: "0934205339",
+    //         countryCode: "963",
+    //         areaCode: "963",
+    //         email: "lubnaalhalabi40@gmail.com",
+    //         cityName: "city",
+    //         countryName: "Syria",
+    //         countryIsoCode: "SY",
+    //         preferredLanguage: "en"
+    //     }
+    // };
 
     // const stops = 12
     const info = [
