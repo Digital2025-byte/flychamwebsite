@@ -11,13 +11,108 @@ import Divider from '@/components/FlightResults/FlighSelectStep/Divider';
 import { getBySessionIdService } from '@/store/Services/flightServices';
 import { useSearchParams } from 'next/navigation';
 import Screen from '@/components/Ui/Screen';
+import useFormattedFlightTimes from '@/hooks/useFormattedFlightTimes';
+import useIsMobile from '@/hooks/useIsMobile';
+import formatTime from '@/util/formatFlightTime';
 const BookingConfirm = () => {
-    // const { selectedFlight } = useSelector((s) => s.flights)
-    const { sessionInfo } = useSelector((s) => s.flights)
+    const { selectedFlight } = useSelector((s) => s.flights)
+    const isXl = useIsMobile(1280);
+    const isLg = useIsMobile(1078);
+    const isMd = useIsMobile(768);
+    // const { sessionInfo } = useSelector((s) => s.flights)
     const searchParams = useSearchParams();
     const sessionId = searchParams.get('session_id');
+    const sessionInfo = {
+        id: 7,
+        sessionId: "cs_test_a1vtkdQz1FUAcxzeGsCPE4T5d4eJ0jsSvFl2bjpsTvfMJh81MFqxMatuPs",
+        ticketAdvisory: "Reservation is fully paid and confirmed.",
+        pnr: "0DBMZ9",
+        baseFareAmount: 140,
+        baseFareCurrency: null,
+        totalFareAmount: 261.1,
+        totalFareCurrency: null,
+        totalEquivFareAmount: 2886700,
+        totalEquivFareCurrency: null,
+        companyName: "DAM547",
+        paymentAmount: 261.1,
+        paymentCurrency: "USD",
+        paymentAmountInPayCurAmount: 2886700,
+        paymentAmountInPayCurCurrency: "SYP",
+        ticketingStatus: "3",
+        ticketType: "eTicket",
+        numberOfADT: 1,
+        numberOfCHD: 0,
+        numberOfINF: 0,
+        segments: [
+            {
+                id: 8,
+                flightNumber: "XH705",
+                departureAirportCode: "DAM",
+                arrivalAirportCode: "KWI",
+                departureDateTime: "2025-10-20T15:00:00",
+                arrivalDateTime: "2025-10-20T17:00:00",
+                terminal: "TerminalX",
+                cabinClass: "Y",
+                status: "35",
+                rph: "3763903",
+                comment: "airport_short_names:DAM=Damasc,KWI=null"
+            }
+        ],
+        passengers: [
+            {
+                id: 7,
+                firstName: "LubnaTestPaymentI",
+                lastName: "LubnaTestPaymentI",
+                title: "MS",
+                phoneNumber: "963-963-0934205339",
+                nationality: "SY",
+                typeCode: "ADT"
+            }
+        ],
+        taxes: [
+            {
+                id: 7,
+                taxCode: "TOTALTAX",
+                amount: 36.1,
+                currency: "USD"
+            }
+        ],
+        fees: [
+            {
+                id: 7,
+                feeCode: "TOTALFEE",
+                amount: 85,
+                currency: "USD"
+            }
+        ],
+        eTickets: [
+            {
+                id: 8,
+                eTicketNumber: "3862304475022",
+                couponNumber: "1",
+                flightSegmentRPH: "3763903",
+                ticketStatus: "O",
+                usedStatus: "UNUSED"
+            }
+        ],
+        contact: {
+            id: 7,
+            title: "MS",
+            firstName: "LubnaTestPaymentI",
+            lastName: "LubnaTestPaymentI",
+            phoneNumber: "0934205339",
+            mobileNumber: "0934205339",
+            countryCode: "963",
+            areaCode: "963",
+            email: "lubnaalhalabi40@gmail.com",
+            cityName: "city",
+            countryName: "Syria",
+            countryIsoCode: "SY",
+            preferredLanguage: "en"
+        }
+    };
 
-    const stops = 12
+    // const stops = 12
     const info = [
         {
             label: "Name",
@@ -46,6 +141,7 @@ const BookingConfirm = () => {
     ];
     const dispatch = useDispatch()
     const [loading, setLoading] = useState(true);
+    const { duration, stops, ecoFare, busFare, segments, } = useFormattedFlightTimes(selectedFlight);
 
     useEffect(() => {
         if (sessionId) {
@@ -53,15 +149,15 @@ const BookingConfirm = () => {
         }
     }, [dispatch, sessionId]);
 
-    if (loading || !sessionInfo) {
-        return (
-            <Screen />
-        );
-    }
+    // if (loading || !sessionInfo) {
+    //     return (
+    //         <Screen />
+    //     );
+    // }
     return (
         <div
 
-            className="w-full max-w-[1100px] mx-auto bg-white py-4 px-4 flex flex-col items-center">
+            className="w-full max-w-[1200px] mx-auto bg-white py-4 px-4 flex flex-col items-center">
             {/* icon */}
             <div
 
@@ -98,18 +194,44 @@ const BookingConfirm = () => {
                     <div className="flex flex-col bg-50 relative p-4">
 
                         {/* Times */}
-                        <div className='flex flex-col justify-center items-start gap-4 '>
+                        {sessionInfo?.segments?.map((s, idx) => {
+                            const segment = {
+                                id: s.id,
+                                flightNumber: s.flightNumber,
+                                origin_code: s.departureAirportCode,
+                                destination_code: s.arrivalAirportCode,
+                                departure_time: (s.departureDateTime),
+                                arrival_time: (s.arrivalDateTime),
+                                terminal: s.terminal,
+                                cabinClass: s.cabinClass,
+                                status: s.status,
+                                rph: s.rph,
+                                comment: s.comment
+                            }
+                            return (
+                                <FlightTimeInfo
+                                    s={segment}
+                                    idx={idx}
+                                    flight={selectedFlight}
+                                    isLg={isLg}
+                                    isMd={isMd}
+                                    isXl={isXl}
+                                />
+                            )
+                        })}
+                        {/* <div className='flex flex-col justify-center items-start gap-4 '>
                             <div className="text-600text-sm pt-2 self-center">
                                 {stops > 0 ? stops : 'Non-stop,'}
                                 {10}
                             </div>
-                            {/* <FlightTimeInfo
+                            <FlightTimeInfo
                                 flight={selectedFlight}
                                 isLg={false}
                                 isMd={false}
                                 isXl={true}
-                            /> */}
-                        </div>
+                            />
+                            
+                        </div> */}
 
                         {/* Notice */}
                         <div className="flex justify-between bg-[#A6CFE04D] rounded-lg px-2 py-3 mt-6 text-sm text-500">
@@ -200,10 +322,10 @@ const BookingConfirm = () => {
                     <ArrowLeft size={18} />
                     Back to Home Page
                 </button>
-                <button className="flex items-center gap-2 bg-primary-1 text-white px-5 py-2 rounded-md font-medium">
+                {/* <button className="flex items-center gap-2 bg-primary-1 text-white px-5 py-2 rounded-md font-medium">
                     <DownloadSimple size={18} />
                     Download Ticket
-                </button>
+                </button> */}
             </div>
         </div>
     );

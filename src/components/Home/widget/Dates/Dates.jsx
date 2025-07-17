@@ -69,50 +69,52 @@ const Dates = ({ formik, handleDateSelect, currentMonth, setCurrentMonth, minMon
                     minMonth={new Date()}
                     handleMonthChange={handleMonthChange}
                 />
+                <div className="overflow-x-hidden w-full">
 
-                <DayPicker
-                    month={currentMonth}
-                    numberOfMonths={isMobile ? 1 : 2}
-                    fromMonth={tripType === 'Return' ? minMonth : undefined}
 
-                    pagedNavigation
-                    locale={isArabic ? arSA : enUS}
-                    disabled={{
-                        before:
-                            tripType === 'OneWay'
-                                ? new Date()
-                                : formik.values.dateStart
-                                    ? new Date(formik.values.dateStart)
-                                    : new Date()
-                    }}
-                    mode={tripType === 'OneWay' ? 'single' : 'range'}
-                    selected={selected}
-                    onSelect={tripType === 'OneWay' ? handleOneWayDateSelect : handleDateSelect}
-                    className="flex justify-center"
-                    classNames={{
-                        head_cell: 'uppercase text-xs font-bold text-gray-500 text-center',
-                        caption_label: 'text-center text-lg font-semibold text-black',
-                        day: 'text-sm text-black transition duration-300 ease-in-out w-8 h-8',
-                        today: '',
-                        selected:
-                            tripType === 'OneWay'
-                                ? 'rounded-full text-white bg-secondary'
-                                : 'bg-[#B6A889] text-black',
-                        range_middle: 'bg-[#e6dabc61] text-black',
-                        range_start: isArabic
-                            ? 'rounded-r-xl text-white'
-                            : 'rounded-l-xl text-white',
-                        range_end: isArabic
-                            ? 'rounded-l-xl text-white'
-                            : 'rounded-r-xl text-white',
-                    }}
-                    components={{
-                        DayContent: (props) => (
-                            <CustomDayContent {...props} isArabic={isArabic} />
-                        ),
-                    }}
-                />
+                    <DayPicker
+                        month={currentMonth}
+                        numberOfMonths={isMobile ? 1 : 2}
+                        fromMonth={tripType === 'Return' ? minMonth : undefined}
 
+                        pagedNavigation
+                        locale={isArabic ? arSA : enUS}
+                        disabled={{
+                            before:
+                                tripType === 'OneWay'
+                                    ? new Date()
+                                    : formik.values.dateStart
+                                        ? new Date(formik.values.dateStart)
+                                        : new Date()
+                        }}
+                        mode={tripType === 'OneWay' ? 'single' : 'range'}
+                        selected={selected}
+                        onSelect={tripType === 'OneWay' ? handleOneWayDateSelect : handleDateSelect}
+                        className="flex justify-center"
+                        classNames={{
+                            head_cell: 'uppercase text-xs font-bold text-gray-500 text-center',
+                            caption_label: 'text-center text-lg font-semibold text-black',
+                            day: 'text-sm text-black transition duration-300 ease-in-out w-8 h-8',
+                            today: '',
+                            selected:
+                                tripType === 'OneWay'
+                                    ? 'rounded-full text-white bg-secondary'
+                                    : 'bg-[#B6A889] text-black',
+                            range_middle: 'bg-[#e6dabc61] text-black',
+                            range_start: isArabic
+                                ? 'rounded-r-xl text-white'
+                                : 'rounded-l-xl text-white',
+                            range_end: isArabic
+                                ? 'rounded-l-xl text-white'
+                                : 'rounded-r-xl text-white',
+                        }}
+                        components={{
+                            DayContent: (props) => (
+                                <CustomDayContent {...props} isArabic={isArabic} />
+                            ),
+                        }}
+                    />
+                </div>
                 <div className="hidden md:block absolute left-1/2 top-5 bottom-5 w-[1px] bg-gray-200"></div>
             </div>
 

@@ -68,6 +68,7 @@ const FlightResultsClient = () => {
     };
     const handlePayment = () => {
         const info = selectedType[selectedType.type]
+        console.log('selectedType', selectedType);
 
         const data = {
             bookingInfo: {
@@ -86,9 +87,10 @@ const FlightResultsClient = () => {
                         flightNumber: s.FlightNumber,
                     }
                 }),
-                flightClass: selectedType === "Economy" ? "Y" : "C",
+                flightClass: selectedType.type === "Economy" ? "Y" : "C",
                 paymentAmount: info.total_fare_USD,
-                posId: 7,
+                posId: selectedType.commonInfo.pos_id
+                ,
                 flightType: selectedFlight.common_info.flight,
                 ContactInfo: selectedPassengers
 
