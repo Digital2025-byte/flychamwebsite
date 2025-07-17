@@ -1,5 +1,5 @@
 'use client'
-import React from 'react';
+import React, { useEffect } from 'react';
 import FormTitle from './FormTitle';
 import Input from '@/components/Ui/Input';
 import CustomDateInput from '@/components/Ui/DateInput';
@@ -76,51 +76,71 @@ const PassengerDetails = ({ setActiveStep, selectedFlight, selectedType }) => {
             save: false,
             accept: false,
             recive: false
-        }, 
+        },
         // validationSchema,
 
         onSubmit: (values) => {
             const contactDetails = values.passengers[values.contact.passengerIndex];
 
-            const { title, dateOfBirth, firstName, lastName, type } = contactDetails
+            const capitalize = (str) =>
+                typeof str === 'string' && str.length > 0
+                    ? str.charAt(0).toUpperCase() + str.slice(1).toLowerCase()
+                    : '';
+
+            const { title, dateOfBirth, firstName, lastName } = contactDetails;
+
             const data = {
                 title,
-                firstName,
-                lastName,
+                firstName: capitalize(firstName),
+                lastName: capitalize(lastName),
                 phoneNumber: values.contact.mobileNumber,
                 countryCode: values.contact.countryCode,
                 email: values.contact.email,
-                passengers: values.passengers.map((p) => {
-                    return {
-                        birthDate: p.dateOfBirth,
-                        passengerTypeCode: p.typeValue,
-                        givenName: p.firstName,
-                        surname: p.lastName,
-                        nameTitle: p.title,
-                        // Ms , Mr , 
-                        // "telephone": {
-                        //     "areaCityCode": "91",
-                        //     "countryAccessCode": "+963",
-                        //     "phoneNumber": "934205339"
-                        // },
-                        // "countryCode": "SY",
-                        // "passport": {
-                        //     "docID": "GFHYG",
-                        //     "expireDate": "2033-05-25"
-                        // }
-                    }
-                })
+                passengers: values.passengers.map((p) => ({
+                    birthDate: p.dateOfBirth,
+                    passengerTypeCode: p.typeValue,
+                    givenName: capitalize(p.firstName),
+                    surname: capitalize(p.lastName),
+                    nameTitle: p.title,
+                })),
+            };
+
+            // ✅ Validate required fields before calling the API
+            const hasEmptyFields =
+                !data.title ||
+                !data.firstName ||
+                !data.lastName ||
+                !data.phoneNumber ||
+                !data.countryCode ||
+                !data.email ||
+                data.passengers.some(
+                    (p) =>
+                        !p.birthDate ||
+                        !p.passengerTypeCode ||
+                        !p.givenName ||
+                        !p.surname ||
+                        !p.nameTitle
+                );
+
+            if (hasEmptyFields) {
+                console.warn('Missing required fields. Submission blocked.');
+                return;
             }
+
             dispatch(createListPassengerService(data)).then((action) => {
                 if (createListPassengerService.fulfilled.match(action)) {
-                    dispatch(setSelectedpassengers(data))
-                    setActiveStep(2)
+                    dispatch(setSelectedpassengers(data));
+                    setActiveStep(2);
                 }
-            })
-
+            });
         },
+
     });
-    console.log('formik', formik.errors);
+
+
+    useEffect(() => {
+        window.scroll(0, 0)
+    })
 
     return (
         <div className="flex flex-col xl:flex-row gap-6">

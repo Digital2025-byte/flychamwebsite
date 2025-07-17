@@ -171,12 +171,13 @@ const BookingConfirm = () => {
 
             {/* Ticket */}
             <div
-                className="  max-h-[1200px] shadow-md  rounded-[20px] overflow-hidden relative mb-6">
+                className="  max-h-[1200px] shadow-lg  rounded-[20px] overflow-hidden relative mb-6">
                 {/* Top Half-Circle Cutout */}
                 <div className="absolute   top-0 left-1/2 transform -translate-x-[-180px] -translate-y-1/2 w-10 h-10 bg-white rounded-b-full z-10 shadow-lg" />
+                {/* <div className="absolute   bottom-2 left-1/2 transform -translate-x-[-180px] -translate-y-1/2 w-10 h-10 bg-white rounded-b-full z-10 shadow-lg" /> */}
 
                 {/* Bottom Half-Circle Cutout */}
-                <div className="absolute   bottom-0 left-1/2 transform -translate-x-[-180px] translate-y-1/2 w-10 h-10 bg-white] rounded-t-full z-10 shadow-lg" />
+                <div className="absolute border border-[#ccc]   bottom-0 left-1/2 transform -translate-x-[-180px] translate-y-1/2 w-10 h-10 bg-white rounded-t-full z-10 shadow-lg" />
 
 
                 <div className="absolute top-1/2 -left-[10px] w-5 h-5 rounded-full bg-white border transform -translate-y-1/2" />
@@ -191,7 +192,7 @@ const BookingConfirm = () => {
 
 
                     {/* Left Section */}
-                    <div className="flex flex-col bg-50 relative p-4">
+                    <div className="flex flex-col justify-between bg-50 relative p-4">
 
                         {/* Times */}
                         {sessionInfo?.segments?.map((s, idx) => {
@@ -200,8 +201,8 @@ const BookingConfirm = () => {
                                 flightNumber: s.flightNumber,
                                 origin_code: s.departureAirportCode,
                                 destination_code: s.arrivalAirportCode,
-                                departure_time: (s.departureDateTime),
-                                arrival_time: (s.arrivalDateTime),
+                                departure_time: (s.departureDateTime.split("T")[1]),
+                                arrival_time: (s.arrivalDateTime.split("T")[1]),
                                 terminal: s.terminal,
                                 cabinClass: s.cabinClass,
                                 status: s.status,
@@ -273,25 +274,6 @@ const BookingConfirm = () => {
                     </div>
                 </div>
             </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
             {/* Payment Summary */}

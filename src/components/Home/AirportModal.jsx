@@ -11,7 +11,7 @@ import Dates from "./widget/Dates/Dates";
 import { useSelector } from "react-redux";
 
 const AirportModal = ({ isOpen, onClose, setFieldValue,
-  stepsData, handleClick, renderStepComponent, formikValues,setCurrentMonth,handleSubmit
+  stepsData, handleClick, renderStepComponent, formikValues, setCurrentMonth, handleSubmit
 }) => {
 
 
@@ -30,7 +30,7 @@ const AirportModal = ({ isOpen, onClose, setFieldValue,
           <div className="fixed inset-0 bg-[#0000009D]" />
         </Transition.Child>
 
-<div className="fixed inset-0 flex items-center justify-center px-4">
+        <div className="fixed inset-0 flex items-start justify-center mt-24 px-4">
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-200"
@@ -40,7 +40,7 @@ const AirportModal = ({ isOpen, onClose, setFieldValue,
             leaveFrom="opacity-100 scale-100"
             leaveTo="opacity-0 scale-95"
           >
-<Dialog.Panel className="w-full max-w-[68rem] rounded-2xl shadow-xl max-h-[90vh] overflow-y-auto">
+            <Dialog.Panel className="w-full max-w-[68rem] rounded-2xl shadow-xl ">
 
               <StepBar
                 onClose={onClose}
