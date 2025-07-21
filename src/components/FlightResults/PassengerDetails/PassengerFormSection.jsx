@@ -3,8 +3,11 @@ import React from 'react';
 import CustomDateInput from '@/components/Ui/DateInput';
 import Input from '@/components/Ui/Input';
 import CustomDropdown from '@/components/Ui/TitleDropdown';
+import ErrorMessage from '@/components/Ui/ErrorMessage';
 
-const PassengerFormSection = ({ index, values, onChange, setFieldValue }) => {
+const PassengerFormSection = ({ index, values, onChange, setFieldValue ,errors,touched}) => {
+    const dateOfBirthError = errors?.passengers?.[index]?.dateOfBirth;
+    const dateOfBirthTouched = touched?.passengers?.[index]?.dateOfBirth;
     return (
         <>
             {/* Title dropdown */}
@@ -40,13 +43,15 @@ const PassengerFormSection = ({ index, values, onChange, setFieldValue }) => {
             </div>
 
             {/* Date of Birth */}
-            <div className="flex flex-col md:flex-row gap-4 md:pr-8">
+            <div className="flex flex-col  gap-4 md:pr-8">
                 <CustomDateInput
                     value={values.dateOfBirth}
                     onChange={(val) =>
                         setFieldValue(`passengers[${index}].dateOfBirth`, val)
                     }
                 />
+
+                <ErrorMessage error={dateOfBirthTouched && dateOfBirthError} />
             </div>
         </>
     );

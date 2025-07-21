@@ -42,26 +42,57 @@ const PassengerDetails = ({ setActiveStep, selectedFlight, selectedType }) => {
         }))
     );
 
+    // Utility function to calculate age based on the date of birth
+    const calculateAge = (dateOfBirth) => {
+        console.log('dateOfBirth', dateOfBirth);
+
+        const today = new Date();
+        const birthDate = new Date(dateOfBirth);
+        let age = today.getFullYear() - birthDate.getFullYear();
+        const m = today.getMonth() - birthDate.getMonth();
+
+        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+            age--;
+        }
+
+        return age;
+    };
+
+    // Validation schema for passengers
     const passengerSchema = Yup.object().shape({
-        title: Yup.string().required('Title is required'),
-        firstName: Yup.string().required('First name is required'),
-        lastName: Yup.string().required('Last name is required'),
-        dateOfBirth: Yup.string().required('Date of birth is required'),
-    });
+        // title: Yup.string().required('Title is required'),
+        // firstName: Yup.string().required('First name is required'),
+        // lastName: Yup.string().required('Last name is required'),
+        dateOfBirth: Yup.date()
+            .required('Date of birth is required')
+            .test('is-valid-date', 'Invalid date of birth', function (value) {
+                const { typeValue } = this.parent; // Access the passengerType field
+                console.log('this.parent', this.parent);
+                console.log('passengerType', typeValue);
 
-    const validationSchema = Yup.object().shape({
-        passengers: Yup.array().of(passengerSchema),
-        contact: Yup.object().shape({
-            countryCode: Yup.string().required('Country code is required'),
-            mobileNumber: Yup.string().required('Mobile number is required'),
-            email: Yup.string().email('Invalid email address').required('Email is required'),
-            passengerIndex: Yup.number().nullable().required('Please select a contact passenger'),
-        }),
-        save: Yup.boolean(),
-        accept: Yup.boolean(),
-        recive: Yup.boolean(),
-    });
+                if (!value) return false;
 
+                const age = calculateAge(value); // This should work with a Date object
+                console.log('age', age);
+
+                // Adult (more than 12 years)
+                if (typeValue === 'ADT') {
+                    return age > 12;
+                }
+
+                // Child (2 - 12 years)
+                if (typeValue === 'CHD') {
+                    return age >= 2 && age <= 12;
+                }
+
+                // Infant (less than 2 years)
+                if (typeValue === 'INF') {
+                    return age < 2;
+                }
+
+                return false; // Default case for invalid passenger type
+            }),
+    });
 
 
     const formik = useFormik({
@@ -77,8 +108,15 @@ const PassengerDetails = ({ setActiveStep, selectedFlight, selectedType }) => {
             accept: false,
             recive: false
         },
-        // validationSchema,
-
+        validationSchema: Yup.object().shape({
+            passengers: Yup.array().of(passengerSchema),
+            // contact: Yup.object().shape({
+            //     countryCode: Yup.string().required('Country code is required'),
+            //     mobileNumber: Yup.string().required('Mobile number is required'),
+            //     email: Yup.string().email('Invalid email address').required('Email is required'),
+            //     passengerIndex: Yup.number().nullable().required('Please select a contact passenger'),
+            // }),
+        }),
         onSubmit: (values) => {
             const contactDetails = values.passengers[values.contact.passengerIndex];
 
@@ -137,6 +175,8 @@ const PassengerDetails = ({ setActiveStep, selectedFlight, selectedType }) => {
 
     });
 
+    console.log('Errors', formik.errors.passengers);
+    console.log('values', formik.values.passengers);
 
 
     return (
@@ -151,6 +191,9 @@ const PassengerDetails = ({ setActiveStep, selectedFlight, selectedType }) => {
                             values={passenger}
                             onChange={formik.handleChange}
                             setFieldValue={formik.setFieldValue}
+                            errors={formik.errors}
+                            touched={formik.touched}
+
                         />
                     </Section>
                 ))}
