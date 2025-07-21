@@ -55,7 +55,8 @@ const Dates = ({ formik, handleDateSelect, currentMonth, setCurrentMonth, minMon
 
     return (
         <div className="bg-white rounded-2xl p-6 w-full max-w-5xl mx-auto">
-            <TripTypeSelector isMobile={isMobile} formik={formik} />
+            <TripTypeSelector values={formik.values}
+                setFieldValue={formik.setFieldValue} />
             <div className="hidden md:block w-full my-3 h-[1px] bg-gray-200"></div>
 
             <SelectedDateDisplay selected={selected} tripType={tripType} />

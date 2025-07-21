@@ -1,37 +1,49 @@
 'use client'
 import React, { useEffect, useState } from 'react';
 
-const TripTypeSelector = ({ setFieldValue,values }) => {
-  const {tripType} = values
+const TripTypeSelector = ({ setFieldValue, values }) => {
+  const { tripType } = values;
 
   const handleSelect = (type) => {
-    setFieldValue("tripType", type)
+    setFieldValue("tripType", type);
   };
 
+  const TripTypeButton = ({ label, value, tripType, handleSelect }) => (
+    <button
+      onClick={() => handleSelect(value)}
+      className={`relative z-10 w-1/2 text-sm rounded-[20px]
+        font-medium transition-colors duration-300
+        ${tripType === value ? 'text-white ' : 'text-[#05486e] bg-transparent '}`}
+    >
+      {label}
+    </button>
+  );
 
   return (
-    <div className="relative w-full  md:w-[341px] h-[40px] bg-[#f5f5f4] rounded-[24px] flex items-center p-1 transition-all duration-300">
+    <div
+      style={{
+        height: '100%',
+        paddingLeft: 8.65,
+        paddingRight: 8.65,
+        paddingTop: 12,
+        paddingBottom: 12,
+        background: '#F5F5F4',
+        borderRadius: 12,
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        gap: 18.17,
+        display: 'inline-flex',
+      }}
+      className="relative w-[250px] bg-[#f5f5f4] rounded-[24px] flex items-center transition-all duration-300"
+    >
       {/* Moving background */}
       <div
-        className={`absolute top-1 bottom-1 w-[50%] rounded-[20px] bg-main transition-all duration-300 ${tripType === 'Return' ? 'left-1' : 'left-[50%]'
-          }`}
+        className={`absolute top-1 rounded-[8px] bottom-1 w-[50%] bg-main transition-all duration-500 ease-in-out ${tripType === 'Return' ? 'left-0' : 'left-[50%]'}`}
       />
 
-      {/* Buttons */}
-      <button
-        onClick={() => handleSelect('Return')}
-        className={`relative z-10 w-1/2  rounded-[20px]  text-sm font-medium transition-colors duration-300 ${tripType === 'Return' ? 'text-white' : 'text-[#05486e]'
-          }`}
-      >
-        Round Trip
-      </button>
-      <button
-        onClick={() => handleSelect('OneWay')}
-        className={`relative z-10 w-1/2  rounded-[20px]  text-sm font-medium transition-colors duration-300 ${tripType === 'OneWay' ? 'text-white' : 'text-[#05486e]'
-          }`}
-      >
-        One-way
-      </button>
+      {/* Trip type buttons */}
+      <TripTypeButton label="Round-trip" value="Return" tripType={tripType} handleSelect={handleSelect} />
+      <TripTypeButton label="One-way" value="OneWay" tripType={tripType} handleSelect={handleSelect} />
     </div>
   );
 };

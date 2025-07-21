@@ -346,7 +346,9 @@ const BookingBox = ({ flights, cities, setCities, getCitiesArray, airPorts, sear
 
             />
             <TripTypeSelector values={formik.values}
-                setFieldValue={formik.setFieldValue} />
+                setFieldValue={formik.setFieldValue}
+
+            />
             <FromToSelector
                 setShowModal={setDesktopShowModal}
                 setShowMobileModal={setShowMobileModal}
