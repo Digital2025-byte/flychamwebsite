@@ -10,29 +10,30 @@ const GUEST_OPTIONS = [
 const CLASS_OPTIONS = ["Economy", "Business"];
 
 const Guests = ({ formik, values, isMobile }) => {
-    const { type } = values
+    const { type, adults, infants
+    } = values
     const handleGuestChange = (key, delta) => {
         const currentValue = formik.values[key];
 
         if (key === "adults") {
-            const newValue = Math.min(9, Math.max(1, currentValue + delta)); // min 1, max 9
+            const newValue = Math.min(9, Math.max(1, currentValue + delta));
             formik.setFieldValue("adults", newValue);
 
-            // If infants > new adults - 1, reduce infants
-            if (formik.values.infants > newValue - 1) {
-                formik.setFieldValue("infants", newValue - 1);
+            // If infants > new adults, reduce infants
+            if (formik.values.infants > newValue) {
+                formik.setFieldValue("infants", newValue);
             }
             return;
         }
 
         if (key === "children") {
-            const newValue = Math.min(9, Math.max(0, currentValue + delta)); // max 9
+            const newValue = Math.min(9, Math.max(0, currentValue + delta));
             formik.setFieldValue("children", newValue);
             return;
         }
 
         if (key === "infants") {
-            const maxInfants = formik.values.adults - 1;
+            const maxInfants = formik.values.adults;
             const newValue = Math.min(maxInfants, Math.max(0, currentValue + delta));
             formik.setFieldValue("infants", newValue);
         }
@@ -62,6 +63,7 @@ const Guests = ({ formik, values, isMobile }) => {
                             ))}
                         </div>
                     )}
+
                 </div>
 
                 {GUEST_OPTIONS.map(({ label, sub, key }) => (
@@ -111,11 +113,11 @@ const Guests = ({ formik, values, isMobile }) => {
                                 disabled={
                                     (key === "adults" && formik.values.adults >= 9) ||
                                     (key === "children" && formik.values.children >= 9) ||
-                                    (key === "infants" && formik.values.infants >= formik.values.adults - 1)
+                                    (key === "infants" && formik.values.infants >= formik.values.adults)
                                 }
                                 className={`w-8 h-8 flex items-center justify-center rounded-[6px] transition ${(key === "adults" && formik.values.adults >= 9) ||
                                     (key === "children" && formik.values.children >= 9) ||
-                                    (key === "infants" && formik.values.infants >= formik.values.adults - 1)
+                                    (key === "infants" && formik.values.infants >= formik.values.adults)
                                     ? "bg-gray-300 cursor-not-allowed"
                                     : "bg-[#003A59] cursor-pointer"
                                     }`}
@@ -123,9 +125,15 @@ const Guests = ({ formik, values, isMobile }) => {
                                 <Plus size={12} weight="bold" className="text-white" />
                             </button>
 
+
                         </div>
                     </div>
                 ))}
+                {adults === infants
+                    &&
+                    <p className="text-alert text-sm">{`You can book for max ${adults} Infant`}</p>
+                }
+
             </div>
 
             {/* Class & Promo Section */}

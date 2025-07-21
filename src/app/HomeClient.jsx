@@ -27,7 +27,7 @@ import { setAirports, setPos, setSearchParams } from '@/store/flightSlice'
 import { getAirports, getFlightsService } from '@/store/Services/flightServices'
 import { useFormik } from 'formik'
 import formatDate from '@/util/formatDate'
-const HomeClient = ({ flights,pos }) => {
+const HomeClient = ({ flights, pos }) => {
 
   const dispatch = useDispatch()
   const isMobile = useIsMobile(1024);

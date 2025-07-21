@@ -106,13 +106,24 @@ const MenuItem = ({ t, setIsOpen, router, link, icon: Icon, label, active = fals
   const [isExpanded, setIsExpanded] = useState(false);
 
   const handleClick = () => {
-    if (subLinks.length > 0) {
+    if (label === t('nav.bookFlight')) {
+      router.push('/');
+
+      setTimeout(() => {
+        const searchWidget = document.getElementById('search-widget');
+        if (searchWidget) {
+          searchWidget.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 1000);
+      setIsOpen(false);
+    } else if (subLinks.length > 0) {
       setIsExpanded(!isExpanded);
     } else if (link) {
       router.push(link);
       setIsOpen(false);
     }
   };
+
 
   return (
     <div>
@@ -143,6 +154,8 @@ const MenuItem = ({ t, setIsOpen, router, link, icon: Icon, label, active = fals
               onClick={() => {
                 router.push(sub.link);
                 setIsOpen(false);
+
+
               }}
               className="cursor-pointer px-3 py-2 rounded-md bg-white/5 hover:bg-white/10 text-sm text-white transition"
             >

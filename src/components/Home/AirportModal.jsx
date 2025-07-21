@@ -45,7 +45,6 @@ const AirportModal = ({ isOpen, onClose, setFieldValue,
               <StepBar
                 onClose={onClose}
                 stepsData={stepsData}
-
                 formikValues={formikValues}
                 handleClick={handleClick}
 

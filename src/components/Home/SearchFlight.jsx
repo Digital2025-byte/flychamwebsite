@@ -63,7 +63,7 @@ const BookingBox = ({ flights, cities, setCities, getCitiesArray, airPorts, sear
             dateEnd: '',
             type: 0,
             tripType: 'OneWay',
-            neirby: false
+            nearby: false
         },
         onSubmit: (values) => {
             const {
@@ -73,7 +73,7 @@ const BookingBox = ({ flights, cities, setCities, getCitiesArray, airPorts, sear
                 dateStart,
                 dateEnd,
                 adults,
-                children, infants, type, neirby, tripType
+                children, infants, type, nearby, tripType
 
             } = values;
             const formattedDeparture = formatDate(dateStart);
@@ -91,7 +91,7 @@ const BookingBox = ({ flights, cities, setCities, getCitiesArray, airPorts, sear
                 flightclass: flightclass,
                 flighttype: tripType,
                 pos_id: 0,
-                neirby
+                neirby: nearby
             }
             if (tripType !== 'OneWay' && formattedReturn) {
                 data.date_return = formattedReturn;
@@ -110,14 +110,18 @@ const BookingBox = ({ flights, cities, setCities, getCitiesArray, airPorts, sear
 
     });
 
+    console.log('formik', formik.values);
 
 
     const tabs = ["book", "manage", "flight status"];
 
     const getCityString = (val, type) => {
         const city = airPorts?.items?.find(c => c.id === val);
+        console.log('city', city);
+
         const text = type === 's' ? 'Departure: ' : "Destenation: "
-        return city ? `${text}${city.iataCode}` : '';
+        // return city ? `${text}${city.iataCode}` : '';
+        return city ? `${city.airPortTranslations[0].country},${city.iataCode}` : '';
     };
 
     const getGuestSummary = () => {
@@ -126,7 +130,7 @@ const BookingBox = ({ flights, cities, setCities, getCitiesArray, airPorts, sear
         if (adults > 0) parts.push(`${adults}ADT`);
         if (children > 0) parts.push(`${children}CHD`);
         if (infants > 0) parts.push(`${infants}INF`);
-        if (type === 2) {
+        if (type === 2 || type === 3) {
             // Always show full parts summary when on Guests tab
             return parts.length > 0 ? parts.join(', ') : 'No guests selected';
         }
@@ -332,7 +336,7 @@ const BookingBox = ({ flights, cities, setCities, getCitiesArray, airPorts, sear
 
 
     const MobileView = () => (
-        <div className="  w-full">
+        <div id="search-widget" className="  w-full">
             <TabNavigation
                 tabs={tabs}
                 activeTab={activeTab}
@@ -341,7 +345,8 @@ const BookingBox = ({ flights, cities, setCities, getCitiesArray, airPorts, sear
                 formik={formik}
 
             />
-            <TripTypeSelector defaultValue={selected} setSelected={setSelected} formik={formik} isMobile={isMobile} />
+            <TripTypeSelector values={formik.values}
+                setFieldValue={formik.setFieldValue} />
             <FromToSelector
                 setShowModal={setDesktopShowModal}
                 setShowMobileModal={setShowMobileModal}
@@ -363,7 +368,7 @@ const BookingBox = ({ flights, cities, setCities, getCitiesArray, airPorts, sear
         </div>
     );
     const DesktopView = () => (
-        <div className="bg-white rounded-2xl shadow-md p-6 w-full max-w-5xl mx-auto mt-10">
+        <div id="search-widget" className="bg-white rounded-2xl shadow-md p-6 w-full max-w-5xl mx-auto mt-10">
             <TabNavigation
                 tabs={tabs}
                 activeTab={activeTab}
@@ -372,7 +377,10 @@ const BookingBox = ({ flights, cities, setCities, getCitiesArray, airPorts, sear
                 formik={formik}
             />
             <div className="flex items-center justify-between mb-6">
-                <TripTypeSelector formik={formik} />
+                <TripTypeSelector values={formik.values}
+                    setFieldValue={formik.setFieldValue}
+
+                />
                 <MilesToggle isMobile={isMobile} />
             </div>
             <FromToSelector

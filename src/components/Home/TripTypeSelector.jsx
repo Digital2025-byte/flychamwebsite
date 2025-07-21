@@ -1,12 +1,11 @@
 'use client'
 import React, { useEffect, useState } from 'react';
 
-const TripTypeSelector = ({ formik }) => {
+const TripTypeSelector = ({ setFieldValue,values }) => {
+  const {tripType} = values
 
-  // const [selected, setSelected] = useState("OneWay")
   const handleSelect = (type) => {
-    formik.setFieldValue("tripType",type)
-    // setSelected(type)
+    setFieldValue("tripType", type)
   };
 
 
@@ -14,21 +13,21 @@ const TripTypeSelector = ({ formik }) => {
     <div className="relative w-full  md:w-[341px] h-[40px] bg-[#f5f5f4] rounded-[24px] flex items-center p-1 transition-all duration-300">
       {/* Moving background */}
       <div
-        className={`absolute top-1 bottom-1 w-[50%] rounded-[20px] bg-main transition-all duration-300 ${formik.values.tripType === 'Return' ? 'left-1' : 'left-[50%]'
+        className={`absolute top-1 bottom-1 w-[50%] rounded-[20px] bg-main transition-all duration-300 ${tripType === 'Return' ? 'left-1' : 'left-[50%]'
           }`}
       />
 
       {/* Buttons */}
       <button
         onClick={() => handleSelect('Return')}
-        className={`relative z-10 w-1/2  rounded-[20px]  text-sm font-medium transition-colors duration-300 ${formik.values.tripType === 'Return' ? 'text-white' : 'text-[#05486e]'
+        className={`relative z-10 w-1/2  rounded-[20px]  text-sm font-medium transition-colors duration-300 ${tripType === 'Return' ? 'text-white' : 'text-[#05486e]'
           }`}
       >
         Round Trip
       </button>
       <button
         onClick={() => handleSelect('OneWay')}
-        className={`relative z-10 w-1/2  rounded-[20px]  text-sm font-medium transition-colors duration-300 ${formik.values.tripType === 'OneWay' ? 'text-white' : 'text-[#05486e]'
+        className={`relative z-10 w-1/2  rounded-[20px]  text-sm font-medium transition-colors duration-300 ${tripType === 'OneWay' ? 'text-white' : 'text-[#05486e]'
           }`}
       >
         One-way

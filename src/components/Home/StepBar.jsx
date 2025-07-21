@@ -3,7 +3,9 @@ import StepItem from "./StepItem";
 import Lottie from "lottie-react";
 import planeAnim from "../../assets/plane.json";
 import { X } from "@phosphor-icons/react";
-
+import stepsConnecter from "@/assets/images/stepsConnecter.png"
+import stepsConnectorInActive from "@/assets/images/stepsConnectorInActive.png"
+import Image from "next/image";
 const StepBar = ({ onClose, stepsData, formikValues, handleClick }) => {
   const activeTab = formikValues.type;
 
@@ -27,21 +29,20 @@ const StepBar = ({ onClose, stepsData, formikValues, handleClick }) => {
               />
 
               {/* Connector */}
-              {/* Connector */}
               {step.id < stepsData.length - 1 || step.id === activeTab ? (
                 <div className="w-20 flex justify-center items-center gap-3">
                   {step.id === activeTab ? (
                     <Lottie animationData={planeAnim} loop className="w-full h-full" />
                   ) : step.id < activeTab ? (
                     // Filled bullets for completed steps
-                    [...Array(5)].map((_, i) => (
-                      <div key={i} className="w-1 h-1 bg-main rounded-full" />
-                    ))
+                    // [...Array(5)].map((_, i) => (
+                    //   <div key={i} className="w-1 h-1 bg-main rounded-full" />
+                    // ))
+                    <Image src={stepsConnecter} />
                   ) : (
                     // Gray bullets for upcoming steps
-                    [...Array(5)].map((_, i) => (
-                      <div key={i} className="w-1 h-1 bg-gray-300 rounded-full" />
-                    ))
+                    <Image src={stepsConnectorInActive} />
+
                   )}
                 </div>
               ) : null}

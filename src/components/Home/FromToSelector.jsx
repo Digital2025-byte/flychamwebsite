@@ -17,10 +17,10 @@ const FromToSelector = ({ cities, values, setShowModal, setShowMobileModal, isMo
     };
   };
 
-  const sourceInfo = source ? getCityInfo(source) : { city: 'DAM, Syria', airport: 'Damascus International Airport' };
+  const sourceInfo = source ? getCityInfo(source) : { city: 'Departure city', airport: 'Select your origin' };
   const destinationInfo = destination
     ? getCityInfo(destination)
-    : { city: 'To', airport: 'Select your destination' };
+    : { city: 'Arrival city', airport: 'Select your destination' };
 
   return (
     <div className={`relative flex ${isMobile ? 'flex-col my-3 gap-3' : 'flex-row gap-7'} items-center`}>

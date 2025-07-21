@@ -1,6 +1,7 @@
 'use client'
 import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
+import CustomCheckbox from '../Ui/CustomCheckbox';
 
 const AirportList = ({ search, setSearch, type, values, setFieldValue, isMobile, sliderRef, getCitiesArray }) => {
   const { airPorts } = useSelector(state => state.flights);
@@ -37,7 +38,19 @@ const AirportList = ({ search, setSearch, type, values, setFieldValue, isMobile,
 
   return (
     <div>
-      <p className="text-sm font-medium text-gray-600 mb-4">Matching Airports</p>
+      <div className="flex  flex-col md:flex-row justify-between items-start  my-2 md:my-0">
+
+        <p className="text-sm font-medium text-gray-600 mb-4">Matching Airports</p>
+        <CustomCheckbox
+          checked={values.nearby}
+          onChange={() => setFieldValue("nearby", !values.nearby)}
+          label="Include nearby airports"
+        />
+
+      </div>
+      <div className="bg-gray-300 w-full h-[0.5px]">
+
+      </div>
       <div
         className={`${!isMobile && 'max-h-[300px]'} overflow-y-auto pr-1`}
         style={{
@@ -60,9 +73,9 @@ const AirportList = ({ search, setSearch, type, values, setFieldValue, isMobile,
               >
                 <div>
                   <p className="text-sm font-semibold text-gray-800">{airPortName}</p>
-                  <p className="text-xs text-gray-500">{`${country} ${city}`}</p>
+                  <p className="text-xs text-gray-500 my-1 md:my-0">{`${country} ${city}`}</p>
                 </div>
-                <div className="bg-main text-white text-xs px-3 py-1 rounded-md font-semibold">{iataCode}</div>
+                <div className="bg-main w-13  text-white text-xs px-3 py-1 rounded-md font-semibold">{iataCode}</div>
               </div>
             );
           })}

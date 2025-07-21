@@ -19,6 +19,7 @@ import turkey from '@/assets/images/Destenations/turkey.webp';
 import kuwait from '@/assets/images/Destenations/kuwait.webp';
 import { useTranslation } from 'react-i18next';
 import useIsArabic from '@/hooks/useIsArabic';
+import { useRouter } from 'next/navigation';
 
 
 const DestinationCard = ({ name, description, isArabic }) => (
@@ -55,6 +56,7 @@ const PrevArrow = ({ onClick }) => (
 const DestenationClient = () => {
     const { t } = useTranslation()
     const isArabic = useIsArabic()
+    const router = useRouter()
     const destinations = [
         {
             country: t('destinations.uae.country'),
@@ -140,10 +142,12 @@ const DestenationClient = () => {
     };
 
     const handleClickBookNow = () => {
-        const widget = document.getElementById("search-widget");
-        if (widget) {
-            widget.scrollIntoView({ behavior: "smooth", block: "start" });
-        }
+        // const widget = document.getElementById("search-widget");
+        // if (widget) {
+        //     widget.scrollIntoView({ behavior: "smooth", block: "start" });
+        // }
+        router.push("/")
+
     };
 
     return (
