@@ -3,6 +3,7 @@ import {
     User,
     Smiley,
     Baby,
+    BabyCarriage,
 } from "@phosphor-icons/react";
 import React from "react";
 
@@ -11,9 +12,9 @@ const getIconByType = (type) => {
         case "adult":
             return User;
         case "child":
-            return Smiley;
-        case "infant":
             return Baby;
+        case "infant":
+            return BabyCarriage;
         default:
             return User;
     }

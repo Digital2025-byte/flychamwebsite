@@ -23,7 +23,7 @@ const SearchConfirmClient = () => {
     const [selectedFlight, setSelectedFlight] = useState(null);
     const { sessionInfo } = useSelector((s) => s.flights)
 
-    
+
     const flights = [
         {
             departureTime: "22:15", arrivalTime: "02:30", departureCode: "DAM", arrivalCode: "DXB",

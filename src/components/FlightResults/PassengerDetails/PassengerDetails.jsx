@@ -26,9 +26,9 @@ const PassengerDetails = ({ setActiveStep, selectedFlight, selectedType }) => {
     let globalIndex = 0;
 
     const passengers = [
-        { type: 'adult', count: 1, typeValue: 'ADT' },
-        { type: 'child', count: 0, typeValue: 'CHD' },
-        { type: 'infant', count: 0, typeValue: 'INF' },
+        { type: 'adult', count: adults, typeValue: 'ADT' },
+        { type: 'child', count: children, typeValue: 'CHD' },
+        { type: 'infant', count: infants, typeValue: 'INF' },
     ].filter(p => p.count > 0);
     const initialPassengers = passengers.flatMap(p =>
         Array.from({ length: p.count }, () => ({
