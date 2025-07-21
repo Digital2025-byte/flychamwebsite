@@ -41,6 +41,15 @@ const PassengerDetails = ({ setActiveStep, selectedFlight, selectedType }) => {
             title: '',
         }))
     );
+const calculateAgeInYears = (dob) => {
+    const birth = new Date(dob);
+    const today = new Date();
+
+    const diffTime = today - birth; // Difference in milliseconds
+    const ageInYears = diffTime / (1000 * 60 * 60 * 24 * 365.25); // Convert to years (approx)
+
+    return ageInYears;
+};
 
     // Utility function to calculate age based on the date of birth
     const calculateAge = (dateOfBirth) => {
@@ -72,7 +81,7 @@ const PassengerDetails = ({ setActiveStep, selectedFlight, selectedType }) => {
 
                 if (!value) return false;
 
-                const age = calculateAge(value); // This should work with a Date object
+            const age = calculateAgeInYears(value);
                 console.log('age', age);
 
                 // Adult (more than 12 years)

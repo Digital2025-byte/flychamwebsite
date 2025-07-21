@@ -5,7 +5,7 @@ import Input from '@/components/Ui/Input';
 import CustomDropdown from '@/components/Ui/TitleDropdown';
 import ErrorMessage from '@/components/Ui/ErrorMessage';
 
-const PassengerFormSection = ({ index, values, onChange, setFieldValue ,errors,touched}) => {
+const PassengerFormSection = ({ index, values, onChange, setFieldValue, errors, touched }) => {
     const dateOfBirthError = errors?.passengers?.[index]?.dateOfBirth;
     const dateOfBirthTouched = touched?.passengers?.[index]?.dateOfBirth;
     return (
