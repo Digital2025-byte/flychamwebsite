@@ -21,16 +21,66 @@ import useCities from "@/hooks/useCities";
 import { useDispatch, useSelector } from "react-redux";
 import { getFlightsService } from "@/store/Services/flightServices";
 import { useRouter } from "next/navigation";
-import { setSearchParams } from "@/store/flightSlice";
+import { setAirports, setPos, setSearchParams } from "@/store/flightSlice";
 import AirportList from "./AirportList";
 import Guests from "./Guests";
 import Dates from "./widget/Dates/Dates";
 import SearchInput from "./SearchInput";
 
-const BookingBox = ({ flights, cities, setCities, getCitiesArray, airPorts, search, setSearch }) => {
+const BookingBox = ({ flights,pos }) => {
     const isMobile = useIsMobile()
     const dispatch = useDispatch()
     const router = useRouter()
+  useEffect(() => {
+    dispatch(setAirports(flights))
+    dispatch(setPos(pos))
+  }, [])
+
+
+  const { airPorts } = useSelector(state => state.flights)
+
+  const [cities, setCities] = useState([])
+
+  useEffect(() => {
+    if (airPorts?.items?.length > 0) {
+
+      setCities(airPorts.items)
+    }
+  }, [])
+  const getCitiesArray = (type, iataSourceCode, search = "") => {
+    const normalizedSearch = search.toLowerCase();
+
+    const filtered = cities?.filter((c) => {
+      const { airPortTranslations, iataCode } = c;
+      const { airPortName, city, country } = airPortTranslations?.[0] || {};
+      const matchesSearch = (
+        airPortName?.toLowerCase().includes(normalizedSearch) ||
+        city?.toLowerCase().includes(normalizedSearch) ||
+        country?.toLowerCase().includes(normalizedSearch) ||
+        iataCode?.toLowerCase().includes(normalizedSearch)
+      );
+
+      if (!matchesSearch) return false;
+
+      if (type === "source") {
+        return true; // all match
+      }
+
+      // Destination logic
+      if (iataSourceCode === "DAM" || iataSourceCode === "ALP") {
+        return iataCode !== "DAM" && iataCode !== "ALP";
+      } else {
+        return iataCode === "DAM" || iataCode === "ALP";
+      }
+    });
+
+    return filtered || [];
+  };
+
+
+
+
+
     const [activeTab, setActiveTab] = useState("book");
     const [showDesktopModal, setDesktopShowModal] = useState(false);
     const [showMobileModal, setShowMobileModal] = useState(false);
@@ -117,7 +167,6 @@ const BookingBox = ({ flights, cities, setCities, getCitiesArray, airPorts, sear
 
     const getCityString = (val, type) => {
         const city = airPorts?.items?.find(c => c.id === val);
-        console.log('city', city);
 
         const text = type === 's' ? 'Departure: ' : "Destenation: "
         // return city ? `${text}${city.iataCode}` : '';
@@ -209,45 +258,44 @@ const BookingBox = ({ flights, cities, setCities, getCitiesArray, airPorts, sear
         formik.setFieldValue("dateEnd", null);
         setMinMonth(new Date())
     };
-
     const handleDateSelect = (value) => {
         const tripType = formik.values.tripType;
+        console.log('value', value);
 
         if (tripType === 'OneWay') {
+            // Handle OneWay: Set dateStart and clear dateEnd
             if (value instanceof Date) {
-                formik.setFieldValue('dateStart', value);
-                formik.setFieldValue('dateEnd', '');
+                const existing = formik.values.dateStart
+                    ? new Date(formik.values.dateStart).toDateString()
+                    : null;
+                const selected = new Date(value).toDateString();
 
-                // const selectedMonth = new Date(value.getFullYear(), value.getMonth(), 1);
-                // setCurrentMonth(selectedMonth);
+                // If date is the same as the existing dateStart, skip update
+                if (existing === selected) return;
+
+                formik.setFieldValue('dateStart', value);
+                formik.setFieldValue('dateEnd', ''); // Clear dateEnd for OneWay
             }
         } else {
+            // Handle Return (range mode): Set dateStart and dateEnd
             if (value?.from) {
                 formik.setFieldValue('dateStart', value.from);
-                formik.setFieldValue('dateEnd', value.to || '');
 
-                const target = value.to || value.from;
-                // const selectedMonth = new Date(target.getFullYear(), target.getMonth(), 1);
-                // setCurrentMonth(selectedMonth);
-                setMinMonth(selectedMonth); // ✅ Now prevent viewing older months
+                // If both "from" and "to" dates are selected, set dateEnd
+                if (value.to) {
+                    formik.setFieldValue('dateEnd', value.to);
+                } else {
+                    // Keep dateEnd empty until second date is selected
+                    formik.setFieldValue('dateEnd', '');
+                }
+
+                setMinMonth(selectedMonth); // Adjust minMonth if needed
             }
         }
     };
 
 
 
-    const handleOneWayDateSelect = (date) => {
-        const existing = formik.values.dateStart
-            ? new Date(formik.values.dateStart).toDateString()
-            : null;
-
-        const selected = date ? new Date(date).toDateString() : null;
-
-        // If date is the same, skip update
-        if (existing === selected) return;
-
-        formik.setFieldValue("dateStart", date);
-    };
 
 
 
@@ -316,7 +364,7 @@ const BookingBox = ({ flights, cities, setCities, getCitiesArray, airPorts, sear
                     setCurrentMonth={setCurrentMonth}
                     currentMonth={currentMonth}
                     handleDateSelect={handleDateSelect}
-                    handleOneWayDateSelect={handleOneWayDateSelect}
+                    handleReset={handleReset}
                 />
             );
         }

@@ -10,7 +10,7 @@ import MonthNavigation from './MonthNavigation';
 import SelectedDateDisplay from './SelectedDateDisplay';
 import CustomDayContent from './CustomDayContent';
 
-const Dates = ({ formik, handleDateSelect, currentMonth, setCurrentMonth, minMonth, setMinMonth, handleOneWayDateSelect }) => {
+const Dates = ({ formik, handleDateSelect, currentMonth, setCurrentMonth, minMonth, setMinMonth ,handleReset}) => {
     const [shouldAnimateMonth, setShouldAnimateMonth] = useState(false);
 
     const isMobile = useIsMobile('768');
@@ -59,7 +59,7 @@ const Dates = ({ formik, handleDateSelect, currentMonth, setCurrentMonth, minMon
                 setFieldValue={formik.setFieldValue} />
             <div className="hidden md:block w-full my-3 h-[1px] bg-gray-200"></div>
 
-            <SelectedDateDisplay selected={selected} tripType={tripType} />
+            <SelectedDateDisplay selected={selected} tripType={tripType} handleReset={handleReset} />
 
             <div
                 className={`relative transition-all duration-300 ease-in-out ${shouldAnimateMonth ? 'animate-fadeInLeft' : ''
@@ -90,7 +90,7 @@ const Dates = ({ formik, handleDateSelect, currentMonth, setCurrentMonth, minMon
                         }}
                         mode={tripType === 'OneWay' ? 'single' : 'range'}
                         selected={selected}
-                        onSelect={tripType === 'OneWay' ? handleOneWayDateSelect : handleDateSelect}
+                        onSelect={handleDateSelect}
                         className="flex justify-center"
                         classNames={{
                             head_cell: 'uppercase text-xs font-bold text-gray-500 text-center',

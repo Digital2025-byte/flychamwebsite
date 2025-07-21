@@ -17,13 +17,7 @@ const StepFooterBar = ({ activeTab, isNextDisabled, getTripDuration, handleReset
                 <span className="text-black">
                     {tripDuration || '‎'}
                 </span>
-                <button
-                    onClick={handleReset}
-                    className="cursor-pointer text-main text-sm hover:text-[#002233]"
-                    disabled={!showExtras}
-                >
-                    Reset
-                </button>
+   
             </div>
 
             {/* Right Side - Navigation Buttons */}

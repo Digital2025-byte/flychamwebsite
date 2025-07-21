@@ -2,9 +2,9 @@
 import React from 'react';
 
 const SearchFlightsButton = ({ handleSubmit, values }) => {
-  const { source, destination, dateStart } = values;
+  const { source, destination, dateStart, tripType } = values;
 
-  const isDisabled = !dateStart || !source || !destination;
+  const isDisabled = !dateStart || !source || !destination || (tripType === "Return" && !dateEnd);
 
   return (
     <button
@@ -13,10 +13,9 @@ const SearchFlightsButton = ({ handleSubmit, values }) => {
       type="button"
       className={`w-full mt-4 flex justify-center items-center gap-[10px] h-[56px] p-[10px]
         flex-shrink-0 rounded-[8px] text-sm font-medium transition
-        ${
-          isDisabled
-            ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-            : 'bg-[#BAA981] text-white cursor-pointer hover:bg-[#a89773]'
+        ${isDisabled
+          ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+          : 'bg-[#BAA981] text-white cursor-pointer hover:bg-[#a89773]'
         }`}
     >
       Search flights

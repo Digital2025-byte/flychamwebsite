@@ -6,7 +6,6 @@ import React, { useState } from 'react';
 
 const ProgressBar = ({ steps, activeStep, setActiveStep }) => {
   const isLg = !useIsMobile(1024)
-  console.log('steps', steps);
 
   const completedPercentage = ((activeStep + 1) / steps.length) * 100;
 

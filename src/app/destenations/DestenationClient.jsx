@@ -20,9 +20,11 @@ import kuwait from '@/assets/images/Destenations/kuwait.webp';
 import { useTranslation } from 'react-i18next';
 import useIsArabic from '@/hooks/useIsArabic';
 import { useRouter } from 'next/navigation';
+import useIsMobile from '@/hooks/useIsMobile';
+import BookingBox from '@/components/Home/SearchFlight';
 
 
-const DestinationCard = ({ name, description, isArabic }) => (
+const DestinationCard = ({ name, description, isArabic, flights, pos }) => (
     <div
         className={`group bg-white rounded-xl p-5 shadow-lg w-full max-w-xs text-black transition hover:shadow-2xl hover:-translate-y-1 flex flex-col justify-between h-auto ${isArabic ? 'text-right' : 'text-left'}`}
         dir={isArabic ? 'rtl' : 'ltr'}
@@ -53,10 +55,11 @@ const PrevArrow = ({ onClick }) => (
     </button>
 );
 
-const DestenationClient = () => {
+const DestenationClient = ({ flights, pos }) => {
     const { t } = useTranslation()
     const isArabic = useIsArabic()
     const router = useRouter()
+    const isMobile = useIsMobile()
     const destinations = [
         {
             country: t('destinations.uae.country'),
@@ -142,12 +145,10 @@ const DestenationClient = () => {
     };
 
     const handleClickBookNow = () => {
-        // const widget = document.getElementById("search-widget");
-        // if (widget) {
-        //     widget.scrollIntoView({ behavior: "smooth", block: "start" });
-        // }
-        router.push("/")
-
+        const searchWidget = document.getElementById('search-widget');
+        if (searchWidget) {
+            searchWidget.scrollIntoView({ behavior: 'smooth' });
+        }
     };
 
     return (
@@ -242,7 +243,9 @@ const DestenationClient = () => {
                 <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-center mb-2 tracking-tight text-main drop-shadow-sm">
                     Let’s Book Your Next Flight
                 </h1>
-                <FlightSearch isHome />
+                <BookingBox pos={pos} flights={flights} />
+
+                {/* <FlightSearch isHome /> */}
             </div>
 
             <div className=' block xl:hidden  h-[64px]'></div>

@@ -66,15 +66,15 @@ export default function ClientLayoutWrapper({ children }) {
       link: '',
       subLinks: []
     },
-    {
-      label: t('nav.travelAgent'),
-      icon: Handshake,
-      link: '/travel-agent',
-      subLinks: [
-        { label: t('nav.subSignUp'), link: '/' },
-        { label: t('nav.subLogin'), link: 'https://reservations.flycham.com/xbe/' }
-      ]
-    },
+    // {
+    //   label: t('nav.travelAgent'),
+    //   icon: Handshake,
+    //   link: '/travel-agent',
+    //   subLinks: [
+    //     { label: t('nav.subSignUp'), link: '/' },
+    //     { label: t('nav.subLogin'), link: 'https://reservations.flycham.com/xbe/' }
+    //   ]
+    // },
     {
       label: t('nav.loyaltyProgram'),
       icon: Medal,

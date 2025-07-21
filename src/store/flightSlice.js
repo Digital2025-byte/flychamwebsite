@@ -103,8 +103,6 @@ const flightSlice = createSlice({
             })
             .addCase(getBySessionIdService.fulfilled, (state, action) => {
                 state.isLoading = false;
-                console.log('action.payload', action.payload);
-
                 state.sessionInfo = action.payload;
             })
             .addCase(getBySessionIdService.rejected, (state, action) => {

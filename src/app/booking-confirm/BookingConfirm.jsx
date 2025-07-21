@@ -18,7 +18,6 @@ import formatTime from '@/util/formatFlightTime';
 const BookingConfirm = () => {
     const dispatch = useDispatch();
     const { selectedFlight, sessionInfo, selectedPlan } = useSelector((s) => s.flights);
-    console.log('selectedPlan', selectedPlan);
 
     const isXl = useIsMobile(1280);
     const isLg = useIsMobile(1078);

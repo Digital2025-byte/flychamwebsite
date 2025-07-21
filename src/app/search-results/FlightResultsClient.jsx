@@ -68,7 +68,6 @@ const FlightResultsClient = () => {
     };
     const handlePayment = () => {
         const info = selectedType[selectedType.type]
-        console.log('selectedType', selectedType);
 
         const data = {
             bookingInfo: {

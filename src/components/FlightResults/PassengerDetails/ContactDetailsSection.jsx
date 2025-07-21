@@ -7,7 +7,6 @@ import countries from '@/util/countries';
 import ErrorMessage from '@/components/Ui/ErrorMessage';
 
 const ContactDetailsSection = ({ passengers, values, setFieldValue, handleChange, errors }) => {
-    console.log('errors', errors);
 
     const adultOptions = passengers
         .map((p, idx) => ({ ...p, idx }))

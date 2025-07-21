@@ -1,3 +1,4 @@
+import { fetchFromAPI } from '@/lib/api';
 import DestenationClient from './DestenationClient';
 
 export const metadata = {
@@ -19,9 +20,16 @@ export const metadata = {
         ],
     },
 };
+export async function getAirports() {
+    return await fetchFromAPI(`/api/booking/AirPort?filters=language==en&sorts=iata`)
+}
+export async function getPos() {
+    return await fetchFromAPI(`/api/booking/POS`)
+}
 
-const Page = () => {
-    return <DestenationClient />;
+export default async function DestenationPage() {
+    const flights = await getAirports()
+    const pos = await getPos()
+    return <DestenationClient flights={flights} pos={pos} />;
 };
 
-export default Page;

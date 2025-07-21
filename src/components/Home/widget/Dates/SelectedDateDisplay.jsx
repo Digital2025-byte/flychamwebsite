@@ -2,36 +2,39 @@
 import React from 'react';
 import { format, isSameDay } from 'date-fns';
 
-const SelectedDateDisplay = ({ selected, tripType }) => {
+const SelectedDateDisplay = ({ selected, tripType, handleReset }) => {
+  const text = tripType === 'Return' && selected?.from ? (
+    <div className="flex items-center justify-center gap-2">
+      Departure: <strong>{format(selected.from, 'dd MMM yyyy')}</strong> — Return:
+      {!selected.to || isSameDay(selected.from, selected.to) ? null : (
+        <>
+          <strong>{format(selected.to, 'dd MMM yyyy')}</strong>
+          <button
+            onClick={handleReset}
+            className="cursor-pointer underline text-main text-sm hover:text-[#002233]"
+          >
+            Reset Dates
+          </button>
+        </>
+      )}
+    </div>
+  ) : tripType === 'OneWay' && selected ? (
+    <div className="flex items-center justify-center gap-2">
+      Departure: <strong>{format(selected, 'dd MMM yyyy')}</strong>
+      <button
+        onClick={handleReset}
+        className="cursor-pointer underline text-main text-sm hover:text-[#002233]"
+      >
+        Reset Dates
+      </button>
+    </div>
+  ) : null;
 
-    let text = '';
-
-    if (tripType === 'Return' && selected?.from) {
-        text = (
-            <>
-                Departure: <strong>{format(selected.from, 'dd MMM yyyy')}</strong>
-                {' '}— Return:
-                {!selected.to || isSameDay(selected.from, selected.to) ? null : (
-                    <> <strong>{format(selected.to, 'dd MMM yyyy')}</strong></>
-                )}
-            </>
-        );
-    } else if (tripType === 'OneWay' && selected) {
-        text = (
-            <>
-                Departure: <strong>{format(selected, 'dd MMM yyyy')}</strong>
-            </>
-        );
-    }
-
-    return (
-        <p
-            className="text-center text-sm my-5 mb-2 min-h-[20px] transition-opacity duration-300"
-            style={{ opacity: text ? 1 : 0 }}
-        >
-            {text || '‎' /* invisible non-breaking space to preserve height */}
-        </p>
-    );
+  return (
+    <div className="text-center w-full text-sm my-5 mb-2 min-h-[20px] transition-opacity duration-300" style={{ opacity: text ? 1 : 0 }}>
+      {text || '‎'} {/* invisible non-breaking space to preserve height */}
+    </div>
+  );
 };
 
 export default SelectedDateDisplay;

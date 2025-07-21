@@ -38,55 +38,6 @@ const HomeClient = ({ flights, pos }) => {
   }
   const slides = [bg1, bg2, bg3];
 
-  useEffect(() => {
-    dispatch(setAirports(flights))
-    dispatch(setPos(pos))
-  }, [])
-
-  // useEffect(() => {
-  //   dispatch(getAirports({ search }))
-  // }, [search])
-  const { airPorts } = useSelector(state => state.flights)
-
-  const [cities, setCities] = useState([])
-  const [search, setSearch] = useState('');
-
-  useEffect(() => {
-    if (airPorts?.items?.length > 0) {
-
-      setCities(airPorts.items)
-    }
-  }, [])
-  const getCitiesArray = (type, iataSourceCode, search = "") => {
-    const normalizedSearch = search.toLowerCase();
-
-    const filtered = cities?.filter((c) => {
-      const { airPortTranslations, iataCode } = c;
-      const { airPortName, city, country } = airPortTranslations?.[0] || {};
-      const matchesSearch = (
-        airPortName?.toLowerCase().includes(normalizedSearch) ||
-        city?.toLowerCase().includes(normalizedSearch) ||
-        country?.toLowerCase().includes(normalizedSearch) ||
-        iataCode?.toLowerCase().includes(normalizedSearch)
-      );
-
-      if (!matchesSearch) return false;
-
-      if (type === "source") {
-        return true; // all match
-      }
-
-      // Destination logic
-      if (iataSourceCode === "DAM" || iataSourceCode === "ALP") {
-        return iataCode !== "DAM" && iataCode !== "ALP";
-      } else {
-        return iataCode === "DAM" || iataCode === "ALP";
-      }
-    });
-
-    return filtered || [];
-  };
-
 
 
 
@@ -100,11 +51,7 @@ const HomeClient = ({ flights, pos }) => {
 
           {/* <FlightSearch isHome /> */}
 
-          <BookingBox getCitiesArray={getCitiesArray} setCities={setCities} cities={cities} airPorts={airPorts}
-            search={search}
-            setSearch={setSearch}
-
-          />
+          <BookingBox pos={pos} flights={flights}          />
         </div>
         <div className='w-[90%] mx-auto px-2'>
 
