@@ -5,7 +5,7 @@ export default function CustomDropdown({
   selected,
   onChange,
   options = [],
-  placeholder = "Select", type
+  placeholder = "Select", type, error = false
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState("");
@@ -40,15 +40,15 @@ export default function CustomDropdown({
       <button
         type="button"
         onClick={toggleDropdown}
-        className="w-full px-4 py-3 rounded-xl text-left bg-100 hover:cursor-pointer border border-gray-300 relative"
+        className={`w-full px-4 py-3 rounded-xl text-left  hover:cursor-pointer border border-gray-300 relative ${error ? 'border-alert' : 'border-gray-300'}`}
       >
-        <span className="text-sm text-600">
+        <span className={`text-sm  ${error ? 'text-alert' : 'text-600'}`}>
           {selected
-            ? options.find((o) => o.value === selected)?.label  || selected
+            ? options.find((o) => o.value === selected)?.label || selected
             : placeholder}
         </span>
         <svg
-          className="w-4 h-4 absolute top-1/2 right-3 transform -translate-y-1/2 text-600"
+          className={`w-4 h-4 absolute top-1/2 right-3 transform -translate-y-1/2 ${error ? 'text-alert' : 'text-600'}`}
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"

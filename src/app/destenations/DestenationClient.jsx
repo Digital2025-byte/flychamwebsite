@@ -21,7 +21,7 @@ import { useTranslation } from 'react-i18next';
 import useIsArabic from '@/hooks/useIsArabic';
 import { useRouter } from 'next/navigation';
 import useIsMobile from '@/hooks/useIsMobile';
-import BookingBox from '@/components/Home/SearchFlight';
+import BookingBox from '@/components/Home/BookingBox';
 
 
 const DestinationCard = ({ name, description, isArabic, flights, pos }) => (

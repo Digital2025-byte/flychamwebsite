@@ -277,6 +277,9 @@
 .text-alert {
   color: var(--alert);
 }
+.border-alert {
+  border-color: var(--alert);
+}
 
 /* green */
 

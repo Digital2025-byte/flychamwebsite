@@ -41,12 +41,12 @@ const BookingBox = ({ flights,pos }) => {
 
   const [cities, setCities] = useState([])
 
-  useEffect(() => {
-    if (airPorts?.items?.length > 0) {
+useEffect(() => {
+  if (airPorts?.items?.length > 0) {
+    setCities(airPorts.items)
+  }
+}, [airPorts])
 
-      setCities(airPorts.items)
-    }
-  }, [])
   const getCitiesArray = (type, iataSourceCode, search = "") => {
     const normalizedSearch = search.toLowerCase();
 
@@ -260,7 +260,6 @@ const BookingBox = ({ flights,pos }) => {
     };
     const handleDateSelect = (value) => {
         const tripType = formik.values.tripType;
-        console.log('value', value);
 
         if (tripType === 'OneWay') {
             // Handle OneWay: Set dateStart and clear dateEnd

@@ -30,7 +30,7 @@ const AirportModal = ({ isOpen, onClose, setFieldValue,
           <div className="fixed inset-0 bg-[#0000009D]" />
         </Transition.Child>
 
-        <div className="fixed inset-0 flex items-start justify-center mt-24 px-4">
+        <div className="fixed inset-0 flex items-start justify-center mt-24 px-4 overflow-y-auto">
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-200"

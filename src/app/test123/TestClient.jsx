@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useRouter } from 'next/navigation';
 
-import BookingBox from '@/components/Home/SearchFlight'
+import BookingBox from '@/components/Home/BookingBox'
 import { useDispatch, useSelector } from 'react-redux';
 import { setAirports, setPos } from '@/store/flightSlice';
 const TestClient = ({ flights, pos}) => {

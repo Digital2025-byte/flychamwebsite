@@ -17,6 +17,9 @@ import { Phone, User } from '@phosphor-icons/react';
 import ContactDetailsSection from './ContactDetailsSection';
 import { createListPassengerService } from '@/store/Services/flightServices';
 import { setSelectedpassengers } from '@/store/flightSlice';
+import calculateAgeInYears from '@/util/calculateAgeInYears';
+import daysUntilAge from '@/util/daysUntilAge';
+import { passengerSchema } from '@/util/validatonSchemas';
 import * as Yup from 'yup';
 
 const PassengerDetails = ({ setActiveStep, selectedFlight, selectedType }) => {
@@ -24,7 +27,6 @@ const PassengerDetails = ({ setActiveStep, selectedFlight, selectedType }) => {
     const { searchParams } = useSelector((s) => s.flights)
     const { adults, children, infants } = searchParams
     let globalIndex = 0;
-
     const passengers = [
         { type: 'adult', count: adults, typeValue: 'ADT' },
         { type: 'child', count: children, typeValue: 'CHD' },
@@ -41,67 +43,8 @@ const PassengerDetails = ({ setActiveStep, selectedFlight, selectedType }) => {
             title: '',
         }))
     );
-const calculateAgeInYears = (dob) => {
-    const birth = new Date(dob);
-    const today = new Date();
 
-    const diffTime = today - birth; // Difference in milliseconds
-    const ageInYears = diffTime / (1000 * 60 * 60 * 24 * 365.25); // Convert to years (approx)
 
-    return ageInYears;
-};
-
-    // Utility function to calculate age based on the date of birth
-    const calculateAge = (dateOfBirth) => {
-        console.log('dateOfBirth', dateOfBirth);
-
-        const today = new Date();
-        const birthDate = new Date(dateOfBirth);
-        let age = today.getFullYear() - birthDate.getFullYear();
-        const m = today.getMonth() - birthDate.getMonth();
-
-        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-            age--;
-        }
-
-        return age;
-    };
-
-    // Validation schema for passengers
-    const passengerSchema = Yup.object().shape({
-        // title: Yup.string().required('Title is required'),
-        // firstName: Yup.string().required('First name is required'),
-        // lastName: Yup.string().required('Last name is required'),
-        dateOfBirth: Yup.date()
-            .required('Date of birth is required')
-            .test('is-valid-date', 'Invalid date of birth', function (value) {
-                const { typeValue } = this.parent; // Access the passengerType field
-                console.log('this.parent', this.parent);
-                console.log('passengerType', typeValue);
-
-                if (!value) return false;
-
-            const age = calculateAgeInYears(value);
-                console.log('age', age);
-
-                // Adult (more than 12 years)
-                if (typeValue === 'ADT') {
-                    return age > 12;
-                }
-
-                // Child (2 - 12 years)
-                if (typeValue === 'CHD') {
-                    return age >= 2 && age <= 12;
-                }
-
-                // Infant (less than 2 years)
-                if (typeValue === 'INF') {
-                    return age < 2;
-                }
-
-                return false; // Default case for invalid passenger type
-            }),
-    });
 
 
     const formik = useFormik({
@@ -152,7 +95,6 @@ const calculateAgeInYears = (dob) => {
                 })),
             };
 
-            // ✅ Validate required fields before calling the API
             const hasEmptyFields =
                 !data.title ||
                 !data.firstName ||
@@ -183,9 +125,6 @@ const calculateAgeInYears = (dob) => {
         },
 
     });
-
-    console.log('Errors', formik.errors.passengers);
-    console.log('values', formik.values.passengers);
 
 
     return (

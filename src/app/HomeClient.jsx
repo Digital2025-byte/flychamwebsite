@@ -21,7 +21,7 @@ import bg1 from '../assets/images/main-slider/bg1.webp';
 import bg2 from '../assets/images/main-slider/bg2.webp';
 import bg3 from '../assets/images/main-slider/bg3.webp';
 import ImportantAlert from '@/components/Ui/Alert'
-import BookingBox from '@/components/Home/SearchFlight'
+import BookingBox from '@/components/Home/BookingBox'
 import { useDispatch, useSelector } from 'react-redux'
 import { setAirports, setPos, setSearchParams } from '@/store/flightSlice'
 import { getAirports, getFlightsService } from '@/store/Services/flightServices'
