@@ -27,55 +27,55 @@ import Guests from "./Guests";
 import Dates from "./widget/Dates/Dates";
 import SearchInput from "./SearchInput";
 
-const BookingBox = ({ flights,pos }) => {
+const BookingBox = ({ flights, pos }) => {
     const isMobile = useIsMobile()
     const dispatch = useDispatch()
     const router = useRouter()
-  useEffect(() => {
-    dispatch(setAirports(flights))
-    dispatch(setPos(pos))
-  }, [])
+    useEffect(() => {
+        dispatch(setAirports(flights))
+        dispatch(setPos(pos))
+    }, [])
 
 
-  const { airPorts } = useSelector(state => state.flights)
+    const { airPorts } = useSelector(state => state.flights)
 
-  const [cities, setCities] = useState([])
+    const [cities, setCities] = useState([])
 
-useEffect(() => {
-  if (airPorts?.items?.length > 0) {
-    setCities(airPorts.items)
-  }
-}, [airPorts])
+    useEffect(() => {
+        if (airPorts?.items?.length > 0) {
+            setCities(airPorts.items)
+        }
+    }, [airPorts])
 
-  const getCitiesArray = (type, iataSourceCode, search = "") => {
-    const normalizedSearch = search.toLowerCase();
+    const getCitiesArray = (type, iataSourceCode, search = "") => {
+        const normalizedSearch = search.toLowerCase();
 
-    const filtered = cities?.filter((c) => {
-      const { airPortTranslations, iataCode } = c;
-      const { airPortName, city, country } = airPortTranslations?.[0] || {};
-      const matchesSearch = (
-        airPortName?.toLowerCase().includes(normalizedSearch) ||
-        city?.toLowerCase().includes(normalizedSearch) ||
-        country?.toLowerCase().includes(normalizedSearch) ||
-        iataCode?.toLowerCase().includes(normalizedSearch)
-      );
+        const filtered = cities?.filter((c) => {
+            const { airPortTranslations, iataCode } = c;
+            const { airPortName, city, country } = airPortTranslations?.[0] || {};
+            const matchesSearch = (
+                airPortName?.toLowerCase().includes(normalizedSearch) ||
+                city?.toLowerCase().includes(normalizedSearch) ||
+                country?.toLowerCase().includes(normalizedSearch) ||
+                iataCode?.toLowerCase().includes(normalizedSearch)
+            );
 
-      if (!matchesSearch) return false;
+            if (!matchesSearch) return false;
 
-      if (type === "source") {
-        return true; // all match
-      }
+            if (type === "source") {
+                return true; // all match
+            }
 
-      // Destination logic
-      if (iataSourceCode === "DAM" || iataSourceCode === "ALP") {
-        return iataCode !== "DAM" && iataCode !== "ALP";
-      } else {
-        return iataCode === "DAM" || iataCode === "ALP";
-      }
-    });
+            // Destination logic
+            if (iataSourceCode === "DAM" || iataSourceCode === "ALP") {
+                return iataCode !== "DAM" && iataCode !== "ALP";
+            } else {
+                return iataCode === "DAM" || iataCode === "ALP";
+            }
+        });
 
-    return filtered || [];
-  };
+        return filtered || [];
+    };
 
 
 
@@ -113,7 +113,8 @@ useEffect(() => {
             dateEnd: '',
             type: 0,
             tripType: 'OneWay',
-            nearby: false
+            nearby: false,
+            hasClickCalendar: false
         },
         onSubmit: (values) => {
             const {
@@ -256,11 +257,13 @@ useEffect(() => {
     const handleReset = () => {
         formik.setFieldValue("dateStart", null);
         formik.setFieldValue("dateEnd", null);
+        formik.setFieldValue('hasClickCalendar', false);
+
         setMinMonth(new Date())
     };
     const handleDateSelect = (value) => {
         const tripType = formik.values.tripType;
-
+        formik.setFieldValue('hasClickCalendar', true);
         if (tripType === 'OneWay') {
             // Handle OneWay: Set dateStart and clear dateEnd
             if (value instanceof Date) {
@@ -273,13 +276,15 @@ useEffect(() => {
                 if (existing === selected) return;
 
                 formik.setFieldValue('dateStart', value);
-                formik.setFieldValue('dateEnd', ''); // Clear dateEnd for OneWay
+                formik.setFieldValue('dateEnd', '');
+
             }
         } else {
+            const { hasClickCalendar } = formik.values
             // Handle Return (range mode): Set dateStart and dateEnd
             if (value?.from) {
                 formik.setFieldValue('dateStart', value.from);
-
+                formik.setFieldValue('hasClickCalendar', false);
                 // If both "from" and "to" dates are selected, set dateEnd
                 if (value.to) {
                     formik.setFieldValue('dateEnd', value.to);
@@ -328,13 +333,15 @@ useEffect(() => {
             const isSource = type === 0;
             return (
                 <>
+                {!isMobile &&
                     <SearchInput
-                        search={type === 0 ? sourceSearch : destinationSearch}
-                        handleSearch={handleSearch}
-                        onClose={onClose}
-                        placeholder={type === 0 ? "Search for airport or city" : "To"}
-                        type={type === 0 ? "source" : "destination"}
+                    search={type === 0 ? sourceSearch : destinationSearch}
+                    handleSearch={handleSearch}
+                    onClose={onClose}
+                    placeholder={type === 0 ? "Search for airport or city" : "To"}
+                    type={type === 0 ? "source" : "destination"}
                     />
+                }
                     <AirportList
                         type={isSource ? "source" : "destination"}
                         values={formik.values}
@@ -394,6 +401,7 @@ useEffect(() => {
             />
             <TripTypeSelector values={formik.values}
                 setFieldValue={formik.setFieldValue}
+                handleReset={handleReset}
 
             />
             <FromToSelector
@@ -428,7 +436,7 @@ useEffect(() => {
             <div className="flex items-center justify-between mb-6">
                 <TripTypeSelector values={formik.values}
                     setFieldValue={formik.setFieldValue}
-
+                    handleReset={handleReset}
                 />
                 <MilesToggle isMobile={isMobile} />
             </div>

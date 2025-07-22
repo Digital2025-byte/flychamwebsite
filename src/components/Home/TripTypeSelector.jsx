@@ -1,11 +1,12 @@
 'use client'
 import React, { useEffect, useState } from 'react';
 
-const TripTypeSelector = ({ setFieldValue, values }) => {
+const TripTypeSelector = ({ setFieldValue, values, handleReset }) => {
   const { tripType } = values;
 
   const handleSelect = (type) => {
     setFieldValue("tripType", type);
+    handleReset()
   };
 
   const TripTypeButton = ({ label, value, tripType, handleSelect }) => (
