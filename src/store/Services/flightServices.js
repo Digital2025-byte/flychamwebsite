@@ -2,7 +2,7 @@ import apiClient from '@/lib/apiClient';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 const sliceName = 'airPorts';
-
+// ===================================== GET AIR PORTS ==============================================
 export const getAirports = createAsyncThunk(
     `${sliceName}/getAirports`,
     async ({ search }, thunkAPI) => {
@@ -19,6 +19,7 @@ export const getAirports = createAsyncThunk(
         }
     }
 );
+// ===================================== SEARCH FLIGHTS ==============================================
 export const getFlightsService = createAsyncThunk(
     `${sliceName}/getFlightsService`,
     async (data, thunkAPI) => {
@@ -33,6 +34,8 @@ export const getFlightsService = createAsyncThunk(
         }
     }
 );
+// ===================================== CREATE PASSENGER LISITS ==============================================
+
 export const createListPassengerService = createAsyncThunk(
     `${sliceName}/createListPassengerService`,
     async (data, thunkAPI) => {
@@ -47,6 +50,8 @@ export const createListPassengerService = createAsyncThunk(
         }
     }
 );
+// ===================================== CREATE PAYMENT ==============================================
+
 export const createPaymentService = createAsyncThunk(
     `${sliceName}/createPaymentService`,
     async (data, thunkAPI) => {
@@ -61,23 +66,26 @@ export const createPaymentService = createAsyncThunk(
         }
     }
 );
+// ===================================== CREATE SESSION BY ID ==============================================
+
 export const getBySessionIdService = createAsyncThunk(
-  `${sliceName}/getBySessionIdService`,
-  async (id, thunkAPI) => {
-    try {
-      const response = await apiClient.get(
-        `/api/booking/PaymentPNRResult/GetBySessionId`,
-        {
-          headers: {
-            SessionId: id,
-          },
+    `${sliceName}/getBySessionIdService`,
+    async (id, thunkAPI) => {
+        try {
+            const response = await apiClient.get(
+                `/api/booking/PaymentPNRResult/GetBySessionId`,
+                {
+                    headers: {
+                        SessionId: id,
+                    },
+                }
+            );
+            return response.data;
+        } catch (error) {
+            return thunkAPI.rejectWithValue(
+                error.response?.data?.message || error.message || 'Something went wrong'
+            );
         }
-      );
-      return response.data;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(
-        error.response?.data?.message || error.message || 'Something went wrong'
-      );
     }
-  }
 );
+// ===================================== VALIDATE EMAIL ==============================================
