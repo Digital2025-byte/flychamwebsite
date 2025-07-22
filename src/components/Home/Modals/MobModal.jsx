@@ -126,7 +126,7 @@ const MobModal = ({ handleReset, isOpen, onClose,
                                         disabled={!canWeFly}
                                         onClick={onClose}
                                         className="flex w-[344px] h-[56px] px-[10px] py-[10px] justify-center items-center gap-[10px] 
-             flex-shrink-0 rounded-[8px] bg-secondary text-white font-semibold text-sm"
+                                                  flex-shrink-0 rounded-[8px] bg-secondary text-white font-semibold text-sm"
                                     >
                                         Continue
                                     </button>

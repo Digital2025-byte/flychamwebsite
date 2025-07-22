@@ -289,7 +289,7 @@ const BookingBox = ({ flights,pos }) => {
                     formik.setFieldValue('dateEnd', '');
                 }
 
-                setMinMonth(selectedMonth); // Adjust minMonth if needed
+                // setMinMonth(selectedMonth); // Adjust minMonth if needed
             }
         }
     };

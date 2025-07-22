@@ -128,8 +128,6 @@ const FlightResultsClient = () => {
         if (dateReturn && adjustedDate > dateReturn) return;
 
         const formattedDateOnly = `${adjustedDate.getUTCFullYear()}-${String(adjustedDate.getUTCMonth() + 1).padStart(2, '0')}-${String(adjustedDate.getUTCDate()).padStart(2, '0')}`;
-
-        // ✅ Convert to "YYYY-MM-DDT00:00:00"
         const formattedFullDate = `${formattedDateOnly}T00:00:00`;
 
 
@@ -222,15 +220,6 @@ const FlightResultsClient = () => {
     }, []);
 
 
-    // useEffect(() => {
-    //     // Start 5-minute (300000ms) timer
-    //     const timer = setTimeout(() => {
-    //         setSessionModalOpen(true);
-    //     }, 5 * 60 * 1000); // 5 minutes
-
-    //     // Cleanup timer on unmount
-    //     return () => clearTimeout(timer);
-    // }, []);
     const handleSelectPos = (id) => {
         const newParams = {
             ...searchParams,

@@ -2,7 +2,7 @@
 import React from 'react';
 
 const SearchFlightsButton = ({ handleSubmit, values }) => {
-  const { source, destination, dateStart, tripType } = values;
+  const { source, destination, dateStart, tripType, dateEnd } = values;
 
   const isDisabled = !dateStart || !source || !destination || (tripType === "Return" && !dateEnd);
 
