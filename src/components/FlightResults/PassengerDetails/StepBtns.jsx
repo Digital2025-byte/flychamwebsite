@@ -2,9 +2,9 @@
 import { CaretLeft } from '@phosphor-icons/react';
 import { useSelector } from 'react-redux';
 
-const StepBtns = ({ setActiveStep, handleSubmit }) => {
-    const isBackDisabled = true;
-    const isNextDisabled = false;
+const StepBtns = ({ activeStep, setActiveStep, handleSubmit }) => {
+    console.log('activeStep', activeStep);
+
     const { isLoadingCreatePassengers, isLoadingCreatePayment } = useSelector((s) => s.flights)
 
     return (
@@ -30,7 +30,7 @@ const StepBtns = ({ setActiveStep, handleSubmit }) => {
                     }`}
                 onClick={handleSubmit}
             >
-                {isLoadingCreatePayment || isLoadingCreatePassengers ? 'Processing...' : 'Next'}
+                {isLoadingCreatePayment || isLoadingCreatePassengers ? 'Processing...' : activeStep === 1 ? 'Next' : "Go to pay"}
             </button>
 
         </div>

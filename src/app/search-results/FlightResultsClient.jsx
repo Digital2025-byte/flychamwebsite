@@ -30,7 +30,8 @@ import PosSelectorModal from '@/components/FlightResults/FlighSelectStep/PosSele
 
 const FlightResultsClient = () => {
     const dispatch = useDispatch()
-    const { flights, selectedPassengers, searchParams, isLoadingFlights, selectedPlan } = useSelector((state) => state.flights)
+    const { flights, selectedPassengers, searchParams, isLoadingFlights, selectedPlan } = useSelector((state) => state.flights);
+    const { flighttype } = searchParams
     const router = useRouter()
 
     const [showNoice, setShowNotice] = useState(true);
@@ -97,7 +98,8 @@ const FlightResultsClient = () => {
             stripeInfo: {
                 Amount: Number(info.total_fare),
                 Currency: selectedPlan.commonInfo.currency.toLowerCase(),
-                Description: `${selectedFlight.common_info.segments[0].origin_code}_${selectedFlight.common_info.segments[0].destination_code}`
+                Description:
+                    `${selectedFlight.common_info.segments[0].origin_code}_${selectedFlight.common_info.segments[0].destination_code}_${selectedFlight.common_info.flight}_${selectedFlight.common_info.flight_number}YKDTFC`
             }
         }
 
@@ -159,7 +161,7 @@ const FlightResultsClient = () => {
         },
         {
             label: 'Passenger details', content: <PassengerDetails
-
+                activeStep={activeStep}
                 setActiveStep={setActiveStep}
                 selectedFlight={selectedFlight}
                 selectedType={selectedType}
@@ -169,6 +171,8 @@ const FlightResultsClient = () => {
         // { label: 'Seats & Extras', content: <p>3</p> },
         {
             label: 'Pay & confirm', content: <Payment setActiveStep={setActiveStep}
+                activeStep={activeStep}
+
                 selectedFlight={selectedFlight}
                 selectedType={selectedType}
                 handlePayment={handlePayment}
@@ -232,6 +236,32 @@ const FlightResultsClient = () => {
         window.scroll(0, 0)
     }, [activeStep])
 
+    
+    const [timeLeft, setTimeLeft] = useState(7 * 60);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setTimeLeft(prev => {
+                if (prev <= 1) {
+                    clearInterval(interval);
+                    setSessionModalOpen(true); 
+                    return 0;
+                }
+                return prev - 1;
+            });
+        }, 1000);
+
+        return () => clearInterval(interval); 
+    }, []);
+    const handleSearchAgain = () => {
+        const data = searchParams
+        dispatch(getFlightsService(data)).then((action) => {
+            if (getFlightsService.fulfilled.match(action)) {
+                setSessionModalOpen(false)
+                setTimeLeft(7 * 60)
+            }
+        });
+    }
     return (
         <>
 
@@ -285,6 +315,7 @@ const FlightResultsClient = () => {
             <SessionExpiredModal
                 isOpen={isSessionModalOpen}
                 onClose={() => setSessionModalOpen(false)}
+                handleSearchAgain={handleSearchAgain}
             />
             <PosSelectorModal handleSelectPos={handleSelectPos} isOpen={showPosModal} setIsOpen={setShowPosModal} />
 

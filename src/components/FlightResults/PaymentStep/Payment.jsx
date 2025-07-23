@@ -5,7 +5,7 @@ import StripBox from './StripBox';
 import StepBtns from '../PassengerDetails/StepBtns';
 
 
-const Payment = ({ setActiveStep, selectedFlight, selectedType, handlePayment }) => {
+const Payment = ({activeStep, setActiveStep, selectedFlight, selectedType, handlePayment }) => {
 
     return (
         <div className="flex flex-col xl:flex-row gap-6">
@@ -16,6 +16,7 @@ const Payment = ({ setActiveStep, selectedFlight, selectedType, handlePayment })
                 <StripBox />
                 <StepBtns setActiveStep={setActiveStep}
                     handleSubmit={handlePayment}
+activeStep={activeStep}
                 />
 
             </div>

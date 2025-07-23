@@ -23,7 +23,7 @@ import { contactSchema, passengerSchema } from '@/util/validatonSchemas';
 import * as Yup from 'yup';
 import ErrorMessage from '@/components/Ui/ErrorMessage';
 
-const PassengerDetails = ({ setActiveStep, selectedFlight, selectedType }) => {
+const PassengerDetails = ({activeStep, setActiveStep, selectedFlight, selectedType }) => {
     const dispatch = useDispatch()
     const { searchParams } = useSelector((s) => s.flights)
     const { adults, children, infants } = searchParams
@@ -190,7 +190,7 @@ const PassengerDetails = ({ setActiveStep, selectedFlight, selectedType }) => {
                     />
                 </Section>
                 <Section>
-                    <StepBtns setActiveStep={setActiveStep} handleSubmit={formik.handleSubmit} />
+                    <StepBtns activeStep={activeStep} setActiveStep={setActiveStep} handleSubmit={formik.handleSubmit} />
                 </Section>
 
             </div>

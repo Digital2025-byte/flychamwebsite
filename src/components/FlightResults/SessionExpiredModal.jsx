@@ -3,11 +3,12 @@ import { Dialog, Transition } from '@headlessui/react';
 import { Fragment } from 'react';
 import { useRouter } from 'next/navigation';
 import { Warning } from '@phosphor-icons/react';
+import { useSelector } from 'react-redux';
 // import { ExclamationTriangleIcon } from '@heroicons/react/24/outline';
 
-const SessionExpiredModal = ({ isOpen, onClose }) => {
+const SessionExpiredModal = ({ isOpen, onClose, handleSearchAgain }) => {
     const router = useRouter();
-
+    const { isLoadingFlights } = useSelector((s) => s.flights)
     const handleReturnHome = () => {
         // onClose();
         router.push('/');
@@ -38,21 +39,45 @@ const SessionExpiredModal = ({ isOpen, onClose }) => {
                                     <Warning size={60} color='#BAA981' weight='fill' />
 
                                 </div>
-                                <Dialog.Title as="h3" className="text-[26px] font-semibold text-primary-1 font-montserrat">
+                                <Dialog.Title as="h3" className="text-[26px] font-semibold text-primary-1 ">
                                     Your Session Has Expired
                                 </Dialog.Title>
-                                <div className="mt-4 text-[16px] text-600 font-medium font-montserrat">
+                                <div className="mt-4 text-[16px] text-600 font-medium ">
                                     Oops! Looks like your session timed out. Please return to the homepage and continue search.
                                 </div>
 
-                                <div className="mt-8">
+                                <div className="flex gap-4 items-center justify-center mt-8">
                                     <button
                                         onClick={handleReturnHome}
-                                        className="cursor-pointer bg-primary-1 text-[#FFF] text-[16px] font-semibold font-montserrat px-6 py-3 rounded-md  transition"
+                                        className="cursor-pointer text-primary-1 border border-primary-1 text-[16px] font-semibold px-6 py-3 rounded-md transition duration-200 ease-in-out hover:!bg-[#054E72] hover:!text-white"
                                     >
                                         Back to home page
                                     </button>
+
+
+                                    <button
+                                        onClick={handleSearchAgain}
+                                        disabled={isLoadingFlights}
+                                        className={`
+    cursor-pointer
+    ${isLoadingFlights ? 'bg-gray-300 cursor-not-allowed' : 'bg-primary-1'}
+    text-white text-[16px] font-semibold px-6 py-3 rounded-md transition
+    ${!isLoadingFlights ? 'hover:!bg-white hover:!text-[#054E72] hover:border-[#054E72] hover:border hover:shadow-lg' : ''}
+    flex items-center justify-center gap-2
+  `}
+                                    >
+                                        {isLoadingFlights ? (
+                                            <>
+                                                Loading...
+                                            </>
+                                        ) : (
+                                            'Search again'
+                                        )}
+                                    </button>
+
+
                                 </div>
+
                             </Dialog.Panel>
                         </Transition.Child>
                     </div>

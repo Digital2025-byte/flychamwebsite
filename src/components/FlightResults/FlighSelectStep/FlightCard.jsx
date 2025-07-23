@@ -32,9 +32,9 @@ const FlightCard = ({
     w-full p-4 lg:py-8 lg:px-8 flex flex-col items-center lg:items-stretch 
     rounded-[12px]
     ${isConfirmed
-                    ? 'border border-[var(--green)] bg-[#F5F5F4] shadow-[0px_2px_10px_0px_rgba(0,0,0,0.15)]'
-                    : 'bg-100'
-                }
+      ? 'border border-[#34C759] bg-[#F5F5F4] shadow-[0px_2px_10px_rgba(0,0,0,0.1)]'
+      : 'bg-100'
+    }
     ${!isConfirmed ? 'cursor-pointer' : ''}
   `}
         >
