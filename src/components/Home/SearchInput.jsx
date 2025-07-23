@@ -17,7 +17,7 @@ const SearchInput = ({ search, placeholder, handleSearch, type, values, airPorts
     inputRef.current?.focus();
 
     // Auto-select text when a value exists
-    if (search && (source || destenations)) {
+    if (search &&  values?.[type]) {
       inputRef.current?.select();
     }
   }, [search]);
