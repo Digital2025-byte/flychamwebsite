@@ -31,7 +31,7 @@ const SearchInput = ({ search, placeholder, handleSearch, type, values, airPorts
           onChange={(e) => handleSearch(e.target.value, type)}
 
           placeholder={placeholder}
-          className="w-full text-gray-700 placeholder-gray-400 text-sm px-0 py-2 focus:outline-none"
+          className="w-full text-gray-700 placeholder-gray-400 text-[16px] px-0 py-2 focus:outline-none"
         />
         {search && (
           <button
