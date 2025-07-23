@@ -55,7 +55,7 @@ const ContactDetailsSection = ({ passengers, values, setFieldValue, handleChange
                         onChange={handleChange}
                         placeholder="Local number only, no country code"
                         label="Phone number"
-                        type="tel"
+                        type="number"
                         error={touched?.phoneNumber && errors?.phoneNumber}
                     />
                     {touched?.phoneNumber && errors?.phoneNumber && <ErrorMessage error={errors.phoneNumber} />}

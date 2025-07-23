@@ -7,8 +7,13 @@ import { store } from '@/store';
 
 export const passengerSchema = Yup.object().shape({
     title: Yup.string().required('Title is required'),
-    firstName: Yup.string().required('First name is required'),
-    lastName: Yup.string().required('Last name is required'),
+    firstName: Yup.string()
+        .required('First name is required')
+        .matches(/^[A-Za-z\s]+$/, 'Only English letters are allowed'),
+
+    lastName: Yup.string()
+        .required('Last name is required')
+        .matches(/^[A-Za-z\s]+$/, 'Only English letters are allowed'),
 
     dateOfBirth: Yup.date()
         .required('Date of birth is required')
