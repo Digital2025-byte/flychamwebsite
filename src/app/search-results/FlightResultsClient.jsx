@@ -275,7 +275,7 @@ const FlightResultsClient = () => {
                             <Section><ProgressBar steps={steps} activeStep={activeStep} setActiveStep={setActiveStep} /></Section>
 
                             <Section><RouteInfo /></Section>
-                            {showNoice && (activeStep === 0 || activeStep === 1) &&
+                            {showNoice && (activeStep === 0) &&
                                 <POSNotice setShowNotice={setShowNotice} setShowPosModal={setShowPosModal} />
                             }
                             {!selectedFlight &&
@@ -292,7 +292,7 @@ const FlightResultsClient = () => {
                             <Section ><DateNavigation handleClickDate={handleClickDate} /></Section>
 
                         }
-                        {showNoice && (activeStep === 0 || activeStep === 1) &&
+                        {showNoice && (activeStep === 0) &&
                             <POSNotice setShowNotice={setShowNotice} setShowPosModal={setShowPosModal} />
                         }
 

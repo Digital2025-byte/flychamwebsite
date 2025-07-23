@@ -42,7 +42,7 @@ export default function CustomDropdown({
         onClick={toggleDropdown}
         className={`w-full px-4 py-3 rounded-xl text-left  hover:cursor-pointer border border-gray-300 relative ${error ? 'border-alert' : 'border-gray-300'}`}
       >
-        <span className={`text-sm  ${error ? 'text-alert' : 'text-600'}`}>
+        <span className={`text-[16px]  ${error ? 'text-alert' : 'text-600'}`}>
           {selected
             ? options.find((o) => o.value === selected)?.label || selected
             : placeholder}
@@ -69,7 +69,7 @@ export default function CustomDropdown({
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              className="w-full px-4 py-2 text-sm border-b border-gray-300 focus:outline-none"
+              className="w-full px-4 py-2 text-[16px] border-b border-gray-300 focus:outline-none"
               placeholder="Search country or code"
             />
           }
@@ -78,14 +78,14 @@ export default function CustomDropdown({
               <li
                 key={opt.value}
                 onClick={() => handleSelect(opt.value)}
-                className={`px-4 py-2 text-sm hover:bg-[#054E72] hover:text-white ${selected === opt.value ? "bg-[#054E72] text-white" : "text-gray-700"
+                className={`px-4 py-2 text-[16px] hover:bg-[#054E72] hover:text-white ${selected === opt.value ? "bg-[#054E72] text-white" : "text-gray-700"
                   } cursor-pointer`}
               >
                 {opt.label}
               </li>
             ))}
             {filteredOptions.length === 0 && (
-              <li className="px-4 py-2 text-sm text-gray-500">No matches found</li>
+              <li className="px-4 py-2 text-[16px] text-gray-500">No matches found</li>
             )}
           </ul>
         </div>
