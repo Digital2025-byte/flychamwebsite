@@ -277,6 +277,7 @@
 .text-alert {
   color: var(--alert);
 }
+
 .border-alert {
   border-color: var(--alert);
 }
@@ -512,4 +513,10 @@ input:focus {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+/* styles/globals.css */
+input::selection {
+  background-color: var(--color-main);
+  color: white;
 }

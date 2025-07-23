@@ -3,19 +3,30 @@ import { X } from "@phosphor-icons/react";
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 
-const SearchInput = ({ search, placeholder, handleSearch, type }) => {
+const SearchInput = ({ search, placeholder, handleSearch, type, values, airPorts }) => {
   const inputRef = useRef(null);
+  // Get selected airport ID dynamically from `values`
+  const selectedAirportId = values?.[type]; // either values.source or values.destination
+  const selectedAirport = airPorts.find((a) => a.id === selectedAirportId);
+  const selectedAirportName = selectedAirport?.airPortTranslations?.[0]?.airPortName ?? "";
+
+  const displayValue = selectedAirportName || search;
+
   useEffect(() => {
     inputRef.current?.focus();
-  }, []);
+
+    // Auto-select text when a value exists
+    if (search) {
+      inputRef.current?.select();
+    }
+  }, [search]);
   return (
     <div className="rounded-t-2xl py-6">
       <div className="flex items-center border-b border-gray-300">
         <input
           ref={inputRef}
-
           type="text"
-          value={search}
+          value={search ? search : displayValue}
           onChange={(e) => handleSearch(e.target.value, type)}
 
           placeholder={placeholder}
@@ -25,7 +36,7 @@ const SearchInput = ({ search, placeholder, handleSearch, type }) => {
           <button
             onClick={() => {
 
-              handleSearch('');
+              handleSearch('', type);
             }}
             className="cursor-pointer text-gray-700 hover:text-black text-sm px-2"
           >

@@ -28,6 +28,12 @@ export default function RootLayout({ children }) {
   return (
     <html dir="ltr">
       <head>
+        {/* ✅ Prevent screen zoom on input focus (especially iOS Safari) */}
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+        />
+
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
         <style>{`
           body, h1, p, h2, h3, h4, h5, h6, div, span {
@@ -39,10 +45,10 @@ export default function RootLayout({ children }) {
         <Toaster richColors />
         <ClientLayoutWrapper>{children}</ClientLayoutWrapper>
       </body>
-     <Script
-          src="https://unpkg.com/preline/dist/preline.js"
-          strategy="afterInteractive"
-        />
+      <Script
+        src="https://unpkg.com/preline/dist/preline.js"
+        strategy="afterInteractive"
+      />
     </html>
   );
 }

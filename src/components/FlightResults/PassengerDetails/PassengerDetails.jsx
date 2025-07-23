@@ -135,8 +135,7 @@ const PassengerDetails = ({ setActiveStep, selectedFlight, selectedType }) => {
 
     });
 
-    console.log('Errors', formik.errors);
-    console.log('Values', formik.values);
+
 
     return (
         <div className="flex flex-col xl:flex-row gap-6">

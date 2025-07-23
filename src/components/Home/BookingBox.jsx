@@ -87,7 +87,8 @@ const BookingBox = ({ flights, pos }) => {
     const [minMonth, setMinMonth] = useState(new Date());
     const [selected, setSelected] = useState('Return');
     const [currentMonth, setCurrentMonth] = useState(new Date());
-
+    const [sourceSearch, setSourceSearch] = useState("");
+    const [destinationSearch, setDestinationSearch] = useState("");
     const sliderRef = useRef(null);
 
     const formatDate = (date) => {
@@ -313,15 +314,24 @@ const BookingBox = ({ flights, pos }) => {
             setDesktopShowModal(false)
         }
     }
-    const [sourceSearch, setSourceSearch] = useState("");
-    const [destinationSearch, setDestinationSearch] = useState("");
+
     const handleSearch = (searchValue, type) => {
-        if (type === "source") {
-            setSourceSearch(searchValue);
-        } else {
-            setDestinationSearch(searchValue);
-        }
+        const key = type === 'source' ? 'source' : 'destination';
+        if (searchValue === '') formik.setFieldValue(key, '');
+        type === 'source' ? setSourceSearch(searchValue) : setDestinationSearch(searchValue);
     };
+
+    useEffect(() => {
+        const updateSearch = (key, setSearch) => {
+            const city = airPorts.items.find((a) => a.id === formik.values[key]);
+            const name = city?.airPortTranslations?.[0]?.airPortName ?? '';
+            setSearch(name);
+        };
+
+        updateSearch('source', setSourceSearch);
+        updateSearch('destination', setDestinationSearch);
+    }, [formik.values.source, formik.values.destination, airPorts.items]);
+
 
 
 
@@ -333,15 +343,17 @@ const BookingBox = ({ flights, pos }) => {
             const isSource = type === 0;
             return (
                 <>
-                    {!isMobile &&
+                    {/* {!isMobile && */}
                         <SearchInput
                             search={type === 0 ? sourceSearch : destinationSearch}
                             handleSearch={handleSearch}
                             onClose={onClose}
                             placeholder={type === 0 ? "Search for airport or city" : "To"}
                             type={type === 0 ? "source" : "destination"}
+                            values={formik.values}
+                            airPorts={airPorts.items}
                         />
-                    }
+                    {/* } */}
                     <AirportList
                         type={isSource ? "source" : "destination"}
                         values={formik.values}
