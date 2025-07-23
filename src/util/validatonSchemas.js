@@ -1,6 +1,9 @@
 import * as Yup from 'yup';
 import calculateAgeInYears from './calculateAgeInYears';
 import daysUntilAge from './daysUntilAge';
+import { validateEmailService, validatePhoneNumberService } from '@/store/Services/flightServices';
+import { useDispatch } from 'react-redux';
+import { store } from '@/store';
 
 export const passengerSchema = Yup.object().shape({
     title: Yup.string().required('Title is required'),
@@ -100,4 +103,43 @@ export const passengerSchema = Yup.object().shape({
             return true;
         }),
 
-}); 
+});
+
+export const contactSchema = Yup.object().shape({
+    email: Yup.string()
+        .email('Invalid email format')
+        .required('Email is required')
+        .test(
+            'validate-email-via-api',
+            'This email address is invalid.',
+            async function (value) {
+                if (!value) return false;
+                try {
+                    const result = await store.dispatch(validateEmailService(value));
+                    return result.payload === true;
+                } catch {
+                    return this.createError({ message: 'Unable to validate email. Try again later.' });
+                }
+            }
+        ),
+    phoneNumber: Yup.string()
+        .required('Phone number is required')
+        .test(
+            'validate-phone-via-api',
+            'This phone number is invalid.',
+            async function (value) {
+                const { countryCode } = this.parent;
+                if (!value || !countryCode) return false;
+
+                const fullNumber = countryCode + value;
+
+                try {
+                    const result = await store.dispatch(validatePhoneNumberService(fullNumber));
+                    return result.payload === true;
+                } catch {
+                    return this.createError({ message: 'Unable to validate phone number. Try again later.' });
+                }
+            }
+        ), countryCode: Yup.string().required('Country code is required'),
+    passengerIndex: Yup.number().nullable().required('Please select a contact passenger'),
+});

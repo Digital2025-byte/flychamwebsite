@@ -46,6 +46,8 @@ selection:bg-[#F00] selection:text-white
     [&::-webkit-calendar-picker-indicator]:pointer-events-none
     [&::-webkit-calendar-picker-indicator]:absolute`
                 }
+                min="1900-01-01"
+                max="2099-12-31"
             />
 
         </div >

@@ -19,8 +19,9 @@ import { createListPassengerService } from '@/store/Services/flightServices';
 import { setSelectedpassengers } from '@/store/flightSlice';
 import calculateAgeInYears from '@/util/calculateAgeInYears';
 import daysUntilAge from '@/util/daysUntilAge';
-import { passengerSchema } from '@/util/validatonSchemas';
+import { contactSchema, passengerSchema } from '@/util/validatonSchemas';
 import * as Yup from 'yup';
+import ErrorMessage from '@/components/Ui/ErrorMessage';
 
 const PassengerDetails = ({ setActiveStep, selectedFlight, selectedType }) => {
     const dispatch = useDispatch()
@@ -52,8 +53,8 @@ const PassengerDetails = ({ setActiveStep, selectedFlight, selectedType }) => {
             passengers: initialPassengers,
             contact: {
                 countryCode: '',
-                mobileNumber: '',
-                email: '',
+                phoneNumber: '',
+                email: '', emailError: '',
                 passengerIndex: null
             },
             save: false,
@@ -61,13 +62,21 @@ const PassengerDetails = ({ setActiveStep, selectedFlight, selectedType }) => {
             recive: false
         },
         validationSchema: Yup.object().shape({
-            passengers: Yup.array().of(passengerSchema),
-            // contact: Yup.object().shape({
-            //     countryCode: Yup.string().required('Country code is required'),
-            //     mobileNumber: Yup.string().required('Mobile number is required'),
-            //     email: Yup.string().email('Invalid email address').required('Email is required'),
-            //     passengerIndex: Yup.number().nullable().required('Please select a contact passenger'),
-            // }),
+            passengers: Yup.array()
+                .of(passengerSchema)
+                .test('unique-names', 'Passenger names must be unique.', function (passengers = []) {
+                    const seen = new Set();
+                    for (const p of passengers) {
+                        const fullName = `${p.firstName?.trim().toLowerCase()} ${p.lastName?.trim().toLowerCase()}`;
+                        if (seen.has(fullName)) {
+                            return this.createError({
+                                message: `Duplicate name found: ${fullName}. Each passenger must have a unique name.`,
+                            });
+                        }
+                        seen.add(fullName);
+                    }
+                    return true;
+                }), contact: contactSchema,
         }),
         onSubmit: (values) => {
             const contactDetails = values.passengers[values.contact.passengerIndex];
@@ -83,7 +92,7 @@ const PassengerDetails = ({ setActiveStep, selectedFlight, selectedType }) => {
                 title,
                 firstName: capitalize(firstName),
                 lastName: capitalize(lastName),
-                phoneNumber: values.contact.mobileNumber,
+                phoneNumber: values.contact.phoneNumber,
                 countryCode: values.contact.countryCode,
                 email: values.contact.email,
                 passengers: values.passengers.map((p) => ({
@@ -126,6 +135,8 @@ const PassengerDetails = ({ setActiveStep, selectedFlight, selectedType }) => {
 
     });
 
+    console.log('Errors', formik.errors);
+    console.log('Values', formik.values);
 
     return (
         <div className="flex flex-col xl:flex-row gap-6">
@@ -143,8 +154,13 @@ const PassengerDetails = ({ setActiveStep, selectedFlight, selectedType }) => {
                             touched={formik.touched}
 
                         />
+
                     </Section>
                 ))}
+                {typeof formik.errors.passengers === 'string' && (
+
+                    <ErrorMessage error={formik.errors.passengers} />
+                )}
                 <Section>
                     <ContactDetailsSection
                         passengers={formik.values.passengers}
@@ -153,6 +169,8 @@ const PassengerDetails = ({ setActiveStep, selectedFlight, selectedType }) => {
                         handleChange={formik.handleChange}
                         errors={formik.errors.contact
                         }
+                        touched={formik.touched.contact}
+
                     />
 
 

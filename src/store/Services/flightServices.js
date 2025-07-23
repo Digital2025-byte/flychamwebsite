@@ -89,3 +89,32 @@ export const getBySessionIdService = createAsyncThunk(
     }
 );
 // ===================================== VALIDATE EMAIL ==============================================
+export const validateEmailService = createAsyncThunk(
+    `${sliceName}/validateEmailService`,
+    async (email, thunkAPI) => {
+        try {
+
+            const response = await apiClient.get(`/api/booking/AbstractApi/ValidateEmail?email=${email}`);
+            return response.data;
+        } catch (error) {
+            return thunkAPI.rejectWithValue(
+                error.response?.data?.message || error.message || 'Something went wrong'
+            );
+        }
+    }
+);
+// ===================================== VALIDATE PHONE NUMBER ==============================================
+export const validatePhoneNumberService = createAsyncThunk(
+    `${sliceName}/validatePhoneNumberService`,
+    async (phoneNumber, thunkAPI) => {
+        try {
+
+            const response = await apiClient.get(`/api/booking/AbstractApi/ValidatePhone?phoneNumber=${phoneNumber}`);
+            return response.data;
+        } catch (error) {
+            return thunkAPI.rejectWithValue(
+                error.response?.data?.message || error.message || 'Something went wrong'
+            );
+        }
+    }
+);

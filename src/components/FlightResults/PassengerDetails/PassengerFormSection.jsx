@@ -6,6 +6,7 @@ import CustomDropdown from '@/components/Ui/TitleDropdown';
 import ErrorMessage from '@/components/Ui/ErrorMessage';
 
 const PassengerFormSection = ({ index, values, onChange, setFieldValue, errors, touched }) => {
+    
     const basePath = `passengers[${index}]`;
 
     const getError = (field) => errors?.passengers?.[index]?.[field];
