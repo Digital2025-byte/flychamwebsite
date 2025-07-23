@@ -10,23 +10,25 @@ import MonthNavigation from './MonthNavigation';
 import SelectedDateDisplay from './SelectedDateDisplay';
 import CustomDayContent from './CustomDayContent';
 
-const Dates = ({ formik, handleDateSelect, currentMonth, setCurrentMonth, minMonth, setMinMonth ,handleReset}) => {
+const Dates = ({ formik, handleDateSelect, currentMonth, setCurrentMonth, minMonth, setMinMonth, handleReset }) => {
     const [shouldAnimateMonth, setShouldAnimateMonth] = useState(false);
 
     const isMobile = useIsMobile('768');
     const isArabic = useIsArabic();
     const tripType = formik.values.tripType;
 
-    const selected = tripType === 'OneWay'
-        ? formik.values.dateStart
-            ? new Date(formik.values.dateStart)
-            : undefined
-        : formik.values.dateStart && formik.values.dateEnd
-            ? {
-                from: new Date(formik.values.dateStart),
-                to: new Date(formik.values.dateEnd)
-            }
-            : undefined;
+const selected =
+  tripType === 'OneWay'
+    ? formik.values.dateStart
+      ? new Date(formik.values.dateStart)
+      : undefined
+    : formik.values.dateStart
+      ? {
+          from: new Date(formik.values.dateStart),
+          to: formik.values.dateEnd ? new Date(formik.values.dateEnd) : new Date(),
+        }
+      : undefined;
+
 
 
 
@@ -58,7 +60,7 @@ const Dates = ({ formik, handleDateSelect, currentMonth, setCurrentMonth, minMon
             <TripTypeSelector values={formik.values}
                 setFieldValue={formik.setFieldValue}
                 handleReset={handleReset}
-                />
+            />
             <div className="hidden md:block w-full my-3 h-[1px] bg-gray-200"></div>
 
             <SelectedDateDisplay selected={selected} tripType={tripType} handleReset={handleReset} />

@@ -263,7 +263,8 @@ const BookingBox = ({ flights, pos }) => {
     };
     const handleDateSelect = (value) => {
         const tripType = formik.values.tripType;
-        formik.setFieldValue('hasClickCalendar', true);
+        console.log('value', value.to);
+
         if (tripType === 'OneWay') {
             // Handle OneWay: Set dateStart and clear dateEnd
             if (value instanceof Date) {
@@ -280,20 +281,19 @@ const BookingBox = ({ flights, pos }) => {
 
             }
         } else {
-            const { hasClickCalendar } = formik.values
-            // Handle Return (range mode): Set dateStart and dateEnd
-            if (value?.from) {
-                formik.setFieldValue('dateStart', value.from);
-                formik.setFieldValue('hasClickCalendar', false);
-                // If both "from" and "to" dates are selected, set dateEnd
-                if (value.to) {
-                    formik.setFieldValue('dateEnd', value.to);
-                } else {
-                    // Keep dateEnd empty until second date is selected
-                    formik.setFieldValue('dateEnd', '');
-                }
+            const { hasClickCalendar, dateStart, dateEnd } = formik.values
 
-                // setMinMonth(selectedMonth); // Adjust minMonth if needed
+
+            if (!hasClickCalendar) {
+                formik.setFieldValue('dateStart', value.from);
+                formik.setFieldValue('hasClickCalendar', true);
+                formik.setFieldValue('dateEnd', '');
+
+            }
+
+            if (hasClickCalendar && dateStart) {
+                formik.setFieldValue('dateEnd', value.to);
+
             }
         }
     };
@@ -333,15 +333,15 @@ const BookingBox = ({ flights, pos }) => {
             const isSource = type === 0;
             return (
                 <>
-                {!isMobile &&
-                    <SearchInput
-                    search={type === 0 ? sourceSearch : destinationSearch}
-                    handleSearch={handleSearch}
-                    onClose={onClose}
-                    placeholder={type === 0 ? "Search for airport or city" : "To"}
-                    type={type === 0 ? "source" : "destination"}
-                    />
-                }
+                    {!isMobile &&
+                        <SearchInput
+                            search={type === 0 ? sourceSearch : destinationSearch}
+                            handleSearch={handleSearch}
+                            onClose={onClose}
+                            placeholder={type === 0 ? "Search for airport or city" : "To"}
+                            type={type === 0 ? "source" : "destination"}
+                        />
+                    }
                     <AirportList
                         type={isSource ? "source" : "destination"}
                         values={formik.values}
