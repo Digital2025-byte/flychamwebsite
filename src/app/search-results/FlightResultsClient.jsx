@@ -99,7 +99,7 @@ const FlightResultsClient = () => {
                 Amount: Number(info.total_fare),
                 Currency: selectedPlan.commonInfo.currency.toLowerCase(),
                 Description:
-                    `${selectedFlight.common_info.segments[0].origin_code}_${selectedFlight.common_info.segments[0].destination_code}_${selectedFlight.common_info.flight}_${selectedFlight.common_info.flight_number}YKDTFC`
+                    `${selectedFlight.common_info.segments[0].origin_code}_${selectedFlight.common_info.segments[0].destination_code}_${selectedFlight.common_info.flight}`
             }
         }
 
@@ -236,7 +236,7 @@ const FlightResultsClient = () => {
         window.scroll(0, 0)
     }, [activeStep])
 
-    
+
     const [timeLeft, setTimeLeft] = useState(7 * 60);
 
     useEffect(() => {
@@ -244,14 +244,14 @@ const FlightResultsClient = () => {
             setTimeLeft(prev => {
                 if (prev <= 1) {
                     clearInterval(interval);
-                    setSessionModalOpen(true); 
+                    setSessionModalOpen(true);
                     return 0;
                 }
                 return prev - 1;
             });
         }, 1000);
 
-        return () => clearInterval(interval); 
+        return () => clearInterval(interval);
     }, []);
     const handleSearchAgain = () => {
         const data = searchParams
