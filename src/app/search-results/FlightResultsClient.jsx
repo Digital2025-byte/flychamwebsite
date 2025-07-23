@@ -106,7 +106,7 @@ const FlightResultsClient = () => {
                 const { checkoutUrl } = action.payload;
 
                 if (checkoutUrl) {
-                    window.open(checkoutUrl, '_blank');
+                    window.open(checkoutUrl, '_self');
                 } else {
                     console.error("Checkout URL not found in payload");
                 }
