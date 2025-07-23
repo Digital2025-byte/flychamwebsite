@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 
 const SearchInput = ({ search, placeholder, handleSearch, type, values, airPorts }) => {
+  const { source, destenations } = values
   const inputRef = useRef(null);
   // Get selected airport ID dynamically from `values`
   const selectedAirportId = values?.[type]; // either values.source or values.destination
@@ -16,7 +17,7 @@ const SearchInput = ({ search, placeholder, handleSearch, type, values, airPorts
     inputRef.current?.focus();
 
     // Auto-select text when a value exists
-    if (search) {
+    if (search && (source || destenations)) {
       inputRef.current?.select();
     }
   }, [search]);
