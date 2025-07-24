@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import DateNavigation from '@/components/FlightResults/DateNavigation'
 import FilterControls from '@/components/FlightResults/FilterControls'
 import FlightCard from '@/components/FlightResults/FlighSelectStep/FlightCard'
@@ -27,8 +27,11 @@ import SessionExpiredModal from '@/components/FlightResults/SessionExpiredModal'
 import { useRouter } from 'next/navigation'
 import POSNotice from '@/components/FlightResults/POSNotice'
 import PosSelectorModal from '@/components/FlightResults/FlighSelectStep/PosSelectorModal'
+import useSessionTimer from '@/hooks/useSessionTimer'
 
 const FlightResultsClient = () => {
+
+
     const dispatch = useDispatch()
     const { flights, selectedPassengers, searchParams, isLoadingFlights, selectedPlan } = useSelector((state) => state.flights);
     const { flighttype } = searchParams
@@ -45,6 +48,11 @@ const FlightResultsClient = () => {
     const [selectedFlight, setSelectedFlight] = useState(null);
     const [selectedType, setSelectedType] = useState(null);
     const [activeStep, setActiveStep] = useState(0);
+
+    const { restartTimer } = useSessionTimer({
+        duration: 60 * 7,
+        onExpire: () => setSessionModalOpen(true),
+    });
 
     const handleDetailsClick = (flight) => {
         setExpandedFlight(flight);
@@ -237,31 +245,19 @@ const FlightResultsClient = () => {
     }, [activeStep])
 
 
-    const [timeLeft, setTimeLeft] = useState(7 * 60);
 
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setTimeLeft(prev => {
-                if (prev <= 1) {
-                    clearInterval(interval);
-                    setSessionModalOpen(true);
-                    return 0;
-                }
-                return prev - 1;
-            });
-        }, 1000);
 
-        return () => clearInterval(interval);
-    }, []);
+
     const handleSearchAgain = () => {
-        const data = searchParams
+        const data = searchParams;
+
         dispatch(getFlightsService(data)).then((action) => {
             if (getFlightsService.fulfilled.match(action)) {
-                setSessionModalOpen(false)
-                setTimeLeft(7 * 60)
+                setSessionModalOpen(false);
+                restartTimer();
             }
         });
-    }
+    };
     return (
         <>
 

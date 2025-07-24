@@ -7,6 +7,10 @@ import countries from '@/util/countries';
 import ErrorMessage from '@/components/Ui/ErrorMessage';
 
 const ContactDetailsSection = ({ passengers, values, setFieldValue, handleChange, errors, touched }) => {
+const getError = (field) => errors?.[field];
+const isTouched = (field) => touched?.[field];
+
+
     const adultOptions = passengers
         .map((p, idx) => ({ ...p, idx }))
         .filter((p) => p.type === 'adult')
@@ -33,7 +37,10 @@ const ContactDetailsSection = ({ passengers, values, setFieldValue, handleChange
                         onChange={(val) => setFieldValue('contact.passengerIndex', Number(val))}
                         options={adultOptions.map((opt) => ({ ...opt, value: String(opt.value) }))}
                         placeholder="Select an adult"
+                        error={isTouched('passengerIndex') && getError('passengerIndex')}
                     />
+                    <ErrorMessage error={isTouched('passengerIndex') && getError('passengerIndex')} />
+
                 </div>
             </div>
 
@@ -45,20 +52,23 @@ const ContactDetailsSection = ({ passengers, values, setFieldValue, handleChange
                         options={countries}
                         type="countries"
                         placeholder="Country code"
+                        error={isTouched('countryCode') && getError('countryCode')}
                     />
+                    <ErrorMessage error={isTouched('countryCode') && getError('countryCode')} />
+
                 </div>
 
                 <div className="w-full">
                     <Input
                         name="contact.phoneNumber"
-                        value={ values.phoneNumber}
+                        value={values.phoneNumber}
                         onChange={handleChange}
                         placeholder="Local number only, no country code"
                         label="Phone number"
                         type="number"
-                        error={touched?.phoneNumber && errors?.phoneNumber}
+                        error={isTouched('phoneNumber') && getError('phoneNumber')}
                     />
-                    {touched?.phoneNumber && errors?.phoneNumber && <ErrorMessage error={errors.phoneNumber} />}
+                    <ErrorMessage error={isTouched('phoneNumber') && getError('phoneNumber')} />
                 </div>
             </div>
 
@@ -70,9 +80,9 @@ const ContactDetailsSection = ({ passengers, values, setFieldValue, handleChange
                     placeholder="Email address"
                     label="Email address"
                     type="email"
-                    error={touched?.email && errors?.email}
+                    error={isTouched('email') && getError('email')}
                 />
-                {touched?.email && errors?.email && <ErrorMessage error={errors.email} />}
+                <ErrorMessage error={isTouched('email') && getError('email')} />
             </div>
         </div>
     );

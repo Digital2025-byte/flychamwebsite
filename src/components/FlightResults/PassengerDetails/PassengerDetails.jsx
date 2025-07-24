@@ -1,9 +1,7 @@
 'use client'
-import React, { useEffect } from 'react';
+import React from 'react';
 import FormTitle from './FormTitle';
 import Input from '@/components/Ui/Input';
-import CustomDateInput from '@/components/Ui/DateInput';
-import TitleDropdown from '@/components/Ui/TitleDropdown';
 import Summary from './Summary';
 import PassengerFormSection from './PassengerFormSection';
 import SaveInfoToggle from './SaveInfoToggle';
@@ -13,17 +11,14 @@ import Section from '../Section';
 import Divider from '../FlighSelectStep/Divider';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
-import { Phone, User } from '@phosphor-icons/react';
 import ContactDetailsSection from './ContactDetailsSection';
 import { createListPassengerService } from '@/store/Services/flightServices';
 import { setSelectedpassengers } from '@/store/flightSlice';
-import calculateAgeInYears from '@/util/calculateAgeInYears';
-import daysUntilAge from '@/util/daysUntilAge';
 import { contactSchema, passengerSchema } from '@/util/validatonSchemas';
 import * as Yup from 'yup';
 import ErrorMessage from '@/components/Ui/ErrorMessage';
 
-const PassengerDetails = ({activeStep, setActiveStep, selectedFlight, selectedType }) => {
+const PassengerDetails = ({ activeStep, setActiveStep, selectedFlight, selectedType }) => {
     const dispatch = useDispatch()
     const { searchParams } = useSelector((s) => s.flights)
     const { adults, children, infants } = searchParams
@@ -55,7 +50,7 @@ const PassengerDetails = ({activeStep, setActiveStep, selectedFlight, selectedTy
                 countryCode: '',
                 phoneNumber: '',
                 email: '', emailError: '',
-                passengerIndex: null
+                passengerIndex: ''
             },
             save: false,
             accept: false,
@@ -78,6 +73,9 @@ const PassengerDetails = ({activeStep, setActiveStep, selectedFlight, selectedTy
                     return true;
                 }), contact: contactSchema,
         }),
+        context: { activeField: '' },
+        // validateOnChange: true,
+        // validateOnBlur: true,
         onSubmit: (values) => {
             const contactDetails = values.passengers[values.contact.passengerIndex];
 
@@ -134,6 +132,7 @@ const PassengerDetails = ({activeStep, setActiveStep, selectedFlight, selectedTy
         },
 
     });
+    console.log('Errors', formik.errors);
 
 
 
@@ -157,7 +156,6 @@ const PassengerDetails = ({activeStep, setActiveStep, selectedFlight, selectedTy
                     </Section>
                 ))}
                 {typeof formik.errors.passengers === 'string' && (
-
                     <ErrorMessage error={formik.errors.passengers} />
                 )}
                 <Section>
@@ -165,6 +163,7 @@ const PassengerDetails = ({activeStep, setActiveStep, selectedFlight, selectedTy
                         passengers={formik.values.passengers}
                         values={formik.values.contact}
                         setFieldValue={formik.setFieldValue}
+                        validateField={formik.validateField}
                         handleChange={formik.handleChange}
                         errors={formik.errors.contact
                         }

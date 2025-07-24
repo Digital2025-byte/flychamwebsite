@@ -3,7 +3,6 @@ import { CaretLeft } from '@phosphor-icons/react';
 import { useSelector } from 'react-redux';
 
 const StepBtns = ({ activeStep, setActiveStep, handleSubmit }) => {
-    console.log('activeStep', activeStep);
 
     const { isLoadingCreatePassengers, isLoadingCreatePayment } = useSelector((s) => s.flights)
 

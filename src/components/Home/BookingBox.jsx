@@ -264,7 +264,6 @@ const BookingBox = ({ flights, pos }) => {
     };
     const handleDateSelect = (value) => {
         const tripType = formik.values.tripType;
-        console.log('value', value.to);
 
         if (tripType === 'OneWay') {
             // Handle OneWay: Set dateStart and clear dateEnd
