@@ -1,14 +1,15 @@
 'use client';
+import getFlightCurrencyAndRegion from '@/util/getFlightCurrencyAndRegion';
 import { X } from '@phosphor-icons/react';
 import React from 'react';
 import { useSelector } from 'react-redux';
 
 const POSNotice = ({ setShowNotice, setShowPosModal }) => {
-  const { flights } = useSelector((s) => s.flights);
+  const { flights, IndirectAirPort } = useSelector((s) => s.flights);
 
-  const commonInfo = flights?.[0]?.common_info;
-  const currency = commonInfo?.currency || '';
-  const region = commonInfo?.region?.split(' ')[0] || '';
+
+  const { currency, region } = getFlightCurrencyAndRegion(flights, IndirectAirPort);
+  console.log('currency, region ', currency, region);
 
   return (
     <div className="bg-100 rounded-xl p-4 flex flex-col sm:flex-row sm:items-start sm:justify-between text-sm gap-2 sm:gap-4">
