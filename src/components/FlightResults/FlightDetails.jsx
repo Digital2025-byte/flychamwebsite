@@ -80,7 +80,7 @@ const FeatureRow = ({ index, item, isLg, infoIcon, isInfo }) => {
 
 
 const InfoRows = ({ isHeader, isEconomy, isLg, isInfo, handleSelectPlan, col, flight }) => {
-    const fareRules = col?.FareRuleReference || {};
+    const fareRules = col?.FareRuleReference[0] || {};
 
     const ruleItems = Object.entries(fareRules).map(([label, value]) => ({
         label,
@@ -229,7 +229,6 @@ const FlightDetails = ({ handleSelectPlan, flight }) => {
             seatsLeft: `${Math.floor(Math.random() * 10) + 1} seats left`,
             type: 'Economy',
             isHeader: true,
-            // items: economyClassItems,
             isBtn: true,
             special: false
         },
@@ -246,7 +245,6 @@ const FlightDetails = ({ handleSelectPlan, flight }) => {
             tag: 'Recommended',
             type: 'Business',
             isHeader: true,
-            // items: economyClassItems,
             isBtn: true,
             special: false
 

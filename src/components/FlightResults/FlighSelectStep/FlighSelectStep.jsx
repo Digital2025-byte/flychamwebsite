@@ -11,6 +11,8 @@ const FlighSelectStep = ({ flights, setFilterModalOpen, handleDetailsClick, isFi
   setFlightDetailsOpen, expandedFlight, handleSelectPlan, selectedFlight, setActiveStep, selectedType,
   setSelectedFlight, handleClickDate, IndirectAirPort
 }) => {
+  console.log('IndirectAirPort',IndirectAirPort);
+  
   return (
     <div>
       {!selectedFlight &&
