@@ -11,8 +11,8 @@ const FlighSelectStep = ({ flights, setFilterModalOpen, handleDetailsClick, isFi
   setFlightDetailsOpen, expandedFlight, handleSelectPlan, selectedFlight, setActiveStep, selectedType,
   setSelectedFlight, handleClickDate, IndirectAirPort
 }) => {
-  console.log('IndirectAirPort',IndirectAirPort);
-  
+  console.log('IndirectAirPort', IndirectAirPort);
+
   return (
     <div>
       {!selectedFlight &&
@@ -31,11 +31,12 @@ const FlighSelectStep = ({ flights, setFilterModalOpen, handleDetailsClick, isFi
             handleSelectPlan={handleSelectPlan} selectedFlight={selectedFlight} setActiveStep={setActiveStep}
             selectedType={selectedType} setSelectedFlight={setSelectedFlight}
           />
+          <Divider />
         </>
       }
       {IndirectAirPort.length > 0 &&
         <>
-        <Divider />
+
           <FlightsListCounter type="All airport" count={IndirectAirPort.length} />
           <FlightList flights={IndirectAirPort} onDetailsClick={handleDetailsClick}
             handleSelectPlan={handleSelectPlan} selectedFlight={selectedFlight} setActiveStep={setActiveStep}
