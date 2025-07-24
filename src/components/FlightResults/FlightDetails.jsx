@@ -80,7 +80,7 @@ const FeatureRow = ({ index, item, isLg, infoIcon, isInfo }) => {
 
 
 const InfoRows = ({ isHeader, isEconomy, isLg, isInfo, handleSelectPlan, col, flight }) => {
-    const fareRules = col?.FareRuleReference[0] || {};
+    const fareRules = col?.FareRuleReference || {};
 
     const ruleItems = Object.entries(fareRules).map(([label, value]) => ({
         label,
