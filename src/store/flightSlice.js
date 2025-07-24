@@ -65,10 +65,9 @@ const flightSlice = createSlice({
             })
             .addCase(getFlightsService.fulfilled, (state, action) => {
                 state.isLoadingFlights = false;
-                console.log('action payload',action.payload);
-                
-                state.flights = action.payload.DirectAirPort;
-                state.IndirectAirPort = action.payload.IndirectAirPort;
+                state.flights = action.payload.flights;
+                //                 state.flights = action.payload.DirectAirPort;
+                // state.IndirectAirPort = action.payload.IndirectAirPort;
             })
             .addCase(getFlightsService.rejected, (state, action) => {
                 state.isLoadingFlights = false;
