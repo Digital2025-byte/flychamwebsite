@@ -322,7 +322,7 @@ const BookingBox = ({ flights, pos }) => {
 
     useEffect(() => {
         const updateSearch = (key, setSearch) => {
-            const city = airPorts.items.find((a) => a.id === formik.values[key]);
+            const city = airPorts?.items?.find((a) => a.id === formik.values[key]);
             const name = city?.airPortTranslations?.[0]?.airPortName ?? '';
             setSearch(name);
         };
