@@ -1,5 +1,5 @@
 'use client'
-import React from 'react';
+import React, { useState } from 'react';
 import { ArrowLeft, ArrowRight, CheckCircle } from '@phosphor-icons/react';
 import tabIcon from '@/assets/images/tabicon.png';
 import Image from 'next/image';
@@ -10,6 +10,7 @@ import useFormattedFlightTimes from '@/hooks/useFormattedFlightTimes';
 import useFlightDetails from '@/hooks/useFlightDetails';
 import FlightTimeInfo from '../FlightTimeInfo';
 import useIsMobile from '@/hooks/useIsMobile';
+import PricingAccordion from './PricingAccordion';
 const data = {
     title: 'Price summary',
     from: 'Damascus',
@@ -30,6 +31,11 @@ const Summary = ({ selectedFlight, selectedType }) => {
     const isXl = useIsMobile(1280);
     const isLg = useIsMobile(1078);
     const isMd = useIsMobile(768);
+    const [expandedType, setExpandedType] = useState(null);
+
+    const toggleAccordion = (type) => {
+        setExpandedType(expandedType === type ? null : type);
+    };
 
 
     const { arrivalTime, departureTime, duration, segments } = useFormattedFlightTimes(selectedFlight);
@@ -87,47 +93,6 @@ const Summary = ({ selectedFlight, selectedType }) => {
 
                 </>
             }
-
-            {/* <div className="flex justify-between items-center text-sm mb-1 gap-4">
-
-                <div className="flex-1 text-start">
-                    <div className="text-800 text-[14px]">{departureTime}</div>
-                    <div className="text-800 text-[12px]">{origin.iataCode}</div>
-                </div>
-
-                <div className="flex flex-col items-center  ">
-
-                    <DurationDashed
-                        length={5}      
-                        width={28}     
-                        height={28}        
-                        logoWidth={14}     
-                        startSize={6}     
-                    />              
-                    <span className="text-[12px] text-600 mt-1">{duration}</span>
-                </div>
-
-                <div className="flex-1 text-start">
-                    <div className="text-800 text-[14px]">{arrivalTime}</div>
-                    <div className="text-800 text-[12px]">{destination.iataCode}</div>
-                </div>
-            </div> */}
-
-            {/* Arrival */}
-            {segments?.map((s, idx) => {
-                return (
-
-                    <FlightTimeInfo
-                        s={s}
-                        idx={idx}
-                        flight={selectedFlight}
-                        isLg={isLg}
-                        isMd={isMd}
-                        isXl={isXl}
-                        isSummary
-                    />
-                )
-            })}
             <div className="mt-3 mb-4">
                 <span className="inline-block bg-primary-1 text-white text-sm font-medium px-4 py-1">
                     {type}
@@ -135,23 +100,7 @@ const Summary = ({ selectedFlight, selectedType }) => {
             </div>
 
             <hr className="border-t border-[#E5E5E3] my-4" />
-            <div className="text-sm space-y-2">
-                {info.pricing_info.map((item) => {
-                    return (
-                        <>
-                            <div className="flex justify-between text-[#000]">
-                                <span className="text-[16px] font-semibold">Per {getLabel(item.PaxType)}</span>
-                            </div>
-                            <div className="flex justify-between"><span className="text-600"> Fare</span><span className="text-600">{item.TotalEquiv}</span></div>
-                            <div className="flex justify-between"><span className="text-600">Taxes</span><span className="text-600">{item.TotalTaxEquiv}</span></div>
-                            <div className="flex justify-between"><span className="text-600">Fees</span><span className="text-600">{item.TotalFeesEquiv}</span></div>
-                            <div className="flex justify-between font-semibold mt-3"><span className="text-700"> Sub-total</span><span className="text-700 text-lg">{item.TotalEquiv}</span></div>
-                            <hr className="border-t border-[#E5E5E3] my-4" />
-
-                        </>
-                    )
-                })}
-            </div>
+            <PricingAccordion pricingInfo={info?.pricing_info} />
 
             <div className="flex justify-between font-semibold mt-3  text-lg"><span className="text-700"> Total</span>
                 <span className="text-700 text-lg">{`${selectedType?.
@@ -166,11 +115,11 @@ const Summary = ({ selectedFlight, selectedType }) => {
 
             {/* <p className="text-600 text-xs mb-4">{data.note}</p> */}
 
-            <div className="space-y-2 text-sm">
+            {/* <div className="space-y-2 text-sm">
                 {data.links.map(({ label, href }, i) => (
                     <a key={i} href={href} className="text-primary-1 underline font-medium">{label}</a>
                 ))}
-            </div>
+            </div> */}
         </div>
     );
 }

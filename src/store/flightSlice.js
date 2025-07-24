@@ -7,6 +7,7 @@ const flightSlice = createSlice({
     initialState: {
         airPorts: [],
         flights: [],
+        IndirectAirPort: [],
         pos: [],
         searchParams: {},
         selectedFlight: {},
@@ -64,7 +65,10 @@ const flightSlice = createSlice({
             })
             .addCase(getFlightsService.fulfilled, (state, action) => {
                 state.isLoadingFlights = false;
-                state.flights = action.payload.flights;
+                console.log('action payload',action.payload);
+                
+                state.flights = action.payload.DirectAirPort;
+                state.IndirectAirPort = action.payload.IndirectAirPort;
             })
             .addCase(getFlightsService.rejected, (state, action) => {
                 state.isLoadingFlights = false;

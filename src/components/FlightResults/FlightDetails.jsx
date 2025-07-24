@@ -2,28 +2,27 @@
 import useIsMobile from '@/hooks/useIsMobile';
 import React from 'react';
 import {
-    AirplaneTilt, ArrowsClockwise, Briefcase, BriefcaseIcon, CheckCircle,
+    AirplaneTilt, ArrowsClockwise, ArrowUDownLeft, Briefcase, BriefcaseIcon, CheckCircle,
     EyeSlash, ProhibitInset, SuitcaseIcon, SuitcaseSimple, XCircle
 } from '@phosphor-icons/react';
 import formatPrice from '@/util/formatePrice';
 
 const getIcon = (key) => {
     switch (key) {
-        case "Modification before 24 hours":
-            // case "Changes or Refund within 24 Hrs":
-            return ArrowsClockwise;
-        case "Refund before departure":
+
         case "No-Show":
             return EyeSlash;
-        case "Refund before departure":
-        case "Changes or refund within 24 Hrs":
-            return ProhibitInset;
+        case "Refund Before Departure":
+        case "Changes or Refund Within 24 Hours":
+            return ArrowUDownLeft ;
         case "Checked baggage":
             return SuitcaseIcon;
         case "Hand baggage":
             return BriefcaseIcon;
         case "Excess Baggage":
             return SuitcaseSimple;
+        case "Modification Before 24 Hours":
+            return ArrowsClockwise;
 
 
         default:
@@ -227,7 +226,7 @@ const FlightDetails = ({ handleSelectPlan, flight }) => {
             FareRuleReference: Economy?.pricing_info[0]?.FareRuleReference,
             price: formatPrice(Economy?.total_fare),
             currecny: commonInfo?.currecny,
-            seatsLeft: '2 seats left',
+            seatsLeft: `${Math.floor(Math.random() * 10) + 1} seats left`,
             type: 'Economy',
             isHeader: true,
             // items: economyClassItems,
@@ -243,7 +242,7 @@ const FlightDetails = ({ handleSelectPlan, flight }) => {
             price: formatPrice(Business?.total_fare),
             currecny: commonInfo?.currecny,
 
-            seatsLeft: '4 seats left',
+            seatsLeft: `${Math.floor(Math.random() * 10) + 1} seats left`,
             tag: 'Recommended',
             type: 'Business',
             isHeader: true,

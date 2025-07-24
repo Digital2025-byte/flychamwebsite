@@ -13,7 +13,7 @@ const StripeBox = () => {
         return (
             <div className='flex flex-col'>
 
-                <span className="text-base font-semibold text-black flex gap-1 items-center">
+                <span className="text-base font-semibold text-black flex gap-1 items-start ">
                     <div className='block md:hidden'>
 
                         <Dot />
@@ -36,16 +36,17 @@ const StripeBox = () => {
             <div className="flex justify-center sm:justify-end flex-1 items-center gap-2 mt-2 sm:mt-0">
                 <img src="/visa.svg" alt="Visa" className="h-4 w-auto" />
                 <img src="/mastercard.svg" alt="Mastercard" className="h-4 w-auto" />
-                <img src="/amex.svg" alt="Amex" className="h-4 w-auto" />
-                <img src="/AmericanExpress.svg" alt="Amex" className="h-4 w-auto" />
+                <img src="/GooglePay.svg" alt="Mastercard" className="h-4 w-auto" />
                 <img src="/ApplePay.svg" alt="Amex" className="h-4 w-auto" />
+                <img src="/AmericanExpress.svg" alt="Amex" className="h-4 w-auto" />
+                {/* <img src="/amex.svg" alt="Amex" className="h-4 w-auto" /> */}
             </div>
         )
     }
 
     return (
         <div className="border border-[var(--primary-1)] max-w-xl rounded-xl p-4 flex flex-row gap-2  items-start justify-start my-3">
-            <div className='flex justify-start gap-3 items-start md:items-center w-full'>
+            <div className='flex justify-start gap-3 items-start md:items-start w-full'>
 
                 <div className='hidden md:block'>
 

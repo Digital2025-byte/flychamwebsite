@@ -1,24 +1,16 @@
 'use client'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import DateNavigation from '@/components/FlightResults/DateNavigation'
-import FilterControls from '@/components/FlightResults/FilterControls'
-import FlightCard from '@/components/FlightResults/FlighSelectStep/FlightCard'
 import Header from '@/components/FlightResults/Header'
 import ProgressBar from '@/components/FlightResults/ProgressBar'
 import RouteInfo from '@/components/FlightResults/RouteInfo'
-import SortFilterModal from '@/components/FlightResults/FlighSelectStep/SortFilterModal'
-import { FunnelSimple, X } from '@phosphor-icons/react'
 import HeaderMobile from '@/components/FlightResults/HeaderMobile'
-import ProgressBarMb from '@/components/FlightResults/ProgressBarMb'
 import Section from '@/components/FlightResults/Section'
 import FlighSelectStep from '@/components/FlightResults/FlighSelectStep/FlighSelectStep'
 import Divider from '@/components/FlightResults/FlighSelectStep/Divider'
-import SearchResultsFooter from '@/components/FlightResults/SearchResultsFooter'
 import PassengerDetails from '@/components/FlightResults/PassengerDetails/PassengerDetails'
 import Payment from '@/components/FlightResults/PaymentStep/Payment'
-import { AirplaneTilt, ArrowsClockwise, Briefcase, CheckCircle, EyeSlash, SuitcaseSimple, XCircle } from '@phosphor-icons/react';
 import { useDispatch, useSelector } from 'react-redux'
-import { useTranslation } from 'react-i18next'
 import { setSearchParams, setSelectedF, setSelectedPlan } from '@/store/flightSlice'
 import { createPaymentService, getFlightsService } from '@/store/Services/flightServices'
 import NoResults from '@/components/FlightResults/NoResults'
@@ -33,10 +25,8 @@ const FlightResultsClient = () => {
 
 
     const dispatch = useDispatch()
-    const { flights, selectedPassengers, searchParams, isLoadingFlights, selectedPlan } = useSelector((state) => state.flights);
-    const { flighttype } = searchParams
+    const { flights, selectedPassengers, searchParams, isLoadingFlights, selectedPlan, IndirectAirPort } = useSelector((state) => state.flights);
     const router = useRouter()
-
     const [showNoice, setShowNotice] = useState(true);
     const [showPosModal, setShowPosModal] = useState(false);
     const [localLoading, setLocalLoading] = useState(true);
@@ -154,6 +144,7 @@ const FlightResultsClient = () => {
             content: <FlighSelectStep
                 handleDetailsClick={handleDetailsClick}
                 flights={flights}
+                IndirectAirPort={IndirectAirPort}
                 isFilterModalOpen={isFilterModalOpen}
                 setFilterModalOpen={setFilterModalOpen}
                 isShowDetailsModalOpen={isShowDetailsModalOpen}
@@ -245,9 +236,6 @@ const FlightResultsClient = () => {
     }, [activeStep])
 
 
-
-
-
     const handleSearchAgain = () => {
         const data = searchParams;
 
@@ -301,7 +289,7 @@ const FlightResultsClient = () => {
                     <main className="w-[95%] md:w-[70%] mx-auto px-2">
                         {steps[activeStep].content}
                         <Section>
-                            {flights?.length === 0 && <NoResults />}
+                            {flights?.length === 0 && IndirectAirPort.length === 0 && <NoResults />}
                         </Section>
                     </main>
 
