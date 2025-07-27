@@ -14,7 +14,7 @@ const getIcon = (key) => {
             return EyeSlash;
         case "Refund Before Departure":
         case "Changes or Refund Within 24 Hours":
-            return ArrowUDownLeft ;
+            return ArrowUDownLeft;
         case "Checked baggage":
             return SuitcaseIcon;
         case "Hand baggage":
@@ -214,7 +214,7 @@ const FlightDetails = ({ handleSelectPlan, flight }) => {
         {
 
             type: 'Info',
-            FareRuleReference: Economy?.pricing_info[0]?.FareRuleReference,
+            FareRuleReference: Economy?.pricing_info[0]?.FareRuleReference[0],
             // items: economyClassItems,
 
         },
@@ -223,21 +223,36 @@ const FlightDetails = ({ handleSelectPlan, flight }) => {
             title: 'Economy Class',
             Economy,
             commonInfo,
-            FareRuleReference: Economy?.pricing_info[0]?.FareRuleReference,
+            FareRuleReference: Economy?.pricing_info[0]?.FareRuleReference[0],
             price: formatPrice(Economy?.total_fare),
             currecny: commonInfo?.currecny,
             seatsLeft: `${Math.floor(Math.random() * 10) + 1} seats left`,
             type: 'Economy',
             isHeader: true,
             isBtn: true,
-            special: false
+            special: false,
+         PassengerInfo: {
+                PaxType: Economy?.pricing_info[0]?.PaxType,
+                BaseFare: Economy?.pricing_info[0]?.BaseFare,
+                // BaseFareEquiv: Economy?.pricing_info[0]?.BaseFareEquiv,
+                TotalTax: Economy?.pricing_info[0]?.TotalTax,
+                // TotalTaxEquiv: Economy?.pricing_info[0]?.TotalTaxEquiv,
+                TotalFees: Economy?.pricing_info[0]?.TotalFees,
+                // TotalFeesEquiv: Economy?.pricing_info[0]?.TotalFeesEquiv,
+                TotalFare: Economy?.pricing_info[0]?.TotalFare,
+                // TotalEquiv: Economy?.pricing_info[0]?.TotalEquiv,
+                // FareRuleReference: Economy?.pricing_info[0]?.FareRuleReference,
+                Rules: Economy?.pricing_info[0]?.Rules,
+                FareBasisCodes: Economy?.pricing_info[0]?.FareBasisCodes,
+                SegmentCode: Economy?.pricing_info[0]?.SegmentCode
+            }
         },
         {
             id: 2,
             title: 'Business Class',
             Business,
             commonInfo,
-            FareRuleReference: Business?.pricing_info[0]?.FareRuleReference,
+            FareRuleReference: Business?.pricing_info[0]?.FareRuleReference[0],
             price: formatPrice(Business?.total_fare),
             currecny: commonInfo?.currecny,
 
@@ -246,7 +261,22 @@ const FlightDetails = ({ handleSelectPlan, flight }) => {
             type: 'Business',
             isHeader: true,
             isBtn: true,
-            special: false
+            special: false,
+            PassengerInfo: {
+                PaxType: Business?.pricing_info[0]?.PaxType,
+                BaseFare: Business?.pricing_info[0]?.BaseFare,
+                // BaseFareEquiv: Business?.pricing_info[0]?.BaseFareEquiv,
+                TotalTax: Business?.pricing_info[0]?.TotalTax,
+                // TotalTaxEquiv: Business?.pricing_info[0]?.TotalTaxEquiv,
+                TotalFees: Business?.pricing_info[0]?.TotalFees,
+                // TotalFeesEquiv: Business?.pricing_info[0]?.TotalFeesEquiv,
+                TotalFare: Business?.pricing_info[0]?.TotalFare,
+                // TotalEquiv: Business?.pricing_info[0]?.TotalEquiv,
+                // FareRuleReference: Business?.pricing_info[0]?.FareRuleReference,
+                Rules: Business?.pricing_info[0]?.Rules,
+                FareBasisCodes: Business?.pricing_info[0]?.FareBasisCodes,
+                SegmentCode: Business?.pricing_info[0]?.SegmentCode
+            }
 
         },
     ];

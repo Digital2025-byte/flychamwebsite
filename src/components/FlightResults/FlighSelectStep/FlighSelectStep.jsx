@@ -7,46 +7,92 @@ import FlightDetailsModal from './FlightDetailsModal'
 import FlightsListCounter from './FlightsListCounter'
 import Divider from './Divider'
 
-const FlighSelectStep = ({ flights, setFilterModalOpen, handleDetailsClick, isFilterModalOpen, isShowDetailsModalOpen,
-  setFlightDetailsOpen, expandedFlight, handleSelectPlan, selectedFlight, setActiveStep, selectedType,
-  setSelectedFlight, handleClickDate, IndirectAirPort
+const FlighSelectStep = ({
+  flights = [],
+  IndirectAirPort = [],
+  selectedFlight,
+  selectedType,
+  expandedFlight,
+  isFilterModalOpen,
+  isShowDetailsModalOpen,
+  setFilterModalOpen,
+  setFlightDetailsOpen,
+  setActiveStep,
+  setSelectedFlight,
+  handleDetailsClick,
+  handleSelectPlan,
 }) => {
-  console.log('IndirectAirPort', IndirectAirPort);
+  const hasFlights = flights.length > 0
+  const hasIndirectFlights = IndirectAirPort.length > 0
 
   return (
     <div>
-      {!selectedFlight &&
+      {/* Header and Direct Flights */}
+      {!selectedFlight && (
         <>
-          <FlightHeader
-            count={flights.length}
-            setFilterModalOpen={setFilterModalOpen}
-
-          />
-        </>
-      }
-      {flights.length > 0 &&
-        <>
+          <FlightHeader count={flights.length} setFilterModalOpen={setFilterModalOpen} />
           <FlightsListCounter type="Direct airport" count={flights.length} />
-          <FlightList flights={flights} onDetailsClick={handleDetailsClick}
-            handleSelectPlan={handleSelectPlan} selectedFlight={selectedFlight} setActiveStep={setActiveStep}
-            selectedType={selectedType} setSelectedFlight={setSelectedFlight}
+        </>
+      )}
+
+      {/* Selected Flight View */}
+      {selectedFlight && (
+        <>
+          <FlightList
+            flights={[]} // empty because you're showing selectedFlight details only
+            onDetailsClick={handleDetailsClick}
+            handleSelectPlan={handleSelectPlan}
+            selectedFlight={selectedFlight}
+            setActiveStep={setActiveStep}
+            selectedType={selectedType}
+            setSelectedFlight={setSelectedFlight}
           />
           <Divider />
         </>
-      }
-      {IndirectAirPort.length > 0 &&
+      )}
+
+      {/* Direct Flights List */}
+      {hasFlights && !selectedFlight && (
         <>
-
-          <FlightsListCounter type="All airport" count={IndirectAirPort.length} />
-          <FlightList flights={IndirectAirPort} onDetailsClick={handleDetailsClick}
-            handleSelectPlan={handleSelectPlan} selectedFlight={selectedFlight} setActiveStep={setActiveStep}
-            selectedType={selectedType} setSelectedFlight={setSelectedFlight}
+          <FlightList
+            flights={flights}
+            onDetailsClick={handleDetailsClick}
+            handleSelectPlan={handleSelectPlan}
+            selectedFlight={selectedFlight}
+            setActiveStep={setActiveStep}
+            selectedType={selectedType}
+            setSelectedFlight={setSelectedFlight}
           />
+          <Divider />
         </>
-      }
-      <SortFilterModal isOpen={isFilterModalOpen} onClose={() => setFilterModalOpen(false)} onApply={() => { }} />
-      <FlightDetailsModal isOpen={isShowDetailsModalOpen} onClose={() => setFlightDetailsOpen(false)} flight={expandedFlight} />
+      )}
 
+      {/* Indirect Flights */}
+      {!selectedFlight && <FlightsListCounter type="All airport" count={IndirectAirPort.length} />}
+
+      {hasIndirectFlights && !selectedFlight && (
+        <FlightList
+          flights={IndirectAirPort}
+          onDetailsClick={handleDetailsClick}
+          handleSelectPlan={handleSelectPlan}
+          selectedFlight={selectedFlight}
+          setActiveStep={setActiveStep}
+          selectedType={selectedType}
+          setSelectedFlight={setSelectedFlight}
+        />
+      )}
+
+      {/* Modals */}
+      <SortFilterModal
+        isOpen={isFilterModalOpen}
+        onClose={() => setFilterModalOpen(false)}
+        onApply={() => {}}
+      />
+      <FlightDetailsModal
+        isOpen={isShowDetailsModalOpen}
+        onClose={() => setFlightDetailsOpen(false)}
+        flight={expandedFlight}
+      />
     </div>
   )
 }

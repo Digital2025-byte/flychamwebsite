@@ -74,6 +74,27 @@ const BookingConfirm = () => {
     const handleClickHome = () => {
         router.push("/")
     }
+    const getTaxesAndFees = (taxes = [], fees = []) => {
+        console.log('taxes', taxes);
+        console.log('fees', fees);
+
+        // Sum all tax amounts
+        const totalTaxes = taxes.reduce((sum, t) => sum + (t.amount || 0), 0);
+        // Sum all fee amounts
+        const totalFees = fees.reduce((sum, f) => sum + (f.amount || 0), 0);
+        console.log('totalTaxes', totalTaxes);
+        console.log('totalFees', totalFees);
+
+        // Get currency (fall back to taxes first, then fees)
+        const currency = taxes[0]?.currency || fees[0]?.currency || '';
+
+        // Calculate final total
+        const total = totalTaxes + totalFees;
+        console.log('total', total);
+
+        // Return formatted string
+        return `${total.toFixed(2)} ${currency}`;
+    };
 
     return (
         <div className="w-full max-w-[1200px] mx-auto bg-white py-4 px-4 flex flex-col items-center">
@@ -174,7 +195,7 @@ const BookingConfirm = () => {
                 </div>
                 <div className="flex justify-between text-sm mb-2 text-600">
                     <span>Taxes & fees</span>
-                    <span>{sessionInfo?.taxes?.[0]?.amount ?? '-'}</span>
+                    <span>{getTaxesAndFees(sessionInfo?.taxes, sessionInfo?.fees)}</span>
                 </div>
                 <Divider />
                 <div className="flex justify-between text-sm font-semibold text-primary-1 mb-2">

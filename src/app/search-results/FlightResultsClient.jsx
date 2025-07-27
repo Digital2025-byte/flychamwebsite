@@ -67,6 +67,7 @@ const FlightResultsClient = () => {
     };
     const handlePayment = () => {
         const info = selectedType[selectedType.type]
+        console.log('info', info);
 
         const data = {
             bookingInfo: {
@@ -90,7 +91,8 @@ const FlightResultsClient = () => {
                 posId: selectedType.commonInfo.pos_id
                 ,
                 flightType: selectedFlight.common_info.flight,
-                ContactInfo: selectedPassengers
+                ContactInfo: selectedPassengers,
+
 
             },
             stripeInfo: {
@@ -98,7 +100,9 @@ const FlightResultsClient = () => {
                 Currency: selectedPlan.commonInfo.currency.toLowerCase(),
                 Description:
                     `${selectedFlight.common_info.segments[0].origin_code}_${selectedFlight.common_info.segments[0].destination_code}_${selectedFlight.common_info.flight}`
-            }
+            },
+            PassengerInfo: [selectedPlan?.PassengerInfo]
+
         }
 
         dispatch(createPaymentService(data)).then((action) => {
