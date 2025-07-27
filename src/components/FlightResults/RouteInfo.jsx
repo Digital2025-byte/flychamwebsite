@@ -8,7 +8,10 @@ import { useSelector } from 'react-redux';
 const RouteInfo = ({ activeStep, selectedFlight }) => {
     console.log('selectedFlight', selectedFlight);
     const { selectedPlan } = useSelector((s) => s.flights)
-    const destenationAirPortName = selectedPlan.commonInfo.segments[0].destination_name + " " + selectedPlan.commonInfo.segments[0].destination_code
+    const firstSegment = selectedPlan?.commonInfo?.segments?.[0];
+    const destenationAirPortName = firstSegment
+        ? `${firstSegment.destination_name} ${firstSegment.destination_code}`
+        : '';
     const isLg = !useIsMobile(1024);
     const { destination, origin, date, flighttype } = useFlightRouteDetails()
     return (

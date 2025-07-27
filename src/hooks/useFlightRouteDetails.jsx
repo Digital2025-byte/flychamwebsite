@@ -5,9 +5,7 @@ import { useSelector } from "react-redux";
 
 const useFlightRouteDetails = () => {
     const { i18n } = useTranslation();
-    const { searchParams, selectedPlan } = useSelector((state) => state.flights);
-    const { commonInfo } = selectedPlan;
-    const segments = commonInfo.segments
+    const { searchParams } = useSelector((state) => state.flights);
 
     const { origin_id, destination_id, date, date_return, flighttype } = searchParams;
 
