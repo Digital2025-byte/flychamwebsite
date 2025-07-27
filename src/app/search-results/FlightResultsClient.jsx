@@ -113,7 +113,7 @@ const FlightResultsClient = () => {
                     dispatch(setPnr(pnr))
                 }
                 if (checkoutUrl) {
-                    // window.open(checkoutUrl, '_self');
+                    window.open(checkoutUrl, '_self');
                 } else {
                     console.error("Checkout URL not found in payload");
                 }
