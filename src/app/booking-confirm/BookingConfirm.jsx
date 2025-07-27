@@ -93,14 +93,22 @@ const BookingConfirm = () => {
         console.log('total', total);
 
         // Return formatted string
-        return `${total.toFixed(2)} ${currency}`;
+        return `${total.toFixed(2)} `;
     };
 
     const handkeDownloadTicket = () => {
         dispatch(downloadTickeyService({
             SessionId: sessionId,
             PNR: pnr
-        }))
+        })).then((action) => {
+            if (downloadTickeyService.fulfilled.match(action)) {
+                const { fileUrl } = action.payload;
+
+                if (fileUrl) {
+                    window.open(fileUrl, '_self');
+                }
+            }
+        })
     }
 
     return (
