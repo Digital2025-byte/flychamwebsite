@@ -11,7 +11,7 @@ import Divider from '@/components/FlightResults/FlighSelectStep/Divider'
 import PassengerDetails from '@/components/FlightResults/PassengerDetails/PassengerDetails'
 import Payment from '@/components/FlightResults/PaymentStep/Payment'
 import { useDispatch, useSelector } from 'react-redux'
-import { setSearchParams, setSelectedF, setSelectedPlan } from '@/store/flightSlice'
+import { setPnr, setSearchParams, setSelectedF, setSelectedPlan } from '@/store/flightSlice'
 import { createPaymentService, getFlightsService } from '@/store/Services/flightServices'
 import NoResults from '@/components/FlightResults/NoResults'
 import Screen from '@/components/Ui/Screen'
@@ -107,10 +107,13 @@ const FlightResultsClient = () => {
 
         dispatch(createPaymentService(data)).then((action) => {
             if (createPaymentService.fulfilled.match(action)) {
-                const { checkoutUrl } = action.payload;
+                const { checkoutUrl, pnr } = action.payload;
+                if (pnr) {
 
+                    dispatch(setPnr(pnr))
+                }
                 if (checkoutUrl) {
-                    window.open(checkoutUrl, '_self');
+                    // window.open(checkoutUrl, '_self');
                 } else {
                     console.error("Checkout URL not found in payload");
                 }

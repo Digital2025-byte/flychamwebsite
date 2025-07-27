@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import mask from "@/assets/images/mask.png"
 import check from "@/assets/images/check.png"
 import Divider from '@/components/FlightResults/FlighSelectStep/Divider';
-import { getBySessionIdService } from '@/store/Services/flightServices';
+import { downloadTickeyService, getBySessionIdService } from '@/store/Services/flightServices';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Screen from '@/components/Ui/Screen';
 import useFormattedFlightTimes from '@/hooks/useFormattedFlightTimes';
@@ -17,7 +17,7 @@ import formatTime from '@/util/formatFlightTime';
 
 const BookingConfirm = () => {
     const dispatch = useDispatch();
-    const { selectedFlight, sessionInfo, selectedPlan } = useSelector((s) => s.flights);
+    const { selectedFlight, sessionInfo, selectedPlan, pnr } = useSelector((s) => s.flights);
 
     const isXl = useIsMobile(1280);
     const isLg = useIsMobile(1078);
@@ -95,6 +95,13 @@ const BookingConfirm = () => {
         // Return formatted string
         return `${total.toFixed(2)} ${currency}`;
     };
+
+    const handkeDownloadTicket = () => {
+        dispatch(downloadTickeyService({
+            SessionId: sessionId,
+            PNR: pnr
+        }))
+    }
 
     return (
         <div className="w-full max-w-[1200px] mx-auto bg-white py-4 px-4 flex flex-col items-center">
@@ -210,6 +217,12 @@ const BookingConfirm = () => {
                     className="flex items-center gap-2 border border-primary-1 text-primary-1 px-5 py-2 rounded-md font-medium">
                     <ArrowLeft size={18} />
                     Back to Home Page
+                </button>
+                <button
+                    onClick={handkeDownloadTicket}
+                    className="flex items-center gap-2 border border-primary-1 text-primary-1 px-5 py-2 rounded-md font-medium">
+                    <ArrowLeft size={18} />
+                    Download Ticket
                 </button>
             </div>
         </div>

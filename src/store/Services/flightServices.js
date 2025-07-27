@@ -118,3 +118,25 @@ export const validatePhoneNumberService = createAsyncThunk(
         }
     }
 );
+// ===================================== DOWNLOAD TICKET ==============================================
+export const downloadTickeyService = createAsyncThunk(
+    `${sliceName}/downloadTickeyService`,
+    async ({ SessionId, PNR }, thunkAPI) => {
+        try {
+            const response = await apiClient.get(
+                `/api/booking/AbstractApi/PDFTicket/DownloadTicketPDF`,
+                {
+                    headers: {
+                        'SessionId': SessionId,
+                        'PNR': PNR
+                    }
+                }
+            );
+            return response.data;
+        } catch (error) {
+            return thunkAPI.rejectWithValue(
+                error.response?.data?.message || error.message || 'Something went wrong'
+            );
+        }
+    }
+);
