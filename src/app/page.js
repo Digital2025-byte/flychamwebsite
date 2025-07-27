@@ -2,14 +2,14 @@ import { fetchFromAPI } from '@/lib/api';
 import HomeClient from './HomeClient';
 
 export const metadata = {
-  title: 'Who We Are – Fly Cham',
+  title: 'Fly Cham - Choose Excellance',
   description:
     'Book flights across the world and discover the story behind Fly Cham, our identity, and our commitment to excellence in aviation.',
   icons: {
     icon: '/tabicon.svg',
   },
   openGraph: {
-    title: 'Who We Are – Fly Cham',
+    title: 'Fly Cham - Choose Excellance',
     description:
       'Book flights across the world and discover the story behind Fly Cham, our identity, and our commitment to excellence in aviation.',
     url: 'https://flycham.com',
