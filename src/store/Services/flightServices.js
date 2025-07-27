@@ -124,7 +124,7 @@ export const downloadTickeyService = createAsyncThunk(
     async ({ SessionId, PNR }, thunkAPI) => {
         try {
             const response = await apiClient.get(
-                `/api/booking/AbstractApi/PDFTicket/DownloadTicketPDF`,
+                `/api/booking/PDFTicket/DownloadTicketPDF`,
                 {
                     headers: {
                         'SessionId': SessionId,

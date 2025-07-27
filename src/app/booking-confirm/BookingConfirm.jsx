@@ -1,6 +1,6 @@
 'use client'
 import React, { useEffect, useState } from 'react';
-import { EnvelopeSimple, Clock, DownloadSimple, ArrowLeft } from '@phosphor-icons/react';
+import { EnvelopeSimple, Clock, DownloadSimple, ArrowLeft, DownloadSimpleIcon } from '@phosphor-icons/react';
 import logoEn from "@/assets/images/logoEn.png"
 import Image from 'next/image';
 import FlightTimeInfo from '@/components/FlightResults/FlightTimeInfo';
@@ -221,7 +221,7 @@ const BookingConfirm = () => {
                 <button
                     onClick={handkeDownloadTicket}
                     className="flex items-center gap-2 border border-primary-1 text-primary-1 px-5 py-2 rounded-md font-medium">
-                    <ArrowLeft size={18} />
+                    <DownloadSimpleIcon size={18} />
                     Download Ticket
                 </button>
             </div>
