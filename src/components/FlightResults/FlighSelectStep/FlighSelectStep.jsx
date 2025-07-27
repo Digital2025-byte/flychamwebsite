@@ -26,7 +26,7 @@ const FlighSelectStep = ({ flights, setFilterModalOpen, handleDetailsClick, isFi
       }
       {flights.length > 0 &&
         <>
-          {/* <FlightsListCounter type="Direct airport" count={flights.length} /> */}
+          <FlightsListCounter type="Direct airport" count={flights.length} />
           <FlightList flights={flights} onDetailsClick={handleDetailsClick}
             handleSelectPlan={handleSelectPlan} selectedFlight={selectedFlight} setActiveStep={setActiveStep}
             selectedType={selectedType} setSelectedFlight={setSelectedFlight}
@@ -34,7 +34,7 @@ const FlighSelectStep = ({ flights, setFilterModalOpen, handleDetailsClick, isFi
           <Divider />
         </>
       }
-      {/* {IndirectAirPort.length > 0 &&
+      {IndirectAirPort.length > 0 &&
         <>
 
           <FlightsListCounter type="All airport" count={IndirectAirPort.length} />
@@ -43,7 +43,7 @@ const FlighSelectStep = ({ flights, setFilterModalOpen, handleDetailsClick, isFi
             selectedType={selectedType} setSelectedFlight={setSelectedFlight}
           />
         </>
-      } */}
+      }
       <SortFilterModal isOpen={isFilterModalOpen} onClose={() => setFilterModalOpen(false)} onApply={() => { }} />
       <FlightDetailsModal isOpen={isShowDetailsModalOpen} onClose={() => setFlightDetailsOpen(false)} flight={expandedFlight} />
 

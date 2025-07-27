@@ -152,7 +152,7 @@ const BookingBox = ({ flights, pos }) => {
             if (!dateStart || !source || !destination) {
                 return
             }
-            router.push('/search-results');
+            // router.push('/search-results');
 
 
 
