@@ -215,7 +215,7 @@ const BookingConfirm = () => {
                 <Divider />
                 <div className="flex justify-between text-sm font-semibold text-primary-1 mb-2">
                     <span>Total Paid</span>
-                    <span>{sessionInfo?.paymentAmount + " " + taxes[0]?.currency ?? '-'}</span>
+                    <span>{sessionInfo?.paymentAmount + " " + sessionInfo?.taxes[0]?.currency ?? '-'}</span>
                 </div>
             </div>
 
