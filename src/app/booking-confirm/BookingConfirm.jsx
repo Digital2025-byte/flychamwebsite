@@ -93,7 +93,7 @@ const BookingConfirm = () => {
         console.log('total', total);
 
         // Return formatted string
-        return `${total.toFixed(2)} `;
+        return `${total.toFixed(2)} ${currency}`;
     };
 
     const handkeDownloadTicket = () => {
@@ -215,7 +215,7 @@ const BookingConfirm = () => {
                 <Divider />
                 <div className="flex justify-between text-sm font-semibold text-primary-1 mb-2">
                     <span>Total Paid</span>
-                    <span>{sessionInfo?.paymentAmount ?? '-'}</span>
+                    <span>{sessionInfo?.paymentAmount + " " + taxes[0]?.currency ?? '-'}</span>
                 </div>
             </div>
 
