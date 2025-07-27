@@ -131,7 +131,10 @@ const InfoRows = ({ isHeader, isEconomy, isLg, isInfo, handleSelectPlan, col, fl
         </div>
     )
 }
-const Header = ({ tag, price, title, isEconomy, isHeader, isLg, currecny }) => {
+const Header = ({ tag, price, title, isEconomy, isHeader, isLg, currency }) => {
+
+    console.log('currency', currency);
+
     // Don't show anything on mobile if not header
     if (!isHeader && !isLg) {
         return null;
@@ -151,9 +154,9 @@ const Header = ({ tag, price, title, isEconomy, isHeader, isLg, currecny }) => {
             <div>
                 <span className={`text-sm font-semibold ${textColor}`}>{title}</span>
 
-                <div className={`${textCurrencyColor}`}>
-                    <div className={`${textCurrencyColor} text-xs font-medium  `}>{currecny}</div>
-                    <div className={`${textCurrencyColor} text-2xl font-regular`}>{price?.replace('USD ', '')}</div>
+                <div className={` flex items-center gap-1 ${textCurrencyColor}`}>
+                    <div className={`${textCurrencyColor} text-2xl font-regular`}>{price}</div>
+                    <div className={`${textCurrencyColor} text-xs font-medium  `}>{currency}</div>
                 </div>
             </div>
 
@@ -173,8 +176,10 @@ const FareColumn = ({
     tag = '',
     type,
     isHeader,
-    isLg, handleSelectPlan, col, flight, currecny
+    isLg, handleSelectPlan, col, flight
 }) => {
+    const c = flight.common_info.currency
+
     const isEconomy = type === 'Economy';
     const isInfo = type === 'Info';
 
@@ -182,7 +187,7 @@ const FareColumn = ({
     return (
         <div className=" w-full lg:max-w-[430px] flex flex-col  rounded-lg ">
 
-            <Header tag={tag} currecny={currecny} price={price} title={title} isEconomy={isEconomy} isHeader={isHeader} isLg={isLg} />
+            <Header currency={c} tag={tag} col={col} price={price} title={title} isEconomy={isEconomy} isHeader={isHeader} isLg={isLg} />
 
             {(isHeader && isLg) ? (
                 <div className="text-alert text-xs font-medium text-end mb-2">
@@ -210,12 +215,14 @@ const FlightDetails = ({ handleSelectPlan, flight }) => {
     const Economy = flight.Economy
     const Business = flight.Business
     const commonInfo = flight.common_info
+
     const columns = [
         {
 
             type: 'Info',
             FareRuleReference: Economy?.pricing_info[0]?.FareRuleReference[0],
             // items: economyClassItems,
+            currency: commonInfo?.currency,
 
         },
         {
@@ -225,13 +232,13 @@ const FlightDetails = ({ handleSelectPlan, flight }) => {
             commonInfo,
             FareRuleReference: Economy?.pricing_info[0]?.FareRuleReference[0],
             price: formatPrice(Economy?.total_fare),
-            currecny: commonInfo?.currecny,
+            currency: commonInfo?.currency,
             seatsLeft: `${Math.floor(Math.random() * 10) + 1} seats left`,
             type: 'Economy',
             isHeader: true,
             isBtn: true,
             special: false,
-         PassengerInfo: {
+            PassengerInfo: {
                 PaxType: Economy?.pricing_info[0]?.PaxType,
                 BaseFare: Economy?.pricing_info[0]?.BaseFare,
                 // BaseFareEquiv: Economy?.pricing_info[0]?.BaseFareEquiv,
@@ -254,7 +261,7 @@ const FlightDetails = ({ handleSelectPlan, flight }) => {
             commonInfo,
             FareRuleReference: Business?.pricing_info[0]?.FareRuleReference[0],
             price: formatPrice(Business?.total_fare),
-            currecny: commonInfo?.currecny,
+            currency: commonInfo?.currency,
 
             seatsLeft: `${Math.floor(Math.random() * 10) + 1} seats left`,
             tag: 'Recommended',

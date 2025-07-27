@@ -9,7 +9,6 @@ import CustomCheckbox from '../CustomCheckbox';
 const SortFilterModal = ({ isOpen, onClose, onApply }) => {
     const [sortBy, setSortBy] = useState('recommended');
     const [departureTime, setDepartureTime] = useState({ any: true, day: false, night: false });
-    const [stops, setStops] = useState({ any: true, nonstop: false, oneStop: false });
 
     const handleToggle = (state, setState, key) => {
         key === 'any'
@@ -62,7 +61,7 @@ const SortFilterModal = ({ isOpen, onClose, onApply }) => {
 
                                 <hr className="border-[#E5E5E5] my-2" />
 
-                                <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-4 text-sm">
+                                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-4 text-sm">
                                     <FilterGroup
                                         title="Sort by"
                                         type="radio"
@@ -71,7 +70,7 @@ const SortFilterModal = ({ isOpen, onClose, onApply }) => {
                                         options={[
                                             { key: 'recommended', label: 'Recommended' },
                                             { key: 'lowest', label: 'Lowest price' },
-                                            { key: '1stop', label: '1 Stop' },
+                                            // { key: '1stop', label: '1 Stop' },
                                         ]}
                                     />
                                     <FilterGroup
@@ -85,7 +84,7 @@ const SortFilterModal = ({ isOpen, onClose, onApply }) => {
                                             { key: 'night', label: 'Night' },
                                         ]}
                                     />
-                                    <FilterGroup
+                                    {/* <FilterGroup
                                         title="Number of stops"
                                         type="checkbox"
                                         value={stops}
@@ -95,13 +94,13 @@ const SortFilterModal = ({ isOpen, onClose, onApply }) => {
                                             { key: 'nonstop', label: 'Non stop' },
                                             { key: 'oneStop', label: '1 Stop' },
                                         ]}
-                                    />
+                                    /> */}
                                 </div>
 
                                 <div className="sticky bottom-0 bg-white pt-4 pb-2 flex justify-end">
                                     <button
                                         onClick={() => {
-                                            onApply?.({ sortBy, departureTime, stops });
+                                            onApply?.({ sortBy, departureTime });
                                             onClose();
                                         }} className="px-6 py-2 rounded-md bg-[#C1AA81] text-white font-semibold text-sm hover:bg-[#b69d76] transition"
                                     >

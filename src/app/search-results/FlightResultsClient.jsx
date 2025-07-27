@@ -265,8 +265,8 @@ const FlightResultsClient = () => {
                         <main className="w-[70%] mx-auto px-2">
                             <Section><ProgressBar steps={steps} activeStep={activeStep} setActiveStep={setActiveStep} /></Section>
 
-                            <Section><RouteInfo /></Section>
-                            {showNoice && (activeStep === 0) &&
+                            <Section><RouteInfo activeStep={activeStep} selectedFlight={selectedFlight} /></Section>
+                            {showNoice && (activeStep === 0) && !selectedFlight &&
                                 <POSNotice setShowNotice={setShowNotice} setShowPosModal={setShowPosModal} />
                             }
                             {!selectedFlight &&

@@ -150,7 +150,7 @@ const PassengerDetails = ({ activeStep, setActiveStep, selectedFlight, selectedT
                             setFieldValue={formik.setFieldValue}
                             errors={formik.errors}
                             touched={formik.touched}
-
+                            type={passenger.typeValue}
                         />
 
                     </Section>

@@ -85,7 +85,7 @@ const flightSlice = createSlice({
             })
             .addCase(createListPassengerService.fulfilled, (state, action) => {
                 state.isLoadingCreatePassengers = false;
-                state.flights = action.payload.flights;
+                // state.flights = action.payload.flights;
             })
             .addCase(createListPassengerService.rejected, (state, action) => {
                 state.isLoadingCreatePassengers = false;

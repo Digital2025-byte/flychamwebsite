@@ -5,7 +5,10 @@ import { ArrowLeft, ArrowRight } from '@phosphor-icons/react';
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-const RouteInfo = () => {
+const RouteInfo = ({ activeStep, selectedFlight }) => {
+    console.log('selectedFlight', selectedFlight);
+    const { selectedPlan } = useSelector((s) => s.flights)
+    const destenationAirPortName = selectedPlan.commonInfo.segments[0].destination_name + " " + selectedPlan.commonInfo.segments[0].destination_code
     const isLg = !useIsMobile(1024);
     const { destination, origin, date, flighttype } = useFlightRouteDetails()
     return (
@@ -17,9 +20,13 @@ const RouteInfo = () => {
                         <h1 className="text-primary-1 text-[16px] lg:text-[32px]  font-bold leading-tight">
                             {origin.city}
                         </h1>
+
                         <p className="hidden lg:block text-primary-1 text-sm text-start font-normal">
-                            {`${origin.city} Intl (${origin.iataCode})`}
+                            {`${origin.originAirPortName} (${origin.iataCode})`}
                         </p>
+
+
+
                     </div>
 
                     {/* Arrow */}
@@ -40,8 +47,12 @@ const RouteInfo = () => {
                         <h1 className="text-primary-1 text-[16px] lg:text-[32px]  font-bold leading-tight">
                             {destination.city}
                         </h1>
-                        <p className=" hidden lg:block text-primary-1 text-sm font-normal">
-                            {`${destination.city} Intl (${destination.iataCode})`}
+                        { }
+                        <p className="hidden lg:block text-primary-1 text-sm text-start font-normal">
+                            {(Boolean(selectedFlight) || activeStep > 0) ?
+                                destenationAirPortName :
+                                `${destination.destenationAirPortName} (${destination.iataCode})`
+                            }
                         </p>
                     </div>
                 </div>

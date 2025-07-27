@@ -6,6 +6,7 @@ import SortFilterModal from './SortFilterModal'
 import FlightDetailsModal from './FlightDetailsModal'
 import FlightsListCounter from './FlightsListCounter'
 import Divider from './Divider'
+import { useSelector } from 'react-redux'
 
 const FlighSelectStep = ({
   flights = [],
@@ -24,14 +25,14 @@ const FlighSelectStep = ({
 }) => {
   const hasFlights = flights.length > 0
   const hasIndirectFlights = IndirectAirPort.length > 0
-
+  const { searchParams } = useSelector((s) => s.flights);
+  const { neirby } = searchParams
   return (
     <div>
       {/* Header and Direct Flights */}
       {!selectedFlight && (
         <>
           <FlightHeader count={flights.length} setFilterModalOpen={setFilterModalOpen} />
-          <FlightsListCounter type="Direct airport" count={flights.length} />
         </>
       )}
 
@@ -54,6 +55,8 @@ const FlighSelectStep = ({
       {/* Direct Flights List */}
       {hasFlights && !selectedFlight && (
         <>
+          <FlightsListCounter type="Direct Airport" count={flights.length} />
+
           <FlightList
             flights={flights}
             onDetailsClick={handleDetailsClick}
@@ -68,25 +71,28 @@ const FlighSelectStep = ({
       )}
 
       {/* Indirect Flights */}
-      {!selectedFlight && <FlightsListCounter type="All airport" count={IndirectAirPort.length} />}
+      {/* {!selectedFlight && neirby && <FlightsListCounter type="All Airport" count={IndirectAirPort.length} />} */}
 
       {hasIndirectFlights && !selectedFlight && (
-        <FlightList
-          flights={IndirectAirPort}
-          onDetailsClick={handleDetailsClick}
-          handleSelectPlan={handleSelectPlan}
-          selectedFlight={selectedFlight}
-          setActiveStep={setActiveStep}
-          selectedType={selectedType}
-          setSelectedFlight={setSelectedFlight}
-        />
+        <>
+          <FlightsListCounter type="All Airport" count={IndirectAirPort.length} />
+          <FlightList
+            flights={IndirectAirPort}
+            onDetailsClick={handleDetailsClick}
+            handleSelectPlan={handleSelectPlan}
+            selectedFlight={selectedFlight}
+            setActiveStep={setActiveStep}
+            selectedType={selectedType}
+            setSelectedFlight={setSelectedFlight}
+          />
+        </>
       )}
 
       {/* Modals */}
       <SortFilterModal
         isOpen={isFilterModalOpen}
         onClose={() => setFilterModalOpen(false)}
-        onApply={() => {}}
+        onApply={() => { }}
       />
       <FlightDetailsModal
         isOpen={isShowDetailsModalOpen}

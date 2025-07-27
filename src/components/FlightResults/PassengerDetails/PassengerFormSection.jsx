@@ -5,7 +5,16 @@ import Input from '@/components/Ui/Input';
 import CustomDropdown from '@/components/Ui/TitleDropdown';
 import ErrorMessage from '@/components/Ui/ErrorMessage';
 
-const PassengerFormSection = ({ index, values, onChange, setFieldValue, errors, touched }) => {
+const PassengerFormSection = ({ index, values, onChange, setFieldValue, errors, touched, type }) => {
+    console.log('type', type);
+    const titleOptions =
+        type === 'CHD' || type === 'INF'
+            ? [{ label: "Mr", value: "Mr" }, { label: "Ms", value: "Ms" }]
+            : [
+                { label: "Mr", value: "Mr" },
+                { label: "Mrs", value: "Mrs" },
+                { label: "Ms", value: "Ms" }
+            ];
 
     const basePath = `passengers[${index}]`;
 
@@ -19,11 +28,7 @@ const PassengerFormSection = ({ index, values, onChange, setFieldValue, errors, 
                 <CustomDropdown
                     selected={values.title}
                     onChange={(val) => setFieldValue(`${basePath}.title`, val)}
-                    options={[
-                        { label: "Mr", value: "Mr" },
-                        { label: "Mrs", value: "Mrs" },
-                        { label: "Ms", value: "Ms" }
-                    ]}
+                    options={titleOptions}
                     placeholder="Title"
                     error={isTouched('title') && getError('title')}
 
