@@ -6,37 +6,39 @@ const LatestNews = ({ lastNews }) => {
     const { date, category, title, description, image, link } = lastNews;
 
     return (
-        <section className="w-full px-4 md:px-8 lg:px-50 py-10">
+        <section className="w-full px-4 md:px-8 lg:px-50 mt-[34px]">
             {/* ✅ Section Title */}
-            <h2 className="text-primary-1 text-2xl md:text-3xl font-montserrat font-bold mb-6">
+            <h2 className="text-primary-1 text-2xl md:text-3xl bg font-bold mb-6">
                 Latest News
             </h2>
 
             {/* ✅ News Card */}
-            <div className="flex flex-col-reverse lg:flex-row gap-6 justify-center items-start">
+            <div className="flex flex-col-reverse lg:flex-row gap-6 justify-center items-start ">
                 {/* ✅ Left Column: Text */}
                 <div className="  ">
                     {/* ✅ Date & Category */}
                     <div className="flex items-center gap-2 text-600 mb-2">
                         <Clock size={18} weight="regular" />
-                        <span className="text-sm md:text-base font-montserrat font-medium">
+                        <span className="text-sm md:text-base bg font-medium">
                             {date}
                         </span>
                         <div className="w-1 h-1 rounded-full bg-600" />
-                        <span className="text-sm md:text-base font-montserrat font-medium text-primary-1">
+                        <span className="text-sm md:text-base bg-[#054e7224] bg-opacity-10 text-[#054E72] font-medium px-3 py-1 rounded-full">
                             {category}
                         </span>
+
+
                     </div>
 
                     {/* ✅ Title */}
-                    <h3 className="text-primary-1 text-lg md:text-xl lg:text-2xl font-montserrat font-semibold mb-3">
+                    <h3 className="text-primary-1 text-lg md:text-xl lg:text-2xl bg font-semibold mb-3 hover:underline">
                         {title}
                     </h3>
 
                     {/* ✅ Description */}
-     <p className="text-sm md:text-base font-montserrat leading-6 mb-4 break-words max-w-[600px]">
-  {description}
-</p>
+                    <p className="text-sm md:text-base bg leading-6 mb-[24px] break-words max-w-[600px]">
+                        {description}
+                    </p>
 
                     {/* ✅ Read More Button */}
                     <button
@@ -45,7 +47,7 @@ const LatestNews = ({ lastNews }) => {
     inline-flex items-center justify-center gap-2 
     px-4 py-2 md:px-6 md:py-3 
     bg-[#BAA981] rounded-xl 
-    text-white text-base md:text-lg font-montserrat font-semibold 
+    text-white text-base md:text-lg bg font-semibold 
     hover:bg-[#a3936d] transition w-full sm:w-auto
   "
                     >
@@ -56,13 +58,13 @@ const LatestNews = ({ lastNews }) => {
                 </div>
 
                 {/* ✅ Right Column: Image */}
-                <div className="w-full flex justify-center">
+                <div className="w-full flex justify-center overflow-hidden group">
                     <Image
                         src={image}
                         alt={title}
                         width={800}        // ✅ Fixed width
                         height={250}       // ✅ Fixed height
-                        className="rounded-xl object-cover"
+                        className="rounded-xl w-full h-full object-cover transition-transform duration-300 ease-in-out group-hover:scale-105"
                     />
                 </div>
 
