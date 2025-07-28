@@ -131,11 +131,13 @@ export default function ClientLayoutWrapper({ children }) {
           {/* Sidebar */}
           <aside className="hidden xl:block   h-screen shadow-xl z-50">
             {/* {(pathname !== '/about' || pathname !== '/Mission') && */}
-            {pathname !== '/search-results' && pathname !== '/Search-results-confirm' && pathname !== '/passenger-details' && pathname !== '/booking-confirm' && (
-              <aside className="hidden xl:block h-screen shadow-xl z-50">
-                <SideBar navItems={navItems} isOpen={isOpen} setIsOpen={setIsOpen} />
-              </aside>
-            )}
+            {pathname !== '/search-results' && pathname !== '/Search-results-confirm' && pathname !== '/passenger-details' && pathname !== '/booking-confirm' &&
+              // pathname !== '/Media-center' &&
+              (
+                <aside className="hidden xl:block h-screen shadow-xl z-50">
+                  <SideBar navItems={navItems} isOpen={isOpen} setIsOpen={setIsOpen} />
+                </aside>
+              )}
             {/* } */}
           </aside>
 

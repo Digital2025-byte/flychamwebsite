@@ -36,19 +36,19 @@ const SideBar = ({ navItems, isOpen, setIsOpen }) => {
         }
     }
 
-const handleArrowClick = () => {
-  if (isOpen) {
-    setTimeout(() => {
-      setIsOpen(false);
-      setIsManuallyControlled(true);
-    }, 300);
-  } else {
-    setTimeout(() => {
-      setIsOpen(true);
-      setIsManuallyControlled(false);
-    }, 300);
-  }
-};
+    const handleArrowClick = () => {
+        if (isOpen) {
+            setTimeout(() => {
+                setIsOpen(false);
+                setIsManuallyControlled(true);
+            }, 300);
+        } else {
+            setTimeout(() => {
+                setIsOpen(true);
+                setIsManuallyControlled(false);
+            }, 300);
+        }
+    };
 
 
     return (
@@ -56,14 +56,14 @@ const handleArrowClick = () => {
             className={`relative  ${isArabic ? 'right-0' : 'left-0'} h-screen bg-main text-white flex flex-col justify-between transition-all duration-1000 shadow-xl
                 z-50 xl:pt-8`}
             style={{
-                width: isOpen ? '220px' : '80px',
+                width: isOpen ? '170px' : '80px',
             }}
 
         >
             {/* ${isArabic ? 'rounded-bl-2xl' : 'rounded-br-2xl'} */}
 
             {/* Top section */}
-            <div className=" h-120 py-6 px-4">
+            <div className=" h-120 py-6 ">
 
                 <div
                     onClick={handleArrowClick}
@@ -81,19 +81,19 @@ const handleArrowClick = () => {
                     />
                 </div>
 
- {isOpen && (
-    <div
-        className={`absolute bottom-0 left-0 opacity-50 w-full overflow-hidden rounded-br-[16px] `}
-    >
-        <Image
-            src={isArabic ? sidebarar : footerPattern}
-            alt="Fly Cham pattern"
-            width={250}
-            height={250}
-            className="w-full h-full"
-        />
-    </div>
-)}
+                {isOpen && (
+                    <div
+                        className={`absolute bottom-0 left-0 opacity-50 w-full overflow-hidden rounded-br-[16px] `}
+                    >
+                        <Image
+                            src={isArabic ? sidebarar : footerPattern}
+                            alt="Fly Cham pattern"
+                            width={250}
+                            height={250}
+                            className="w-full h-full"
+                        />
+                    </div>
+                )}
 
                 <div className="space-y-6"
 
@@ -155,7 +155,7 @@ const handleArrowClick = () => {
                             {navItems.map((item, index) => (
                                 <div
                                     key={item.label}
-                                    className="relative group"
+                                    className="relative group "
                                     onMouseEnter={() => setHoveredItem(index)}
                                 >
                                     <button
@@ -172,10 +172,10 @@ const handleArrowClick = () => {
                                             }
                                         }}
                                     >
-                                        <div className="flex gap-2 items-center relative">
-                                            <span className="text-lg relative">
+                                        <div className="flex gap-[2px] items-center relative mb-1">
+                                            <span className="text-sm relative">
                                                 <item.icon
-                                                    size={24}
+                                                    size={18}
                                                     weight={hoveredItem === index ? 'fill' : 'bold'}
                                                     color="white"
                                                 />
@@ -187,7 +187,7 @@ const handleArrowClick = () => {
                                             )}
 
                                             <span
-                                                className={`ml-3 whitespace-nowrap transition-all duration-300 ${isOpen
+                                                className={`ml-3 text-xs whitespace-nowrap transition-all duration-300 ${isOpen
                                                     ? 'opacity-100'
                                                     : 'opacity-0 w-0 overflow-hidden'
                                                     }`}

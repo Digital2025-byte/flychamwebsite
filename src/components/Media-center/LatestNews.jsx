@@ -6,16 +6,16 @@ const LatestNews = ({ lastNews }) => {
     const { date, category, title, description, image, link } = lastNews;
 
     return (
-        <section className="w-full px-4 md:px-8 lg:px-16 py-10">
+        <section className="w-full px-4 md:px-8 lg:px-50 py-10">
             {/* ✅ Section Title */}
             <h2 className="text-primary-1 text-2xl md:text-3xl font-montserrat font-bold mb-6">
                 Latest News
             </h2>
 
             {/* ✅ News Card */}
-            <div className="flex flex-col-reverse lg:flex-row gap-6 items-start">
+            <div className="flex flex-col-reverse lg:flex-row gap-6 justify-center items-start">
                 {/* ✅ Left Column: Text */}
-                <div className="flex-1">
+                <div className="  ">
                     {/* ✅ Date & Category */}
                     <div className="flex items-center gap-2 text-600 mb-2">
                         <Clock size={18} weight="regular" />
@@ -34,9 +34,9 @@ const LatestNews = ({ lastNews }) => {
                     </h3>
 
                     {/* ✅ Description */}
-                    <p className="text-700 text-sm md:text-base font-montserrat leading-6 mb-4">
-                        {description}
-                    </p>
+     <p className="text-sm md:text-base font-montserrat leading-6 mb-4 break-words max-w-[600px]">
+  {description}
+</p>
 
                     {/* ✅ Read More Button */}
                     <button
@@ -56,15 +56,16 @@ const LatestNews = ({ lastNews }) => {
                 </div>
 
                 {/* ✅ Right Column: Image */}
-                <div className="flex-1 w-full lg:w-1/2">
+                <div className="w-full flex justify-center">
                     <Image
                         src={image}
                         alt={title}
-                        width={600}
-                        height={400}
-                        className="rounded-xl object-cover w-full h-full"
+                        width={800}        // ✅ Fixed width
+                        height={250}       // ✅ Fixed height
+                        className="rounded-xl object-cover"
                     />
                 </div>
+
             </div>
         </section>
     );
