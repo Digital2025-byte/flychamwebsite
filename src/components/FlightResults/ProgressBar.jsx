@@ -36,7 +36,7 @@ const ProgressBar = ({ steps, activeStep, setActiveStep }) => {
         {steps.map((step, index) => {
           const isCompleted = index <= activeStep;
           const stepColor = isCompleted ? 'text-white' : 'text-400';
-          const borderColor = isCompleted ? 'border-white' : 'border-[var(text-400)]';
+          const borderColor = isCompleted ? 'border-white' : 'border-[var(--text-400)]';
 
           return (
             <div

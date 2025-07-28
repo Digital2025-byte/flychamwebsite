@@ -18,7 +18,7 @@ import formatTime from '@/util/formatFlightTime';
 const BookingConfirm = () => {
     const dispatch = useDispatch();
     const { selectedFlight,
-        //  sessionInfo,
+         sessionInfo,
         selectedPlan, pnr } = useSelector((s) => s.flights);
     // 🔹 Dummy sessionInfo for testing UI without API
     // const sessionInfo = {
