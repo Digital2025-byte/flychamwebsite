@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import DateNavigation from '@/components/FlightResults/DateNavigation'
 import Header from '@/components/FlightResults/Header'
 import ProgressBar from '@/components/FlightResults/ProgressBar'
@@ -23,6 +23,7 @@ import useSessionTimer from '@/hooks/useSessionTimer'
 
 const FlightResultsClient = () => {
 
+    const scrollRef = useRef(null)  // ✅ Create scrollable div ref
 
     const dispatch = useDispatch()
     const { flights, selectedPassengers, searchParams, isLoadingFlights, selectedPlan, IndirectAirPort } = useSelector((state) => state.flights);
@@ -49,11 +50,15 @@ const FlightResultsClient = () => {
         setFlightDetailsOpen(true);
 
     };
+    const handleStepBack = () => {
+        // Make sure we don't go below step 0
+        setActiveStep((prevStep) => Math.max(prevStep - 1, 0));
+    };
 
 
     const HeaderBarMobile = () => (
-        <div className="px-3 flex items-center justify-between h-16 shadow-md bg-[#F1F1F1]">
-            <HeaderMobile />
+        <div className=" px-3 flex items-center justify-between h-16 shadow-md bg-[#F1F1F1]">
+            <HeaderMobile handleStepBack={handleStepBack}/>
         </div>
     );
 
@@ -238,9 +243,17 @@ const FlightResultsClient = () => {
         dispatch(getFlightsService(newParams))
         setShowPosModal(false)
     };
+
     useEffect(() => {
-        window.scroll(0, 0)
-    }, [activeStep])
+        const timer = setTimeout(() => {
+            if (scrollRef.current) {
+                scrollRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }, 100); // small delay to ensure DOM updates before scroll
+
+        return () => clearTimeout(timer);
+    }, [activeStep, selectedFlight]);
+
 
 
     const handleSearchAgain = () => {
@@ -253,13 +266,15 @@ const FlightResultsClient = () => {
             }
         });
     };
+
+
     return (
         <>
 
             {(isLoadingFlights || localLoading) ? <Screen /> :
 
 
-                <div className="">
+                <div ref={scrollRef} className="h-screen overflow-y-auto">
                     <div className='hidden lg:block'>
                         <Header />
                         <main className="w-[70%] mx-auto px-2">
@@ -267,7 +282,10 @@ const FlightResultsClient = () => {
 
                             <Section><RouteInfo activeStep={activeStep} selectedFlight={selectedFlight} /></Section>
                             {showNoice && (activeStep === 0) && !selectedFlight &&
-                                <POSNotice setShowNotice={setShowNotice} setShowPosModal={setShowPosModal} />
+                                <Section>
+
+                                    <POSNotice setShowNotice={setShowNotice} setShowPosModal={setShowPosModal} />
+                                </Section>
                             }
                             {!selectedFlight &&
                                 <Section ><DateNavigation handleClickDate={handleClickDate} /></Section>
@@ -283,14 +301,9 @@ const FlightResultsClient = () => {
                             <Section ><DateNavigation handleClickDate={handleClickDate} /></Section>
 
                         }
-                        {showNoice && (activeStep === 0) &&
+                        {showNoice && (activeStep === 0) && !selectedFlight &&
                             <POSNotice setShowNotice={setShowNotice} setShowPosModal={setShowPosModal} />
                         }
-
-                        {/* <main className="w-[95%] md:w-[70%] mx-auto px-2 py-4">
-
-                        <ProgressBarMb />
-                    </main> */}
                     </div>
 
                     <main className="w-[95%] md:w-[70%] mx-auto px-2">
@@ -300,7 +313,6 @@ const FlightResultsClient = () => {
                         </Section>
                     </main>
 
-                    {/* <SearchResultsFooter /> */}
                 </div>}
 
             <SessionExpiredModal

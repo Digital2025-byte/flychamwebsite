@@ -58,7 +58,7 @@ const PricingAccordion = ({ pricingInfo }) => {
                             <div className="space-y-1 mt-2 pl-1 pt-1">
                                 <div className="flex justify-between">
                                     <span className="text-600">Fare</span>
-                                    <span className="text-600">{item.TotalEquiv}</span>
+                                    <span className="text-600">{item.BaseFare[0]}</span>
                                 </div>
                                 <div className="flex justify-between">
                                     <span className="text-600">Taxes</span>

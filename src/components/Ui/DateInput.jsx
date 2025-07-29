@@ -40,7 +40,12 @@ export default function CustomDateInput({ value, onChange, error }) {
                 onBlur={() => !value && setIsFocused(false)}
                 className={
                     `w-full bg-100 text-600  text-[16px] px-4 py-3 pr-10 rounded-xl  focus:outline-none 
-                border border-gray-300 ${error ? 'border-alert' : 'border-gray-300'}
+                border border-gray-300
+                     appearance-none
+    [-webkit-appearance:none]  
+    [::-webkit-calendar-picker-indicator]:hidden 
+    [::-webkit-inner-spin-button]:hidden        
+    ${error ? 'border-alert' : 'border-gray-300'}
 selection:bg-[#F00] selection:text-white
     [&::-webkit-calendar-picker-indicator]:opacity-0
     [&::-webkit-calendar-picker-indicator]:pointer-events-none
