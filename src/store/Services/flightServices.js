@@ -41,11 +41,12 @@ export const createListPassengerService = createAsyncThunk(
     async (data, thunkAPI) => {
         try {
 
+            // const response = await apiClient.post(`/api/bookingtest/Contact/CreateList`, data);
             const response = await apiClient.post(`/api/booking/Contact/CreateListPassenger`, data);
             return response.data;
         } catch (error) {
             return thunkAPI.rejectWithValue(
-                error.response?.data?.message || error.message || 'Something went wrong'
+              error.response.data|| 'Something went wrong'
             );
         }
     }

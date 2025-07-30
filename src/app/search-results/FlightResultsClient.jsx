@@ -37,6 +37,7 @@ const FlightResultsClient = () => {
     const [localLoading, setLocalLoading] = useState(true);
     const [isSessionModalOpen, setSessionModalOpen] = useState(false);
     const [isAlertOpen, setIsAlertOpen] = useState(false);
+    const [alertMessage, setAlertMessage] = useState(false);
 
     const [isFilterModalOpen, setFilterModalOpen] = useState(false);
     const [isShowDetailsModalOpen, setFlightDetailsOpen] = useState(false);
@@ -179,6 +180,7 @@ const FlightResultsClient = () => {
                 selectedFlight={selectedFlight}
                 selectedType={selectedType}
                 setIsAlertOpen={setIsAlertOpen}
+                setAlertMessage={setAlertMessage}
             />
 
         },
@@ -325,7 +327,7 @@ const FlightResultsClient = () => {
             <AlertModal
                 isOpen={isAlertOpen}
                 onClose={() => setIsAlertOpen(false)}
-                message="You are not allowed to book multible filghts"
+                message={alertMessage}
 
             />
             <PosSelectorModal handleSelectPos={handleSelectPos} isOpen={showPosModal} setIsOpen={setShowPosModal} />

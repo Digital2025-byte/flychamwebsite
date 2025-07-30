@@ -19,7 +19,7 @@ import * as Yup from 'yup';
 import ErrorMessage from '@/components/Ui/ErrorMessage';
 import useFlightDetails from '@/hooks/useFlightDetails';
 
-const PassengerDetails = ({ activeStep, setActiveStep, selectedFlight, selectedType, setIsAlertOpen }) => {
+const PassengerDetails = ({ activeStep, setActiveStep, selectedFlight, selectedType, setIsAlertOpen, setAlertMessage }) => {
     const dispatch = useDispatch()
     const { searchParams, selectedPlan } = useSelector((s) => s.flights)
     const { info } = useFlightDetails(selectedPlan);
@@ -133,14 +133,14 @@ const PassengerDetails = ({ activeStep, setActiveStep, selectedFlight, selectedT
 
             dispatch(createListPassengerService(data)).then(action => {
 
-                // if (false) {
                 if (createListPassengerService.fulfilled.match(action)) {
                     dispatch(setSelectedpassengers(data));
                     setActiveStep(2);
-                    // } else if (true) {
                 } else if (createListPassengerService.rejected.match(action)) {
-                    if (action.payload === "Request failed with status code 400") {
+                    if (action.payload.status === 400) {
+                        const errorMessage = action.payload.title || "An error occurred";
                         setIsAlertOpen(true)
+                        setAlertMessage(errorMessage)
                     }
                 }
             });
