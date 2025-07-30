@@ -97,7 +97,6 @@ const PassengerDetails = ({ activeStep, setActiveStep, selectedFlight, selectedT
                 phoneNumber: values.contact.phoneNumber,
                 countryCode: values.contact.countryCode,
                 email: values.contact.email,
-                ResBookDesigCode: "",
                 passengers: values.passengers.map((p) => ({
                     birthDate: p.dateOfBirth,
                     passengerTypeCode: p.typeValue,
