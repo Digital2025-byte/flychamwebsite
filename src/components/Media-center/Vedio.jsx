@@ -4,7 +4,7 @@ import React from 'react'
 
 const Vedio = ({ handleOpenModal }) => {
     return (
-        <div className="relative group rounded-xl overflow-hidden flex-[0.6] mb-[66px]">
+        <div className="relative group rounded-xl overflow-hidden flex-[0.6] mb-5 xl:mb-[66px]">
             {/* 🎥 Video */}
             <video
                 autoPlay

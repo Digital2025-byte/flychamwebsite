@@ -19,7 +19,7 @@ import * as Yup from 'yup';
 import ErrorMessage from '@/components/Ui/ErrorMessage';
 import useFlightDetails from '@/hooks/useFlightDetails';
 
-const PassengerDetails = ({ activeStep, setActiveStep, selectedFlight, selectedType }) => {
+const PassengerDetails = ({ activeStep, setActiveStep, selectedFlight, selectedType, setIsAlertOpen }) => {
     const dispatch = useDispatch()
     const { searchParams, selectedPlan } = useSelector((s) => s.flights)
     const { info } = useFlightDetails(selectedPlan);
@@ -104,7 +104,7 @@ const PassengerDetails = ({ activeStep, setActiveStep, selectedFlight, selectedT
                     surname: capitalize(p.lastName),
                     nameTitle: p.title,
                 })),
-                pricinginfo: info.pricing_info.map((item,idx) => ({
+                pricinginfo: info.pricing_info.map((item, idx) => ({
                     PaxType: item.PaxType,
                     ResBookDesigCode: item.ResBookDesigCode
                 }))
@@ -131,16 +131,23 @@ const PassengerDetails = ({ activeStep, setActiveStep, selectedFlight, selectedT
                 return;
             }
 
-            dispatch(createListPassengerService(data)).then((action) => {
+            dispatch(createListPassengerService(data)).then(action => {
+
+                // if (false) {
                 if (createListPassengerService.fulfilled.match(action)) {
                     dispatch(setSelectedpassengers(data));
                     setActiveStep(2);
+                    // } else if (true) {
+                } else if (createListPassengerService.rejected.match(action)) {
+                    if (action.payload === "Request failed with status code 400") {
+                        setIsAlertOpen(true)
+                    }
                 }
             });
+
         },
 
     });
-    console.log('Errors', formik.errors);
 
 
 

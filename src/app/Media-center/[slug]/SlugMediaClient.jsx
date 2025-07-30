@@ -22,6 +22,8 @@ import GridCards from '@/components/Media-center/GridCards'
 import Dimonds from '@/components/Media-center/Dimonds'
 import LatestNews from '@/components/Media-center/LatestNews'
 import NewsCard from '@/components/Media-center/NewsCard'
+import NavigationArrows from '@/components/Media-center/NavigationArrows'
+import DateCategoryInfo from '@/components/Media-center/DateCategoryInfo'
 
 const dummyNews = [
     {
@@ -81,7 +83,7 @@ const dummyNews = [
 const SlugMediaClient = () => {
     const [isModalOpen, setModalOpen] = useState(false);
     const [startIndex, setStartIndex] = useState(0);
-    const [template, setTemplate] = useState(0)
+    const [template, setTemplate] = useState(2)
     const newsInfo = {
         date: "2024/1/4",
         category: "Network",
@@ -102,10 +104,22 @@ const SlugMediaClient = () => {
             { id: 5, image: n5 }
         ]
     }
-    const { title, content, gridImages } = newsInfo
+    const { title, content, gridImages, date, category } = newsInfo
     const handleOpenModal = (index) => {
         setStartIndex(index);
         setModalOpen(true);
+    };
+    const renderTemplate = () => {
+        switch (template) {
+            case 0:
+                return <GridImages gridImages={gridImages} />;
+            case 1:
+                return <GridCards gridImages={gridImages} />;
+            case 2:
+                return <Dimonds gridImages={gridImages} />;
+            default:
+                return null;
+        }
     };
 
     return (
@@ -113,16 +127,10 @@ const SlugMediaClient = () => {
             <div className='mt-[50px]'>
 
                 {/* ✅ Date & Category */}
-                <div className="flex items-center gap-2 text-600 mb-2">
-                    <Clock size={18} weight="regular" />
-                    <span className="text-sm md:text-base font-medium">
-                        {newsInfo.date}
-                    </span>
-                    <div className="w-1 h-1 rounded-full bg-600" />
-                    <span className="text-sm md:text-base bg-[#054e7224] text-[#054E72] font-medium px-3 py-1 rounded-full">
-                        {newsInfo.category}
-                    </span>
-                </div>
+                <DateCategoryInfo
+                    date={date}
+                    category={category}
+                />
 
                 {/* ✅ Main Image */}
                 <Image
@@ -145,15 +153,7 @@ const SlugMediaClient = () => {
                         {content}
                     </p>
                     <div className="flex-1 relative ">
-                        {template === 0 &&
-                            <GridImages gridImages={gridImages} />
-                        }
-                        {template === 1 &&
-                            <GridCards gridImages={gridImages} />
-                        }
-                        {template === 2 &&
-                            <Dimonds gridImages={gridImages} />
-                        }
+                        {renderTemplate()}
                     </div>
                 </div>
                 {/* ✅ 📸 GALLERY SECTION */}
@@ -163,6 +163,7 @@ const SlugMediaClient = () => {
                         <Vedio handleOpenModal={handleOpenModal} />
                     </>
                 }
+                <NavigationArrows />
                 <h2 className="w-full text-[#054E72] text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-[48px] font-bold mt-4 sm:mt-5 mb-6 sm:mb-18">
                     Related News
                 </h2>

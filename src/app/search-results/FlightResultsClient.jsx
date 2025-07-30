@@ -20,6 +20,7 @@ import { useRouter } from 'next/navigation'
 import POSNotice from '@/components/FlightResults/POSNotice'
 import PosSelectorModal from '@/components/FlightResults/FlighSelectStep/PosSelectorModal'
 import useSessionTimer from '@/hooks/useSessionTimer'
+import AlertModal from '@/components/FlightResults/AlertModal'
 
 const FlightResultsClient = () => {
 
@@ -27,11 +28,15 @@ const FlightResultsClient = () => {
 
     const dispatch = useDispatch()
     const { flights, selectedPassengers, searchParams, isLoadingFlights, selectedPlan, IndirectAirPort } = useSelector((state) => state.flights);
+    const { adults, children, infants } = searchParams;
+    const passengerNumber = adults + children + infants
+
     const router = useRouter()
     const [showNoice, setShowNotice] = useState(true);
     const [showPosModal, setShowPosModal] = useState(false);
     const [localLoading, setLocalLoading] = useState(true);
     const [isSessionModalOpen, setSessionModalOpen] = useState(false);
+    const [isAlertOpen, setIsAlertOpen] = useState(false);
 
     const [isFilterModalOpen, setFilterModalOpen] = useState(false);
     const [isShowDetailsModalOpen, setFlightDetailsOpen] = useState(false);
@@ -41,7 +46,7 @@ const FlightResultsClient = () => {
     const [activeStep, setActiveStep] = useState(0);
 
     const { restartTimer } = useSessionTimer({
-        duration: 60 * 7,
+        duration: passengerNumber >= 3 ? 60 * 10 : 60 * 7,
         onExpire: () => setSessionModalOpen(true),
     });
 
@@ -72,8 +77,6 @@ const FlightResultsClient = () => {
     };
     const handlePayment = () => {
         const info = selectedType[selectedType.type]
-        console.log('info', info);
-
         const data = {
             bookingInfo: {
                 transactionId: info.transaction_id,
@@ -111,20 +114,18 @@ const FlightResultsClient = () => {
 
         }
 
-        dispatch(createPaymentService(data)).then((action) => {
+        dispatch(createPaymentService(data)).then(action => {
             if (createPaymentService.fulfilled.match(action)) {
                 const { checkoutUrl, pnr } = action.payload;
-                if (pnr) {
-
-                    dispatch(setPnr(pnr))
-                }
-                if (checkoutUrl) {
-                    window.open(checkoutUrl, '_self');
-                } else {
-                    console.error("Checkout URL not found in payload");
-                }
+                if (pnr) dispatch(setPnr(pnr));
+                checkoutUrl ? window.open(checkoutUrl, '_self') : console.error("Checkout URL not found");
+            } else if (createPaymentService.rejected.match(action)) {
+                const status = action.payload?.status || action.error?.status;
+                alert(status === 400 ? "There was a problem with your request. Please try again." : "Something went wrong. Please try again later.");
             }
         });
+
+
 
     }
     const handleClickDate = (type) => {
@@ -177,10 +178,10 @@ const FlightResultsClient = () => {
                 setActiveStep={setActiveStep}
                 selectedFlight={selectedFlight}
                 selectedType={selectedType}
+                setIsAlertOpen={setIsAlertOpen}
             />
 
         },
-        // { label: 'Seats & Extras', content: <p>3</p> },
         {
             label: 'Pay & confirm', content: <Payment setActiveStep={setActiveStep}
                 activeStep={activeStep}
@@ -250,7 +251,7 @@ const FlightResultsClient = () => {
             if (scrollRef.current) {
                 scrollRef.current.scrollTo({ top: 0, behavior: 'smooth' });
             }
-        }, 100); // small delay to ensure DOM updates before scroll
+        }, 100);
 
         return () => clearTimeout(timer);
     }, [activeStep, selectedFlight]);
@@ -320,6 +321,12 @@ const FlightResultsClient = () => {
                 isOpen={isSessionModalOpen}
                 onClose={() => setSessionModalOpen(false)}
                 handleSearchAgain={handleSearchAgain}
+            />
+            <AlertModal
+                isOpen={isAlertOpen}
+                onClose={() => setIsAlertOpen(false)}
+                message="You are not allowed to book multible filghts"
+
             />
             <PosSelectorModal handleSelectPos={handleSelectPos} isOpen={showPosModal} setIsOpen={setShowPosModal} />
 
