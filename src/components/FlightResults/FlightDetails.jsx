@@ -216,7 +216,7 @@ const FlightDetails = ({ handleSelectPlan, flight }) => {
     const Business = flight.Business
     const commonInfo = flight.common_info
     const buildPassengerInfo = (pricingInfo = []) =>
-        pricingInfo.map(({ PaxType, BaseFare, TotalTax, TotalFees, TotalFare, Rules, FareBasisCodes, SegmentCode }) => ({
+        pricingInfo.map(({ PaxType, BaseFare, TotalTax, TotalFees, TotalFare, Rules, FareBasisCodes, SegmentCode, ResBookDesigCode }) => ({
             PaxType,
             BaseFare,
             TotalTax,
@@ -225,6 +225,7 @@ const FlightDetails = ({ handleSelectPlan, flight }) => {
             Rules,
             FareBasisCodes,
             SegmentCode,
+            ResBookDesigCode
         }));
 
 
