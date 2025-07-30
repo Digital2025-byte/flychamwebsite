@@ -106,7 +106,7 @@ const Hero = ({ slides, isNavigationBtns ,title,subTitle}) => {
                 <div
                     style={{
                         position: 'absolute',
-                        bottom: '100px',
+                        bottom: '160px',
                         left: '50%',
                         transform: 'translateX(-50%)',
                         display: 'flex',

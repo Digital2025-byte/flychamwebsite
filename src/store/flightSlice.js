@@ -19,7 +19,7 @@ const flightSlice = createSlice({
         error: null,
         selectedPassengers: {},
         sessionInfo: {},
-        pnr:''
+        pnr: ''
     },
     reducers: {
         setAirports: (state, action) => {
@@ -119,5 +119,5 @@ const flightSlice = createSlice({
     },
 });
 
-export const { setAirports, setSearchParams, setSelectedF, setSelectedPlan, setSelectedpassengers, setPos ,setPnr} = flightSlice.actions;
+export const { setAirports, setSearchParams, setSelectedF, setSelectedPlan, setSelectedpassengers, setPos, setPnr } = flightSlice.actions;
 export default flightSlice.reducer;

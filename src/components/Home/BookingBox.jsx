@@ -436,7 +436,7 @@ const BookingBox = ({ flights, pos }) => {
         </div>
     );
     const DesktopView = () => (
-        <div id="search-widget" className="bg-white rounded-2xl shadow-md p-6 w-full max-w-5xl mx-auto mt-[-70px] relative z-20 ">
+        <div id="search-widget" className="bg-white rounded-2xl shadow-md p-6 w-full max-w-5xl mx-auto mt-[-130px] relative z-20 ">
             <TabNavigation
                 tabs={tabs}
                 activeTab={activeTab}

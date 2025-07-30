@@ -17,10 +17,14 @@ import { setSelectedpassengers } from '@/store/flightSlice';
 import { contactSchema, passengerSchema } from '@/util/validatonSchemas';
 import * as Yup from 'yup';
 import ErrorMessage from '@/components/Ui/ErrorMessage';
+import useFlightDetails from '@/hooks/useFlightDetails';
 
 const PassengerDetails = ({ activeStep, setActiveStep, selectedFlight, selectedType }) => {
     const dispatch = useDispatch()
-    const { searchParams } = useSelector((s) => s.flights)
+    const { searchParams, selectedPlan } = useSelector((s) => s.flights)
+    const { info } = useFlightDetails(selectedPlan);
+
+
     const { adults, children, infants } = searchParams
     let globalIndex = 0;
     const passengers = [
@@ -93,6 +97,7 @@ const PassengerDetails = ({ activeStep, setActiveStep, selectedFlight, selectedT
                 phoneNumber: values.contact.phoneNumber,
                 countryCode: values.contact.countryCode,
                 email: values.contact.email,
+                ResBookDesigCode: "",
                 passengers: values.passengers.map((p) => ({
                     birthDate: p.dateOfBirth,
                     passengerTypeCode: p.typeValue,
@@ -100,6 +105,10 @@ const PassengerDetails = ({ activeStep, setActiveStep, selectedFlight, selectedT
                     surname: capitalize(p.lastName),
                     nameTitle: p.title,
                 })),
+                pricinginfo: info.pricing_info.map((item,idx) => ({
+                    PaxType: item.PaxType,
+                    ResBookDesigCode: item.ResBookDesigCode
+                }))
             };
 
             const hasEmptyFields =

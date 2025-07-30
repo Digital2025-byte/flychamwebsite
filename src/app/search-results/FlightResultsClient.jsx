@@ -58,7 +58,7 @@ const FlightResultsClient = () => {
 
     const HeaderBarMobile = () => (
         <div className=" px-3 flex items-center justify-between h-16 shadow-md bg-[#F1F1F1]">
-            <HeaderMobile handleStepBack={handleStepBack}/>
+            <HeaderMobile handleStepBack={handleStepBack} />
         </div>
     );
 
@@ -106,7 +106,11 @@ const FlightResultsClient = () => {
                 Description:
                     `${selectedFlight.common_info.segments[0].origin_code}_${selectedFlight.common_info.segments[0].destination_code}_${selectedFlight.common_info.flight}`
             },
-            PassengerInfo: [selectedPlan?.PassengerInfo]
+            PassengerInfo: [selectedPlan?.PassengerInfo],
+            pricinginfo: info.pricing_info.map((item, idx) => ({
+                PaxType: item.PaxType,
+                ResBookDesigCode: item.ResBookDesigCode
+            }))
 
         }
 

@@ -10,6 +10,7 @@ import Resources from '@/components/Media-center/Resources'
 import StayUpdated from '@/components/Media-center/StayUpdated'
 import { useRouter } from 'next/navigation'
 import LatestNews from '@/components/Media-center/LatestNews'
+import MediaCenterLayout from '@/components/Ui/MediaCenterLayout'
 
 const dummyNews = [
     {
@@ -84,7 +85,7 @@ const MediaCenter = () => {
 
     return (
         <div className=''>
-            <Cover coverImg={coverImg} title=" Media center" disc="Your source for news, press releases, and travel updates"/>
+            <Cover coverImg={coverImg} title=" Media center" disc="Your source for news, press releases, and travel updates" />
             <LatestNews
                 lastNews={{
                     date: "24 JUL 2025",
@@ -96,7 +97,10 @@ const MediaCenter = () => {
                     link: "/news/major-expansion",
                 }}
             />
-            <div className='px-4 md:px-8 lg:px-50 '>
+            <MediaCenterLayout
+            >
+
+
                 {/* ✅ Tabs */}
 
                 <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
@@ -116,7 +120,7 @@ const MediaCenter = () => {
 
 
                 {/* Resources */}
-            </div>
+            </MediaCenterLayout>
             <div className="my-6  ">
 
                 <Resources />

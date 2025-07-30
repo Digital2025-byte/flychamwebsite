@@ -215,76 +215,56 @@ const FlightDetails = ({ handleSelectPlan, flight }) => {
     const Economy = flight.Economy
     const Business = flight.Business
     const commonInfo = flight.common_info
+    const buildPassengerInfo = (pricingInfo = []) =>
+        pricingInfo.map(({ PaxType, BaseFare, TotalTax, TotalFees, TotalFare, Rules, FareBasisCodes, SegmentCode }) => ({
+            PaxType,
+            BaseFare,
+            TotalTax,
+            TotalFees,
+            TotalFare,
+            Rules,
+            FareBasisCodes,
+            SegmentCode,
+        }));
+
+
+    const baseColumn = {
+        commonInfo,
+        isHeader: true,
+        isBtn: true,
+        special: false,
+    };
 
     const columns = [
         {
-
             type: 'Info',
-            FareRuleReference: Economy?.pricing_info[0]?.FareRuleReference[0],
-            // items: economyClassItems,
+            FareRuleReference: Economy?.pricing_info?.[0]?.FareRuleReference?.[0],
             currency: commonInfo?.currency,
-
         },
         {
+            ...baseColumn,
             id: 1,
             title: 'Economy Class',
             Economy,
-            commonInfo,
-            FareRuleReference: Economy?.pricing_info[0]?.FareRuleReference[0],
+            FareRuleReference: Economy?.pricing_info?.[0]?.FareRuleReference?.[0],
             price: formatPrice(Economy?.total_fare),
             currency: commonInfo?.currency,
             seatsLeft: `${Math.floor(Math.random() * 10) + 1} seats left`,
             type: 'Economy',
-            isHeader: true,
-            isBtn: true,
-            special: false,
-            PassengerInfo: {
-                PaxType: Economy?.pricing_info[0]?.PaxType,
-                BaseFare: Economy?.pricing_info[0]?.BaseFare,
-                // BaseFareEquiv: Economy?.pricing_info[0]?.BaseFareEquiv,
-                TotalTax: Economy?.pricing_info[0]?.TotalTax,
-                // TotalTaxEquiv: Economy?.pricing_info[0]?.TotalTaxEquiv,
-                TotalFees: Economy?.pricing_info[0]?.TotalFees,
-                // TotalFeesEquiv: Economy?.pricing_info[0]?.TotalFeesEquiv,
-                TotalFare: Economy?.pricing_info[0]?.TotalFare,
-                // TotalEquiv: Economy?.pricing_info[0]?.TotalEquiv,
-                // FareRuleReference: Economy?.pricing_info[0]?.FareRuleReference,
-                Rules: Economy?.pricing_info[0]?.Rules,
-                FareBasisCodes: Economy?.pricing_info[0]?.FareBasisCodes,
-                SegmentCode: Economy?.pricing_info[0]?.SegmentCode
-            }
+            PassengerInfo: buildPassengerInfo(Economy?.pricing_info),
         },
         {
+            ...baseColumn,
             id: 2,
             title: 'Business Class',
             Business,
-            commonInfo,
-            FareRuleReference: Business?.pricing_info[0]?.FareRuleReference[0],
+            FareRuleReference: Business?.pricing_info?.[0]?.FareRuleReference?.[0],
             price: formatPrice(Business?.total_fare),
             currency: commonInfo?.currency,
-
             seatsLeft: `${Math.floor(Math.random() * 10) + 1} seats left`,
-            tag: 'Recommended',
             type: 'Business',
-            isHeader: true,
-            isBtn: true,
-            special: false,
-            PassengerInfo: {
-                PaxType: Business?.pricing_info[0]?.PaxType,
-                BaseFare: Business?.pricing_info[0]?.BaseFare,
-                // BaseFareEquiv: Business?.pricing_info[0]?.BaseFareEquiv,
-                TotalTax: Business?.pricing_info[0]?.TotalTax,
-                // TotalTaxEquiv: Business?.pricing_info[0]?.TotalTaxEquiv,
-                TotalFees: Business?.pricing_info[0]?.TotalFees,
-                // TotalFeesEquiv: Business?.pricing_info[0]?.TotalFeesEquiv,
-                TotalFare: Business?.pricing_info[0]?.TotalFare,
-                // TotalEquiv: Business?.pricing_info[0]?.TotalEquiv,
-                // FareRuleReference: Business?.pricing_info[0]?.FareRuleReference,
-                Rules: Business?.pricing_info[0]?.Rules,
-                FareBasisCodes: Business?.pricing_info[0]?.FareBasisCodes,
-                SegmentCode: Business?.pricing_info[0]?.SegmentCode
-            }
-
+            tag: 'Recommended',
+            PassengerInfo: buildPassengerInfo(Business?.pricing_info),
         },
     ];
     return (
