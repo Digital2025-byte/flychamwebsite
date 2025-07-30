@@ -106,7 +106,7 @@ const FlightResultsClient = () => {
                 Description:
                     `${selectedFlight.common_info.segments[0].origin_code}_${selectedFlight.common_info.segments[0].destination_code}_${selectedFlight.common_info.flight}`
             },
-            PassengerInfo: [selectedPlan?.PassengerInfo],
+            PassengerInfo: selectedPlan?.PassengerInfo,
 
 
         }
