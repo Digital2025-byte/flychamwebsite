@@ -280,7 +280,7 @@ const FlightResultsClient = () => {
 
 
                 <div ref={scrollRef} className="h-screen overflow-y-auto">
-                    <div className='hidden lg:block'>vf
+                    <div className='hidden lg:block'>
                         <Header />
                         <main className="w-[70%] mx-auto px-2">
                             <Section><ProgressBar steps={steps} activeStep={activeStep} setActiveStep={setActiveStep} /></Section>
