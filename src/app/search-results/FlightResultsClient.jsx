@@ -276,11 +276,11 @@ const FlightResultsClient = () => {
         <>
 
             {/* {(isLoadingFlights || localLoading) ? <Screen /> : */}
-            {(isLoadingFlights || localLoading) ?          <LottieComponent /> :
+            {(isLoadingFlights || localLoading) ? <LottieComponent /> :
 
 
                 <div ref={scrollRef} className="h-screen overflow-y-auto">
-                    <div className='hidden lg:block'>
+                    <div className='hidden lg:block'>vf
                         <Header />
                         <main className="w-[70%] mx-auto px-2">
                             <Section><ProgressBar steps={steps} activeStep={activeStep} setActiveStep={setActiveStep} /></Section>
@@ -315,7 +315,7 @@ const FlightResultsClient = () => {
                         {steps[activeStep].content}
                         <Section>
                             {flights?.length === 0 && IndirectAirPort.length === 0 && <NoResults />}
-            
+
                         </Section>
                     </main>
 
