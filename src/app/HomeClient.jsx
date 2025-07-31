@@ -85,7 +85,6 @@ const HomeClient = ({ flights, pos }) => {
               btn=''
             />
 
-            <AboutFlyChamSection />
             {/* <div className="my-20">
             <Panner />
           </div> */}
