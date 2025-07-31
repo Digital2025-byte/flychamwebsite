@@ -21,7 +21,7 @@ import POSNotice from '@/components/FlightResults/POSNotice'
 import PosSelectorModal from '@/components/FlightResults/FlighSelectStep/PosSelectorModal'
 import useSessionTimer from '@/hooks/useSessionTimer'
 import AlertModal from '@/components/FlightResults/AlertModal'
-
+import LottieComponent from '@/components/Ui/LottieComponent'
 const FlightResultsClient = () => {
 
     const scrollRef = useRef(null)  // ✅ Create scrollable div ref
@@ -275,7 +275,8 @@ const FlightResultsClient = () => {
     return (
         <>
 
-            {(isLoadingFlights || localLoading) ? <Screen /> :
+            {/* {(isLoadingFlights || localLoading) ? <Screen /> : */}
+            {(isLoadingFlights || localLoading) ?          <LottieComponent /> :
 
 
                 <div ref={scrollRef} className="h-screen overflow-y-auto">
@@ -314,6 +315,7 @@ const FlightResultsClient = () => {
                         {steps[activeStep].content}
                         <Section>
                             {flights?.length === 0 && IndirectAirPort.length === 0 && <NoResults />}
+            
                         </Section>
                     </main>
 
